@@ -1,7 +1,7 @@
-/* Maximum way in tree and LCR, CLR, LRC of tree
+/* Maximum way in tree and CLR  traverse the tree
    made by Guzel Garifullina
    Estimated time 2 hours
-   real time      1 hour +
+   real time      1 hour + 30 minutes
 */
 
 abstract  class  Tree {}
@@ -75,6 +75,22 @@ fun Tree.maxWay(min : Int) : Int{
     return max
 }
 
+fun Tree.CLR() {
+    fun Tree.CLR_(){
+        when (this){
+            is Empty -> print("_ " )
+            is Leaf  -> print("$value ")
+            is Node  -> {
+                print("$value ")
+                left.CLR_()
+                right.CLR_()
+            }
+        }
+    }
+    this.CLR_()
+    println()
+}
+
 fun main(args: Array<String>) {
 
     val tree = generateTree(0, 4)
@@ -82,10 +98,15 @@ fun main(args: Array<String>) {
     println(tree.toText())
 
     println("Maximal sum ${tree.maxWay(0)}\n")
+    println("CLR is")
+    tree.CLR()
+    println()
 
     val tree1 = generateTree(-7, 0)
     println("Initial tree")
     println(tree1.toText())
 
     println("Maximal sum ${tree1.maxWay(-100)}\n")
+    println("CLR is")
+    tree1.CLR()
 }
