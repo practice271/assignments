@@ -1,10 +1,10 @@
-//1 задание. Пирамидальная сортировка.
+//Task 1. Heapsort.
 fun swap(array:Array<Int>, i:Int, j:Int){
     val tmp = array[i]
     array[i] = array[j]
     array[j] = tmp
 }
-//Поиск наибольшего потомка
+//Search maximum child
 fun child(arr:Array<Int>, par:Int, n:Int):Int {
     if (n - 1 >= par * 2 + 2) {
         if (arr[2 * par + 1] > arr[2 * par + 2]) return (2 * par + 1)
@@ -13,7 +13,7 @@ fun child(arr:Array<Int>, par:Int, n:Int):Int {
     else if (n - 1 == par * 2 + 1) return (2 * par + 1)
     else return par
 }
-//Построение двоичной кучи
+//Build binary heap
 fun buildTree(arr:Array<Int>){
     val n = arr.size()
     var i = arr.size()/2 -1
@@ -43,7 +43,7 @@ fun heapsort(arr:Array<Int>){
         n--
     }
 }
-//Задание 2. Поиск максимальной суммы в дереве на путях от корня до листьев.
+//Task 2. Search maximum sum in tree.
 abstract class Tree {}
 open class Empty() : Tree() {}
 open class Leaf(val value : Int) : Tree() {}
@@ -87,7 +87,7 @@ fun maxWay(tree:Tree):Int{
     return foldMax({a,b -> Math.max(a,b)}, 0, tree)
 }
 
-//Задание 3. Обобщенный метод для обхода деревьев сверху вниз.
+//Task 3. Implementation fold.
 fun fold(f:(Int, Int) -> Int, acc: Int, tree: Tree):Int {
     when (tree) {
         is Empty -> return acc
@@ -97,7 +97,7 @@ fun fold(f:(Int, Int) -> Int, acc: Int, tree: Tree):Int {
     }
 }
 
-//4 задание. Числа Пеано.
+//Task 4. Numbers Peano.
 abstract class Peano{}
 open class Zero(): Peano(){}
 open class S(val p:Peano): Peano(){}
@@ -160,61 +160,57 @@ fun pow(a:Peano, b:Peano):Peano{
 fun main(args:Array<String>){
     println("1.Heapsort")
     val b = arrayOf(3,6,-1,0,8,11,5,9,7)
-    println("Данный массив:")
+    println("Array:")
     b.forEach{
         print("$it ")
     }
     println()
-    println("Двоичная куча:")
+    println("Binary heap:")
     buildTree(b)
     b.forEach {
         print("$it ")
     }
     println()
-    println("Отсортированный массив:")
+    println("Sorted array:")
     heapsort(b)
     b.forEach {
         print("$it ")
     }
     println()
 
-    println("2.Максимальная сумма в дереве")
-    println("Дерево:")
+    println("2.Max sum in tree")
+    println("Tree:")
     val tr = Node(Leaf(10), 5, Node (Node(Leaf (4), 0, Leaf(100)), 1, Leaf(2)))
     print(tr.toText())
-    println("Максимальная сумма:")
+    println("Max sum:")
     print(maxWay(tr))
     println()
 
-    println("3.Реализация fold")
+    println("3.Implementation fold")
     val c = genTree(0,5)
-    println("Дерево:")
+    println("Tree:")
     print(c.toText())
-    println("Максимальное значение в дереве:")
+    println("Max in tree:")
     println(fold({x, y -> Math.max(x, y)}, 0, c))
 
-    println("4.Числа Пеано")
+    println("4.Numbers Peano")
     println("x = S(S(S(S(Zero())))), y = Zero(),z = S(S(Zero()))")
     val x = S(S(S(S(Zero()))))
     val y = Zero()
     val z = S(S(Zero()))
-//Сложение
-    println("Сумма x и y:")
+    println("x + y:")
     printPeano(sum(x,y))
     println()
-//Вычитание
-    println("Разность x и z:")
+    println("x - z:")
     printPeano(sub(x, z))
     println()
-//Умножение
-    println("Умножение y и z:")
+    println("y * z")
     printPeano(mult(y,z))
     println()
-//Возведение в степень
-    println("Возведение y в степень x:")
+    println("y ^ x:")
     printPeano(pow (y,x))
     println()
-    println("Возведение z в степень y:")
+    println("z ^ y:")
     printPeano(pow (z,y))
     println()
 }
