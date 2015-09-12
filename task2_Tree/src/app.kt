@@ -32,6 +32,8 @@ fun Tree.toText() : String {
     return builder.toString()
 }
 
+// task 3
+
 fun fold(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int  {
         when (tree) {
 
@@ -41,6 +43,8 @@ fun fold(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int  {
                 else -> throw Exception("Unknown class")
             }
     }
+
+// task 2
 
 fun  maxPath( f : (Int,Int) -> Int, acc : Int, tree : Tree) : Int
 {
