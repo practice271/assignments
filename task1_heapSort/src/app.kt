@@ -1,4 +1,7 @@
-
+/**
+ * Created by Zarina Kurbatova on 11/09/15.
+ */
+ 
 fun heapSort(arr: Array<Int>) {
 
     for(i in arr.size()/2 downTo 0) {
