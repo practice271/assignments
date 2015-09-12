@@ -1,2 +1,8 @@
 *.jar
 *.class
+workspace.xml
+*~
+*.swp
+!gradle-wrapper.jar
+.gradle
+build
