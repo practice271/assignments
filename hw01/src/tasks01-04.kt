@@ -1,5 +1,5 @@
 // Homework 1
-// Alekseev Aleksei, group 171.
+// Alekseev Aleksei, group 271.
 
 /*Task 1*/
 
