@@ -43,8 +43,8 @@ fun Peano.pow(p: Peano): Peano =
     }
 
 fun main(args: Array<String>) {
-    var a: Peano = fromInt(2)
-    var b: Peano = fromInt(3)
-    var c: Peano = a.pow(b)
-    println(c.String());
+    println((fromInt(2) + fromInt(2)).String());
+    println((fromInt(10) - fromInt(3)).String());
+    println((fromInt(5) * fromInt(5)).String());
+    println((fromInt(2).pow(fromInt(6))).String());
 }
