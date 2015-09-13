@@ -1,15 +1,5 @@
 fun main(args: Array<String>) {
-    val a = Array(10, {i -> (0)})
-    a[0] = 8
-    a[1] = 1
-    a[2] = 4
-    a[3] = 6
-    a[4] = 7
-    a[5] = 2
-    a[6] = 9
-    a[7] = 10
-    a[8] = 3
-    a[9] = 5
+    val a = arrayOf(8, 1, 4, 6, 7, 2, 9, 10, 3, 5)
     heapSort(a)
     printArray(a)
 }
