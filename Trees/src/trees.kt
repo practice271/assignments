@@ -13,15 +13,11 @@ fun main(args: Array<String>) {
     t.traverse()
 }
 
-fun Tree<Int>.maxPath(): Int {
-    if (this is Node) {
-        val sl = l.maxPath()
-        val sr = r.maxPath()
-        return v + if (sl > sr) sl else sr
-    } else {
-        return 0
+fun Tree<Int>.maxPath(): Int =
+    when (this) {
+        is Node -> v + Math.max(l.maxPath(), r.maxPath())
+        else -> 0
     }
-}
 
 fun <T>Tree<T>.traverse() {
     if (this is Node) {
