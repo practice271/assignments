@@ -1,3 +1,6 @@
+// Homework 1
+// Alekseev Aleksei, group 171.
+
 /*Task 1*/
 
 fun heapSort(array : Array<Int>) {
