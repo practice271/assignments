@@ -65,7 +65,8 @@ fun maxWay (max: (Int, Int) -> Int, tree: Tree, res: Int) : Int {
     when (tree){
         is Empty -> return res
         is Leaf  -> return (res + tree.value)
-        is Node  -> return max(maxWay(max, tree.l, res + tree.value), maxWay(max, tree.r,tree.value))
+        is Node  ->
+                    return max(maxWay(max, tree.l, res + tree.value), maxWay(max, tree.r, res + tree.value))
         else     -> throw Exception("Incorrect class")
     }
 }
@@ -161,9 +162,9 @@ fun main(args: Array<String>) {
     a2.printArray()
 
     println("ex.2 Max way in tree")
-    val tree = Node(3, Node(4,Leaf(7), Leaf(3)), Leaf(5))
+    val tree = Node(3, Node(5,Leaf(1), Leaf(4)), Leaf(8))
     val res = maxWay_(tree)
-    println ("Node(3, Node(4,Leaf(7), Leaf(3)), Leaf(5))")
+    println ("Node(3, Node(5,Leaf(1), Leaf(4)), Leaf(8))")
     println(" max = ${res} ")
 
     println("ex.4 Peano")
