@@ -71,11 +71,6 @@ fun Tree.toText() : String {
     return builder.toString()
 }
 
-fun max(x : Int, y : Int) : Int {
-    if (x > y) return x
-    else return y
-}
-
 //finds way in tree from root to leafs with maximum sum of nodes
 fun maxWay(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
     when (tree) {
@@ -83,8 +78,8 @@ fun maxWay(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
         is Leaf  -> return f(acc, tree.value)
         is Node  -> {
             val temp = f(acc, tree.value)
-            return max(maxWay(f, temp, tree.left), maxWay(f, temp, tree.right))
-    }
+            return Math.max(maxWay(f, temp, tree.left), maxWay(f, temp, tree.right))
+        }
         else -> throw Exception("Error")
     }
 }
@@ -96,7 +91,7 @@ fun fold(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
         is Leaf  -> return f(acc, tree.value)
         is Node  -> {
             val temp = f(acc, tree.value)
-            return fold(f, fold(f, temp, tree.left), tree.right)
+            return f(temp, f(fold(f, acc, tree.left), fold(f, acc, tree.right)))
         }
         else -> throw Exception("Error")
     }
