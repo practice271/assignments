@@ -4,13 +4,15 @@
 fun Array<Int>.Heapsort()
 {
     var i = this.size()/2 - 1
-    while (i >= 0){
+    while (i >= 0)
+    {
         shiftDown(this, i, this.size())
         i--
 
     }
     i = this.size() - 1;
-    while(i >= 1){
+    while(i >= 1)
+    {
 
         var temp : Int;
         temp = this[0]
@@ -33,11 +35,16 @@ fun shiftDown (array : Array<Int>,  p: Int, j: Int )
     while ((i * 2 + 1 < j) && (!flag))
     {
         if (i * 2 + 1 == j - 1) { maxChild = i * 2 + 1 };
-        else {
-            if (array[i * 2 + 1] > array[i * 2 + 2]) {
+        else 
+        {
+            if (array[i * 2 + 1] > array[i * 2 + 2]) 
+            {
                 maxChild = i * 2 + 1
             };
-            else { maxChild = i * 2 + 2 }
+            else 
+            { 
+                maxChild = i * 2 + 2 
+            }
         }
 
         if (array[i] < array[maxChild])
@@ -54,10 +61,9 @@ fun shiftDown (array : Array<Int>,  p: Int, j: Int )
     }
 }
 
-fun Array<out Any>.printArray() {
-    this.forEach {
-        print ("$it, ")
-    }
+fun Array<out Any>.printArray() 
+{
+    this.forEach {print ("$it, ")}
     println()
 }
 
@@ -68,9 +74,12 @@ class Node(val value : Int, val l : Tree, val r: Tree) : Tree() {}
 class Leaf(val value : Int) : Tree(){}
 class Empty : Tree()
 
-fun Tree.toText() : String {
-    fun Tree.toText_() : List<String> {
-        when (this) {
+fun Tree.toText() : String 
+{
+    fun Tree.toText_() : List<String> 
+    {
+        when (this) 
+        {
             is Empty -> return listOf("_\n")
             is Leaf  -> return listOf("${this.value}\n")
             is Node  -> {
@@ -122,7 +131,8 @@ abstract class Peano() {}
 class Zero : Peano(){}
 class S(val value : Peano) : Peano(){}
 
-fun genPeano (value : Int) : Peano{
+fun genPeano (value : Int) : Peano
+{
     if(value == 0) {return Zero()}
     else {return S(genPeano(value - 1))}
 }
@@ -137,8 +147,10 @@ fun Peano.toInt():Int
     }
 }
 
-fun Peano.print() {
-    when (this) {
+fun Peano.print() 
+{
+    when (this) 
+    {
         is Zero -> print("Zero")
         is S    -> {
             print("S(")
@@ -161,9 +173,11 @@ fun sum (a: Peano, b: Peano): Peano
 fun sub (a: Peano, b: Peano) : Peano
 {
 
-    when(a){
+    when(a)
+    {
         is Zero -> return Zero()
-        is S -> when(b){
+        is S -> when(b)
+        {
             is Zero -> return a
             is S ->  return sub(a.value, b.value)
             else -> throw Exception("Error")
@@ -172,7 +186,8 @@ fun sub (a: Peano, b: Peano) : Peano
     }
 }
 
-fun mult(a: Peano, b:Peano) : Peano {
+fun mult(a: Peano, b:Peano) : Peano 
+{
     when(a)
     {
         is Zero -> return Zero()
