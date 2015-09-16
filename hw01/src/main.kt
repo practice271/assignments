@@ -61,8 +61,10 @@ fun Tree.maxSum() : Int {
         is Leaf -> return sum + this.value
         is Node -> {
             val max: Int
-            if (l.maxSum() > r.maxSum()) {max = l.maxSum()}
-            else {max = r.maxSum()}
+            val lMax = l.maxSum()
+            val rMax = r.maxSum()
+            if (lMax > rMax) {max = lMax}
+            else {max = rMax}
             return sum + this.value + max
         }
         else -> throw Exception("Unknown class")
