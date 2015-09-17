@@ -33,12 +33,11 @@ fun main(args: Array<String>) {
 
     println("tree: Node(1, Node(8, Leaf(7), Leaf(5)), Node(5, Empty(), Node(4, Leaf(3), Leaf(2))))")
 
-    println("Example: tree to list")
-    val list = traverse(LinkedList(), { acc: LinkedList<Int>, elem: Int -> acc.addFirst(elem); acc }, tree)
-    println(list)
-
-    println("Example: sum of tree elements")
-    var x = traverse(0, { acc: Int, elem: Int -> acc + elem }, tree)
+    println("Example: maximum path")
+    var x = foldTopDown(0,
+    { acc: Int, elem: Int -> acc + elem },
+    { acc1: Int, acc2: Int -> if (acc1 > acc2) acc1 else acc2  },
+    tree)
     println(x)
 
     println("4. Peano numbers")

@@ -3,11 +3,12 @@ open class Empty() : Tree() {}
 open class Leaf(val value : Int) : Tree() {}
 open class Node(val value : Int, val l : Tree, val r : Tree) : Tree() {}
 
-fun <B> traverse(acc: B, f: (B, Int) -> B, tree: Tree) : B {
+fun <B> foldTopDown(acc: B, f1: (B, Int) -> B, f2: (B, B) -> B, tree: Tree) : B {
     when (tree) {
         is Empty -> return acc
-        is Leaf -> return f(acc, tree.value)
-        is Node -> return traverse(traverse(f(acc, tree.value), f, tree.l), f, tree.r)
+        is Leaf -> return f1(acc, tree.value)
+        is Node -> return f2(foldTopDown(f1(acc, tree.value), f1, f2, tree.l),
+                foldTopDown(f1(acc, tree.value), f1, f2, tree.r))
         else -> throw Exception("Unknown class")
     }
 }
