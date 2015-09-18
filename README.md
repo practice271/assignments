@@ -1,5 +1,5 @@
 # assignments
-[![Build Status](https://travis-ci.org/practice271/assignments.svg?branch=master)](https://travis-ci.org/practice271/assignments)
+[![Build Status](https://travis-ci.org/Mikelle/assignments.svg?branch=master)](https://travis-ci.org/practice271/assignments)
 The repository to fork and complete assignments in it.
 
 The result [table](https://docs.google.com/spreadsheets/d/1kmUJBEjTM9AaVXt_Cd_I2kif1Y99rwpd9gdsyaNQdRc/edit?usp=sharing).
@@ -13,5 +13,3 @@ The result [table](https://docs.google.com/spreadsheets/d/1kmUJBEjTM9AaVXt_Cd_I2
 ### Homework 2 (15.09 - 29.09):
 1. (4 points) Previous homework using Unit tests and Gradle.
 2. (4 points) The computer network assignment from the spring term.
-=======
-[![Build Status](https://travis-ci.org/Mikelle/assignments.svg?branch=master)](https://travis-ci.org/Mikelle/assignments)
