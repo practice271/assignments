@@ -37,29 +37,29 @@ public class tests
     {
         val tree = genTree(0, 6)
 
-        val res = tree.MyFoldTopDown(0, {(a, b) -> a + b}, {(a, b, c) -> a + b + c})
+        val res = tree.MyFoldTopDown(0, { a, b -> a + b}, { a, b, c -> a + b + c})
 
         assertEquals(res, 21)
     }
 
     Test fun TestPeano()
     {
-        var bar = LoL(Peano.Zero)
+        var bar = Some(Peano.Zero)
 
 
-        bar = bar.Plus(LoL(Peano.Zero)) as LoL
+        bar = bar.Plus(Some(Peano.Zero)) as Some
         assertEquals(bar.ToInt(), 2)
 
-        bar = bar.Mult(LoL(LoL(Peano.Zero))) as LoL
+        bar = bar.Mult(Some(Some(Peano.Zero))) as Some
         assertEquals(bar.ToInt(), 4)
 
-        bar = bar.Minus(LoL(Peano.Zero)) as LoL
+        bar = bar.Minus(Some(Peano.Zero)) as Some
         assertEquals(bar.ToInt(), 3)
 
-        bar = bar.Pow(bar) as LoL
+        bar = bar.Pow(bar) as Some
         assertEquals(bar.ToInt(), 27)
 
-        bar = bar.Pow(Peano.Zero) as LoL
+        bar = bar.Pow(Peano.Zero) as Some
         assertEquals(bar.ToInt(), 1)
     }
 }

@@ -46,14 +46,12 @@ fun <A> Tree.MyFoldTopDown (acc: A, f1: (A, Int) -> A, f2: (A, A, Int) -> A) : A
 }
 
 fun Tree.FindMaxInLine () : Int
-{
-    return MyFold(0, {it}, {(value, l, r) ->
-        if (l > r)
-        {
-            value + l
-        }
-        else
-        {
-            value + r
-        }})
-}
+        = MyFold(0, { it: Int -> it}, { value, l, r ->
+            if (l > r)
+            {
+                value + l
+            }
+            else
+            {
+                value + r
+            }})
