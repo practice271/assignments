@@ -33,6 +33,18 @@ fun <A> Tree.MyFold (fEmpty : A, fLeaf : (Int) -> A, fNode : (A, A, A) -> A) : A
     }
 }
 
+fun <A> Tree.MyFoldTopDown (acc: A, f1: (A, Int) -> A, f2: (A, A, Int) -> A) : A
+{
+    when (this)
+    {
+        is Empty -> return acc
+        is Leaf  -> return f1(acc, value)
+        is Node  -> return f2(l.MyFoldTopDown(acc, f1, f2),
+                              r.MyFoldTopDown(acc, f1, f2), value)
+        else     -> throw Exception("Unknown class")
+    }
+}
+
 fun Tree.FindMaxInLine () : Int
 {
     return MyFold(0, {it}, {(value, l, r) ->

@@ -33,6 +33,15 @@ public class tests
         assertEquals(tree.FindMaxInLine(), 14)
     }
 
+    Test fun TestFoldTopDown()
+    {
+        val tree = genTree(0, 6)
+
+        val res = tree.MyFoldTopDown(0, {(a, b) -> a + b}, {(a, b, c) -> a + b + c})
+
+        assertEquals(res, 21)
+    }
+
     Test fun TestPeano()
     {
         var bar = LoL(Peano.Zero)
