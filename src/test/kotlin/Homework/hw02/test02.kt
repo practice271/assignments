@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 public class tests
 {
-    Test fun TestC1P1()
+    Test fun TestHeapSort()
     {
         var arr = arrayOf(5, 4, 16, 2, 75, 0, 67, 22, 63)
         var res = arrayOf(0, 2, 4, 5, 16, 22, 63, 67, 75)
@@ -24,5 +24,33 @@ public class tests
         }
 
         assert(bool)
+    }
+
+    Test fun TestFindMaxInLine()
+    {
+        val tree = genTree(0, 6)
+
+        assertEquals(tree.FindMaxInLine(), 14)
+    }
+
+    Test fun TestPeano()
+    {
+        var bar = LoL(Peano.Zero)
+
+
+        bar = bar.Plus(LoL(Peano.Zero)) as LoL
+        assertEquals(bar.ToInt(), 2)
+
+        bar = bar.Mult(LoL(LoL(Peano.Zero))) as LoL
+        assertEquals(bar.ToInt(), 4)
+
+        bar = bar.Minus(LoL(Peano.Zero)) as LoL
+        assertEquals(bar.ToInt(), 3)
+
+        bar = bar.Pow(bar) as LoL
+        assertEquals(bar.ToInt(), 27)
+
+        bar = bar.Pow(Peano.Zero) as LoL
+        assertEquals(bar.ToInt(), 1)
     }
 }
