@@ -6,7 +6,11 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
+mainClassName = 'classroom.c02.C02Package'
+
 sourceCompatibility = 1.5
+
+
 
 repositories {
     mavenCentral()
