@@ -74,7 +74,8 @@ fun maxWay_ (tree:Tree): Int{
     return maxWay({a,b -> Math.max(a,b)},tree, 0)
 }
 
-/** ex.3 Fold for tree */
+/** ex.3 Fold for tree
+ * from root to leaf */
 
 fun foldT (f1: (Int,Int) -> Int,f2: (Int, Int) -> Int, acc: Int, tree: Tree): Int{
     when(tree){
@@ -152,7 +153,7 @@ fun peanoDeg (a:Peano, b:Peano): Peano{
 }
 
 fun main(args: Array<String>) {
-    println("ex.1 Heapsort")
+   /** println("ex.1 Heapsort")
     val a = arrayOf(1,2,3,0)
     val a2 = arrayOf(2,2,2,2,-1,5,0)
     fun Array<out Any>.printArray() {
@@ -195,6 +196,6 @@ fun main(args: Array<String>) {
     val res1 = foldT({a,b -> a + b},{a,b -> Math.max(a,b)}, 0, tree1)
     println(" max = ${res1} ")
     val res2 = foldT({a,b -> a * b},{a,b -> a * b}, 1, tree1)
-    println(" multiply = ${res2} ")
+    println(" multiply = ${res2} ")*/
 
 }
