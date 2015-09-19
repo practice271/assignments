@@ -1,2 +1,4 @@
-*lib
-*out
+*.class
+*.jar
+*.iml
+.idea
