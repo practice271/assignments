@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="hw01.Task2Test" tests="4" skipped="0" failures="0" errors="0" timestamp="2015-09-19T19:22:23" hostname="YumatovMain" time="0.013">
+<testsuite name="hw01.Task2Test" tests="4" skipped="0" failures="0" errors="0" timestamp="2015-09-19T20:00:49" hostname="YumatovMain" time="0.019">
   <properties/>
-  <testcase name="inleaf" classname="hw01.Task2Test" time="0.011"/>
-  <testcase name="innode" classname="hw01.Task2Test" time="0.001"/>
+  <testcase name="inleaf" classname="hw01.Task2Test" time="0.015"/>
+  <testcase name="innode" classname="hw01.Task2Test" time="0.0"/>
   <testcase name="general" classname="hw01.Task2Test" time="0.0"/>
   <testcase name="inempty" classname="hw01.Task2Test" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

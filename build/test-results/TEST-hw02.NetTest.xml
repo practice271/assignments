@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="hw02.NetTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2015-09-19T19:22:23" hostname="YumatovMain" time="0.024">
+<testsuite name="hw02.NetTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2015-09-19T20:00:49" hostname="YumatovMain" time="0.027">
   <properties/>
-  <testcase name="nsstep1" classname="hw02.NetTest" time="0.018"/>
+  <testcase name="nsstep1" classname="hw02.NetTest" time="0.021"/>
   <testcase name="gstep1" classname="hw02.NetTest" time="0.0"/>
-  <testcase name="gstep2" classname="hw02.NetTest" time="0.001"/>
+  <testcase name="gstep2" classname="hw02.NetTest" time="0.0"/>
   <testcase name="gstep3" classname="hw02.NetTest" time="0.0"/>
   <testcase name="nsstep100" classname="hw02.NetTest" time="0.001"/>
-  <testcase name="ncstep1" classname="hw02.NetTest" time="0.001"/>
+  <testcase name="ncstep1" classname="hw02.NetTest" time="0.002"/>
   <testcase name="ncstep100" classname="hw02.NetTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
