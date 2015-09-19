@@ -48,5 +48,14 @@ public class hw01Test {
         val c : Peano = S(S(S(Zero())))
         assertEquals(1, peanoPrint((peanoDeg(c,b))))
     }
+    Test fun foldTTest1() { /** Max way in tree */
+        val tree = Node(3, Node(5, Leaf(1), Leaf(-4)), Leaf(8))
+        assertEquals(11, foldT({ a, b -> a + b }, { a, b -> Math.max(a, b) }, 0, tree))
+    }
+
+    Test fun foldTTest2() { /** Max number in tree. */
+    val tree = Node(3, Node(5, Leaf(1), Leaf(-4)), Leaf(8))
+        assertEquals(8, foldT({ a, b -> Math.max(a, b) },{ a, b -> Math.max(a, b) }, 0, tree))
+    }
 
 }
