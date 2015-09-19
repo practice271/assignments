@@ -59,13 +59,9 @@ fun <B>Tree.fold(fEmpty : B, fLeaf : (Int) -> B, fNode : (Int, B, B) -> B) : B {
 
 fun Tree.maxWay(min : Int) : Int{
     var max  = min
-    fun maximum (a : Int, b : Int) : Int{
-        if (a > b) return a
-        else return b
-    }
     fun Tree.maxWay_ (sum : Int) {
         when (this){
-            is Leaf  -> max = maximum (max, sum + value)
+            is Leaf  -> max = Math.max(max, sum + value)
             is Node  -> {
                 left.maxWay_(sum + value)
                 right.maxWay_(sum + value)
