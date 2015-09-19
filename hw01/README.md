@@ -1,16 +1,11 @@
-Homework_1 (08.09.2015)
-=======================
+# assignments [![Build Status](https://travis-ci.org/MaKToff/assignments.svg)](https://travis-ci.org/MaKToff/assignments)
+The repository to fork and complete assignments in it.
 
-### Первое домашнее задание (от 8 сентября):
+The result [table](https://docs.google.com/spreadsheets/d/1kmUJBEjTM9AaVXt_Cd_I2kif1Y99rwpd9gdsyaNQdRc/edit?usp=sharing).
 
-(1). (4 балла) Пиромидальная сортировка (heapsort).
+### Homework 1 (08.09 - 22.09):
+1. (4 points) Heapsort (https://en.wikipedia.org/wiki/Heapsort).
+2. (2 points) Maximum sum on paths from a root to leaves in a binary tree.
+3. (2 points) Generalized method for top-down tree traversal.
+4. (4 points) The Peano arithmetic (+, -, *, ^) in an object-oriented manner.
 
-(2). (2 балла) Поиск максимальной суммы в дереве на путях от корня до листьев.
-
-(3). (2 балла) Обобщенный метод для обхода деревьев сверху вниз.
-
-(4). (4 балла) Числа Пеано в объектно-ориентированной модели. Операции сложения, вычитания, умножения и возведения в степень на них.
-
-### Время на выполнение проекта
-* Ожидаемое: 5ч
-* Реальное: 7ч

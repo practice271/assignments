@@ -85,13 +85,13 @@ fun maxWay(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
 }
 
 //The 3rd task
-fun fold(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
+fun fold(f : (Int, Int) -> Int, g : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
     when (tree) {
         is Empty -> return acc
         is Leaf  -> return f(acc, tree.value)
         is Node  -> {
             val temp = f(acc, tree.value)
-            return f(temp, f(fold(f, acc, tree.left), fold(f, acc, tree.right)))
+            return f(temp, g(fold(f, g, acc, tree.left), fold(f, g, acc, tree.right)))
         }
         else -> throw Exception("Error")
     }
@@ -208,7 +208,10 @@ fun main (args: Array<String>)
     println ("Maximum way  = ${maxWay({x, y -> x + y}, 0, tree)}")
 
     //test for fold: sum of all elements in tree
-    println ("Sum of nodes = ${fold({x, y -> x + y}, 0, tree)}")
+    println ("Sum of nodes = ${fold({x, y -> x + y}, {x, y -> x + y}, 0, tree)}")
+
+    //test for fold: maximum way
+    println ("Maximum way = ${fold({x, y -> x + y}, {x, y -> Math.max(x, y)}, 0, tree)}")
 
     //test for arithmetics with peano numbers
     val a = peanoGen(3, Zero())
