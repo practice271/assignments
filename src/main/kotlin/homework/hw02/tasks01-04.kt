@@ -71,12 +71,12 @@ fun maxWay(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
 
 /*Task 3*/
 
-fun fold(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
+fun fold(f1 : (Int, Int) -> Int, f2 : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
     when (tree) {
         is Empty -> return acc
-        is Leaf  -> return f(acc, tree.value)
-        is Node  -> return fold(f, fold(f, f(acc, tree.value), tree.left), tree.right)
-        else     -> throw Exception("Error")
+        is Leaf  -> return f1(acc, tree.value)
+        is Node  -> return f1(f1(acc, tree.value), f2(fold(f1, f2, acc, tree.left), fold(f1, f2, acc, tree.right)))
+        else -> throw Exception("Error")
     }
 }
 

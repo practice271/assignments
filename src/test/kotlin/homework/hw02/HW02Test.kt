@@ -17,6 +17,10 @@ public class HW02Test {
         heapSort(array)
         org.junit.Assert.assertArrayEquals(resArray, array)
     }
+    Test fun fold() {
+        val tree = Node(8, Node(5, Empty(), Leaf(14)), Node(1, Leaf(10), Leaf(22)))
+        assertEquals(60, fold({a, b -> a + b}, {a, b -> a + b}, 0, tree))
+    }
     Test fun maxWayTest() {
         val tree = Node(8, Node(5, Empty(), Leaf(14)), Node(1, Leaf(10), Leaf(22)))
         assertEquals(31, maxWay({ a, b -> a + b }, 0, tree))
