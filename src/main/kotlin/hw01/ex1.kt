@@ -74,6 +74,17 @@ fun maxWay_ (tree:Tree): Int{
     return maxWay({a,b -> Math.max(a,b)},tree, 0)
 }
 
+/** ex.3 Fold for tree */
+
+fun foldT (f1: (Int,Int) -> Int,f2: (Int, Int) -> Int, acc: Int, tree: Tree): Int{
+    when(tree){
+        is Empty -> return acc
+        is Leaf -> return f1(acc, tree.value)
+        is Node -> return f2(foldT(f1,f2,f1(acc, tree.value), tree.l), foldT(f1,f2,f1(acc, tree.value), tree.r))
+        else -> throw Exception("Unknown class")
+    }
+}
+
 /** ex.4 Peano*/
 /** Expected time : 3h
  *  Real time : 1h
@@ -178,5 +189,12 @@ fun main(args: Array<String>) {
     println(" 3 ^ 2 = ${peanoPrint((peanoDeg(c,b)))} ")
     println(" 2 ^ 0 = ${peanoPrint((peanoDeg(S(S(Zero())),Zero())))} ")
     println(" 0 ^ 2 = ${peanoPrint((peanoDeg(Zero(),S(S(Zero())))))} ")
+
+    println("Ex. 3")
+    val tree1 = Node(3, Node(5,Leaf(1), Leaf(4)), Leaf(8))
+    val res1 = foldT({a,b -> a + b},{a,b -> Math.max(a,b)}, 0, tree1)
+    println(" max = ${res1} ")
+    val res2 = foldT({a,b -> a * b},{a,b -> a * b}, 1, tree1)
+    println(" multiply = ${res2} ")
 
 }
