@@ -23,6 +23,6 @@ public class HW02Test {
     }
     Test fun maxWayTest() {
         val tree = Node(8, Node(5, Empty(), Leaf(14)), Node(1, Leaf(10), Leaf(22)))
-        assertEquals(31, maxWay({ a, b -> a + b }, 0, tree))
+        assertEquals(31, maxWay(0, tree))
     }
 }

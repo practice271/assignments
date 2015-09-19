@@ -60,11 +60,11 @@ fun Tree.toText() : String {
     return builder.toString()
 }
 
-fun maxWay(f : (Int, Int) -> Int, acc : Int, tree : Tree) : Int {
+fun maxWay(acc : Int, tree : Tree) : Int {
     when (tree) {
         is Empty -> return acc
-        is Leaf  -> return f(acc, tree.value)
-        is Node  -> return Math.max(maxWay(f, f(acc, tree.value), tree.left), maxWay(f, f(acc, tree.value), tree.right))
+        is Leaf  -> return acc + tree.value
+        is Node  -> return Math.max(maxWay((acc + tree.value), tree.left), maxWay((acc + tree.value), tree.right))
         else     -> throw Exception("Error")
     }
 }
