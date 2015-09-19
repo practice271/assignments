@@ -3,7 +3,7 @@ package homework.hw02
 import org.junit.Test
 import kotlin.test.assertEquals
 
-public class traverseTreeTest {
+public class TraverseTreeTest {
     Test fun maxPathTest01() {
         assertEquals(0, maxPath(Empty()))
     }

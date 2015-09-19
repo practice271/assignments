@@ -73,9 +73,11 @@ fun modelLan() {
      |             |
     (2) — (3) — (4)
     """)
+    println("Original lan:")
     lan.show()
     var i = 0
     while (i < 10) {
+        println("Iteration ${i}: ")
         lan.tryInfect()
         lan.show()
         i++
