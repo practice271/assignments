@@ -1,3 +1,4 @@
+# assignments [![Build Status](https://travis-ci.org/SergeevED/assignments.svg)](https://travis-ci.org/SergeevED/assignments)
 
 ### Homework 2 (15.09 - 29.09):
 1. (4 points) Previous homework using Unit tests and Gradle.
