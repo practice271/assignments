@@ -8,11 +8,13 @@ Author: Mikhail Kita, group 271
 package homework.hw02
 
 fun infectionProb(OS : String) : Double {
-    if (OS == "Windows") return 0.647
-    else if (OS == "Linux") return 0.310
-    else if (OS == "FreeBSD") return 0.154
-    else if (OS == "OS X") return 0.281
-    else throw Exception ("Incorrect OS")
+    when(OS) {
+        "Windows" -> return 0.647
+        "Linux"   -> return 0.310
+        "FreeBSD" -> return 0.154
+        "OS X"    -> return 0.281
+        else      -> throw Exception ("Incorrect OS")
+    }
 }
 
 class Computer(val number : Int, val OS : String) {
@@ -32,17 +34,17 @@ class Computer(val number : Int, val OS : String) {
     }
 }
 
-class ComputerGraph (val OSList : Array<String>, val labels : Array<Boolean>, val aList : Array<List<Int>>) {
+class ComputerGraph(val OSList : Array<String>, val labels : Array<Boolean>, val aList : Array<List<Int>>) {
     val n           = OSList.size()
     val nodes       = Array(n, {i -> Computer(i, OSList[i])})
     val nodesNumber = n
 
     fun hasEdge(node1 : Computer, node2 : Computer) : Boolean {
-        return (aList[node1.number].contains(node2.number))
+        return aList[node1.number].contains(node2.number)
     }
 }
 
-class LocalNetwork (val graph : ComputerGraph) {
+class LocalNetwork(val graph : ComputerGraph) {
     var move = 0
     val n    = graph.nodesNumber - 1
 
@@ -106,9 +108,8 @@ fun main(args : Array<String>) {
 
     val labels = arrayOf(false, true, false, false, false, false, false, true, false, false)
 
-    val aList =
-        arrayOf(listOf(1, 4), listOf(0, 2), listOf(1, 3, 4), listOf(2), listOf(0, 2, 5), listOf(4),
-            listOf(7, 8), listOf(6, 9), listOf(6, 9), listOf(7, 8))
+    val aList = arrayOf(listOf(1, 4), listOf(0, 2), listOf(1, 3, 4), listOf(2), listOf(0, 2, 5),
+                    listOf(4), listOf(7, 8), listOf(6, 9), listOf(6, 9), listOf(7, 8))
 
     val graph   = ComputerGraph (OSList, labels, aList)
     val network = LocalNetwork (graph)
