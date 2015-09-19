@@ -83,3 +83,7 @@ fun modelLan() {
         i++
     }
 }
+
+fun main(args : Array<String>) {
+    modelLan()
+}
