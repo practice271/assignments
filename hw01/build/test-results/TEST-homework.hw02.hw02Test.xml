@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="homework.hw02.hw02Test" tests="3" skipped="0" failures="0" errors="0" timestamp="2015-09-19T20:39:16" hostname="bulgakov" time="0.036">
-  <properties/>
-  <testcase name="HeapSortTest1" classname="homework.hw02.hw02Test" time="0.008"/>
-  <testcase name="PeanoTest" classname="homework.hw02.hw02Test" time="0.005"/>
-  <testcase name="findMaxTest" classname="homework.hw02.hw02Test" time="0.021"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
