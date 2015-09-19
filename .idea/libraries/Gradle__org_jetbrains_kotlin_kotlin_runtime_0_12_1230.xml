@@ -1,5 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: org.jetbrains.kotlin:kotlin-runtime:0.12.1230">
+    <ANNOTATIONS>
+      <root url="file://$PROJECT_DIR$/annotations/Gradle_ org.jetbrains.kotlin_kotlin-runtime_0.12.1230" />
+    </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-runtime/0.12.1230/4ac1402951dfcdb04b981e20260fdcaf14858b68/kotlin-runtime-0.12.1230.jar!/" />
     </CLASSES>

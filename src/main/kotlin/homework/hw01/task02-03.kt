@@ -1,6 +1,6 @@
 // Задания 01-04 от 08.09.2015
 // Автор: Кирилл Смиренко, группа 271
-package hw01
+package homework.hw01
 
 abstract class Tree<B> {}
 open class Empty<B>() : Tree<B>() {}
