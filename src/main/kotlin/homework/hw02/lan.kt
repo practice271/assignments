@@ -12,6 +12,7 @@ open class LAN(var computers: Array<Computer>, val adjMatrix : Array<Array<Boole
         while(i < this.size){
             print("Computer ${computers[i].number} : ")
             if (computers[i].isInfected) println("infected") else println("not infected")
+            i++
         }
     }
 
