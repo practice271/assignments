@@ -7,13 +7,13 @@ fun Array<out Any>.printArray() {
 
 fun Heapify(arr:Array<Int>, i:Int, heapSize:Int) {
     var max = Int.MIN_VALUE
-    if ( 2 * i + 1 <= heapSize && arr[2*i + 1]>arr[i] ) {
+    if (2 * i + 1 <= heapSize && arr[2*i + 1]>arr[i]) {
         max = 2 * i + 1
     }
     else {
         max = i
     }
-    if ( 2 * i + 2 <= heapSize && arr[2*i+2]>arr[max] ) {
+    if (2 * i + 2 <= heapSize && arr[2*i+2]>arr[max]) {
         max = 2 * i + 2
     }
     if (max!=i) {
