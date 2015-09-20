@@ -64,7 +64,3 @@ fun start(probability: Double) : String{
     result = situation(comps)
     return result
 }
-
-fun main(args: Array<String>) {
-
-}

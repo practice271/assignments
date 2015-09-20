@@ -47,7 +47,7 @@ fun sayAllPhrases(factory : langFactory){
     factory.sayFirstThird()
     factory.sayFirstFourth()
 }
-
+/**
 fun main(args: Array<String>) {
     println("Choose your language")
     println("russian - 1, chinese - 2, french - 3,  english as default")
@@ -58,4 +58,4 @@ fun main(args: Array<String>) {
         3    -> sayAllPhrases(frenchFactory ())
         else -> sayAllPhrases(englishFactory())
     }
-}
+}**/
