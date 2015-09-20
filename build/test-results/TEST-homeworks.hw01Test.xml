@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="homeworks.hw01Test" tests="16" skipped="0" failures="0" errors="0" timestamp="2015-09-20T00:37:04" hostname="SiD-pc" time="0.029">
+<testsuite name="homeworks.hw01Test" tests="16" skipped="0" failures="0" errors="0" timestamp="2015-09-20T01:07:17" hostname="SiD-pc" time="0.031">
   <properties/>
-  <testcase name="TestMultPeano1" classname="homeworks.hw01Test" time="0.004"/>
+  <testcase name="TestMultPeano1" classname="homeworks.hw01Test" time="0.003"/>
   <testcase name="TestMultPeano2" classname="homeworks.hw01Test" time="0.0"/>
   <testcase name="TestMaximumSum1" classname="homeworks.hw01Test" time="0.003"/>
   <testcase name="TestMaximumSum2" classname="homeworks.hw01Test" time="0.0"/>
@@ -10,12 +10,12 @@
   <testcase name="TestSubPeano1" classname="homeworks.hw01Test" time="0.0"/>
   <testcase name="TestSubPeano2" classname="homeworks.hw01Test" time="0.0"/>
   <testcase name="TestAddPeano1" classname="homeworks.hw01Test" time="0.0"/>
-  <testcase name="TestAddPeano2" classname="homeworks.hw01Test" time="0.0"/>
-  <testcase name="TestHeapSort1" classname="homeworks.hw01Test" time="0.016"/>
+  <testcase name="TestAddPeano2" classname="homeworks.hw01Test" time="0.001"/>
+  <testcase name="TestHeapSort1" classname="homeworks.hw01Test" time="0.02"/>
   <testcase name="TestHeapSort2" classname="homeworks.hw01Test" time="0.0"/>
   <testcase name="TestHeapSort3" classname="homeworks.hw01Test" time="0.0"/>
   <testcase name="TestHeapSort4" classname="homeworks.hw01Test" time="0.0"/>
-  <testcase name="TestPowPeano1" classname="homeworks.hw01Test" time="0.001"/>
+  <testcase name="TestPowPeano1" classname="homeworks.hw01Test" time="0.0"/>
   <testcase name="TestPowPeano2" classname="homeworks.hw01Test" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
