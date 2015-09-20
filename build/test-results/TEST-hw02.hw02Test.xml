@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="hw02.hw02Test" tests="2" skipped="0" failures="0" errors="0" timestamp="2015-09-20T00:30:47" hostname="Jinx-ПК" time="0.03">
+  <properties/>
+  <testcase name="Test0" classname="hw02.hw02Test" time="0.029"/>
+  <testcase name="Test1" classname="hw02.hw02Test" time="0.0"/>
+  <system-out><![CDATA[hw02.Computer@384222f2     true
+hw02.Computer@724b9bf9     false
+hw02.Computer@52115ae2     false
+hw02.Computer@22027bbe     false
+hw02.Computer@bfe98be     false
+hw02.Computer@25444e6b     false
+hw02.Computer@7d5ad66b     true
+hw02.Computer@4cb48df5     true
+hw02.Computer@33f0d7b5     true
+hw02.Computer@3440f0b6     true
+hw02.Computer@1f0281db     true
+hw02.Computer@77317ceb     false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
