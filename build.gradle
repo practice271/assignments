@@ -9,9 +9,9 @@ task wrapper(type: Wrapper) {
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-defaultTasks 'test', 'run'
+defaultTasks 'test'//, 'run'
 
-mainClassName = 'homeworks.Package'
+//mainClassName = 'homeworks.Package'
 
 sourceCompatibility = 1.5
 
