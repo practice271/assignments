@@ -19,7 +19,7 @@ fun virus(OS: Array<String>, inf:Array<Boolean>, nei:Array<List<Int>>) {
     var i = 0
     var j = 0
     while(size >= 0) {
-        if (inf[i] == true) {
+        if (inf[i]) {
                 j = nei[i].size() - 1
             while (j >= 0) {
                 if ((viority(OS[nei[i][j]]) > 0.5)) {
