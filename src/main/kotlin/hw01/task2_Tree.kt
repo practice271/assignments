@@ -42,9 +42,7 @@ fun  Tree.maxPath(): Int {
         is Leaf -> return this.value + path
         is Node -> {
             path = path + this.value
-            if (l.maxPath() > r.maxPath()) {return l.maxPath() + path}
-            else return r.maxPath() + path
-
+            return Math.max(l.maxPath(), r.maxPath()) + path
         }
         else -> throw Exception("Error")
     }
