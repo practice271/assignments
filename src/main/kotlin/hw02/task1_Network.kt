@@ -6,18 +6,18 @@ package hw02
 
 fun viority(OS: String): Double {
     when(OS) {
-        "Windows" -> return 0.9
-        "Linux"   -> return 0.1
-        "Solaris" -> return 0.8
+        "Windows"  -> return 0.9
+        "Linux"    -> return 0.1
+        "Solaris"  -> return 0.8
         "Mac OS X" -> return 0.6
-        else -> throw Exception ("Error")
+        else       -> throw Exception ("Error")
     }
 }
 
 fun virus(OS: Array<String>, inf:Array<Boolean>, nei:Array<List<Int>>) {
     var size = inf.size() - 1
     var i = 0
-    var j=0
+    var j = 0
     while(size >= 0) {
         if (inf[i] == true) {
                 j = nei[i].size() - 1
@@ -30,7 +30,7 @@ fun virus(OS: Array<String>, inf:Array<Boolean>, nei:Array<List<Int>>) {
         }
         size--
         i++
-        j=0
+        j = 0
     }
 }
 
@@ -38,9 +38,9 @@ fun status(OS: Array<String>, inf: Array<Boolean>) {
     var size = inf.size()
     while (size > 0) {
         if (inf[size - 1] == true) {
-            print("Computer number "+size+" with OS "+OS[size-1]+" is infected"+"\n")
+            print("Computer number " + size + " with OS " + OS[size - 1] + " is infected" + "\n")
         }
-        else {print("Computer number "+size+" with OS "+OS[size-1]+" is clear"+"\n")}
+        else {print("Computer number " + size + " with OS " + OS[size - 1] + " is clear" + "\n")}
         size--
 
     }
