@@ -1,4 +1,4 @@
-package homework
+package hw02
 
 abstract class Peano {}
 class S(val value: Peano): Peano() {}

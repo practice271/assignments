@@ -1,4 +1,4 @@
-package homework
+package hw02
 
 abstract class Tree {}
 open class Empty() : Tree() {}

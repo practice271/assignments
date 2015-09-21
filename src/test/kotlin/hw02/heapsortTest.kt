@@ -1,4 +1,4 @@
-package homework
+package hw02
 
 import org.junit.Test
 import kotlin.test.assertEquals

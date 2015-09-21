@@ -11,7 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
-mainClassName = 'homework.HomeworkPackage'
+mainClassName = 'hw02.Hw02Package'
 
 sourceCompatibility = 1.5
 

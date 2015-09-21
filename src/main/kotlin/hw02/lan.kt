@@ -1,4 +1,4 @@
-package homework
+package hw02
 
 import java.util.*
 

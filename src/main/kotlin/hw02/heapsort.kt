@@ -1,4 +1,4 @@
-package homework
+package hw02
 
 fun <T> Array<T>.heapsort()
         where T: Comparable<T> {
