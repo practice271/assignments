@@ -1,5 +1,5 @@
-// Задание 02 от 15.09.2015
-// Автор: Кирилл Смиренко, группа 271
+// Р—Р°РґР°РЅРёРµ 02 РѕС‚ 15.09.2015
+// РђРІС‚РѕСЂ: РљРёСЂРёР»Р» РЎРјРёСЂРµРЅРєРѕ, РіСЂСѓРїРїР° 271
 package homework.hw02
 
 import java.util.Random
@@ -74,5 +74,5 @@ class Network(comps : Array<String>, e : List<Pair<Int, Int>>, infected : List<I
     }
 
     // get computer info
-    fun ci(index : Int) : String = computers[index].toString()
+    fun getCompInfo(index : Int) : String = computers[index].toString()
 }
