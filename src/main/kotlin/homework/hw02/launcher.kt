@@ -12,13 +12,13 @@ fun Network.drawNet() {
     //   |         |
     //   |         |
     //   A -- A -- M     M!-- M
-    println("   ${ci(1)}------- ${ci(2)}    ${ci(4)}        ${ci(13)}-- ${ci(14)}")
+    println("   ${getCompInfo(1)}------- ${getCompInfo(2)}    ${getCompInfo(4)}        ${getCompInfo(13)}-- ${getCompInfo(14)}")
     println("   |         |     | \\       |    |")
     println("   |         |     |  \\      |    |")
-    println("   ${ci(0)}------- ${ci(6)}--- ${ci(3)}-- ${ci(5)}   ${ci(12)}-- ${ci(15)}")
+    println("   ${getCompInfo(0)}------- ${getCompInfo(6)}--- ${getCompInfo(3)}-- ${getCompInfo(5)}   ${getCompInfo(12)}-- ${getCompInfo(15)}")
     println("   |         |")
     println("   |         |")
-    println("   ${ci(7)}-- ${ci(8)}-- ${ci(9)}    ${ci(10)}-- ${ci(11)}")
+    println("   ${getCompInfo(7)}-- ${getCompInfo(8)}-- ${getCompInfo(9)}    ${getCompInfo(10)}-- ${getCompInfo(11)}")
 }
 
 fun loop(net : Network, cnt : Int) {

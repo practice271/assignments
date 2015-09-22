@@ -74,5 +74,5 @@ class Network(comps : Array<String>, e : List<Pair<Int, Int>>, infected : List<I
     }
 
     // get computer info
-    fun ci(index : Int) : String = computers[index].toString()
+    fun getCompInfo(index : Int) : String = computers[index].toString()
 }
