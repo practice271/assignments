@@ -1,8 +1,8 @@
 package hw01
 
 abstract class Peano {}
-open class Z(): Peano() {}
-open class S(val prev: Peano): Peano() {}
+class Z(): Peano() {}
+class S(val prev: Peano): Peano() {}
 
 fun Peano.ToInt(): Int {
     return when(this) {
