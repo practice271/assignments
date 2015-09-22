@@ -1,7 +1,8 @@
-*.jar
 *.class
 annotations/
 build/
 .gradle
-.idea/workspace.xml
 !gradle-wrapper.jar
+*.jar
+*.iml
+.idea
