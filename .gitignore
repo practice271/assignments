@@ -1,9 +1,7 @@
 *.class
-<<<<<<< HEAD
-*lib
-*out
-=======
 *.jar
 *.iml
 .idea
->>>>>>> practice271/master
+build
+.gradle
+!gradle-wrapper.jar

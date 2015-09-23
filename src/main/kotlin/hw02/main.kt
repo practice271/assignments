@@ -7,17 +7,18 @@ class Computer(
    val number : Int
 ) {
    fun probability () : Double {
-      if (OS == "Windows") {return 0.3}
-      if (OS == "Linux") {return 0.2}
-      if (OS == "MacOS") {return 0.1}
-      else throw Exception("Unknown OS")
+      when (OS) {
+      "Windows" -> return 0.3
+      "Linux" -> return 0.2
+      "MacOS" -> return 0.1
+      else -> throw Exception("Unknown OS")
+      }
    }
 }
 
 fun randomise(needToRandom : Boolean) : Int {
    if (needToRandom) {
       val f = Random().nextInt(11)
-      println (f)
       return f
    }
    else return 1000
@@ -25,17 +26,15 @@ fun randomise(needToRandom : Boolean) : Int {
 
 class CompGraph(
         val numberOfComps : Int,
-        val connect : Array<Array<Computer>>,//каждый компьютер соединен с самим собой
+        val connect : Array<Array<Computer>>,//each computer connected to itself
         var infected : Array<Boolean>
 ) {
    fun infection(needToRandom: Boolean) {
       val result = infected
-      var i = numberOfComps - 1
-      while (i >= 0) {
+      for (i in numberOfComps..1){
          if (infected[i]) {
             var risk = connect[i]
-            var j = risk.size() - 1
-            while (j > 0) {
+            for (j in risk.size()..1){
                var k = risk[j]
                val coeff = randomise(needToRandom)
                if (!infected[k.number]) {
@@ -43,20 +42,16 @@ class CompGraph(
                      result[k.number] = true
                   }
                }
-               j--
             }
          }
-         i--
       }
       infected = result
    }
 }
 
 fun CompGraph.delayTime (time : Int, needToRandom: Boolean) {
-   var t = time
-   while (t > 0) {
+   for (t in time..1 ){
       this.infection(needToRandom)
-      t--
    }
 }
 
