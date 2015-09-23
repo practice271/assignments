@@ -48,5 +48,6 @@ fun main(args: Array<String>) {
     val value: Int = tree?.value ?: 0
     print(hello())
 }
-
-fun hello() = "Hello"
+fun hello(): String {
+   return "Hello"
+}
