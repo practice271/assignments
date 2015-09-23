@@ -6,17 +6,22 @@ import kotlin.test.assertEquals
 public class hw02Test {
     fun createNetWork(linux: Double, windowsXP: Double, windows8: Double, embox: Double): List<List<Computer>> {
         var network = listOf(
-                listOf(Computer(0, windowsXP), Computer(1, windows8), Computer(4, linux)),
-                listOf(Computer(1, windows8), Computer(0, windowsXP), Computer(2, embox), Computer(3, embox)),
-                listOf(Computer(2, embox), Computer(1, windows8), Computer(3, embox), Computer(4, linux), Computer(5, windows8), Computer(6, linux)),
-                listOf(Computer(3, embox), Computer(1, windows8), Computer(2, embox), Computer(4, linux), Computer(7, embox)),
-                listOf(Computer(4, linux), Computer(0, windowsXP), Computer(2, embox), Computer(3, embox)),
-                listOf(Computer(5, windows8), Computer(2, embox)),
-                listOf(Computer(6, linux), Computer(2, embox), Computer(7, embox)),
-                listOf(Computer(7, embox), Computer(3, embox), Computer(6, linux), Computer(8, linux)),
-                listOf(Computer(8, linux), Computer(7, embox)),
-                listOf(Computer(9, linux)),
-                listOf(Computer(10, embox))
+                listOf(Computer(0, "windowsXP", windowsXP), Computer(1, "windows8", windows8), Computer(4, "linux", linux)),
+                listOf(Computer(1, "windows8", windows8), Computer(0, "windowsXP", windowsXP), Computer(2, "embox", embox),
+                        Computer(3, "embox", embox)),
+                listOf(Computer(2, "embox", embox), Computer(1, "windows8", windows8), Computer(3, "embox", embox),
+                        Computer(4, "linux", linux), Computer(5, "windows8", windows8), Computer(6, "linux", linux)),
+                listOf(Computer(3, "embox", embox), Computer(1, "windows8", windows8), Computer(2, "embox", embox),
+                        Computer(4, "linux", linux), Computer(7, "embox", embox)),
+                listOf(Computer(4, "linux", linux), Computer(0, "windowsXP", windowsXP), Computer(2, "embox", embox),
+                        Computer(3, "embox", embox)),
+                listOf(Computer(5, "windows8", windows8), Computer(2, "embox", embox)),
+                listOf(Computer(6, "linux", linux), Computer(2, "embox", embox), Computer(7, "embox", embox)),
+                listOf(Computer(7, "embox", embox), Computer(3, "embox", embox), Computer(6, "linux", linux),
+                        Computer(8, "linux", linux)),
+                listOf(Computer(8, "linux", linux), Computer(7, "embox", embox)),
+                listOf(Computer(9, "linux", linux)),
+                listOf(Computer(10, "embox", embox))
         )
         return network
     }

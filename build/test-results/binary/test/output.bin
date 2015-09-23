@@ -1,624 +1,1068 @@
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is not Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is not Infected
-+Computer4 with Linux      is not Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is not Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is not Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is     Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is     Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is     Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is     Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is     Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is     Infected
-+Computer8 with Linux      is     Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
-+Computer2 with Embox      is     Infected
-+Computer3 with Embox      is     Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is     Infected
-+Computer6 with Linux      is     Infected
-+Computer7 with Embox      is     Infected
-+Computer8 with Linux      is     Infected
-+Computer9 with Linux      is not Infected
-,Computer10 with Embox      is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is not Infected
- is not Infected
- is not Infected
-+Computer4 with Linux      is not Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
- is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is     Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is     Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is     Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
+*________________________________________
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is not Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is not Infected
- is not Infected
- is not Infected
-+Computer4 with Linux      is not Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
- is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is not Infected
- is not Infected
- is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
- is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
- is not Infected
-*________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is not Infected
- is not Infected
- is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
- is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
- is not Infected
-*________________________________________
-+Computer0 with Windows XP is     Infected
-+Computer1 with Windows 8  is     Infected
- is not Infected
- is not Infected
-+Computer4 with Linux      is     Infected
-+Computer5 with Windows 8  is not Infected
-+Computer6 with Linux      is not Infected
- is not Infected
-+Computer8 with Linux      is not Infected
-+Computer9 with Linux      is not Infected
- is not Infected
-*________________________________________
- is     Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is not Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is not Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is not Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is not Infected
- is not Infected
- is     Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is not Infected
+(Computer 3 with embox  is not Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is not Infected
+(Computer 6 with linux  is not Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is not Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is not Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is     Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is     Infected
- is not Infected
- is not Infected
+,Computer 0 with windowsXP  is     Infected
++Computer 1 with windows8  is     Infected
+(Computer 2 with embox  is     Infected
+(Computer 3 with embox  is     Infected
+(Computer 4 with linux  is     Infected
++Computer 5 with windows8  is     Infected
+(Computer 6 with linux  is     Infected
+(Computer 7 with embox  is     Infected
+(Computer 8 with linux  is     Infected
+(Computer 9 with linux  is not Infected
+)Computer 10 with embox  is not Infected
 *________________________________________

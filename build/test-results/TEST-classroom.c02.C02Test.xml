@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="classroom.c02.C02Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2015-09-20T01:07:17" hostname="SiD-pc" time="0.018">
+<testsuite name="classroom.c02.C02Test" tests="1" skipped="0" failures="0" errors="0" timestamp="2015-09-23T14:12:42" hostname="SiD-pc" time="0.018">
   <properties/>
   <testcase name="helloTest" classname="classroom.c02.C02Test" time="0.018"/>
   <system-out><![CDATA[]]></system-out>

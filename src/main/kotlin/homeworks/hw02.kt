@@ -1,19 +1,25 @@
 package homeworks
 
+class Computer(val name: Int, val operationSystem: String, val probability: Double, var isInfected: Boolean = false) {}
 
-class Computer(val name: Int, val probability: Double, var isInfected: Boolean = false) {}
 fun computerToString(comp: Computer): String {
+    /*
     var result    = ""
     val linux     = 0.2
     val windowsXP = 0.3
     val windows8  = 0.4
     val embox     = 0.1
-    when (comp.probability) {
-        linux     -> result = "Computer" + comp.name + " with Linux     "
-        windowsXP -> result = "Computer" + comp.name + " with Windows XP"
-        embox     -> result = "Computer" + comp.name + " with Embox     "
-        windows8  -> result = "Computer" + comp.name + " with Windows 8 "
+    when (comp.operationSystem) {
+        "linux"     -> result = "Computer $linux     with Linux     "
+        "windowsXP" -> result = "Computer $windowsXP with Windows XP"
+        "embox"     -> result = "Computer $embox     with Embox     "
+        "windows8"  -> result = "Computer $windows8  with Windows 8 "
     }
+    */
+    val name = comp.name
+    val operationSystem = comp.operationSystem
+    var result = "Computer $name with $operationSystem "
+
     if (comp.isInfected) { result += " is     Infected" }
     else                 { result += " is not Infected" }
 
@@ -22,10 +28,10 @@ fun computerToString(comp: Computer): String {
 
 fun infection(network: List<List<Computer>>) : String {
     fun infectThisComputer(comp: Computer) {
-        for (i in network) {
-            for (j in i) {
-                if (j.name == comp.name) {
-                    j.isInfected = true
+        for (listOfComputers in network) {
+            for (computer in listOfComputers) {
+                if (computer.name == comp.name) {
+                    computer.isInfected = true
                 }
             }
         }
@@ -38,16 +44,15 @@ fun infection(network: List<List<Computer>>) : String {
         while(queue.size() != 0) {
             var temp = queue.first()
             queue.remove()
-            //взяли из очереди компьютер, его номер в листе соответствует его имени(для удобства), иначе можно еще один цикл, для поиска нужного листа
-            for (i in network[temp.name]) {
-                if (!i.isInfected) {
-                    if ((i.probability == 0.0) || (i.probability > 1.0)){
+            for (computer in network[temp.name]) {
+                if (!computer.isInfected) {
+                    if ((computer.probability == 0.0) || (computer.probability > 1.0)){
                         return "Fail. Error Probability"
                     }
-                    if (Math.random() <= i.probability) {
-                        queue.add(i)
+                    if (Math.random() <= computer.probability) {
+                        queue.add(computer)
                         //i.isInfected = true
-                        infectThisComputer(i)
+                        infectThisComputer(computer)
                     }
                     else (queue.add(temp))
                 }
