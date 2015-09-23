@@ -31,10 +31,10 @@ class CompGraph(
 ) {
    fun infection(needToRandom: Boolean) {
       val result = infected
-      for (i in numberOfComps..1){
+      for (i in 0..numberOfComps - 1){
          if (infected[i]) {
             var risk = connect[i]
-            for (j in risk.size()..1){
+            for (j in 1..risk.size() - 1){
                var k = risk[j]
                val coeff = randomise(needToRandom)
                if (!infected[k.number]) {
@@ -50,7 +50,8 @@ class CompGraph(
 }
 
 fun CompGraph.delayTime (time : Int, needToRandom: Boolean) {
-   for (t in time..1 ){
+
+   for (t in 1..time ){
       this.infection(needToRandom)
    }
 }
@@ -69,5 +70,5 @@ fun main(args: Array<String>){
 
    var gr = CompGraph(3, con, inf)
    gr.delayTime(100, true)
-   print(gr.infected.toList())
+   println(gr.infected.toList())
 }
