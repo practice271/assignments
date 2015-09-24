@@ -1,7 +1,5 @@
 package Homework
 
-import javax.swing.plaf.ComponentUI
-
 class osName (name : String) {
     var nameOs : String = name
 
