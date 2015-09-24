@@ -78,3 +78,11 @@ fun Peano.ToInt (): Int
         else          -> throw Exception("Unknown class")
     }
 }
+
+fun FromInt (someInt : Int) : Peano
+{
+    if (someInt == 0)
+        return Peano.Zero
+    else
+        return Some(FromInt(someInt - 1))
+}

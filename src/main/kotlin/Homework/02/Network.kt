@@ -32,8 +32,8 @@ class Computer(os : osName, infect : Boolean)
     }
 }
 
-fun InitComps (comps : Array<String>, infect : Array<Boolean>): Array<Computer> {
-    var res : Array<Computer> = arrayOf()
+fun InitComps (comps : List<String>, infect : List<Boolean>): List<Computer> {
+    var res : List<Computer> = listOf()
 
     for (i in 0..(comps.count() - 1))
     {
@@ -43,12 +43,21 @@ fun InitComps (comps : Array<String>, infect : Array<Boolean>): Array<Computer> 
     return res
 }
 
-class Network (comps : Array<Computer>, edges : List<Any>)
+class Network (val comps : List<Computer>, val edges : List<List<Int>>)
 {
-    var time = 0
+    var countComps = comps.count()
 
     fun NextStep ()
     {
-        
+        val infoList = Array(countComps, {i -> i}).filter { x -> comps[x].IsInfected() }
+
+        infoList.forEach { x ->  edges[x].forEach { y -> comps[y].TryInfect() }}
+
+    }
+
+    fun CountInfected() : Int
+    {
+        val infoList = Array(countComps, {i -> i}).filter { x -> comps[x].IsInfected() }
+        return infoList.count()
     }
 }
