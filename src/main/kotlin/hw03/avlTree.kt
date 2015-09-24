@@ -1,9 +1,5 @@
 package hw03
 
-/**
- * Created by Alexander on 23.09.2015.
- */
-
 internal class  NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
                            var leftChild : NodeAvl<A>?, var rightChild : NodeAvl<A>?) {
     //the numbers in functions below may seem magical,
@@ -127,7 +123,7 @@ internal class  NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
         }
     }
 
-public fun addInt(num : Int, tree: NodeAvl<Int>) : NodeAvl<Int>
+public fun addInt(num : Int, tree: NodeAvl<Int>?) : NodeAvl<Int>
 {
     return add(Pair(num, num), tree)
 }
@@ -141,9 +137,7 @@ public fun main(args : Array<String>)
     t = addInt(-3, t)
     t = addInt(4, t)
     t = addInt(25, t)
-    print("${search(12, t)}")
     var nt = del(Pair(12, 12), t)
-    print("${search(12, nt)}")
     printTree("", nt)
 
 }
