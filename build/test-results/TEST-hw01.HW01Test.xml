@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="hw01.HW01Test" tests="29" skipped="0" failures="0" errors="0" timestamp="2015-09-19T21:55:27" hostname="MacBook-Air-Polina.local" time="0.086">
+  <properties/>
+  <testcase name="myFoldMultiplication" classname="hw01.HW01Test" time="0.021"/>
+  <testcase name="myFoldMaxSum" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="myFoldMinElement" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoSubstractionTest1" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoSubstractionTest2" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoSubstractionTest3" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoSubstractionTest4" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoSubstractionTest5" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="heapsortTest1" classname="hw01.HW01Test" time="0.027"/>
+  <testcase name="heapsortTest2" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="heapsortTest3" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoPowerTest1" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoPowerTest2" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoPowerTest3" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoPowerTest4" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoAdditionTest1" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoAdditionTest2" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoAdditionTest3" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoAdditionTest4" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoAdditionTest5" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoMultiplicationTest1" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoMultiplicationTest2" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoMultiplicationTest3" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="peanoMultiplicationTest4" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="peanoMultiplicationTest5" classname="hw01.HW01Test" time="0.001"/>
+  <testcase name="findMaxSumTest1" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="findMaxSumTest2" classname="hw01.HW01Test" time="0.0"/>
+  <testcase name="myFoldMaxElement" classname="hw01.HW01Test" time="0.002"/>
+  <testcase name="myFoldSum" classname="hw01.HW01Test" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

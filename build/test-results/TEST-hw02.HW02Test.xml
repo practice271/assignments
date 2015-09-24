@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="hw02.HW02Test" tests="17" skipped="0" failures="0" errors="0" timestamp="2015-09-19T21:55:27" hostname="MacBook-Air-Polina.local" time="0.026">
+  <properties/>
+  <testcase name="statusOfInfected" classname="hw02.HW02Test" time="0.001"/>
+  <testcase name="similarConnected1" classname="hw02.HW02Test" time="0.001"/>
+  <testcase name="similarConnected2" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="similarConnected3" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="similarConnected4" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="signOfInfected" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="statusOfUninfected" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="probabilityLinux" classname="hw02.HW02Test" time="0.002"/>
+  <testcase name="signOfUninfected" classname="hw02.HW02Test" time="0.002"/>
+  <testcase name="probabilityWindows" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="locNetIn5Steps1" classname="hw02.HW02Test" time="0.001"/>
+  <testcase name="locNetIn5Steps2" classname="hw02.HW02Test" time="0.001"/>
+  <testcase name="probabilityOSX" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="signOfBecomingInfected" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="notConnectedIn5Steps1" classname="hw02.HW02Test" time="0.001"/>
+  <testcase name="notConnectedIn5Steps2" classname="hw02.HW02Test" time="0.0"/>
+  <testcase name="notConnectedIn5Steps3" classname="hw02.HW02Test" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
