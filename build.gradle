@@ -11,9 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
-//mainClassName = 'classroom.c02.C02Package'
-mainClassName = 'hw01.Hw01Package'
-mainClassName = 'hw02.Hw02Package'
+mainClassName = 'classroom.c02.C02Package'
 
 sourceCompatibility = 1.5
 
