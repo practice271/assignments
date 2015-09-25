@@ -7,7 +7,7 @@ package hw02
 import org.junit.Test
 import kotlin.test.assertEquals
 
-public class task1_Test {
+public class task1_sortTest {
     fun equal(arr1: Array<Int>, arr2: Array<Int>): Boolean {
 
         if (arr1.size() != arr2.size()) return false
