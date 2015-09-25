@@ -2,6 +2,6 @@
 *.jar
 *.iml
 .idea
-build
 .gradle
+build
 !gradle-wrapper.jar
