@@ -8,5 +8,5 @@ public class Tester {
         assertEquals("Hello", hello())
     }
 
-    fun hello() = "Hello"
+    fun hello() = "Hella"
 }
