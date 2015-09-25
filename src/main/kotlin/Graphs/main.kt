@@ -73,5 +73,5 @@ class Network(val g: MarkedGraph<Pair<String, Boolean>>) {
     fun neighbourInfected(v: Int) = oneOfInfected(g.outByEdge(v))
     fun allInfected() = allOfInfected(all)
     fun canInfect(v: Int) = !infected(v) && neighbourInfected(v)
-    fun step() = all.filter { v -> canInfect(v) }.forEach { v -> infectByOS(v }
+    fun step() = all.filter { v -> canInfect(v) }.forEach { v -> infectByOS(v) }
 }
