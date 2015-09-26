@@ -4,6 +4,27 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 public class Hw03Test {
+    /**
+     * Generates simplified node representation (for testing).
+     */
+    fun <K : Comparable<K>, V> Node<K, V>.toStringCLR() : String {
+        fun Node<K, V>.toStringCLR_() : List<String> {
+            val lText = left?.toStringCLR_() ?: listOf("-")
+            val rText = right?.toStringCLR_() ?: listOf("-")
+            val vText = listOf("$value")
+            return vText + lText + rText
+        }
+        val builder = StringBuilder()
+        val lines = this.toStringCLR_()
+        lines.forEach { builder.append(it) }
+        return builder.toString()
+    }
+
+    /**
+     * Creates a tree leaf.
+     */
+    fun <K : Comparable<K>, V> leaf(key : K, value : V) : Node<K, V> = Node(key, value, null, null)
+
     @Test fun testInsertBasic() {
         val tree = AVLTree<Int, String>()
         tree.insert(3, "A")

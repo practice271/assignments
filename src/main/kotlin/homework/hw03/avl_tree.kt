@@ -45,6 +45,38 @@ class Node<K : Comparable<K>, V>(key: K, value : V, left: Node<K, V>?, right: No
         tree.root = this
         return tree
     }
+
+    // ROTATIONS
+
+    internal fun <K : Comparable<K>, V> Node<K, V>.rotateSmallLeft() {
+        val nodeB = right
+        if (nodeB != null) {
+            left = Node(key, value, left, nodeB.left)
+            right = nodeB.right
+            key = nodeB.key
+            value = nodeB.value
+        }
+    }
+
+    internal fun <K : Comparable<K>, V> Node<K, V>.rotateSmallRight() {
+        val nodeB = left
+        if (nodeB != null) {
+            right = Node(key, value, nodeB.right, right)
+            left = nodeB.left
+            key = nodeB.key
+            value = nodeB.value
+        }
+    }
+
+    internal fun <K : Comparable<K>, V> Node<K, V>.rotateBigLeft() {
+        right?.rotateSmallRight()
+        this.rotateSmallLeft()
+    }
+
+    internal fun <K : Comparable<K>, V> Node<K, V>.rotateBigRight() {
+        left?.rotateSmallLeft()
+        this.rotateSmallRight()
+    }
 }
 
 /**
@@ -93,7 +125,9 @@ class AVLTree<K : Comparable<K>, V>() {
     }
 }
 
-fun <K : Comparable<K>, V> insert(node : Node<K, V>?, keyN : K, valueN : V) : Node<K, V>? {
+// main functions
+
+private fun <K : Comparable<K>, V> insert(node : Node<K, V>?, keyN : K, valueN : V) : Node<K, V>? {
     if (node == null) return Node(keyN, valueN, null, null)
     if (keyN == node.key) {
         node.value = valueN
@@ -109,7 +143,7 @@ fun <K : Comparable<K>, V> insert(node : Node<K, V>?, keyN : K, valueN : V) : No
     }
 }
 
-fun <K : Comparable<K>, V> remove(node : Node<K, V>?, keyR : K) : Node<K, V>? {
+private fun <K : Comparable<K>, V> remove(node : Node<K, V>?, keyR : K) : Node<K, V>? {
     // empty
     if (node == null) return null
     // leaf
@@ -147,7 +181,7 @@ fun <K : Comparable<K>, V> remove(node : Node<K, V>?, keyR : K) : Node<K, V>? {
     }
 }
 
-fun <K : Comparable<K>, V> search(node : Node<K, V>?,keyS: K): V? {
+private fun <K : Comparable<K>, V> search(node : Node<K, V>?,keyS: K): V? {
     if (node == null) return null
     if (keyS == node.key) return node.value
     else if (keyS < node.key) return search(node.left, keyS)
@@ -173,74 +207,4 @@ fun <K : Comparable<K>, V> Node<K, V>.restoreBalance() {
     }
 }
 
-// ------------------ ROTATIONS --------------------------------
-fun <K : Comparable<K>, V> Node<K, V>.rotateSmallLeft() {
-    val nodeB = right
-    if (nodeB != null) {
-        left = Node(key, value, left, nodeB.left)
-        right = nodeB.right
-        key = nodeB.key
-        value = nodeB.value
-    }
-}
-
-fun <K : Comparable<K>, V> Node<K, V>.rotateSmallRight() {
-    val nodeB = left
-    if (nodeB != null) {
-        right = Node(key, value, nodeB.right, right)
-        left = nodeB.left
-        key = nodeB.key
-        value = nodeB.value
-    }
-}
-
-fun <K : Comparable<K>, V> Node<K, V>.rotateBigLeft() {
-    right?.rotateSmallRight()
-    this.rotateSmallLeft()
-}
-
-fun <K : Comparable<K>, V> Node<K, V>.rotateBigRight() {
-    left?.rotateSmallLeft()
-    this.rotateSmallRight()
-}
-
-// TODO: move
-/**
- * Generates simplified node representation (for testing).
- */
-internal fun <K : Comparable<K>, V> Node<K, V>.toStringCLR() : String {
-    fun Node<K, V>.toStringCLR_() : List<String> {
-        val lText = left?.toStringCLR_() ?: listOf("-")
-        val rText = right?.toStringCLR_() ?: listOf("-")
-        val vText = listOf("$value")
-        return vText + lText + rText
-    }
-    val builder = StringBuilder()
-    val lines = this.toStringCLR_()
-    lines.forEach { builder.append(it) }
-    return builder.toString()
-}
-
-/**
- * Creates a tree leaf.
- */
-internal fun <K : Comparable<K>, V> leaf(key : K, value : V) : Node<K, V> = Node(key, value, null, null)
-
-fun main(args : Array<String>) {
-    // TODO: remove
-    val tree =
-            Node(8, "8",
-                    Node(5, "5",
-                            Node(3, "3",
-                                    Node(2, "2", leaf(1, "1"), null),
-                                    leaf(4, "4")),
-                            Node(7, "7", leaf(6, "6"), null)),
-                    Node(11, "B",
-                            Node(10, "A", leaf(9, "9"), null),
-                            leaf(12, "C"))).toTree()
-    tree.insert(0, "0")
-    tree.insert(-1, "X")
-    tree.remove(12)
-    print(tree.toText())
-    print(tree.root?.toStringCLR())
-}
+fun main(args : Array<String>) = println("ok.")
