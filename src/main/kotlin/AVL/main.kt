@@ -29,13 +29,13 @@ fun <T : Comparable<T>>Tree<T>.rotRight(): Tree<T> =
         Nil()
 
 fun <T : Comparable<T>>Tree<T>.rotLeftRight(): Tree<T> =
-    if (this is Node && l is Node)
+    if (this is Node)
         Node(v, l.rotLeft(), r).rotRight()
     else
         Nil()
 
 fun <T : Comparable<T>>Tree<T>.rotRightLeft(): Tree<T> =
-    if (this is Node && l is Node)
+    if (this is Node)
         Node(v, l, r.rotRight()).rotLeft()
     else
         Nil()
