@@ -1,4 +1,8 @@
 *.class
+annotations/
+build/
+.gradle
+!gradle-wrapper.jar
 *.jar
 *.iml
 .idea
