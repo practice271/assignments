@@ -12,17 +12,18 @@ public class HW02 {
                      arrayOf(true, false, false, false ),
                      arrayOf(false, false, false, false ),
                      arrayOf(true, false, false, false ))
+    val network1 = Net(arrayOf(a, b, c, d), gr)
     /* 0--1
        |
        3  2
     */
     @Test
     fun test1(){
-        assertEquals(status(Net(arrayOf(a, b, c, d), gr), 1.0), "true false false true ")
+        assertEquals(network1.status(0.0), "true false false true ")
     }
     @Test
     fun test2(){
-        assertEquals(status(Net(arrayOf(a, b, c, d), gr), 0.0), "false false false true ")
+        assertEquals(network1.status(1.0), "false false false true ")
     }
 
     val e = Computer("Unix", true, 0)
@@ -46,13 +47,14 @@ public class HW02 {
        |                 |
        6(M)--2(U)--7(L)  1(W)
     */
+    val network2 = Net(arrayOf(e,f,g,h,i,j,k,l), gr2)
     @Test
     fun test3(){
-        assertEquals(status(Net(arrayOf(e,f,g,h,i,j,k,l), gr2), 0.6), "true true true true true true true true ")
+        assertEquals(network2.status(0.05), "true true true true true true true true ")
     }
 
     @Test
     fun test4(){
-        assertEquals(status(Net(arrayOf(e,f,g,h,i,j,k,l), gr2), 0.29), "true true true false true true true false ")
+        assertEquals(network2.status(0.29), "true false true true true true false true ")
     }
 }
