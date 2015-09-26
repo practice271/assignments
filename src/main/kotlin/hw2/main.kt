@@ -1,4 +1,4 @@
-package Graphs
+package hw2
 
 import java.util.*
 

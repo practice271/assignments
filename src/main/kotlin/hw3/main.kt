@@ -1,6 +1,8 @@
-package AVL
+package hw3
 
-/* AVL trees - functional-like style */
+import java.io.*
+
+/* hw3 trees - functional-like style */
 
 abstract class Tree<T: Comparable<T>>() {
     var h: Int = 0
@@ -70,7 +72,7 @@ fun <T : Comparable<T>>Tree<T>.remove(x: T): Tree<T> =
             when {
                 l is Node && r is Node -> {
                     val t = l.removeRightmost()!!
-                    Node(t.first, l, r)
+                    Node(t.first, t.second, r)
                 }
                 l is Node -> r
                 r is Node -> l
@@ -86,7 +88,7 @@ fun <T : Comparable<T>>Tree<T>.fix(): Tree<T> =
                 if (r.d <= 0) this.rotLeft()
                 else this.rotRightLeft()
             d == 2 ->
-                if (r.d >= 0) this.rotRight()
+                if (l.d >= 0) this.rotRight()
                 else this.rotLeftRight()
             else ->
                 this
@@ -103,3 +105,50 @@ fun <T : Comparable<T>>Tree<T>.find(x: T): Boolean =
         }
     else
         false
+
+fun <T : Comparable<T>>Tree<T>.print(w: Writer) {
+    if (!(this is Node))
+        w.write("x")
+    else {
+        if (r is Node) {
+            r.printRec(true, w, "");
+        }
+        w.write(v.toString() + "\n");
+        if (l is Node) {
+            l.printRec(false, w, "");
+        }
+    }
+}
+
+fun <T : Comparable<T>>Tree<T>.printRec(isr: Boolean, w: Writer, pre: String) {
+    if (!(this is Node))
+        return
+    if (r is Node)
+        r.printRec(true, w, pre + (if (isr) "     " else " |   "))
+    w.write(pre + (if (isr) " /" else " \\") + "--- " + v.toString() + "\n")
+    if (l is Node)
+        l.printRec(false, w, pre + (if (isr) " |   " else "     "))
+}
+
+fun <T : Comparable<T>>Tree<T>.text(): String =
+    if (this is Node)
+        "[" + v.toString() + "," + l.text() + "," + r.text() + "]"
+    else
+        "[]"
+
+fun main(args: Array<String>) {
+    var t: Tree<Int> = Nil()
+    val w = OutputStreamWriter(System.out)
+    val a = arrayOf(5, 4, 6, 2, 1, 3, 7)
+    for (x in a) {
+        t = t.insert(x)
+        t.print(w)
+    }
+    t = t.remove(4)
+    t.print(w)
+    t = t.remove(3)
+    t.print(w)
+    t = t.remove(2)
+    t.print(w)
+    w.close()
+}
