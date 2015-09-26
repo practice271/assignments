@@ -5,7 +5,7 @@ import java.io.OutputStreamWriter
 import kotlin.test.assertEquals
 
 public class TestAVL {
-    Test fun helloTest() {
+    @Test fun helloTest() {
         var t: Tree<Int> = Nil()
         val w = OutputStreamWriter(System.out)
         val i = arrayOf(5, 4, 6, 2, 1, 3, 7)
