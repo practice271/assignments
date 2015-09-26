@@ -2,156 +2,127 @@
 // Author: Kirill Smirenko, group 271
 package homework.hw03
 
-abstract class AvlNode<K : Comparable<K>, V>() {
+class Node<K : Comparable<K>, V>(key: K, value : V, left: Node<K, V>?, right: Node<K, V>?) {
+    var key: K = key
+    var value: V = value
+    var left: Node<K, V>? = left
+    var right: Node<K, V>? = right
 
+    fun getHeight() : Int = 1 + Math.max(left?.getHeight() ?: 0, right?.getHeight() ?: 0)
+
+    fun getBalance() : Int = (right?.getHeight() ?: 0) - (left?.getHeight() ?: 0)
+
+    fun toTree() : AVLTree<K, V> {
+        val tree = AVLTree<K, V>()
+        tree.root = this
+        return tree
+    }
 }
-internal class Empty<K : Comparable<K>, V>() : AvlNode<K, V>() {}
-internal class Node<K : Comparable<K>, V>(
-        var key : K,
-        var value : V,
-        var left: AvlNode<K, V>,
-        var right: AvlNode<K, V>
-) : AvlNode<K, V>() {}
 
-open class AVLTree<K : Comparable<K>, V>() {
-    internal var root : AvlNode<K, V> = Empty()
+class AVLTree<K : Comparable<K>, V>() {
+    internal var root: Node<K, V>? = null
 
-    /**
-     * Generates detailed visual tree representation (LCR).
-     */
-    fun toText() : String {
-        fun AvlNode<K, V>.toText_() : List<String> {
-            when (this) {
-                is Empty -> return listOf("_\n")
-                is Node  -> {
-                    val lText = left.toText_().map { "|  $it"}
-                    val rText = right.toText_().map { "|  $it"}
-                    val vText = listOf("($key,$value)\n")
-                    return lText + vText + rText
-                }
-                else -> throw Exception("Unknown class")
-            }
+    fun insert(key : K, value : V) {
+        root = insert(root, key, value)
+    }
+
+    fun search(key : K) : V? {
+        return search(root, key)
+    }
+
+    // TODO: delete
+    fun delete(key : K) {
+        
+    }
+
+    fun toText(): String {
+        fun Node<K, V>.toText_(): List<String> {
+            val lText = left?.toText_()?.map { "|  $it" } ?: listOf("|  _\n")
+            val rText = right?.toText_()?.map { "|  $it" } ?: listOf("|  _\n")
+            val vText = listOf("($key,$value)\n")
+            return lText + vText + rText
         }
         val builder = StringBuilder()
-        val lines = root.toText_()
+        val lines = root?.toText_() ?: listOf("_\n")
         lines.forEach { builder.append(it) }
         return builder.toString()
     }
+}
 
-    /**
-     * Inserts a new pair (key, value) into the tree.
-     *
-     * @param keyN The new key.
-     * @param valueN The new value.
-     */
-    fun insert(keyN : K, valueN : V) {
-        fun AvlNode<K, V>.insert_(keyN: K, valueN: V) : AvlNode<K, V> {
-            when (this) {
-                is Empty -> return Node(keyN, valueN, Empty<K, V>(), Empty<K, V>())
-                is Node -> {
-                    if (keyN == key) {
-                        value = valueN
-                        return this
-                    } else if (keyN < key) {
-                        left = left.insert_(keyN, valueN)
-                        this.restoreBalance()
-                        return this
-                    } else {
-                        right = right.insert_(keyN, valueN)
-                        this.restoreBalance()
-                        return this
-                    }
-                }
-                else -> throw Exception("Unknown class")
-            }
-        }
-        root = root.insert_(keyN, valueN)
-    }
-
-    /**
-     * Looks up a value in the tree by key.
-     *
-     * @param keyS The key to search.
-     * @return The value, if found, otherwise null.
-     */
-    fun search(keyS : K) : V? {
-        fun AvlNode<K, V>.search_(keyS: K) : V? {
-            when (this) {
-                is Empty -> return null
-                is Node -> {
-                    if (keyS == key) return value
-                    else if (keyS < key) return left.search_(keyS)
-                    else return right.search_(keyS)
-                }
-                else -> throw Exception("Unknown class")
-            }
-        }
-        return root.search_(keyS)
-    }
-
-    // ------------------ PRIVATE   --------------------------------
-
-    fun AvlNode<K, V>.height() : Int = when (this) {
-        is Empty -> 0
-        is Node -> 1 + Math.max(left.height(), right.height())
-        else -> throw Exception("Unknown class")
-    }
-
-    fun AvlNode<K, V>.restoreBalance() {
-        if (this is Node) {
-            val balance = right.height() - left.height()
-            if (balance == -2) {
-                if ((left is Node) && (left.left.height() >= left.right.height)) {
-                    this.rotateSmallRight();
-                } else {
-                    cur = doubleRotateLeftRight(cur);
-                }
-            } else if(balance==2) {
-                if(height(cur.right.right)>=height(cur.right.left)) {
-                    cur = rotateLeft(cur);
-                } else {
-                    cur = doubleRotateRightLeft(cur);
-                }
-            }
-    }
-
-    // ------------------ ROTATIONS --------------------------------
-    fun AvlNode<K, V>.rotateSmallLeft() {
-        if ((this is Node) && (this.right is Node)) {
-            val nodeB = this.right
-            this.right = nodeB.left
-            nodeB.left = this
-        }
-        else throw Exception("Incorrect operation")
-    }
-
-    fun AvlNode<K, V>.rotateSmallRight() {
-        if ((this is Node) && (this.left is Node)) {
-            val nodeA = this.left
-            this.left = nodeA.right
-            nodeA.right = this
-        }
-        else throw Exception("Incorrect operation")
-    }
-
-    fun AvlNode<K, V>.rotateBigLeft() {
-        if ((this is Node) && (this.right is Node)) {
-            right.rotateSmallRight()
-            this.rotateSmallLeft()
-        }
-        else throw Exception("Incorrect operation")
-    }
-
-    fun AvlNode<K, V>.rotateBigRight() {
-        if ((this is Node) && (this.left is Node)) {
-            left.rotateSmallLeft()
-            this.rotateSmallRight()
-        }
-        else throw Exception("Incorrect operation")
+fun <K : Comparable<K>, V> insert(node : Node<K, V>?, keyN : K, valueN : V) : Node<K, V>? {
+    if (node == null) return Node(keyN, valueN, null, null)
+    if (keyN == node.key) {
+        node.value = valueN
+        return node
+    } else if (keyN < node.key) {
+        node.left = insert(node.left, keyN, valueN)
+        node.restoreBalance()
+        return node
+    } else {
+        node.right = insert(node.right, keyN, valueN)
+        node.restoreBalance()
+        return node
     }
 }
 
-fun <V> newIntLeaf(k : Int, v: V) : AvlNode<Int, V> = Node(k, v, Empty<Int, V>(), Empty<Int, V>())
+fun <K : Comparable<K>, V> search(node : Node<K, V>?,keyS: K): V? {
+    if (node == null) return null
+    if (keyS == node.key) return node.value
+    else if (keyS < node.key) return search(node.left, keyS)
+    else return search(node.right, keyS)
+}
+
+fun <K : Comparable<K>, V> Node<K, V>.restoreBalance() {
+    val balanceA = getBalance()
+    if (balanceA == 2) {
+        val balanceB = right?.getBalance() ?: 0
+        if (balanceB > 0) {
+            rotateSmallLeft();
+        } else {
+            rotateBigLeft();
+        }
+    } else if(balanceA == -2) {
+        val balanceB = left?.getBalance() ?: 0
+        if (balanceB <= 0) {
+            rotateSmallRight();
+        } else {
+            rotateBigRight();
+        }
+    }
+}
+
+// ------------------ ROTATIONS --------------------------------
+fun <K : Comparable<K>, V> Node<K, V>.rotateSmallLeft() {
+    val nodeB = right
+    if (nodeB != null) {
+        left = Node(key, value, left, nodeB.left)
+        right = nodeB.right
+        key = nodeB.key
+        value = nodeB.value
+    }
+}
+
+fun <K : Comparable<K>, V> Node<K, V>.rotateSmallRight() {
+    val nodeB = left
+    if (nodeB != null) {
+        right = Node(key, value, nodeB.right, right)
+        left = nodeB.left
+        key = nodeB.key
+        value = nodeB.value
+    }
+}
+
+fun <K : Comparable<K>, V> Node<K, V>.rotateBigLeft() {
+    right?.rotateSmallRight()
+    this.rotateSmallLeft()
+}
+
+fun <K : Comparable<K>, V> Node<K, V>.rotateBigRight() {
+    left?.rotateSmallLeft()
+    this.rotateSmallRight()
+}
+
+//fun <V> newIntLeaf(k : Int, v: V) : Node<Int, V> = Node1(k, v, Empty<Int, V>(), Empty<Int, V>())
 
 fun main(args: Array<String>) {
     //val tree = Node(4, "A", Node(3, "B", newIntLeaf(1, "C"), newIntLeaf(2, "D")), newIntLeaf(5, "E"))
