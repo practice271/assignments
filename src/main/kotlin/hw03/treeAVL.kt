@@ -6,8 +6,8 @@ package hw03
 */
 
 open class Keys (var value : Int){
-    var height = 0;
-    var diff = 0;
+    var height = 0
+    var diff = 0
 }
 
 abstract class AVL{}
@@ -29,11 +29,8 @@ fun generateTree(lValue : Int, rValue : Int): AVL{
 public fun  AVL.print() {
     fun  AVL.print_ (maxLevel : Int) {
         fun makeSpaces(n : Int) : String{
-            var l : String = ""
-            for (i in 1.. n){
-                l += " "
-            }
-            return l
+            val arr = Array(n, {' '}).toCharArray()
+            return String(arr)
         }
         val num = Math.pow(2.0, (maxLevel).toDouble()).toInt()
         val spaces = makeSpaces(num - 1)
