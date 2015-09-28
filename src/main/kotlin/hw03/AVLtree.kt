@@ -7,11 +7,11 @@ class AVLtree<A>() {
     private var root: Node<A>? = null
 
     public fun find(key : Int) : A?{
-        if (root == null) return null else return root!!.find(key)
+        return root?.find(key)
     }
 
     public fun insert(newKey: Int, newValue : A) {
-        if (root == null) root = Node(newKey, newValue) else root = root!!.insert(newKey, newValue)
+        root = root?.insert(newKey, newValue) ?: Node(newKey, newValue)
     }
 
     public fun remove(key : Int){
@@ -19,11 +19,11 @@ class AVLtree<A>() {
     }
 
     public fun toList() : LinkedList<A> {
-        if (root == null) return linkedListOf() else return root!!.toList()
+        return root?.toList() ?: linkedListOf()
     }
 
     public fun toText() : String {
-        if (root == null) return "null" else return root!!.toText()
+        return root?.toText() ?: "null"
     }
 }
 
@@ -42,7 +42,7 @@ internal class Node<A>(public var key : Int, public var value : A, private var h
         return f(this, linkedListOf<A>())
     }
 
-    public fun toText() : String {
+    public fun toText(): String {
         fun f(node: Node<A>): String {
             val leftToStr: String
             val rightToStr: String
@@ -66,83 +66,87 @@ internal class Node<A>(public var key : Int, public var value : A, private var h
     private fun rightRotate(): Node<A> {
         var temp1 = this
         var temp2 = temp1.left
-        temp1.left = temp2!!.right
-        temp2.right = temp1
+        temp1.left = temp2!!.right      //it`s a "private" function so it`s guaranteed that it won`t be called
+        temp2.right = temp1             //if this.left.right is null
         temp1.overHeigh()
         temp2.overHeigh()
         return temp2
     }
 
-    private fun leftRotate() : Node<A> {
+    private fun leftRotate(): Node<A> {
         val temp1 = this
         val temp2 = temp1.right
-        temp1.right = temp2!!.left
-        temp2.left = temp1
+        temp1.right = temp2!!.left      //it`s a "private" function so it`s guaranteed that it won`t be called
+        temp2.left = temp1              //if this.right.left is null
         temp1.overHeigh()
         temp2.overHeigh()
         return temp2
     }
 
     private fun balance(): Node<A> {
-        this.overHeigh()
-        if (this.balanceFactor() == 2) {
-            if ((this.right!!.balanceFactor()) < 0) this.right = this.right!!.rightRotate()
-            return this.leftRotate()
-        } else if (this.balanceFactor() == -2) {
-            if ((this.left!!.balanceFactor()) > 0) this.left = this.left!!.leftRotate()
-            return this.rightRotate()
+        overHeigh()
+        val bf = balanceFactor()
+        if (bf == 2) {
+            if ((right!!.balanceFactor()) < 0) right = right!!.rightRotate() //it`s guaranteed by 'balanceFactor'
+            return leftRotate()                                              //implementation that 'right' is not null
+        } else if (bf == -2) {                                               //if 'balanceFactor' returns 2
+            if ((left!!.balanceFactor()) > 0) left = left!!.leftRotate()     //and 'left' is not null
+            return rightRotate()                                             //if 'balanceFactor' returns -2
         } else return this
     }
 
     public fun insert(newKey: Int, newValue: A): Node<A> {
         fun f(newKey: Int, newValue: A, node: Node<A>?): Node<A> {
-            if (node == null) return Node(newKey, newValue)
-            else if (newKey < node.key)
-                node.left = f(newKey, newValue, node.left)
-            else if (newKey > node.key)
-                node.right = f(newKey, newValue, node.right)
-            else node.value = newValue
-            return node.balance()
-        }
+            when {
+                node == null -> return Node(newKey, newValue)
+                newKey < node.key -> node.left = f(newKey, newValue, node.left)
+                newKey > node.key -> node.right = f(newKey, newValue, node.right)
+                else -> node.value = newValue
+            }
+            return node!!.balance()      //node is not null because in this case function
+        }                                //would have already returned Node(newKey, newValue)
         return f(newKey, newValue, this)
     }
 
-    public fun find(key: Int): A? {
-        if (key == this.key) return this.value
-        else if (key < this.key)
-            if (this.left == null) return null
-            else return this.left!!.find(key)
-        else
-            if (this.right == null) return null
-            else return this.right!!.find(key)
+    public fun find(searchedKey: Int): A? {
+        when {
+            searchedKey == key -> return value
+            searchedKey < key -> return left?.find(searchedKey)
+            else -> return right?.find(searchedKey)
+        }
     }
 
     private fun findMin(): Node<A> {
-        if (this.left == null) return this
-        else return this.left!!.findMin()
+        return left?.findMin() ?: this
     }
 
     private fun findMax(): Node<A> {
-        if (this.right == null) return this
-        else return this.right!!.findMax()
+        return right?.findMax() ?: this
     }
 
     public fun remove(removingKey: Int): Node<A>? {
         var ans: Node<A>
-        if (this.key == removingKey) {
-            if (this.left != null) {
-                val temp = this.left!!.findMax()
-                ans = Node(temp.key, temp.value, this.height, this.left!!.remove(temp.key), this.right)
-            } else if (this.right != null) {
-                val temp = this.right!!.findMin()
-                ans = Node(temp.key, temp.value, this.height, this.left, this.right!!.remove(temp.key))
-            } else return null
-        } else if (removingKey < this.key) {
-            if (this.left == null) ans = this
-            else ans = Node(this.key, this.value, this.height, this.left!!.remove(removingKey), this.right)
-        } else {
-            if (this.right == null) ans = this
-            else ans = Node(this.key, this.value, this.height, this.left, this.right!!.remove(removingKey))
+        when {
+            this.key == removingKey ->
+                when {
+                    this.left != null -> {
+                        val temp = this.left!!.findMax()
+                        ans = Node(temp.key, temp.value, this.height, this.left!!.remove(temp.key), this.right)
+                    }
+                    this.right != null -> {
+                        val temp = this.right!!.findMin()
+                        ans = Node(temp.key, temp.value, this.height, this.left, this.right!!.remove(temp.key))
+                    }
+                    else -> return null
+                }
+            removingKey < this.key -> {
+                if (this.left == null) ans = this
+                else ans = Node(this.key, this.value, this.height, this.left!!.remove(removingKey), this.right)
+            }
+            else -> {
+                if (this.right == null) ans = this
+                else ans = Node(this.key, this.value, this.height, this.left, this.right!!.remove(removingKey))
+            }
         }
         return ans.balance()
     }
