@@ -10,8 +10,8 @@ import kotlin.test.assertNull
 public class avlTreeTest {
     fun <A>treeEquals(a : NodeAvl<A>?, b : NodeAvl<A>?) : Boolean
     {
-        if ((a== null) && (b == null)) return true
-        if ((a== null) || (b == null)) return false
+        if ((a == null) && (b == null)) return true
+        if ((a == null) || (b == null)) return false
         if (a.value == b.value)
             return (treeEquals(a.leftChild, b.leftChild) && treeEquals(a.rightChild, b.rightChild))
         else return false
@@ -31,7 +31,10 @@ public class avlTreeTest {
         var t = addInt(1, null)
         t = addInt(2, t)
         t = addInt(3, t)
-        treeAssertEquals(t, NodeAvl(Pair(2,2), 0, NodeAvl(Pair(1,1), 0, null, null), NodeAvl(Pair(3,3), 0, null, null)))
+        treeAssertEquals(t, NodeAvl(
+                Pair(2,2), 0,
+                NodeAvl(Pair(1,1), 0, null, null), NodeAvl(Pair(3,3), 0, null, null)
+        ))
     }
     @Test fun addDecreasingSec()
     {
@@ -39,7 +42,10 @@ public class avlTreeTest {
         t = addInt(-2, t)
         t = addInt(-3, t)
         t = addInt(-4, t)
-        treeAssertEquals(t, NodeAvl(Pair(-2,-2), 0, NodeAvl(Pair(-3,-3), 1, NodeAvl(Pair(-4,-4), 0, null, null), null), NodeAvl(Pair(-1,-1), 0, null, null)))
+        treeAssertEquals(t, NodeAvl(Pair(-2,-2), 0, NodeAvl(
+                Pair(-3,-3), 1,
+                NodeAvl(Pair(-4,-4), 0, null, null), null), NodeAvl(Pair(-1,-1), 0, null, null)
+        ))
     }
     @Test fun delFromEmpty()
     {
@@ -60,7 +66,10 @@ public class avlTreeTest {
         t = addInt(3, t)
         t = addInt(4, t)
         var nt = del(Pair(3,3), t)
-        treeAssertEquals(nt, NodeAvl(Pair(2,2), 0, NodeAvl(Pair(1,1), 0, null, null), NodeAvl(Pair(4, 4), 0, null, null)))
+        treeAssertEquals(nt, NodeAvl(
+                Pair(2,2), 0,
+                NodeAvl(Pair(1,1), 0, null, null), NodeAvl(Pair(4, 4), 0, null, null)
+        ))
     }
     @Test fun delLeaf()
     {
