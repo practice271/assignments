@@ -11,7 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'run', 'test'
 
-mainClassName = 'hw02.Hw02Package'
+mainClassName = 'hw03.Hw03Package'
 
 sourceCompatibility = 1.5
 
