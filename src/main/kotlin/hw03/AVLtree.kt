@@ -27,8 +27,22 @@ class AVLtree<A>() {
     }
 }
 
-internal class Node<A>(public var key : Int, public var value : A, private var height : Int = 1,
-              private var left: Node<A>? = null, private var right: Node<A>? = null) {
+internal class Node<A>(public var key : Int, public var value : A,
+                       left_param: Node<A>? = null, right_param: Node<A>? = null) {
+
+    private var height: Int = 1
+
+    private var left: Node<A>? = left_param
+        set(newLeft) {
+            $left = newLeft
+            $height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
+        }
+
+    private var right: Node<A>? = right_param
+        set(newRight) {
+            $right = newRight
+            $height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
+        }
 
     public fun toList(): LinkedList<A> {
         fun f(node: Node<A>?, list: LinkedList<A>): LinkedList<A> {
@@ -60,7 +74,7 @@ internal class Node<A>(public var key : Int, public var value : A, private var h
     private fun overHeigh() {
         val hleft = this.left?.height ?: 0
         val hright = this.right?.height ?: 0
-        this.height = if (hleft > hright) hleft + 1 else hright + 1
+        this.height = Math.max(hleft, hright) + 1
     }
 
     private fun rightRotate(): Node<A> {
@@ -131,21 +145,21 @@ internal class Node<A>(public var key : Int, public var value : A, private var h
                 when {
                     this.left != null -> {
                         val temp = this.left!!.findMax()
-                        ans = Node(temp.key, temp.value, this.height, this.left!!.remove(temp.key), this.right)
+                        ans = Node(temp.key, temp.value, this.left!!.remove(temp.key), this.right)
                     }
                     this.right != null -> {
                         val temp = this.right!!.findMin()
-                        ans = Node(temp.key, temp.value, this.height, this.left, this.right!!.remove(temp.key))
+                        ans = Node(temp.key, temp.value, this.left, this.right!!.remove(temp.key))
                     }
                     else -> return null
                 }
             removingKey < this.key -> {
                 if (this.left == null) ans = this
-                else ans = Node(this.key, this.value, this.height, this.left!!.remove(removingKey), this.right)
+                else ans = Node(this.key, this.value, this.left!!.remove(removingKey), this.right)
             }
             else -> {
                 if (this.right == null) ans = this
-                else ans = Node(this.key, this.value, this.height, this.left, this.right!!.remove(removingKey))
+                else ans = Node(this.key, this.value, this.left, this.right!!.remove(removingKey))
             }
         }
         return ans.balance()
