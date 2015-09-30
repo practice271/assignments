@@ -30,8 +30,10 @@ public class AvlTree {
 
         if (p == null) {
             this.root = q
-        } else {
-            if (q.key < p.key) {
+            return
+        }
+        when (Integer.compare(q.key, p.key)) {
+            -1 -> {
                 if (p.left == null) {
                     p.left = q
                     q.parent = p
@@ -40,8 +42,8 @@ public class AvlTree {
                 } else {
                     insertAVL(p.left, q)
                 }
-
-            } else if (q.key > p.key) {
+            }
+            1 -> {
                 if (p.right == null) {
                     p.right = q
                     q.parent = p
@@ -52,33 +54,35 @@ public class AvlTree {
                 }
             }
         }
+
     }
 
-    private fun rebalance(cur: AvlNode) {
+    private fun rebalance(cur: AvlNode?) {
 
         var cur = cur
-
         setBalance(cur)
-        val balance = cur.balance
+        val balance = cur?.balance
 
-        if (balance == -2) {
-
-            if (height(cur.left?.left) >= height(cur.left?.right)) {
-                cur = rotateRight(cur)
-            } else {
-                cur = doubleRotateLeftRight(cur)
+        when (balance) {
+            -2 -> {
+                if (height(cur?.left?.left) >= height(cur?.left?.right)) {
+                    cur = rotateRight(cur)
+                } else {
+                    cur = doubleRotateLeftRight(cur)
+                }
+            }
+            2 -> {
+                if (height(cur?.right?.right) >= height(cur?.right?.left)) {
+                    cur = rotateLeft(cur)
+                } else {
+                    cur = doubleRotateRightLeft(cur)
+                }
             }
 
-        } else if (balance == 2) {
-            if (height(cur.right?.right) >= height(cur.right?.left)) {
-                cur = rotateLeft(cur)
-            } else {
-                cur = doubleRotateRightLeft(cur)
-            }
         }
 
-        if (cur.parent != null) {
-            rebalance(cur.parent!!)
+        if (cur?.parent != null) {
+            rebalance(cur?.parent)
         } else {
             this.root = cur
         }
@@ -91,194 +95,184 @@ public class AvlTree {
     private fun deleteAVL(p: AvlNode?, q: Int) {
         if (p == null) {
             return
-        } else {
-            if (p.key > q) {
-                deleteAVL(p.left, q)
-            } else if (p.key < q) {
-                deleteAVL(p.right, q)
-            } else if (p.key == q) {
-                deleteFoundNode(p)
-            }
+        }
+        when (Integer.compare(p.key, q)) {
+            1    -> deleteAVL(p.left, q)
+            -1   -> deleteAVL(p.right, q)
+            else -> deleteFoundNode(p)
         }
     }
 
     private fun deleteFoundNode(q: AvlNode?) {
         var r: AvlNode?
-        if (q!!.left == null || q.right == null) {
-            if (q.parent == null) {
+        if (q?.left == null || q?.right == null) {
+            if (q?.parent == null) {
                 this.root = null
                 return
             }
             r = q
         } else {
             r = successor(q)
-            q.key = r.key
+            q?.key = r?.key
         }
 
         val p: AvlNode?
-        if (r.left != null) {
-            p = r.left
+        if (r?.left != null) {
+            p = r?.left
         } else {
-            p = r.right
+            p = r?.right
         }
 
         if (p != null) {
-            p.parent = r.parent
+            p.parent = r?.parent
         }
 
-        if (r.parent == null) {
+        if (r?.parent == null) {
             this.root = p
         } else {
-            if (r == r.parent!!.left) {
-                r.parent!!.left = p
+            if (r == r?.parent?.left) {
+                r?.parent?.left = p
             } else {
-                r.parent!!.right = p
+                r?.parent?.right = p
             }
-            rebalance(r.parent!!)
+            rebalance(r?.parent)
         }
     }
 
-    private fun rotateLeft(node: AvlNode): AvlNode {
+    private fun rotateLeft(node: AvlNode?): AvlNode? {
 
-        val v = node.right
-        v?.parent = node.parent
+        val v = node?.right
+        v?.parent = node?.parent
 
-        node.right = v?.left
+        node?.right = v?.left
 
-        if (node.right != null) {
-            node.right?.parent = node
+        if (node?.right != null) {
+            node?.right?.parent = node
         }
 
         v?.left = node
-        node.parent = v
+        node?.parent = v
 
         if (v?.parent != null) {
-            if (v?.parent!!.right == node) {
-                v?.parent!!.right = v
-            } else if (v?.parent!!.left == node) {
-                v?.parent!!.left = v
+            if (v?.parent?.right == node) {
+                v?.parent?.right = v
+            } else if (v?.parent?.left == node) {
+                v?.parent?.left = v
             }
         }
 
         setBalance(node)
-        setBalance(v!!)
+        setBalance(v)
 
         return v
     }
 
-    private fun rotateRight(node: AvlNode): AvlNode {
+    private fun rotateRight(node: AvlNode?): AvlNode? {
 
-        val v = node.left
-        v?.parent = node.parent
+        val v = node?.left
+        v?.parent = node?.parent
 
-        node.left = v?.right
+        node?.left = v?.right
 
-        if (node.left != null) {
-            node.left?.parent = node
+        if (node?.left != null) {
+            node?.left?.parent = node
         }
 
         v?.right = node
-        node.parent = v
-
-
+        node?.parent = v
         if (v?.parent != null) {
-            if (v?.parent!!.right == node) {
-                v?.parent!!.right = v
-            } else if (v?.parent!!.left == node) {
-                v?.parent!!.left = v
+            if (v?.parent?.right == node) {
+                v?.parent?.right = v
+            } else if (v?.parent?.left == node) {
+                v?.parent?.left = v
             }
         }
 
         setBalance(node)
-        setBalance(v!!)
+        setBalance(v)
 
         return v
     }
 
-    private fun doubleRotateLeftRight(node: AvlNode): AvlNode {
-        node.left = rotateLeft(node.left!!)
+    private fun doubleRotateLeftRight(node: AvlNode?): AvlNode? {
+        node?.left = rotateLeft(node?.left)
         return rotateRight(node)
     }
 
-    private fun doubleRotateRightLeft(node: AvlNode): AvlNode {
-        node.right = rotateRight(node.right!!)
+    private fun doubleRotateRightLeft(node: AvlNode?): AvlNode? {
+        node?.right = rotateRight(node?.right)
         return rotateLeft(node)
     }
 
-    private fun successor(node: AvlNode): AvlNode {
+    private fun successor(node: AvlNode?): AvlNode? {
         var q = node
-        if (q.right != null) {
-            var r = q.right
+        if (q?.right != null) {
+            var r = q?.right
             while (r?.left != null) {
                 r = r?.left
             }
-            return r!!
+            return r
         } else {
-            var p = q.parent
+            var p = q?.parent
             while (p != null && q == p.right) {
                 q = p
                 p = q.parent
             }
-            return p!!
+            return p
         }
     }
 
     private fun height(node: AvlNode?): Int {
-        if (node == null)
-            return -1
+        if (node == null) return -1
         return 1 + Math.max(height(node.left), height(node.right))
     }
 
-    private fun setBalance(cur: AvlNode) {
-        cur.balance = height(cur.right) - height(cur.left)
+    private fun setBalance(cur: AvlNode?) {
+        cur?.balance = height(cur?.right) - height(cur?.left)
     }
     //search fun
-    public fun search(key:Int):Int {
-        return searchNode(root!!, key)
+    public fun search(key: Int): Int {
+        return searchNode(root, key)
     }
 
-    private fun searchNode(n:AvlNode, x:Int):Int {
-        try {
-            if (root == null) {
-                return 0
-            } else if (n.key > x) {
-                return searchNode(n.left!!, x)
-            } else if (n.key < x) {
-                return searchNode(n.right!!, x)
-            } else {
-                return n.key
-            }
-        } catch (e: NullPointerException) {
-            print("\nElement not found\n")
-            return 0
+    private fun searchNode(n: AvlNode?, x: Int): Int {
+        if (n == null) {
+            return -1
+        }
+        when (Integer.compare(n.key, x)) {
+            1    -> return searchNode(n.left, x)
+            -1   -> return searchNode(n.right, x)
+            else -> return n.key
         }
     }
+
     // print fun
     public fun show() {
         print("\n====AvlTree====\n\n")
-        print(print(root!!))
+        if (root == null) {print("Empty tree\n")}
+        else {print(print(root))}
     }
 
-    private fun print(root:AvlNode): String {
+    private fun print(root: AvlNode?): String {
         var sb = StringBuilder { }
         printTree(root, "", sb)
         return sb.toString()
     }
 
-    private fun printTree(node: AvlNode, indent:String, sb:StringBuilder){
+    private fun printTree(node: AvlNode?, indent: String, sb: StringBuilder){
         sb.appendln(node.toString())
-        if (node.left != null) {
-            if (node.right  == null) {
-                printChild(node.left!!, indent, sb)
+        if (node?.left != null) {
+            if (node?.right  == null) {
+                printChild(node?.left, indent, sb)
             }
             else {
-                printChild(node.left!!,indent,sb)
-                printChild(node.right!!, indent, sb)
+                printChild(node?.left, indent,sb)
+                printChild(node?.right, indent, sb)
             }
         }
     }
 
-    private fun printChild(node: AvlNode, indent: String, sb: StringBuilder) {
+    private fun printChild(node: AvlNode?, indent: String, sb: StringBuilder) {
         sb.append(indent)
         sb.append("|---")
         printTree(node, indent + "  ", sb)
@@ -301,28 +295,5 @@ public class AvlTree {
 }
 
 public fun main(args: Array<String>) {
-    val avt1 = AvlTree()
-    avt1.insert(15)
-    avt1.insert(12)
-    avt1.insert(122)
-    avt1.insert(22)
-    avt1.insert(56)
-    avt1.insert(25)
-    avt1.insert(16)
-    avt1.insert(13)
-    avt1.insert(4)
-    avt1.show()
-    avt1.insert(7)
-    avt1.insert(1)
-    avt1.insert(9)
-    avt1.show()
-    avt1.insert(10)
-    avt1.delete(22)
-    avt1.delete(22)
-    avt1.show()
-    avt1.delete(12)
-    avt1.show()
-    avt1.search(1000)
-    avt1.show()
-    //avt1.search(15)
+
 }
