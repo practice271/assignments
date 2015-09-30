@@ -2,8 +2,38 @@ package hw03
 
 internal class  NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
                            var leftChild : NodeAvl<A>?, var rightChild : NodeAvl<A>?) {
-    //the numbers in functions below may seem magical,
-    // but they've been calculated (in scientific way) by me.
+    //the numbers in functions below were calculated this way:
+    /*
+    y,z stand for single nodes, A,B,C - for subtrees.
+    In notation in function names y is NodeGoingDown, and z is NodeGoingUp
+    1. Left rotation
+    Suppose we have tree
+        y
+       / \
+      A   z
+         / \
+        B   C
+     After rotation it'll look like
+             z'
+           / \
+          y'   C
+         / \
+        A   B
+     We'll only rotate left if diff in y is -1
+     Let's define height of A as x. Then height of z is (x+1).
+     We have 3 possibilities:
+        1. |B| = x, |C| = x.
+            In this case y'.diff = 0 ('cause |A| = |B|) and z'.diff = 1 (|y'| = x + 1, |C| = x)
+        2. |B| = x - 1, |C| = x.
+            In this case y'.diff = 1 ('cause |A| = |B| + 1) and z'.diff = 1 (|y'| = x + 1, |C| = x)
+        3. |B| = x, |C| = x - 1.
+            In this case y'.diff = 0 ('cause |A| = |B|) and z'.diff = 2 (|y'| = x + 1, |C| = x-1)
+     2. Right rotation is conducted in a very similar way.
+     I don't know any short way to write it and explanation above is WAAAAY long,
+     so I'll leave this one for curious reader to fill by (him/her)self.
+     Антон, практически полностью дублировать описание из п.1 было бы бесполезной механической работой.
+     Буду рад услышать советы, как можно прокомментировать эти вычисления адекватным и коротким образом.
+     */
     internal fun leftRotationCalcDiffNodeGoingUp(): Int {
         if (diff == 1) return 2
         else return 1
