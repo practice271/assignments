@@ -17,8 +17,8 @@ public class hw03 {
          is Node -> {
             if (tree2 is Empty){ return false }
             val t =  unWrap(tree2)
-            return (tree1.keys.value ==t.keys.value) &&
-                  compare(tree1.left, t.left) && compare(tree1.right, t.right)
+            return (tree1.key ==t.key) &&
+                  compare(tree1.leftChild, t.leftChild) && compare(tree1.rightChild, t.rightChild)
          }
          else -> throw  Exception("Unknown class")
       }
@@ -38,30 +38,30 @@ public class hw03 {
    @Test fun Add(){
       var tree = generateTree(1, 4)
       tree = addToAVL(tree, -1)
-      val value = unWrap(unWrap(unWrap(tree).left).left).keys.value
+      val value = unWrap(unWrap(unWrap(tree).leftChild).leftChild).key
       assertEquals(-1, value)
    }
    @Test fun Add2(){
       var tree = generateTree(1, 4)
       tree = addToAVL(tree, -1)
-      val value = unWrap(unWrap(unWrap(tree).left).left).left
+      val value = unWrap(unWrap(unWrap(tree).leftChild).leftChild).leftChild
       assertTrue(value is Empty)
    }
    @Test fun AddSmallRightRotation(){
       var tree = generateTree(1, 4)
       tree = addToAVL(tree, -1)
       tree = addToAVL(tree, -2)
-      val expectedTree = Node(Keys(-1), Node(Keys(-2), Empty(), Empty() ),
-              Node(Keys(1), Empty(), Empty() ))
-      assertTrue(compare(expectedTree,unWrap(tree).left))
+      val expectedTree = Node(-1, Node(-2, Empty(), Empty() ),
+              Node(1, Empty(), Empty() ))
+      assertTrue(compare(expectedTree,unWrap(tree).leftChild))
    }
    @Test fun AddSmallLeftRotation(){
       var tree = generateTree(1, 4)
       tree = addToAVL(tree, -1)
       tree = addToAVL(tree, -2)
       tree = addToAVL(tree, 5)
-      val expectedTree = Node(Keys(4),Node(Keys(3),Empty(), Empty() ), Node(Keys(5),Empty(), Empty() ) )
-      assertTrue(compare(expectedTree,unWrap(tree).right))
+      val expectedTree = Node(4,Node(3,Empty(), Empty() ), Node(5,Empty(), Empty() ) )
+      assertTrue(compare(expectedTree,unWrap(tree).rightChild))
    }
    @Test fun AddBigLeftRotation(){
       var tree = generateTree(1, 4)
@@ -71,14 +71,14 @@ public class hw03 {
       tree = addToAVL(tree, 8)
       tree = addToAVL(tree, 7)
       tree = addToAVL(tree, 6)
-      val expectedTree = Node(Keys(5),Node(Keys(4),Node(Keys(3),Empty(), Empty() ), Empty() )
-              , Node(Keys(7),Node(Keys(6),Empty(), Empty() ), Node(Keys(8),Empty(), Empty() ) ) )
-      assertTrue(compare(expectedTree, unWrap(tree).right))
+      val expectedTree = Node(5,Node(4,Node(3,Empty(), Empty() ), Empty() )
+              , Node(7,Node(6,Empty(), Empty() ), Node(8,Empty(), Empty() ) ) )
+      assertTrue(compare(expectedTree, unWrap(tree).rightChild))
    }
    @Test fun AddToEmpty(){
       var tree : AVL = Empty()
       tree = addToAVL(tree, -1)
-      val expectedTree = Node(Keys(-1), Empty(), Empty() )
+      val expectedTree = Node(-1, Empty(), Empty() )
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun AddBigRightRotation(){
@@ -94,9 +94,9 @@ public class hw03 {
       tree = addToAVL(tree, 45)
       tree = addToAVL(tree, 34)
 
-      val expectedTree = Node(Keys(35),Node(Keys(30),Node(Keys(20),Empty(), Empty() ),
-              Node(Keys(34),Empty(), Empty() ) ), Node(Keys(40),Empty(), Node(Keys(45),Empty(), Empty() ) ) )
-      assertTrue(compare(expectedTree, unWrap(tree).left))
+      val expectedTree = Node(35,Node(30,Node(20,Empty(), Empty() ),
+              Node(34,Empty(), Empty() ) ), Node(40,Empty(), Node(45,Empty(), Empty() ) ) )
+      assertTrue(compare(expectedTree, unWrap(tree).leftChild))
    }
    @Test fun RemoveFromEmpty(){
       var tree : AVL = Empty()
@@ -116,7 +116,7 @@ public class hw03 {
       tree = addToAVL(tree, -1)
       tree = addToAVL(tree, 2)
       tree = removeInAVL(tree, 2)
-      val expectedTree : AVL =  Node(Keys(-1),Empty(), Empty() )
+      val expectedTree : AVL =  Node(-1,Empty(), Empty() )
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun RemoveRoot(){
@@ -126,7 +126,7 @@ public class hw03 {
       tree = addToAVL(tree, 100)
       tree = addToAVL(tree, 80)
       tree = removeInAVL(tree, 50)
-      val expectedTree : AVL = Node(Keys(80),Node(Keys(30),Empty(), Empty() ), Node(Keys(100),Empty(), Empty() ) )
+      val expectedTree : AVL = Node(80,Node(30,Empty(), Empty() ), Node(100,Empty(), Empty() ) )
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun Remove(){
@@ -139,8 +139,8 @@ public class hw03 {
       tree = addToAVL(tree, 4)
       tree = addToAVL(tree, 5)
       tree= removeInAVL(tree, 3)
-      val expectedTree = Node(Keys(4),Node(Keys(-1),Node(Keys(-2),Empty(), Empty() ), Empty() ),
-              Node(Keys(6),Node(Keys(5),Empty(), Empty() ), Node(Keys(8),Empty(), Empty() ) ) )
+      val expectedTree = Node(4,Node(-1,Node(-2,Empty(), Empty() ), Empty() ),
+              Node(6,Node(5,Empty(), Empty() ), Node(8,Empty(), Empty() ) ) )
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun RemoveWithBalancing(){
@@ -153,8 +153,8 @@ public class hw03 {
       tree = addToAVL(tree, 4)
       tree = addToAVL(tree, 5)
       tree= removeInAVL(tree, 6)
-      val expectedTree = Node(Keys(3),Node(Keys(-1),Node(Keys(-2),Empty(), Empty() ), Empty() ),
-              Node(Keys(5),Node(Keys(4),Empty(), Empty() ), Node(Keys(8),Empty(), Empty() ) ) )
+      val expectedTree = Node(3,Node(-1,Node(-2,Empty(), Empty() ), Empty() ),
+              Node(5,Node(4,Empty(), Empty() ), Node(8,Empty(), Empty() ) ) )
       assertTrue(compare(expectedTree, tree))
    }
 }

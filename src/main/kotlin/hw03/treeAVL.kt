@@ -4,25 +4,54 @@ package hw03
    Estimated time 3 hour
    real time      4 hours
 */
-
-open class Keys (var value : Int){
-    var height = 0
-    var diff = 0
+abstract class AVL{
+    abstract internal fun calcHeightAndDiff() : Pair<Int, Int>
+    abstract internal fun height(): Int
+    abstract internal fun diff() : Int
 }
-
-abstract class AVL{}
-open class Empty() : AVL() {}
-open class Node (var keys : Keys, var left : AVL, var right : AVL) : AVL(){}
+open class Empty() : AVL(){
+    override internal fun calcHeightAndDiff() : Pair<Int, Int>
+    { return Pair(-1, 0)}
+    override internal fun height(): Int{
+        return -1
+    }
+    override internal fun diff() : Int{
+        return 0
+    }
+}
+open class Node (val key : Int,
+                 left : AVL,
+                 right : AVL) : AVL(){
+    public var leftChild: AVL = left
+        get() = $leftChild
+        set(newLeft: AVL) {
+            $leftChild = newLeft
+            heightAndDiff = calcHeightAndDiff()
+        }
+    public var rightChild: AVL = right
+        get() = $rightChild
+        set(newRight: AVL) {
+            $rightChild = newRight
+            heightAndDiff = calcHeightAndDiff()
+        }
+    //suppose that children has right heights
+    override internal fun calcHeightAndDiff() : Pair<Int, Int>{
+        val height =  Math.max(rightChild.height(), leftChild.height()) + 1
+        val diff  = rightChild.height() -  leftChild.height()
+        return Pair(height, diff)
+    }
+    private var heightAndDiff : Pair<Int, Int> = calcHeightAndDiff()
+    override fun height(): Int = heightAndDiff.first
+    override fun diff() : Int  =  heightAndDiff.second
+}
 
 fun generateTree(lValue : Int, rValue : Int): AVL{
     if (lValue > rValue) return Empty()
-    if (lValue == rValue ) return Node(Keys(lValue), Empty(), Empty())
+    if (lValue == rValue ) return Node(lValue, Empty(), Empty())
     val middle =  lValue + (rValue - lValue) / 2
-    val key = Keys(middle)
+    val key = middle
     val left = generateTree(lValue,middle - 1)
     var right = generateTree(middle + 1, rValue)
-    key.height = getHeight2(left, right)
-    key.diff   = getDiff(left, right)
     return Node(key, left, right )
 }
 
@@ -37,13 +66,13 @@ public fun  AVL.print() {
         when (this){
             is Empty -> println("$spaces|empty")
             is Node -> {
-                if (keys.height == 0){
-                    println("$spaces|${keys.value}")
+                if (height() == 0){
+                    println("$spaces|$key")
                 }
                 else {
-                    println("$spaces|${keys.value}")
-                    right.print_(maxLevel + 1)
-                    left.print_(maxLevel + 1)
+                    println("$spaces|$key")
+                    rightChild.print_(maxLevel + 1)
+                    leftChild.print_(maxLevel + 1)
                 }
             }
         }
@@ -54,15 +83,15 @@ public fun  AVL.print() {
 public fun AVL.find (elem : Int): Boolean {
     when (this){
         is Empty -> return false
-        is Node  ->
-                if (keys.value == elem){
+        is Node ->
+                if (key == elem){
                     return true
                 }
                 else{
-                    if (keys.value < elem){
-                        return right.find(elem)
+                    if (key < elem){
+                        return rightChild.find(elem)
                     }
-                    else return  left.find(elem)
+                    else return  leftChild.find(elem)
                 }
         else -> throw  Exception("Unknown class")
     }
@@ -76,67 +105,27 @@ internal fun unWrap (tree: AVL) : Node{
     }
 }
 
-private fun getHeight (tree : AVL): Int {
-    when (tree){
-        is Empty -> return -1
-        is Node ->  return tree.keys.height
-        else -> throw Exception("getHeight function is broken")
-    }
-}
-private fun getHeight (key : Keys): Int {
-    return key.height
-}
-
-private fun getHeight2 (tree : AVL, tree2 : AVL) : Int{
-    return Math.max(getHeight(tree),getHeight(tree2)) + 1
-}
-private fun getHeight2 (key : Keys, tree2 : AVL) : Int{
-    return Math.max(getHeight(key),getHeight(tree2)) + 1
-}
-private fun getHeight2 (tree1 : AVL, key : Keys) : Int{
-    return Math.max(getHeight(tree1),getHeight(key)) + 1
-}
-private fun getHeight2 (key1 : Keys, key2 : Keys) : Int{
-    return Math.max(getHeight(key1),getHeight(key2)) + 1
-}
-
-private  fun getDiff (leftTree : AVL, rightTree : AVL) : Int{
-    return getHeight(rightTree) - getHeight(leftTree)
-}
-private  fun getDiff (leftTree : AVL, rightKey : Keys) : Int{
-    return getHeight(rightKey) - getHeight(leftTree)
-}
-private  fun getDiff (leftKey : Keys, rightTree : AVL) : Int{
-    return getHeight(rightTree) - getHeight(leftKey)
-}
-private  fun getDiff (leftKey : Keys, rightKey : Keys) : Int{
-    return getHeight(rightKey) - getHeight(leftKey)
-}
-
-private fun getKeys (value : Int, left : AVL, right : AVL) : Keys{
-    val key = Keys(value)
-    key.height = getHeight2(left, right)
-    key.diff   = getDiff(left, right)
-    return (key)
-}
-
-private fun makeNewTree (value : Int, left : AVL, right : AVL) : AVL{
-    var key =  getKeys(value, left, right)
+private fun makeNewTree (key : Int, left : AVL, right : AVL) : AVL{
     val newTree = Node(key, left, right )
     return (balance(newTree))
 }
 
 fun addToAVL(tree : AVL, elem : Int) : AVL {
     when (tree){
-        is Empty ->  return Node (Keys(elem), Empty(), Empty())
+        is Empty ->  return Node (elem, Empty(), Empty())
         is Node  -> {
-            if (tree.keys.value > elem){
-                val left = addToAVL(tree.left, elem)
-                return  makeNewTree (tree.keys.value, left, tree.right)
-            }
-            else {
-                val right = addToAVL(tree.right, elem)
-                return   makeNewTree (tree.keys.value, tree.left, right)
+            when {
+                tree.key > elem -> {
+                    val left = addToAVL(tree.leftChild, elem)
+                    return  makeNewTree (tree.key, left, tree.rightChild)
+                }
+                tree.key == elem -> {
+                    return tree
+                }
+                else ->  {
+                    val right = addToAVL(tree.rightChild, elem)
+                    return   makeNewTree (tree.key, tree.leftChild, right)
+                }
             }
         }
         else -> throw  Exception("Unknown class")
@@ -148,28 +137,21 @@ fun balance(tree : AVL): AVL{
         when (tree){
             is Empty -> throw Exception("rightRotation is broken")
             is Node ->{
-                val left = unWrap(tree.left)
-                val r    = tree.right
-                var b = left.keys
-                val l = left.left
-                val c = left.right
-                if (b.diff <= 0) {
+                val left = unWrap(tree.leftChild)
+                val r    = tree.rightChild
+                var b = left.key
+                val l = left.leftChild
+                val c = left.rightChild
+                if (left.diff() <= 0) {
                     //small rotation
-                    val a = getKeys(tree.keys.value, c, r)
-                    b.height = getHeight2(l, a)
-                    b.diff   = getDiff(l, a)
-                    return Node(b, l , Node(a, c, r))
+                    return Node(b, l , Node(tree.key, c, r))
                 }
                 // big rotation
                 val cNode = unWrap(c)
-                val central = cNode.keys
-                val m = cNode.left
-                val n = cNode.right
-                val a = getKeys(tree.keys.value, n, r)
-                b  = getKeys(left.keys.value, l, m)
-                central.height = getHeight2(b, a)
-                central.diff   = getDiff(b, a)
-                return Node(central, Node(b, l, m), Node(a, n, r))
+                val central = cNode.key
+                val m = cNode.leftChild
+                val n = cNode.rightChild
+                return Node(central, Node(b, l, m), Node(tree.key, n, r))
             }
             else -> throw Exception("Unknown class")
         }
@@ -178,28 +160,21 @@ fun balance(tree : AVL): AVL{
         when (tree){
             is Empty -> throw Exception("leftRotation is broken")
             is Node ->{
-                val right = unWrap(tree.right)
-                val l = tree.left
-                var b = right.keys
-                val c = right.left
-                val r = right.right
-                if (b.diff >= 0) {
+                val right = unWrap(tree.rightChild)
+                val l = tree.leftChild
+                var b = right.key
+                val c = right.leftChild
+                val r = right.rightChild
+                if (right.diff() >= 0) {
                     //small rotation
-                    val a = getKeys(tree.keys.value, l, c)
-                    b.height = getHeight2(a, r)
-                    b.diff   = getDiff(a, r)
-                    return Node(b, Node(a, l, c), r)
+                    return Node(b, Node(tree.key, l, c), r)
                 }
                 // big rotation
                 val cNode = unWrap(c)
-                val central = cNode.keys
-                val m = cNode.left
-                val n = cNode.right
-                val a = getKeys(tree.keys.value, l, m)
-                b = getKeys(b.value,n, r)
-                central.height = getHeight2(a, b)
-                central.diff   = getDiff(a, b)
-                return Node(central,Node(a, l, m), Node(b, n, r))
+                val central = cNode.key
+                val m = cNode.leftChild
+                val n = cNode.rightChild
+                return Node(central,Node(tree.key, l, m), Node(b, n, r))
             }
             else -> throw Exception("Unknown class")
         }
@@ -207,10 +182,10 @@ fun balance(tree : AVL): AVL{
     when (tree){
         is Empty -> return Empty()
         is Node  -> {
-            if (Math.abs(tree.keys.diff) != 2){
+            if (Math.abs(tree.diff()) != 2){
                 return tree
             }
-            if (tree.keys.diff < 0){
+            if (tree.diff() < 0){
                 return rightRotation(tree)
             }
             else return leftRotation(tree)
@@ -224,56 +199,62 @@ fun removeInAVL(tree : AVL,elem : Int): AVL {
         when (tree){
             is Empty -> throw Exception("Can't find substitute")
             is Node  -> {
-                if (tree.keys.height == 0){
-                    return Pair(Empty(), tree.keys.value)
+                if (tree.height() == 0){
+                    return Pair(Empty(), tree.key)
                 }
                 // case when substitute element has a child
-                if ((tree.keys.height == 1) &&(Math.abs(tree.keys.diff) == 1)){
-                    if (inRight && (tree.keys.diff < 0)){
-                        return Pair(tree.left, tree.keys.value)
+                if ((tree.height() == 1) &&(Math.abs(tree.diff()) == 1)){
+                    if (inRight && (tree.diff() < 0)){
+                        return Pair(tree.leftChild, tree.key)
                     }
-                    else if (!inRight && (tree.keys.diff > 0)){
-                        return Pair(tree.right, tree.keys.value)
+                    else if (!inRight && (tree.diff() > 0)){
+                        return Pair(tree.rightChild, tree.key)
                     }
                 }
                 val pair : Pair <AVL, Int>
                 if (inRight){
-                    pair = findSubstitute(tree.right, true)
-                    return Pair(makeNewTree(tree.keys.value, tree.left, pair.first), pair.second)
+                    pair = findSubstitute(tree.rightChild, true)
+                    return Pair(makeNewTree(tree.key, tree.leftChild, pair.first), pair.second)
                 }
                 else{
-                    pair = findSubstitute(tree.left, false)
-                    return Pair(makeNewTree(tree.keys.value, pair.first, tree.right), pair.second)
+                    pair = findSubstitute(tree.leftChild, false)
+                    return Pair(makeNewTree(tree.key, pair.first, tree.rightChild), pair.second)
                 }
             }
             else -> throw  Exception ("Unknown class")
         }
     }
-    when (tree){
-        is Empty ->  return Empty()
-        is Node  -> {
-            if (tree.keys.value > elem){
-                val left = removeInAVL(tree.left, elem)
-                return  makeNewTree(tree.keys.value, left, tree.right)
-            }
-            if (tree.keys.value < elem) {
-                val right = removeInAVL(tree.right, elem)
-                return makeNewTree(tree.keys.value, tree.left, right)
-            }
+    when (tree) {
+        is Empty -> return Empty()
+        is Node ->
+            when {
+                (tree.key > elem) -> {
+                    val left = removeInAVL(tree.leftChild, elem)
+                    return makeNewTree(tree.key, left, tree.rightChild)
+                }
+
+                (tree.key < elem) -> {
+                    val right = removeInAVL(tree.rightChild, elem)
+                    return makeNewTree(tree.key, tree.leftChild, right)
+                }
             // case when tree.value == elem
-            if (tree.keys.height == 0){ // isLeaf
-                return Empty()
+                else -> {
+                    when {
+                        (tree.height() == 0) -> {
+                            // isLeaf
+                            return Empty()
+                        }
+                        (tree.diff() < 0) -> {
+                            val pair = findSubstitute (tree.leftChild, true)
+                            return makeNewTree(pair.second, pair.first, tree.rightChild)
+                        }
+                        else -> {
+                            val pair = findSubstitute (tree.rightChild, false)
+                            return makeNewTree(pair.second, tree.leftChild, pair.first)
+                        }
+                    }
+                }
             }
-            val pair : Pair<AVL,Int>
-            if (tree.keys.diff < 0){
-                pair = findSubstitute (tree.left, true)
-                return makeNewTree(pair.second, pair.first, tree.right)
-            }
-            else {
-                pair = findSubstitute (tree.right, false)
-                return makeNewTree(pair.second, tree.left, pair.first)
-            }
-        }
         else -> throw  Exception("Unknown class")
     }
 }
@@ -282,10 +263,10 @@ private fun AVL.toText(): String {
     when (this) {
         is Empty -> return "Empty()"
         is Node -> {
-            val lText = left.toText()
-            val rText = right.toText()
-            val vText = keys.value
-            return "Node(Keys($vText),$lText, $rText )"
+            val lText = leftChild.toText()
+            val rText = rightChild.toText()
+            val vText = key
+            return "Node($vText,$lText, $rText )"
         }
         else -> throw Exception("Unknown class")
     }
