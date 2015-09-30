@@ -33,6 +33,9 @@ internal class  NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
      so I'll leave this one for curious reader to fill by (him/her)self.
      Антон, практически полностью дублировать описание из п.1 было бы бесполезной механической работой.
      Буду рад услышать советы, как можно прокомментировать эти вычисления адекватным и коротким образом.
+     Github seems to dislike Russian, so there're two above lines in English:
+     Anton, writing almost the same things as in p.1 seem to me as useless mechanical labor.
+     So I would be grateful to hear your advice on how to comment these calculations in adequate and short way.
      */
     internal fun leftRotationCalcDiffNodeGoingUp(): Int {
         if (diff == 1) return 2
