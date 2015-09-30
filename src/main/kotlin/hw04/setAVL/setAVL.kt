@@ -1,6 +1,7 @@
-package hw04
+package hw04.setAVL
 
 import hw03.*
+import hw04.AbstractSet
 import java.util.*
 
 /* Realization of abstract set interface
@@ -12,7 +13,7 @@ import java.util.*
 public fun AVL.toList (): ArrayList<Int> {
     when (this) {
         is Empty -> return ArrayList<Int>()
-        is Node  ->{
+        is Node ->{
             val list = leftChild.toList()
             list.add(key)
             list.addAll(rightChild.toList())
@@ -39,7 +40,7 @@ public class setAVL : AbstractSet {
     override public fun search<T : Comparable<T>> (value : Int) : Boolean{
         return tree.find(value)
     }
-    override public fun toList<T : Comparable<T>> (): ArrayList<Int>{
+    override public fun toList<T : Comparable<T>> (): ArrayList<Int> {
         return tree.toList()
     }
     override public fun union (set : AbstractSet) : AbstractSet {
@@ -50,7 +51,7 @@ public class setAVL : AbstractSet {
         }
         return set
     }
-    override public fun intersection (set : AbstractSet) : AbstractSet{
+    override public fun intersection (set : AbstractSet) : AbstractSet {
         fun getResultedList(set : AbstractSet) : List<Int> {
             val list = this.toList<Int>()
             val list2 = set.toList<Int>()
@@ -84,6 +85,7 @@ fun main(args: Array<String>) {
     set.insert<Int>(2)
     set.insert<Int>(7)
     set.insert<Int>(0)
+    println (set.search<Int>(1))
     val l = set.toList<Int>()
     println(l.get(1))
 }
