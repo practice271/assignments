@@ -8,9 +8,27 @@ class Leaf(val value: Int) {}
 
 class Tree(
         val value: Int,
-        val left : Tree?,
-        val right: Tree?
+        left_param : Tree?,
+        right_param: Tree?
 ) {
+    public var left: Tree? = left_param
+        get() = $left
+        set(newLeft: Tree?) {
+            $left = newLeft
+            height_f = calcHeight()
+        }
+
+    public var right: Tree? = right_param
+        get() = $right
+        set(newRight: Tree?) {
+            $right = newRight
+            height_f = calcHeight()
+        }
+    private fun calcHeight() : Int =
+            1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
+    private var height_f : Int = calcHeight()
+    fun height(): Int = height_f
+
     fun <B> fold(fLeaf: (Int) -> B, fOneChild: (Int, B) -> B, fTwoChildren: (Int, B, B) -> B): B {
         val lRes = left ?.fold(fLeaf, fOneChild, fTwoChildren)
         val rRes = right?.fold(fLeaf, fOneChild, fTwoChildren)
@@ -44,8 +62,13 @@ fun getTree(v: Int): Tree? {
 }
 
 fun main(args: Array<String>) {
-    val tree: Tree? = getTree(1)
-    val value: Int = tree?.value ?: 0
+    var tree: Tree? = getTree(1)
+    val tree_val = tree
+    if (tree_val != null) {
+        val value: Int = tree_val.value
+    }
+
+
     print(hello())
 }
 
