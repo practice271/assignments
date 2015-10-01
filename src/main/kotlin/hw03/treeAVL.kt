@@ -4,12 +4,12 @@ package hw03
    Estimated time 3 hour
    real time      4 hours
 */
-abstract class AVL{
+abstract class AVL<T : Comparable<T>> {
     abstract internal fun calcHeightAndDiff() : Pair<Int, Int>
     abstract internal fun height(): Int
     abstract internal fun diff() : Int
 }
-open class Empty() : AVL(){
+open class Empty <T : Comparable<T>>() : AVL<T>(){
     override internal fun calcHeightAndDiff() : Pair<Int, Int>
     { return Pair(-1, 0)}
     override internal fun height(): Int{
@@ -19,18 +19,18 @@ open class Empty() : AVL(){
         return 0
     }
 }
-open class Node (val key : Int,
-                 left : AVL,
-                 right : AVL) : AVL(){
-    public var leftChild: AVL = left
+open class Node<T : Comparable<T>> (val key : T,
+                 left : AVL<T>,
+                 right : AVL<T>) : AVL<T>(){
+    public var leftChild: AVL<T> = left
         get() = $leftChild
-        set(newLeft: AVL) {
+        set(newLeft: AVL<T>) {
             $leftChild = newLeft
             heightAndDiff = calcHeightAndDiff()
         }
-    public var rightChild: AVL = right
+    public var rightChild: AVL<T> = right
         get() = $rightChild
-        set(newRight: AVL) {
+        set(newRight: AVL<T>) {
             $rightChild = newRight
             heightAndDiff = calcHeightAndDiff()
         }
@@ -45,7 +45,7 @@ open class Node (val key : Int,
     override fun diff() : Int  =  heightAndDiff.second
 }
 
-fun generateTree(lValue : Int, rValue : Int): AVL{
+fun generateTree(lValue : Int, rValue : Int): AVL<Int>{
     if (lValue > rValue) return Empty()
     if (lValue == rValue ) return Node(lValue, Empty(), Empty())
     val middle =  lValue + (rValue - lValue) / 2
@@ -55,8 +55,8 @@ fun generateTree(lValue : Int, rValue : Int): AVL{
     return Node(key, left, right )
 }
 
-public fun  AVL.print() {
-    fun  AVL.print_ (maxLevel : Int) {
+public fun  <T : Comparable<T>> AVL<T>.print() {
+    fun AVL<T>.print_ (maxLevel : Int) {
         fun makeSpaces(n : Int) : String{
             val arr = Array(n, {' '}).toCharArray()
             return String(arr)
@@ -80,24 +80,23 @@ public fun  AVL.print() {
     this.print_(0)
 }
 
-public fun AVL.find (elem : Int): Boolean {
+public fun <T : Comparable<T>> AVL<T>.find (elem : T): Boolean {
     when (this){
         is Empty -> return false
-        is Node ->
-                if (key == elem){
-                    return true
-                }
-                else{
-                    if (key < elem){
-                        return rightChild.find(elem)
-                    }
-                    else return  leftChild.find(elem)
-                }
+        is Node -> {
+            if (key == elem) {
+                return true
+            } else {
+                if (key < elem) {
+                    return rightChild.find(elem)
+                } else return leftChild.find(elem)
+            }
+        }
         else -> throw  Exception("Unknown class")
     }
 }
 
-internal fun unWrap (tree: AVL) : Node{
+internal fun unWrap<T : Comparable<T>> (tree: AVL<T>) : Node<T>{
     when (tree){
         is Empty -> throw Exception("Can't unWrap")
         is Node  -> return tree
@@ -105,12 +104,13 @@ internal fun unWrap (tree: AVL) : Node{
     }
 }
 
-private fun makeNewTree (key : Int, left : AVL, right : AVL) : AVL{
+private fun makeNewTree<T : Comparable<T>>
+        (key : T, left : AVL<T>, right : AVL<T>) : AVL<T>{
     val newTree = Node(key, left, right )
     return (balance(newTree))
 }
 
-fun addToAVL(tree : AVL, elem : Int) : AVL {
+fun addToAVL<T : Comparable<T>>(tree : AVL<T>, elem : T) : AVL<T> {
     when (tree){
         is Empty ->  return Node (elem, Empty(), Empty())
         is Node  -> {
@@ -132,8 +132,8 @@ fun addToAVL(tree : AVL, elem : Int) : AVL {
     }
 }
 
-fun balance(tree : AVL): AVL{
-    fun rightRotation(tree : AVL): AVL{
+fun balance<T : Comparable<T>>(tree : AVL<T>): AVL<T>{
+    fun rightRotation(tree : AVL<T>): AVL<T>{
         when (tree){
             is Empty -> throw Exception("rightRotation is broken")
             is Node ->{
@@ -156,7 +156,7 @@ fun balance(tree : AVL): AVL{
             else -> throw Exception("Unknown class")
         }
     }
-    fun leftRotation(tree : AVL): AVL{
+    fun leftRotation(tree : AVL<T>): AVL<T>{
         when (tree){
             is Empty -> throw Exception("leftRotation is broken")
             is Node ->{
@@ -194,13 +194,13 @@ fun balance(tree : AVL): AVL{
     }
 }
 
-fun removeInAVL(tree : AVL,elem : Int): AVL {
-    fun findSubstitute (tree : AVL, inRight : Boolean) : Pair <AVL, Int>{
+fun removeInAVL<T : Comparable<T>>(tree : AVL<T>,elem : T): AVL<T> {
+    fun findSubstitute (tree : AVL<T>, inRight : Boolean) : Pair <AVL<T>, T>{
         when (tree){
             is Empty -> throw Exception("Can't find substitute")
             is Node  -> {
                 if (tree.height() == 0){
-                    return Pair(Empty(), tree.key)
+                    return Pair(Empty() , tree.key)
                 }
                 // case when substitute element has a child
                 if ((tree.height() == 1) &&(Math.abs(tree.diff()) == 1)){
@@ -211,7 +211,7 @@ fun removeInAVL(tree : AVL,elem : Int): AVL {
                         return Pair(tree.rightChild, tree.key)
                     }
                 }
-                val pair : Pair <AVL, Int>
+                val pair : Pair <AVL<T>, T>
                 if (inRight){
                     pair = findSubstitute(tree.rightChild, true)
                     return Pair(makeNewTree(tree.key, tree.leftChild, pair.first), pair.second)
@@ -259,7 +259,7 @@ fun removeInAVL(tree : AVL,elem : Int): AVL {
     }
 }
 
-private fun AVL.toText(): String {
+private fun <T : Comparable<T>> AVL<T>.toText(): String {
     when (this) {
         is Empty -> return "Empty()"
         is Node -> {
@@ -272,7 +272,7 @@ private fun AVL.toText(): String {
     }
 }
 fun main(args: Array<String>) {
-    var t : AVL = Empty()
+    var t : AVL<Int> = Empty()
     t = addToAVL(t, 3)
     t = addToAVL(t, -1)
     t = addToAVL(t, 6)
@@ -282,5 +282,16 @@ fun main(args: Array<String>) {
     t = addToAVL(t, 5)
     t= removeInAVL(t, 6)
     t.print()
+
+    var t1 : AVL<Char> = Empty()
+    t1 = addToAVL(t1, '3')
+    t1 = addToAVL(t1, '1')
+    t1 = addToAVL(t1, '6')
+    t1 = addToAVL(t1, '8')
+    t1 = addToAVL(t1, '2')
+    t1 = addToAVL(t1, '4')
+    t1 = addToAVL(t1, '5')
+    t1= removeInAVL(t1, '6')
+    t1.print()
 }
 
