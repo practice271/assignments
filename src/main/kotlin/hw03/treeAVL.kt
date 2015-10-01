@@ -282,6 +282,7 @@ fun main(args: Array<String>) {
     t = addToAVL(t, 5)
     t= removeInAVL(t, 6)
     t.print()
+    println()
 
     var t1 : AVL<Char> = Empty()
     t1 = addToAVL(t1, '3')

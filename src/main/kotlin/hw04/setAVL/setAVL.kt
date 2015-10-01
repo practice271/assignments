@@ -10,9 +10,9 @@ import java.util.*
    Estimated time 2 hours
    real time      2 hours
 */
-public fun AVL.toList (): ArrayList<Int> {
+public fun <T : Comparable<T>>AVL<T>.toList (): ArrayList<T> {
     when (this) {
-        is Empty -> return ArrayList<Int>()
+        is Empty -> return ArrayList<T>()
         is Node ->{
             val list = leftChild.toList()
             list.add(key)
@@ -22,40 +22,40 @@ public fun AVL.toList (): ArrayList<Int> {
         else -> throw Exception("Unknown class")
     }
 }
-public class setAVL : AbstractSet {
-    private  var tree : AVL = Empty()
+public class setAVL<T : Comparable<T>> : AbstractSet<T> {
+    private  var tree : AVL<T> = Empty()
     override protected fun makeEmpty() {
         tree = Empty()
     }
-    override  public fun insert<T : Comparable<T>> (value : Int){
+    override  public fun insert  (value : T){
         tree = addToAVL(tree, value)
     }
-    override public fun delete<T : Comparable<T>> (value : Int) : Boolean{
+    override public fun delete (value : T) : Boolean{
         val findElem = tree.find(value)
         if (findElem) {
             tree = removeInAVL(tree, value)
         }
         return findElem
     }
-    override public fun search<T : Comparable<T>> (value : Int) : Boolean{
+    override public fun search (value : T) : Boolean{
         return tree.find(value)
     }
-    override public fun toList<T : Comparable<T>> (): ArrayList<Int> {
+    override public fun toList(): ArrayList<T> {
         return tree.toList()
     }
-    override public fun union (set : AbstractSet) : AbstractSet {
-        val list = set.toList<Int>()
+    override public fun union (set : AbstractSet<T>) : AbstractSet<T> {
+        val list = set.toList()
         val set = this
         for (value in list){
-            set.insert<Int>(value)
+            set.insert(value)
         }
         return set
     }
-    override public fun intersection (set : AbstractSet) : AbstractSet {
-        fun getResultedList(set : AbstractSet) : List<Int> {
-            val list = this.toList<Int>()
-            val list2 = set.toList<Int>()
-            var resultedList = ArrayList<Int>()
+    override public fun intersection (set : AbstractSet<T>) : AbstractSet<T> {
+        fun getResultedList(set : AbstractSet<T>) : List<T> {
+            val list = this.toList()
+            val list2 = set.toList()
+            var resultedList = ArrayList<T>()
 
             val lastElem2 = list2.lastIndex
             var i2 = 0
@@ -73,19 +73,8 @@ public class setAVL : AbstractSet {
         val set = this
         set.makeEmpty()
         for (elem in resultedList){
-            set.insert<Int>(elem)
+            set.insert (elem)
         }
         return set
     }
-}
-
-fun main(args: Array<String>) {
-    var set= setAVL()
-    set.insert<Int>(1)
-    set.insert<Int>(2)
-    set.insert<Int>(7)
-    set.insert<Int>(0)
-    println (set.search<Int>(1))
-    val l = set.toList<Int>()
-    println(l.get(1))
 }

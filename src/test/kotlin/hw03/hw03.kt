@@ -11,7 +11,7 @@ import kotlin.test.assertTrue
 import kotlin.test.assertFalse
 
 public class hw03 {
-   private  fun compare (tree1 : AVL, tree2 : AVL): Boolean{
+   private  fun compare<T : Comparable<T>> (tree1 : AVL<T>, tree2 : AVL<T>): Boolean{
       when (tree1){
          is Empty -> { return (tree2 is Empty)}
          is Node -> {
@@ -76,13 +76,13 @@ public class hw03 {
       assertTrue(compare(expectedTree, unWrap(tree).rightChild))
    }
    @Test fun AddToEmpty(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = addToAVL(tree, -1)
       val expectedTree = Node(-1, Empty(), Empty() )
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun AddBigRightRotation(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = addToAVL(tree, 50)
       tree = addToAVL(tree, 30)
       tree = addToAVL(tree, 100)
@@ -99,38 +99,38 @@ public class hw03 {
       assertTrue(compare(expectedTree, unWrap(tree).leftChild))
    }
    @Test fun RemoveFromEmpty(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = removeInAVL(tree, -1)
-      val expectedTree : AVL =  Empty()
+      val expectedTree : AVL<Int> =  Empty()
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun RemoveToEmpty(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = addToAVL(tree, -1)
       tree = removeInAVL(tree, -1)
-      val expectedTree : AVL =  Empty()
+      val expectedTree : AVL<Int> =  Empty()
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun RemoveLeaf(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = addToAVL(tree, -1)
       tree = addToAVL(tree, 2)
       tree = removeInAVL(tree, 2)
-      val expectedTree : AVL =  Node(-1,Empty(), Empty() )
+      val expectedTree : AVL<Int> =  Node(-1,Empty(), Empty() )
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun RemoveRoot(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = addToAVL(tree, 50)
       tree = addToAVL(tree, 30)
       tree = addToAVL(tree, 100)
       tree = addToAVL(tree, 80)
       tree = removeInAVL(tree, 50)
-      val expectedTree : AVL = Node(80,Node(30,Empty(), Empty() ), Node(100,Empty(), Empty() ) )
+      val expectedTree : AVL<Int> = Node(80,Node(30,Empty(), Empty() ), Node(100,Empty(), Empty() ) )
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun Remove(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = addToAVL(tree, 3)
       tree = addToAVL(tree, -1)
       tree = addToAVL(tree, 6)
@@ -144,7 +144,7 @@ public class hw03 {
       assertTrue(compare(expectedTree, tree))
    }
    @Test fun RemoveWithBalancing(){
-      var tree : AVL = Empty()
+      var tree : AVL<Int> = Empty()
       tree = addToAVL(tree, 3)
       tree = addToAVL(tree, -1)
       tree = addToAVL(tree, 6)
