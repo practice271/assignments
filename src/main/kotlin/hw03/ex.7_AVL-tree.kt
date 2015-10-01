@@ -1,8 +1,8 @@
 package hw03
 
 abstract class Tree {}
-open class Empty() : Tree() {}
-open class Node(val value : Int, val l : Tree, val r : Tree, val height: Int) : Tree() {}
+class Empty() : Tree() {}
+class Node(val value : Int, val l : Tree, val r : Tree, val height: Int) : Tree() {}
 
 fun Tree.getHeight(): Int{
     when (this){
@@ -36,24 +36,18 @@ fun Tree.getRightChild(): Tree{
     return Empty()
 }
 
-fun Tree.getValue(): Int{
-    when (this){
-        is Empty -> return 0
-        is Node -> return value
-    }
-    return 0
+fun Tree.getValue(): Int = if (this is Node) value else 0
 
-
-}
 fun fixHeight(tree1: Tree, tree2: Tree): Int {
     val h1 = tree1.getHeight()
     val h2 = tree2.getHeight()
-    if (h1 > h2) {
-        return (h1 + 1)
-    } else {
-        return (h2 + 1)
-    }
+    return (Math.max(h1,h2) + 1)
 }
+/**fun firstHeight(tree:Tree): Int{
+    val RightChild = tree.getRightChild()
+    val LeftChild = tree.getLeftChild()
+    return fixHeight(RightChild,LeftChild)
+}*/
 
 fun rotateLeft(tree: Tree): Tree {
     when (tree){
@@ -186,32 +180,22 @@ fun removeAVL (tree: Tree, key: Int): Tree{
             if (key > valTree){
                 return balance(Node(valTree, tmpLeft, removeAVL(tmpRight,key),fixHeight(tmpLeft,tmpRight)))
             }
-            else if (key < valTree){
+            if (key < valTree){
                 return balance(Node(valTree,removeAVL(tmpLeft,key),tmpRight,fixHeight(tmpLeft,tmpRight)))
             }
+            if (tmpRight.isEmpty() && tmpLeft.isEmpty()){return Empty()}
+            if (tmpLeft.isEmpty()){return balance(tmpRight)}
+            if (tmpRight.isEmpty()){return balance(tmpLeft)}
             else{
-                if ((tmpRight.isEmpty()) && (tmpLeft.isEmpty())){
-                    return Empty()
-                }
-                else if (tmpLeft.isEmpty()){
-                    return balance(tmpRight)
-                }
-                else if (tmpRight.isEmpty()){
-                    return balance(tmpLeft)
+                val tmpLR = tmpLeft.getRightChild()
+                val tmpLL = tmpLeft.getLeftChild()
+                if (tmpLL.isEmpty()){
+                    return balance(Node(tmpLR.findR(),tmpLL,removeAVL(tmpLR,tmpLR.findR()),fixHeight(tmpLR,tmpLL)))
                 }
                 else{
-                    val tmpLR = tmpLeft.getRightChild()
-                    val tmpLL = tmpLeft.getLeftChild()
-                    if (tmpLL.isEmpty()){
-                        return balance(Node(tmpLR.findR(),tmpLL,removeAVL(tmpLR,tmpLR.findR()),fixHeight(tmpLR,tmpLL)))
-                    }
-                    else{
-                        return balance(Node(tmpLL.findL(),removeAVL(tmpLL,tmpLL.findL()),tmpLR,fixHeight(tmpLR,tmpLL)))
-                    }
+                    return balance(Node(tmpLL.findL(),removeAVL(tmpLL,tmpLL.findL()),tmpLR,fixHeight(tmpLR,tmpLL)))
                 }
-
             }
-
         }
     }
     return tree
@@ -271,5 +255,4 @@ fun main (args : Array<String>) {
     println("+++++++++++++++++++")
     val res1 = balance(tree2)
     printAVL(res1)
-
 }
