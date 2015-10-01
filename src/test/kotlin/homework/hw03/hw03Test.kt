@@ -5,15 +5,10 @@ import kotlin.test.assertEquals
 
 public class hw03Test {
 
-
-
-    val tree1 = Node(3,2,Node(2,1, Empty(), Empty()), Node(6,1,Empty(), Empty()))
+    val tree1 = Node(3,Node(2, Empty(), Empty()), Node(6,Empty(), Empty()))
     val res1 = arrayOf(3,2,1,6)
     val res2 = arrayOf(3,2,6,5)
     val res3 = arrayOf(3,2,6)
-
-
-
 
     Test fun insertTest01()
     {
@@ -35,8 +30,7 @@ public class hw03Test {
         org.junit.Assert.assertArrayEquals(temp.toArray().reversedArray(), res3)
     }
 
-
-    val tree2 = Node (3,2,Empty(),Node(4,1,Empty(), Empty()) )
+    val tree2 = Node (3,Empty(),Node(4,Empty(), Empty()) )
     val rotRes01 = arrayOf(4,3,5)
 
     Test fun rotateTest01()
@@ -46,7 +40,7 @@ public class hw03Test {
 
     }
 
-    val tree3 = Node(3,2,Node(2,1,Empty(), Empty()), Empty())
+    val tree3 = Node(3,Node(2,Empty(), Empty()), Empty())
     val rotRes02 = arrayOf(2,1,3)
 
     Test fun rotateTest02()
@@ -55,8 +49,8 @@ public class hw03Test {
         org.junit.Assert.assertArrayEquals(temp.toArray().reversedArray(), rotRes02)
     }
 
-    val tree4 = Node(5,4,Node(3,3, Node(2,2,Node(1,1,Empty(), Empty()),Empty()),
-            Node(4,1,Empty(),Empty())),Node(8,2,Node(7,1,Empty(),Empty()),Empty()))
+    val tree4 = Node(5,Node(3, Node(2,Node(1,Empty(), Empty()),Empty()),
+            Node(4,Empty(),Empty())),Node(8,Node(7,Empty(),Empty()),Empty()))
     val rotRes03 = arrayOf(3,2,1,5,4,7)
 
     Test fun rotateTest03()
