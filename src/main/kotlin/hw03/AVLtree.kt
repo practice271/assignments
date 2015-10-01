@@ -1,67 +1,85 @@
-package hw03
+package hw04
 
 import java.util.LinkedList
 
-class AVLtree<A>() {
+class AVLtree<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key> {
 
-    private var root: Node<A>? = null
+    private var root: Node<Key, Value>? = null
 
-    public fun find(key : Int) : A?{
-        return root?.find(key)
+    override public fun search(key: Key): Value? {
+        return root?.search(key)
     }
 
-    public fun insert(newKey: Int, newValue : A) {
+    override public fun insert(newKey: Key, newValue: Value) {
         root = root?.insert(newKey, newValue) ?: Node(newKey, newValue)
     }
 
-    public fun remove(key : Int){
-        if (root != null) root = root!!.remove(key)
+    override public fun delete(key: Key) {
+        if (root != null) root = root!!.delete(key)
     }
 
-    public fun toList() : LinkedList<A> {
+    override public fun toList(): LinkedList<Pair<Key, Value>> {
         return root?.toList() ?: linkedListOf()
     }
 
-    public fun toText() : String {
+    override public fun union(map: AbstractMap<Key, Value>): AVLtree<Key, Value> {
+        val res = AVLtree<Key, Value>()
+        val treeList = this.toList()
+        val mapList = map.toList()
+        for (elem in treeList) res.insert(elem.first, elem.second)
+        for (elem in mapList) if (res.search(elem.first) == null) res.insert(elem.first, elem.second)
+        return res
+    }
+
+    override public fun intersection(map: AbstractMap<Key, Value>): AVLtree<Key, Value> {
+        val res = AVLtree<Key, Value>()
+        val treeList = this.toList()
+        val mapList = map.toList()
+        for (elem in treeList) if (mapList.contains(elem)) res.insert(elem.first, elem.second)
+        return res
+    }
+
+    public fun toText(): String {
         return root?.toText() ?: "null"
     }
 }
 
-internal class Node<A>(public var key : Int, public var value : A,
-                       left_param: Node<A>? = null, right_param: Node<A>? = null) {
+internal class Node<Key, Value>(public var key : Key, public var value : Value,
+                       left_param: Node<Key, Value>? = null, right_param: Node<Key, Value>? = null)
+where Key : Comparable<Key> {
 
     private var height: Int = 1
 
-    private var left: Node<A>? = left_param
+    private var left: Node<Key, Value>? = left_param
         set(newLeft) {
             $left = newLeft
             $height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
         }
 
-    private var right: Node<A>? = right_param
+    private var right: Node<Key, Value>? = right_param
         set(newRight) {
             $right = newRight
             $height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
         }
 
-    public fun toList(): LinkedList<A> {
-        fun f(node: Node<A>?, list: LinkedList<A>): LinkedList<A> {
+    public fun toList(): LinkedList<Pair<Key, Value>> {
+        fun f(node: Node<Key, Value>?, list: LinkedList<Pair<Key, Value>>): LinkedList<Pair<Key, Value>> {
             if (node == null) return list
             else {
                 val temp = f(node.left, list)
-                temp.add(node.value)
+                temp.add(Pair(node.key, node.value))
                 return f(node.right, temp)
             }
         }
-        return f(this, linkedListOf<A>())
+        return f(this, linkedListOf<Pair<Key, Value>>())
     }
 
     public fun toText(): String {
-        fun f(node: Node<A>): String {
+        fun f(node: Node<Key, Value>): String {
             val leftToStr: String
             val rightToStr: String
-            if (node.left != null) leftToStr = "{" + f(node.left as Node<A>) + "}" else leftToStr = "null"
-            if (node.right != null) rightToStr = "{" + f(node.right as Node<A>) + "}" else rightToStr = "null"
+            if (node.left != null) leftToStr = "{" + f(node.left as Node<Key, Value>) + "}" else leftToStr = "null"
+            if (node.right != null) rightToStr = "{" + f(node.right as Node<Key, Value>) + "}" else rightToStr = "null"
             return leftToStr + ",${node.value.toString()}," + rightToStr
         }
         return f(this)
@@ -77,7 +95,7 @@ internal class Node<A>(public var key : Int, public var value : A,
         this.height = Math.max(hleft, hright) + 1
     }
 
-    private fun rightRotate(): Node<A> {
+    private fun rightRotate(): Node<Key, Value> {
         var temp1 = this
         var temp2 = temp1.left
         temp1.left = temp2!!.right      //it`s a "private" function so it`s guaranteed that it won`t be called
@@ -87,7 +105,7 @@ internal class Node<A>(public var key : Int, public var value : A,
         return temp2
     }
 
-    private fun leftRotate(): Node<A> {
+    private fun leftRotate(): Node<Key, Value> {
         val temp1 = this
         val temp2 = temp1.right
         temp1.right = temp2!!.left      //it`s a "private" function so it`s guaranteed that it won`t be called
@@ -97,20 +115,21 @@ internal class Node<A>(public var key : Int, public var value : A,
         return temp2
     }
 
-    private fun balance(): Node<A> {
+    private fun balance(): Node<Key, Value> {
         overHeigh()
         val bf = balanceFactor()
         if (bf == 2) {
             if ((right!!.balanceFactor()) < 0) right = right!!.rightRotate() //it`s guaranteed by 'balanceFactor'
             return leftRotate()                                              //implementation that 'right' is not null
-        } else if (bf == -2) {                                               //if 'balanceFactor' returns 2
+        } else if (bf == -2) {
+            //if 'balanceFactor' returns 2
             if ((left!!.balanceFactor()) > 0) left = left!!.leftRotate()     //and 'left' is not null
             return rightRotate()                                             //if 'balanceFactor' returns -2
         } else return this
     }
 
-    public fun insert(newKey: Int, newValue: A): Node<A> {
-        fun f(newKey: Int, newValue: A, node: Node<A>?): Node<A> {
+    public fun insert(newKey: Key, newValue: Value): Node<Key, Value> {
+        fun f(newKey: Key, newValue: Value, node: Node<Key, Value>?): Node<Key, Value> {
             when {
                 node == null -> return Node(newKey, newValue)
                 newKey < node.key -> node.left = f(newKey, newValue, node.left)
@@ -122,52 +141,46 @@ internal class Node<A>(public var key : Int, public var value : A,
         return f(newKey, newValue, this)
     }
 
-    public fun find(searchedKey: Int): A? {
+    public fun search(searchedKey: Key): Value? {
         when {
             searchedKey == key -> return value
-            searchedKey < key -> return left?.find(searchedKey)
-            else -> return right?.find(searchedKey)
+            searchedKey < key -> return left?.search(searchedKey)
+            else -> return right?.search(searchedKey)
         }
     }
 
-    private fun findMin(): Node<A> {
+    private fun findMin(): Node<Key, Value> {
         return left?.findMin() ?: this
     }
 
-    private fun findMax(): Node<A> {
+    private fun findMax(): Node<Key, Value> {
         return right?.findMax() ?: this
     }
 
-    public fun remove(removingKey: Int): Node<A>? {
-        var ans: Node<A>
+    public fun delete(removingKey: Key): Node<Key, Value>? {
+        var ans: Node<Key, Value>
         when {
             this.key == removingKey ->
                 when {
                     this.left != null -> {
                         val temp = this.left!!.findMax()
-                        ans = Node(temp.key, temp.value, this.left!!.remove(temp.key), this.right)
+                        ans = Node(temp.key, temp.value, this.left!!.delete(temp.key), this.right)
                     }
                     this.right != null -> {
                         val temp = this.right!!.findMin()
-                        ans = Node(temp.key, temp.value, this.left, this.right!!.remove(temp.key))
+                        ans = Node(temp.key, temp.value, this.left, this.right!!.delete(temp.key))
                     }
                     else -> return null
                 }
             removingKey < this.key -> {
                 if (this.left == null) ans = this
-                else ans = Node(this.key, this.value, this.left!!.remove(removingKey), this.right)
+                else ans = Node(this.key, this.value, this.left!!.delete(removingKey), this.right)
             }
             else -> {
                 if (this.right == null) ans = this
-                else ans = Node(this.key, this.value, this.left, this.right!!.remove(removingKey))
+                else ans = Node(this.key, this.value, this.left, this.right!!.delete(removingKey))
             }
         }
         return ans.balance()
     }
-}
-
-fun main(args: Array<String>) {
-    val tree = AVLtree<Int>()
-    tree.insert(5, 500); tree.insert(9, 900); tree.insert(6, 600); tree.insert(4, 400);
-    print(tree.toText())
 }
