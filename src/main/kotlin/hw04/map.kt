@@ -1,7 +1,69 @@
-package hw03
+package hw04
 
-internal class  NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
-                           var leftChild : NodeAvl<A>?, var rightChild : NodeAvl<A>?) {
+
+public fun <A> List<Pair<Int, A>>.hasSecondValueInPair(value : A) : Boolean {
+    for (i in this) {
+        if (i.second == value) return true
+    }
+    return false
+}
+
+public fun Int.toPair() : Pair<Int, Int> {
+    return Pair(this, this)
+}
+
+abstract public class Map<A> () {
+    abstract public fun insert      (value : Pair<Int, A>) : Map<A>
+    abstract public fun delete      (key : Int) : Map<A>?
+    abstract public fun search      (key : Int) : A?
+    abstract public fun unite       (map2 : Map<A>) : Map<A>
+    abstract public fun intersect   (map2 : Map<A>) : Map<A>?
+
+    abstract internal fun toList () : List<Pair<Int, A>>
+}
+
+//internal class HashMap<A>
+
+
+internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
+                           var leftChild : NodeAvl<A>?, var rightChild : NodeAvl<A>?) : hw04.Map<A>(){
+
+    override public fun insert (value : Pair<Int, A>) : NodeAvl<A> {
+        return add(value, this)
+    }
+    override public fun delete (key : Int) : NodeAvl<A>? {
+        return del(key, this)
+    }
+    override public fun search (key : Int) : A? {
+        return search(key, this)
+    }
+    override internal fun toList () : MutableList<Pair<Int, A>> {
+        val res = linkedListOf(value)
+        val left = leftChild?.toList() ?: linkedListOf()
+        res.addAll(left)
+        val right = rightChild?.toList() ?: linkedListOf()
+        res.addAll(right)
+        return res
+    }
+    override public fun unite (map2 : Map<A>) : NodeAvl<A> {
+        val map2 = map2.toList()
+        var res = this
+        for (i in map2) {
+            res = add(i, res)
+        }
+        return res
+    }
+
+    override public fun intersect (map2 : Map<A>) : NodeAvl<A>? {
+        val map1 = toList()
+        val map2 = map2.toList()
+        var res = null : NodeAvl<A>?
+        for (i in map2) {
+            if (map1.hasSecondValueInPair(i)) res = add(i, res)
+        }
+        return res
+    }
+
     //the numbers in functions below were calculated this way:
     /*
     y,z stand for single nodes, A,B,C - for subtrees.
@@ -116,6 +178,7 @@ internal class  NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
 }
     public fun <A> add(num: Pair<Int, A>, tree: NodeAvl<A>?): NodeAvl<A> {
         if (tree == null) return NodeAvl<A>(num, 0, null, null)
+        if (tree.value.second == num.second) return tree
         if (num.first < tree.value.first)
             return NodeAvl(tree.value, tree.diff + 1, add(num, tree.leftChild), tree.rightChild).balance()
 
@@ -129,23 +192,23 @@ internal class  NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
         return search(key, tree.leftChild)
     }
 
-    public fun <A> del(num : Pair<Int, A>, tree : NodeAvl<A>?) : NodeAvl<A>? {
+    public fun <A> del(num : Int, tree : NodeAvl<A>?) : NodeAvl<A>? {
         if (tree == null) return null //if there's nothing to delete, nothing will be deleted
-        if (num.first == tree.value.first) {
+        if (num == tree.value.first) {
             val substitute : Pair<Int, A>
             if (tree.leftChild != null) {
                 substitute = tree.leftChild!!.findBiggest()
-                val newLeftChild = del(substitute,tree.leftChild)
+                val newLeftChild = del(substitute.first,tree.leftChild)
                 return NodeAvl(substitute, tree.diff - 1, newLeftChild, tree.rightChild).balance()
             }
             if (tree.rightChild != null) {
                 substitute = tree.rightChild!!.findSmallest()
-                val newRightChild = del(substitute,tree.rightChild)
+                val newRightChild = del(substitute.first,tree.rightChild)
                 return NodeAvl(substitute, tree.diff + 1, tree.leftChild, newRightChild).balance()
             }
             return null
         }
-        if (num.first < tree.value.first) {
+        if (num < tree.value.first) {
             val newLeftChild = del(num,tree.leftChild)
             return NodeAvl(tree.value, tree.diff - 1, newLeftChild, tree.rightChild).balance()
         }
@@ -174,7 +237,7 @@ public fun main(args : Array<String>) {
     t = addInt(-3, t)
     t = addInt(4, t)
     t = addInt(25, t)
-    var nt = del(Pair(12, 12), t)
-    printTree("", nt)
-
+    var nt = del(12, t)
+    //printTree("", nt)
+    println("${4.hashCode()}or${4.hashCode()}")
 }

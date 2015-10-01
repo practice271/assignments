@@ -1,4 +1,4 @@
-package hw03
+package hw04
 
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -21,16 +21,11 @@ public class avlTreeTest {
         val res = treeEquals(a,b)
         assertEquals(res, true)
     }
-    @Test fun addToEmpty()
-    {
-        val t = addInt(1, null)
-        treeAssertEquals(t, NodeAvl(Pair(1,1), 0, null, null))
-    }
     @Test fun addIncreasingSec()
     {
-        var t = addInt(1, null)
-        t = addInt(2, t)
-        t = addInt(3, t)
+        var t = NodeAvl(1.toPair(), 0, null, null)
+        t = t.insert(2.toPair())
+        t = t.insert(3.toPair())
         treeAssertEquals(t, NodeAvl(
                 Pair(2,2), 0,
                 NodeAvl(Pair(1,1), 0, null, null), NodeAvl(Pair(3,3), 0, null, null)
@@ -38,34 +33,30 @@ public class avlTreeTest {
     }
     @Test fun addDecreasingSec()
     {
-        var t = addInt(-1, null)
-        t = addInt(-2, t)
-        t = addInt(-3, t)
-        t = addInt(-4, t)
+        var t = NodeAvl((-1).toPair(), 0, null, null)
+        t = t.insert((-2).toPair())
+        t = t.insert((-3).toPair())
+        t = t.insert((-4).toPair())
         treeAssertEquals(t, NodeAvl(Pair(-2,-2), 0, NodeAvl(
                 Pair(-3,-3), 1,
                 NodeAvl(Pair(-4,-4), 0, null, null), null), NodeAvl(Pair(-1,-1), 0, null, null)
         ))
     }
-    @Test fun delFromEmpty()
-    {
-        treeAssertEquals(del(Pair(1,1), null), null)
-    }
     @Test fun delRoot()
     {
-        var t = addInt(1, null)
-        t = addInt(2, t)
-        t = addInt(3, t)
-        var nt = del(Pair(2,2), t)
+        var t = NodeAvl(1.toPair(), 0, null, null)
+        t = t.insert(2.toPair())
+        t = t.insert(3.toPair())
+        var nt = t.delete(2)
         treeAssertEquals(nt, NodeAvl(Pair(1,1), -1, null, NodeAvl(Pair(3,3), 0, null, null)))
     }
     @Test fun delMiddleNode()
     {
-        var t = addInt(1, null)
-        t = addInt(2, t)
-        t = addInt(3, t)
-        t = addInt(4, t)
-        var nt = del(Pair(3,3), t)
+        var t = NodeAvl(1.toPair(), 0, null, null)
+        t = t.insert(2.toPair())
+        t = t.insert(3.toPair())
+        t = t.insert(4.toPair())
+        var nt = t.delete(3)
         treeAssertEquals(nt, NodeAvl(
                 Pair(2,2), 0,
                 NodeAvl(Pair(1,1), 0, null, null), NodeAvl(Pair(4, 4), 0, null, null)
@@ -73,39 +64,35 @@ public class avlTreeTest {
     }
     @Test fun delLeaf()
     {
-        var t = addInt(1, null)
-        t = addInt(2, t)
-        t = addInt(3, t)
-        var nt = del(Pair(1,1), t)
+        var t = NodeAvl(1.toPair(), 0, null, null)
+        t = t.insert(2.toPair())
+        t = t.insert(3.toPair())
+        var nt = t.delete(1)
         treeAssertEquals(nt, NodeAvl(Pair(2,2), -1, null, NodeAvl(Pair(3, 3), 0, null, null)))
     }
     @Test fun searchLeaf()
     {
-        var t = addInt(1, null)
-        t = addInt(2, t)
-        t = addInt(3, t)
-        assertEquals(search(3, t), 3)//second '3' is value, not a key
+        var t = NodeAvl(1.toPair(), 0, null, null)
+        t = t.insert(2.toPair())
+        t = t.insert(3.toPair())
+        assertEquals(t.search(3), 3)
     }
     @Test fun searchNode()
     {
-        var t = addInt(1, null)
-        t = addInt(2, t)
-        t = addInt(3, t)
-        t = addInt(4, t)
-        assertEquals(search(3, t), 3)//second '3' is value, not a key
-    }
-    @Test fun searchEmpty()
-    {
-        assertNull(search(3, null : NodeAvl<Int>?))
+        var t = NodeAvl(1.toPair(), 0, null, null)
+        t = t.insert(2.toPair())
+        t = t.insert(3.toPair())
+        t = t.insert(4.toPair())
+        assertEquals(t.search(3), 3)
     }
     @Test fun searchAfterDeletion()
     {
-        var t = addInt(1, null)
-        t = addInt(2, t)
-        t = addInt(3, t)
-        t = addInt(4, t)
-        var nt = del(Pair(3,3), t)
-        val res = search(3, nt)
+        var t = NodeAvl(1.toPair(), 0, null, null)
+        t = t.insert(2.toPair())
+        t = t.insert(3.toPair())
+        t = t.insert(4.toPair())
+        var nt = t.delete(3)
+        val res = nt!!.search(3)
         assertNull(res)
     }
 }
