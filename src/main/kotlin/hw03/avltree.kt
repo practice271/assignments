@@ -1,35 +1,37 @@
 package hw03
 
-internal class Node(internal var key: Int,
-                    left_param: Node?,
-                    right_param: Node?) {
+public class Node(public var key: Int,
+                  left_param: Node?,
+                  right_param: Node?) {
 
-    //internal constructor(k: Int): this(k, null, null) { }
 
-    internal var left: Node? = left_param
+    public var left: Node? = left_param
         get() = $left
         set(newLeft: Node?) {
             $left = newLeft
             height_f = calcHeight()
         }
-    internal var right: Node? = right_param
+    public var right: Node? = right_param
         get() = $right
         set(newR: Node?) {
             $right = newR
             height_f = calcHeight()
         }
 
-    private fun calcHeight() : Int = 1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
     private var height_f : Int = calcHeight()
-    internal fun height(): Int = height_f
 
-    private  fun balance(): Int = (right?.height() ?: 0) - (left?.height() ?: 0)
+
+    private fun calcHeight() : Int = 1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
+
+    private fun height(): Int = height_f
+
+    private fun balance(): Int = (right?.height() ?: 0) - (left?.height() ?: 0)
 
     private fun ltrotate() {
         if(right != null) {
-        left = Node(key, left, right?.left)
-        key = right?.key ?: 0
-        right = right?.right
+            left = Node(key, left, right?.left)
+            key = right?.key ?: 0
+            right = right?.right
         }
     }
     private fun rgrotate() {
@@ -50,7 +52,7 @@ internal class Node(internal var key: Int,
     }
 
 
-    internal fun rebalance() {
+    public fun rebalance() {
         when(balance()) {
             -2 -> {
                 if(left?.balance()?:0 <= 0)
@@ -70,9 +72,9 @@ internal class Node(internal var key: Int,
 }
 
 
-internal open class AVLtree() {
+public class AVLtree() {
 
-    internal var root: Node? = null
+    public var root: Node? = null
 
 
     private fun ins(k: Int, nd: Node?): Node {
@@ -93,7 +95,7 @@ internal open class AVLtree() {
             }
         }
     }
-    internal fun insert(k: Int) {
+    public fun insert(k: Int) {
         root = ins(k, root)
     }
 
@@ -124,7 +126,7 @@ internal open class AVLtree() {
         nd.rebalance()
         return nd
     }
-    internal fun delete(k: Int) {
+    public fun delete(k: Int) {
         root = del(k, root)
     }
 
@@ -137,30 +139,42 @@ internal open class AVLtree() {
             else -> search(k, nd.left)
         }
     }
-    internal fun search(k: Int): Int = search(k, root)
+    public fun search(k: Int): Int = search(k, root)
 
 
-    /*internal fun toText() : String {
-        fun Node.toText_(): List<String> {
-            val lText = left?.toText_()?.map { "|  $it" } ?: listOf("|  _\n")
-            val rText = right?.toText_()?.map { "|  $it" } ?: listOf("|  _\n")
+    public fun toText() : String {
+        fun Node.toText(): List<String> {
+            val lText = left?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
+            val rText = right?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
             val vText = listOf("($key)\n")
             return rText + vText + lText
         }
         val builder = StringBuilder()
-        val lines = root?.toText_() ?: listOf("_\n")
+        val lines = root?.toText() ?: listOf("_\n")
         lines.forEach { builder.append(it) }
         return builder.toString()
-    }*/
+    }
+
+    override fun toString() : String {
+        fun Node.print() : String {
+            val lText = left?.print() ?: ""
+            val rText = right?.print() ?: ""
+            val vText = key.toString() + " "
+            return vText + lText + rText
+        }
+
+        return root?.print() ?: "TIE"
+    }
 }
 
 
-/*
+
 fun main(args: Array<String>) {
     val t = AVLtree()
-    t.insert(2); t.insert(10); t.insert(14); t.insert(6); t.insert(12); t.insert(100); t.insert(15); t.insert(17)
+    //println(t.toText())
+    t.insert(2); t.insert(10); t.insert(14); //t.insert(6); t.insert(12); t.insert(100); t.insert(15); t.insert(17)
     println(t.toText())
 
-    t.delete(10)
-    println(t.toText())
-}*/
+//    t.delete(10)
+//    println(t.toText())
+}
