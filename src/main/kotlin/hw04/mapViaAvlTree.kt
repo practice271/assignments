@@ -1,28 +1,14 @@
 package hw04
 
-
-public fun <A> List<Pair<Int, A>>.hasSecondValueInPair(value : A) : Boolean {
-    for (i in this) {
-        if (i.second == value) return true
-    }
-    return false
-}
-
-public fun Int.toPair() : Pair<Int, Int> {
-    return Pair(this, this)
-}
-
 abstract public class Map<A> () {
     abstract public fun insert      (value : Pair<Int, A>) : Map<A>
     abstract public fun delete      (key : Int) : Map<A>?
     abstract public fun search      (key : Int) : A?
-    abstract public fun unite       (map2 : Map<A>) : Map<A>
+    abstract public fun unite       (map2 : Map<A>?) : Map<A>
     abstract public fun intersect   (map2 : Map<A>) : Map<A>?
 
     abstract internal fun toList () : List<Pair<Int, A>>
 }
-
-//internal class HashMap<A>
 
 
 internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
@@ -45,7 +31,8 @@ internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
         res.addAll(right)
         return res
     }
-    override public fun unite (map2 : Map<A>) : NodeAvl<A> {
+    override public fun unite (map2 : Map<A>?) : NodeAvl<A> {
+        if (map2 == null) return this
         val map2 = map2.toList()
         var res = this
         for (i in map2) {
@@ -131,7 +118,8 @@ internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
     internal fun rotateRight(): NodeAvl<A> {
         val left = leftChild!!//it is guaranteed by calling functions that there won't be NPE
         val oldDiff = left.diff
-        val newRightChild = NodeAvl(value, rightRotationCalcDiffNodeGoingDown(oldDiff), left.rightChild, rightChild)
+        val newRightChild = NodeAvl(value, rightRotationCalcDiffNodeGoingDown(oldDiff),
+                left.rightChild, rightChild)
         return NodeAvl(left.value, left.rightRotationCalcDiffNodeGoingUp(),
                 left.leftChild,
                 newRightChild)
@@ -140,39 +128,32 @@ internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
     internal fun findBiggest(): Pair<Int, A> {
         val rightChild_val = rightChild
         if (rightChild_val != null) return rightChild_val.findBiggest()
-        //!! is required by Kotlin (for unknown reasons)
         else return value
     }
 
     internal fun findSmallest(): Pair<Int, A> {
         val leftChild_val = leftChild
         if (leftChild_val != null) return leftChild_val.findSmallest()
-        //!! is required by Kotlin (for unknown reasons)
         else return value
     }
 
     internal fun balance(): NodeAvl<A> {
-        if ((diff == -1) || (diff == 1) || (diff == 0)) return this
-        if (diff == 2) {
-            /*
-            var temp = this
-            if (leftChild?.diff == -1) //it is guaranteed by calling functions that there won't be NPE
-            {
-                temp = NodeAvl(value, diff, leftChild!!.rotateLeft(), rightChild)
+        when (diff) {
+            1, -1, 0 -> return this
+            2 -> {
+                val leftChild_val = leftChild
+                if (leftChild_val != null && leftChild_val.diff == -1) {
+                    return NodeAvl(value, diff, leftChild_val.rotateLeft(), rightChild).rotateRight()
+                }
+                return this.rotateRight()
             }
-            return temp.rotateRight()
-            */
-            val leftChild_val = leftChild
-            if (leftChild_val != null && leftChild_val.diff == -1) {
-                return NodeAvl(value, diff, leftChild_val.rotateLeft(), rightChild).rotateRight()
+            else -> {
+                var temp = this
+                if (rightChild?.diff == 1) {//it is guaranteed by calling functions that there won't be NPE
+                    temp = NodeAvl(value, diff, leftChild, rightChild!!.rotateRight())
+                }
+                return temp.rotateLeft()
             }
-            return this.rotateRight()
-        } else {
-            var temp = this
-            if (rightChild?.diff == 1) {//it is guaranteed by calling functions that there won't be NPE
-                temp = NodeAvl(value, diff, leftChild, rightChild!!.rotateRight())
-            }
-            return temp.rotateLeft()
         }
     }
 }
@@ -195,14 +176,13 @@ internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
     public fun <A> del(num : Int, tree : NodeAvl<A>?) : NodeAvl<A>? {
         if (tree == null) return null //if there's nothing to delete, nothing will be deleted
         if (num == tree.value.first) {
-            val substitute : Pair<Int, A>
             if (tree.leftChild != null) {
-                substitute = tree.leftChild!!.findBiggest()
+                val substitute = tree.leftChild!!.findBiggest()
                 val newLeftChild = del(substitute.first,tree.leftChild)
                 return NodeAvl(substitute, tree.diff - 1, newLeftChild, tree.rightChild).balance()
             }
             if (tree.rightChild != null) {
-                substitute = tree.rightChild!!.findSmallest()
+                val substitute = tree.rightChild!!.findSmallest()
                 val newRightChild = del(substitute.first,tree.rightChild)
                 return NodeAvl(substitute, tree.diff + 1, tree.leftChild, newRightChild).balance()
             }
@@ -216,28 +196,9 @@ internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
         return NodeAvl(tree.value, tree.diff + 1, tree.leftChild, newRightChild).balance()
     }
     public fun <A> printTree (spaces : String, node : NodeAvl<A>?) {
-        if (node == null) print("null")
-        else {
-            print("${node.value}\n$spaces|---")
-            printTree(spaces + "        ", node.rightChild)
-            print("\n$spaces|\n$spaces|---")
-            printTree(spaces + "        ", node.leftChild)
-        }
+        if (node == null) { print("null"); return}
+        print("${node.value}\n$spaces|---")
+        printTree(spaces + "        ", node.rightChild)
+        print("\n$spaces|\n$spaces|---")
+        printTree(spaces + "        ", node.leftChild)
     }
-
-public fun addInt(num : Int, tree: NodeAvl<Int>?) : NodeAvl<Int> {
-    return add(Pair(num, num), tree)
-}
-
-public fun main(args : Array<String>) {
-    var t = NodeAvl<Int>(Pair(0, 0), 0, null, null)
-    t = addInt(12, t)
-    t = addInt(-3, t)
-    t = addInt(1, t)
-    t = addInt(-3, t)
-    t = addInt(4, t)
-    t = addInt(25, t)
-    var nt = del(12, t)
-    //printTree("", nt)
-    println("${4.hashCode()}or${4.hashCode()}")
-}

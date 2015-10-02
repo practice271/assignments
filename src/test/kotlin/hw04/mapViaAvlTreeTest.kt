@@ -95,4 +95,62 @@ public class avlTreeTest {
         val res = nt!!.search(3)
         assertNull(res)
     }
+    @Test fun unite() {
+        val a = HashMap<Int>(100)
+        val b = NodeAvl(Pair(-2,-2), 0, NodeAvl(
+                Pair(-3,-3), 1,
+                NodeAvl(Pair(-4,-4), 0, null, null), null), NodeAvl(Pair(-1,-1), 0, null, null)
+        )
+        a.insert(1.toPair())
+        val c = b.unite(a)
+        org.junit.Assert.assertArrayEquals(c.toList().toTypedArray(),
+                arrayOf((-2).toPair(), (-3).toPair(), (-4).toPair(), (-1).toPair(), 1.toPair()))
+    }
+    @Test fun uniteHaveSomeSameVals() {
+        val a = HashMap<Int>(100)
+        val b = NodeAvl(Pair(-2,-2), 0, NodeAvl(
+                Pair(-3,-3), 1,
+                NodeAvl(Pair(-4,-4), 0, null, null), null), NodeAvl(Pair(-1,-1), 0, null, null)
+        )
+        a.insert(1.toPair())
+        a.insert((-2).toPair())
+        a.insert((-4).toPair())
+        val c = b.unite(a)
+        org.junit.Assert.assertArrayEquals(c.toList().toTypedArray(),
+                arrayOf((-2).toPair(), (-4).toPair(), (-3).toPair(), (-1).toPair(), 1.toPair()))
+    }
+
+    @Test fun intersectHaveCommon() {
+        val a = HashMap<Int>(100)
+        val b = NodeAvl(Pair(-2,-2), 0, NodeAvl(
+                Pair(-3,-3), 1,
+                NodeAvl(Pair(-4,-4), 0, null, null), null), NodeAvl(Pair(-1,-1), 0, null, null)
+        )
+        a.insert(1.toPair())
+        a.insert((-2).toPair())
+        val c = b.intersect(a)
+        org.junit.Assert.assertArrayEquals(c?.toList()?.toTypedArray(), arrayOf((-2).toPair()))
+    }
+    @Test fun intersectNoCommon() {
+        val a = HashMap<Int>(100)
+        val b = NodeAvl(Pair(-2,-2), 0, NodeAvl(
+                Pair(-3,-3), 1,
+                NodeAvl(Pair(-4,-4), 0, null, null), null), NodeAvl(Pair(-1,-1), 0, null, null)
+        )
+        a.insert(1.toPair())
+        val c = b.intersect(a)
+        assertNull(c)
+    }
+    @Test fun intersectSame() {
+        val a = HashMap<Int>(100)
+        val b = NodeAvl(Pair(2,2), 0, NodeAvl(
+                Pair(1,1), 0,
+                null, null), NodeAvl(Pair(3,3), 0, null, null)
+        )
+        a.insert(3.toPair())
+        a.insert(1.toPair())
+        a.insert(2.toPair())
+        val c = b.intersect(a)
+        org.junit.Assert.assertArrayEquals(c?.toList()?.toTypedArray(), arrayOf(2.toPair(), 1.toPair(), 3.toPair()))
+    }
 }
