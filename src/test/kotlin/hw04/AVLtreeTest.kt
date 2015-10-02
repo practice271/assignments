@@ -118,19 +118,19 @@ public class AVLtreeTest {
         assertEquals("{null,300,null},500,{null,700,{null,1000,null}}", tree1.union(tree2).toText())
     }
 
-    Test fun treeUnionHashTableTest() {
+    Test fun treeUnionHashMapTest() {
         var tree = AVLtree<Int, Int>()
-        var hashTable = HashTable<Int, Int>()
-        assertEquals("null", tree.union(hashTable).toText())
+        var hashMap = HashMap<Int, Int>()
+        assertEquals("null", tree.union(hashMap).toText())
 
         tree.insert(3, 300); tree.insert(7, 700); tree.insert(5, 500)
-        assertEquals("{null,300,null},500,{null,700,null}", tree.union(hashTable).toText())
+        assertEquals("{null,300,null},500,{null,700,null}", tree.union(hashMap).toText())
 
-        hashTable.insert(3, 300); hashTable.insert(7, 700); hashTable.insert(10, 1000)
-        assertEquals("{null,300,null},500,{null,700,{null,1000,null}}", tree.union(hashTable).toText())
+        hashMap.insert(3, 300); hashMap.insert(7, 700); hashMap.insert(10, 1000)
+        assertEquals("{null,300,null},500,{null,700,{null,1000,null}}", tree.union(hashMap).toText())
 
         tree = AVLtree<Int, Int>()
-        assertEquals("{null,300,null},700,{null,1000,null}", tree.union(hashTable).toText())
+        assertEquals("{null,300,null},700,{null,1000,null}", tree.union(hashMap).toText())
     }
 
     Test fun treeIntersectionTreeTest() {
@@ -146,15 +146,15 @@ public class AVLtreeTest {
         assertEquals("null,300,{null,700,null}", tree1.intersection(tree2).toText())
     }
 
-    Test fun treeIntersectionHashTableTest() {
+    Test fun treeIntersectionHashMapTest() {
         var tree = AVLtree<Int, Int>()
-        var hashTable = HashTable<Int, Int>()
-        assertEquals("null", tree.intersection(hashTable).toText())
+        var hashMap = HashMap<Int, Int>()
+        assertEquals("null", tree.intersection(hashMap).toText())
 
         tree.insert(3, 300); tree.insert(7, 700); tree.insert(5, 500)
-        assertEquals("null", tree.intersection(hashTable).toText())
+        assertEquals("null", tree.intersection(hashMap).toText())
 
-        hashTable.insert(3, 300); hashTable.insert(7, 700); hashTable.insert(10, 1000)
-        assertEquals("null,300,{null,700,null}", tree.intersection(hashTable).toText())
+        hashMap.insert(3, 300); hashMap.insert(7, 700); hashMap.insert(10, 1000)
+        assertEquals("null,300,{null,700,null}", tree.intersection(hashMap).toText())
     }
 }

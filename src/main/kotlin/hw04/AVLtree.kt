@@ -15,7 +15,7 @@ class AVLtree<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key
     }
 
     override public fun delete(key: Key) {
-        if (root != null) root = root!!.delete(key)
+        if (root != null) root = root?.delete(key)
     }
 
     override public fun toList(): LinkedList<Pair<Key, Value>> {
@@ -97,8 +97,8 @@ where Key : Comparable<Key> {
 
     private fun rightRotate(): Node<Key, Value> {
         var temp1 = this
-        var temp2 = temp1.left
-        temp1.left = temp2!!.right      //it`s a "private" function so it`s guaranteed that it won`t be called
+        var temp2 = temp1.left as Node<Key, Value>
+        temp1.left = temp2.right      //it`s a "private" function so it`s guaranteed that it won`t be called
         temp2.right = temp1             //if this.left.right is null
         temp1.overHeigh()
         temp2.overHeigh()
@@ -107,8 +107,8 @@ where Key : Comparable<Key> {
 
     private fun leftRotate(): Node<Key, Value> {
         val temp1 = this
-        val temp2 = temp1.right
-        temp1.right = temp2!!.left      //it`s a "private" function so it`s guaranteed that it won`t be called
+        val temp2 = temp1.right as Node<Key, Value>
+        temp1.right = temp2.left        //it`s a "private" function so it`s guaranteed that it won`t be called
         temp2.left = temp1              //if this.right.left is null
         temp1.overHeigh()
         temp2.overHeigh()
@@ -119,12 +119,11 @@ where Key : Comparable<Key> {
         overHeigh()
         val bf = balanceFactor()
         if (bf == 2) {
-            if ((right!!.balanceFactor()) < 0) right = right!!.rightRotate() //it`s guaranteed by 'balanceFactor'
-            return leftRotate()                                              //implementation that 'right' is not null
-        } else if (bf == -2) {
-            //if 'balanceFactor' returns 2
-            if ((left!!.balanceFactor()) > 0) left = left!!.leftRotate()     //and 'left' is not null
-            return rightRotate()                                             //if 'balanceFactor' returns -2
+            if (((right as Node<Key, Value>).balanceFactor()) < 0) right = right?.rightRotate()
+            return leftRotate()  //it`s guaranteed by 'balanceFactor' implementation that 'right' is not null
+        } else if (bf == -2) {   //if 'balanceFactor' returns 2
+            if (((left as Node<Key, Value>).balanceFactor()) > 0) left = left?.leftRotate()
+            return rightRotate() //'left' is not null if 'balanceFactor' returns -2
         } else return this
     }
 
@@ -136,8 +135,8 @@ where Key : Comparable<Key> {
                 newKey > node.key -> node.right = f(newKey, newValue, node.right)
                 else -> node.value = newValue
             }
-            return node!!.balance()      //node is not null because in this case function
-        }                                //would have already returned Node(newKey, newValue)
+            return (node as Node<Key, Value>).balance()      //node is not null because in this case function
+        }                                                   //would have already returned Node(newKey, newValue)
         return f(newKey, newValue, this)
     }
 
@@ -159,26 +158,28 @@ where Key : Comparable<Key> {
 
     public fun delete(removingKey: Key): Node<Key, Value>? {
         var ans: Node<Key, Value>
+        val leftSubtree = this.left
+        val rightSubtree = this.right
         when {
             this.key == removingKey ->
                 when {
-                    this.left != null -> {
-                        val temp = this.left!!.findMax()
-                        ans = Node(temp.key, temp.value, this.left!!.delete(temp.key), this.right)
+                    leftSubtree != null -> {
+                        val temp = leftSubtree.findMax()
+                        ans = Node(temp.key, temp.value, leftSubtree.delete(temp.key), this.right)
                     }
-                    this.right != null -> {
-                        val temp = this.right!!.findMin()
-                        ans = Node(temp.key, temp.value, this.left, this.right!!.delete(temp.key))
+                    rightSubtree != null -> {
+                        val temp = rightSubtree.findMin()
+                        ans = Node(temp.key, temp.value, this.left, rightSubtree.delete(temp.key))
                     }
                     else -> return null
                 }
             removingKey < this.key -> {
                 if (this.left == null) ans = this
-                else ans = Node(this.key, this.value, this.left!!.delete(removingKey), this.right)
+                else ans = Node(this.key, this.value, leftSubtree?.delete(removingKey), this.right)
             }
             else -> {
                 if (this.right == null) ans = this
-                else ans = Node(this.key, this.value, this.left, this.right!!.delete(removingKey))
+                else ans = Node(this.key, this.value, this.left, rightSubtree?.delete(removingKey))
             }
         }
         return ans.balance()
