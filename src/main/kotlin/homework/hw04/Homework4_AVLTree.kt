@@ -7,7 +7,7 @@
 
 package homework.hw04
 
-abstract class Set {
+abstract public class Set {
     abstract public fun insert(elem : Int) : Set
     abstract public fun remove(elem : Int) : Set
     abstract public fun contains(elem : Int) : Boolean
@@ -16,11 +16,11 @@ abstract class Set {
 }
 
 /** Implementation of AVL tree. */
-open class AVLTree() : Set() {
+open public class AVLTree() : Set() {
 
-    class Empty() : AVLTree() {}
-    class Leaf(val value : Int) : AVLTree() {}
-    class Node(val value : Int, val left : AVLTree, val right : AVLTree) : AVLTree() {
+    internal class Empty() : AVLTree() {}
+    internal class Leaf(val value : Int) : AVLTree() {}
+    internal class Node(val value : Int, val left : AVLTree, val right : AVLTree) : AVLTree() {
         public val height = Math.max(left.getHeight(), right.getHeight()) + 1
     }
 
@@ -173,21 +173,19 @@ open class AVLTree() : Set() {
         when(this) {
             is Empty -> return this
             is Leaf  -> {
-                if (this.value == elem)
-                    return Empty()
-                else
-                    return this
+                when (this.value) {
+                    elem -> return Empty()
+                    else -> return this
+                }
             }
             is Node  -> {
                 if (this.value == elem) {
                     if (this.left.getHeight() < this.right.getHeight()) {
-
                         // finds minimum element in right subtree
                         val temp   = this.right.fold({a, b -> Math.min(a, b)}, this.value)
                         return Node(temp, this.left, this.right.remove(temp)).balance()
                     }
                     else {
-
                         // finds maximum element in left subtree
                         val temp   = this.left.fold({a, b -> Math.max(a, b)}, 0)
                         return Node(temp, this.left.remove(temp), this.right).balance()
@@ -198,7 +196,7 @@ open class AVLTree() : Set() {
                     return Node(this.value, temp, this.right).balance()
                 }
                 else {
-                    val temp   = this.right.remove(elem)
+                    val temp = this.right.remove(elem)
                     return Node(this.value, this.left, temp).balance()
                 }
             }

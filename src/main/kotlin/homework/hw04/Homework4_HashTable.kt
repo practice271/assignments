@@ -10,7 +10,7 @@ package homework.hw04
 import java.util.*
 
 /** Implementation of hash table. */
-open class HashTable(val size : Int) : Set() {
+public class HashTable(val size : Int) : Set() {
 
     private var table = Array(this.size, { i -> LinkedList<Int>() })
 
