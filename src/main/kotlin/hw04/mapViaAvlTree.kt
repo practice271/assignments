@@ -77,15 +77,7 @@ internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
             In this case y'.diff = 1 ('cause |A| = |B| + 1) and z'.diff = 1 (|y'| = x + 1, |C| = x)
         3. |B| = x, |C| = x - 1.
             In this case y'.diff = 0 ('cause |A| = |B|) and z'.diff = 2 (|y'| = x + 1, |C| = x-1)
-     2. Right rotation is conducted in a very similar way.
-     I don't know any short way to write it and explanation above is WAAAAY long,
-     so I'll leave this one for curious reader to fill by (him/her)self.
-     Антон, практически полностью дублировать описание из п.1 было бы бесполезной механической работой.
-     Буду рад услышать советы, как можно прокомментировать эти вычисления адекватным и коротким образом.
-     Github seems to dislike Russian, so there're two above lines in English:
-     Anton, writing almost the same things as in p.1 seem to me as useless mechanical labor.
-     So I would be grateful to hear your advice on how to comment these calculations in adequate and short way.
-     */
+     2. Right rotation is conducted in a very similar way.     */
     internal fun leftRotationCalcDiffNodeGoingUp(): Int {
         if (diff == 1) return 2
         else return 1

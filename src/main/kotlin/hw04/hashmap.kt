@@ -1,44 +1,8 @@
 package hw04
 
 internal class HashMap<A> (arraySize : Int) : Map<A>() {
-    /*
-    val values = arrayOfNulls(arraySize) : Array<MutableList<Pair<Int, A>>?>
-    override public fun insert (pair : Pair<Int, A>) : HashMap<A> {
-        val ind = pair.first.hashCode() % values.size()
-        if (values[ind] == null) {
-            values[ind] = linkedListOf(pair)
-            return this
-        }
-        values[ind]?.addIfNotAlready(pair)//Since there'll be only one thread, values[ind] != null
-        return this
-    }
-    override public fun delete (key : Int) : HashMap<A>? {
-        val ind = key.hashCode() % values.size()
-        if (values[ind] == null) {
-            return this
-        }
+    val values = Array(arraySize, {linkedListOf() : MutableList<Pair<Int, A>>})
 
-        values[ind]?.delByKeyIfExists(key)//Since there'll be only one thread, values[ind] != null
-        return this
-    }
-    override public fun search (key : Int) : A? {
-        val ind = key.hashCode() % values.size()
-        if (values[ind] == null) {
-            return null
-        }
-        return values[ind]?.findByKeyInPair(key)?.second//Since there'll be only one thread, values[ind] != null
-    }
-
-    override public fun toList () : List<Pair<Int, A>> {
-        var res = values[0]
-        for (i in 1..values.size() - 1) {
-            res?.addAll(values[i])
-        }
-    }
-    */
-
-
-    val values = Array(arraySize, {linkedListOf() : MutableList<Pair<Int, A>>}) : Array<MutableList<Pair<Int, A>>>
     override public fun insert (pair : Pair<Int, A>) : HashMap<A> {
         val ind = Math.abs(pair.first.hashCode()) % values.size()
         values[ind].addIfNotAlready(pair)//Since there'll be only one thread, values[ind] != null
