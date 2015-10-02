@@ -86,7 +86,7 @@ public class hashmapTest {
         val a = HashMap<Int>(100)
         val b = null : NodeAvl<Int>?
         val c = a.unite(b)
-        org.junit.Assert.assertArrayEquals(a.toList().toTypedArray(), arrayOf())
+        org.junit.Assert.assertArrayEquals(c.toList().toTypedArray(), arrayOf())
     }
     @Test fun uniteHaveSomeSameVals() {
         val a = HashMap<Int>(100)

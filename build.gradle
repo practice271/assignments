@@ -9,9 +9,9 @@ task wrapper(type: Wrapper) {
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-defaultTasks 'test', 'run'
+defaultTasks 'test'//, 'run'
 
-mainClassName = 'hw04.Hw04Package'
+//mainClassName = 'hw04.Hw04Package'
 
 sourceCompatibility = 1.5
 

@@ -83,11 +83,3 @@ internal class HashMap<A> (arraySize : Int) : Map<A>() {
         return res
     }
 }
-fun main (args : Array<String>) {
-    /*var a = HashMap<Int>(100)
-    a.insert(Pair(12,12))
-    println("${a.search(12)}\n")
-    a.delete(12)
-    println("${a.values[12]}")*/
-    for (i in 0.. 12) println("${i.hashCode()}\n")
-}
