@@ -4,8 +4,8 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 public class hw03Test {
-   val single = AVLtree(1, 1, null, null)
-   val singleInsert = AVLtree (1, 2, null, AVLtree(5, 1, null, null))
+   val single = AVLtree(1, null, null)
+   val singleInsert = AVLtree (1, null, AVLtree(5, null, null))
    val singleDelete : AVLtree? = null
    @Test fun insertSingle () {
       assertEquals(toText(balance(insertion (single, 5))), toText(singleInsert))
@@ -21,7 +21,7 @@ public class hw03Test {
    }
 
 
-   val example2 = AVLtree (5, 3, AVLtree(3, 2, AVLtree(1, 1, null,null), null), AVLtree(7, 1, null,null))
+   val example2 = AVLtree (5, AVLtree(3, AVLtree(1, null,null), null), AVLtree(7, null,null))
    /*
    | | _
    | 7
@@ -33,8 +33,8 @@ public class hw03Test {
    | | 1
    | | | _
    */
-   val example2Insert0 = AVLtree (5, 3, AVLtree(1, 2, AVLtree(0, 1, null,null), AVLtree(3, 1, null,null)), AVLtree(7, 1, null,null))
-   val example2Delete5 = AVLtree (3, 2, AVLtree(1, 1, null, null), AVLtree(7, 1, null,null))
+   val example2Insert0 = AVLtree (5, AVLtree(1, AVLtree(0, null,null), AVLtree(3, null,null)), AVLtree(7, null,null))
+   val example2Delete5 = AVLtree (3, AVLtree(1, null, null), AVLtree(7, null,null))
    @Test fun insertExample2 () {
       assertEquals(toText(balance(insertion ( example2, 0))), toText(example2Insert0))
    }
@@ -49,8 +49,8 @@ public class hw03Test {
    }
 
 
-   val example3 = AVLtree (5, 3, AVLtree(3, 2, AVLtree(2, 1, null,null),
-           AVLtree(4,1,null,null)), AVLtree(6, 2, null, AVLtree(7,1,null,null)))
+   val example3 = AVLtree (5, AVLtree(3, AVLtree(2, null,null),
+           AVLtree(4,null,null)), AVLtree(6, null, AVLtree(7,null,null)))
    /*
    | | | _
    | | 7
@@ -66,10 +66,10 @@ public class hw03Test {
    | | 2
    | | | _
    */
-   val example3Insert8 = AVLtree (5, 3, AVLtree(3, 2, AVLtree(2, 1, null,null),
-           AVLtree(4,1,null,null)), AVLtree(7, 2, AVLtree(6,1,null,null), AVLtree(8,1,null,null)))
-   val example3Delete6 = AVLtree (5, 3, AVLtree(3, 2, AVLtree(2, 1, null,null),
-           AVLtree(4,1,null,null)), AVLtree(7,1,null ,null))
+   val example3Insert8 = AVLtree (5, AVLtree(3, AVLtree(2, null,null),
+           AVLtree(4,null,null)), AVLtree(7, AVLtree(6,null,null), AVLtree(8,null,null)))
+   val example3Delete6 = AVLtree (5, AVLtree(3, AVLtree(2, null,null),
+           AVLtree(4,null,null)), AVLtree(7,null ,null))
    @Test fun insertExample3 () {
       assertEquals(toText(balance(insertion ( example3, 8))), toText(example3Insert8))
    }
@@ -84,8 +84,8 @@ public class hw03Test {
    }
 
 
-   val big = AVLtree (10, 4, AVLtree(3, 3, AVLtree(2, 1, null,null), AVLtree(7,2,AVLtree(5,1,null,null),null)),
-           AVLtree(12, 2, AVLtree(11,1,null,null), AVLtree(13,1,null,null)))
+   val big = AVLtree (10, AVLtree(3, AVLtree(2, null,null), AVLtree(7,AVLtree(5,null,null),null)),
+           AVLtree(12, AVLtree(11,null,null), AVLtree(13,null,null)))
    /*
    | | | _
    | | 13
@@ -105,10 +105,10 @@ public class hw03Test {
    | | 2
    | | | _
     */
-   val bigInsert6 = AVLtree (10, 4, AVLtree(3, 3, AVLtree(2, 1, null,null), AVLtree(6,2,AVLtree(5,1,null,null),AVLtree(7, 1, null, null))),
-           AVLtree(12, 2, AVLtree(11,1,null,null), AVLtree(13,1,null,null)))
-   val bigDelete3 = AVLtree (10, 3, AVLtree(5, 2, AVLtree(2, 1, null,null),AVLtree(7, 1, null, null)),
-           AVLtree(12, 2, AVLtree(11,1,null,null), AVLtree(13,1,null,null)))
+   val bigInsert6 = AVLtree (10, AVLtree(3, AVLtree(2, null,null), AVLtree(6,AVLtree(5,null,null),AVLtree(7, null, null))),
+           AVLtree(12, AVLtree(11,null,null), AVLtree(13,null,null)))
+   val bigDelete3 = AVLtree (10, AVLtree(5, AVLtree(2, null,null),AVLtree(7, null, null)),
+           AVLtree(12, AVLtree(11,null,null), AVLtree(13,null,null)))
    @Test fun insertBig () {
       assertEquals(toText(balance(insertion ( big, 6))), toText(bigInsert6))
    }
