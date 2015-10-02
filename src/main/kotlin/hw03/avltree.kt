@@ -1,12 +1,29 @@
 package hw03
 
-internal class Node(internal var key: Int, internal var left: Node?, internal var right: Node?) {
+internal class Node(internal var key: Int,
+                    left_param: Node?,
+                    right_param: Node?) {
 
-    internal constructor(k: Int): this(k, null, null) { }
+    //internal constructor(k: Int): this(k, null, null) { }
 
-    private fun height(): Int = 1 + Math.max((right?.height() ?: 0), (left?.height() ?: 0))
+    internal var left: Node? = left_param
+        get() = $left
+        set(newLeft: Node?) {
+            $left = newLeft
+            height_f = calcHeight()
+        }
+    internal var right: Node? = right_param
+        get() = $right
+        set(newR: Node?) {
+            $right = newR
+            height_f = calcHeight()
+        }
 
-    private fun balance(): Int = (right?.height() ?: 0) - (left?.height() ?: 0)
+    private fun calcHeight() : Int = 1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
+    private var height_f : Int = calcHeight()
+    internal fun height(): Int = height_f
+
+    private  fun balance(): Int = (right?.height() ?: 0) - (left?.height() ?: 0)
 
     private fun ltrotate() {
         if(right != null) {
@@ -123,7 +140,7 @@ internal open class AVLtree() {
     internal fun search(k: Int): Int = search(k, root)
 
 
-   /* internal fun toText() : String {
+    /*internal fun toText() : String {
         fun Node.toText_(): List<String> {
             val lText = left?.toText_()?.map { "|  $it" } ?: listOf("|  _\n")
             val rText = right?.toText_()?.map { "|  $it" } ?: listOf("|  _\n")
@@ -134,5 +151,16 @@ internal open class AVLtree() {
         val lines = root?.toText_() ?: listOf("_\n")
         lines.forEach { builder.append(it) }
         return builder.toString()
-    } */
+    }*/
 }
+
+
+/*
+fun main(args: Array<String>) {
+    val t = AVLtree()
+    t.insert(2); t.insert(10); t.insert(14); t.insert(6); t.insert(12); t.insert(100); t.insert(15); t.insert(17)
+    println(t.toText())
+
+    t.delete(10)
+    println(t.toText())
+}*/
