@@ -23,8 +23,10 @@ public class HashTable(val size : Int) : Set() {
 
     /** Removes element from hash table. */
     public override fun remove(elem : Int) : HashTable {
-        val hashCode = elem.hashCode() mod this.size
-        if (this.contains(elem)) table[hashCode].remove(table[hashCode].indexOf(elem))
+        val hashCode  = elem.hashCode() mod this.size
+        val cellList = table[hashCode]
+        val elemIndex = cellList.indexOf(elem)
+        if (this.contains(elem)) cellList.remove(elemIndex)
         return this
     }
 
@@ -45,19 +47,18 @@ public class HashTable(val size : Int) : Set() {
 
     /** Returns hash table which is union of given hash tables. */
     public override fun unite(set : Set) : HashTable {
-        var result = this
-        for (i in (set as HashTable).toList()) {
+        var result = HashTable(size)
+        for (i in this.toList()) result = result.insert(i)
+        for (i in (set as HashTable).toList())
             if (!this.contains(i)) result = result.insert(i)
-        }
         return result
     }
 
     /** Returns hash table which is intersection of given hash tables. */
     public override fun intersect(set : Set) : HashTable {
         var result = HashTable(size)
-        for (i in (set as HashTable).toList()) {
+        for (i in (set as HashTable).toList())
             if (this.contains(i)) result = result.insert(i)
-        }
         return result
     }
 

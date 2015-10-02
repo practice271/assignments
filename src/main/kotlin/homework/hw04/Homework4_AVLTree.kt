@@ -108,24 +108,31 @@ open public class AVLTree() : Set() {
                 val rightLeft  = this.right.getLeftTree()
                 val rightRight = this.right.getRightTree()
 
-                // small left rotation
-                if (balance == 2 && rightLeft.getHeight() <= rightRight.getHeight())
-                    return this.leftRotation()
+                when (balance) {
+                    2 -> {
+                        // small left rotation
+                        if (rightLeft.getHeight() <= rightRight.getHeight())
+                            return this.leftRotation()
 
-                // small right rotation
-                else if (balance == -2 && leftRight.getHeight() <= leftLeft.getHeight())
-                    return this.rightRotation()
+                        // big left rotation
+                        else {
+                            val temp = this.right.rightRotation()
+                            return (Node(this.value, this.left, temp)).leftRotation()
+                        }
+                    }
+                    -2 -> {
+                        // small right rotation
+                        if (leftRight.getHeight() <= leftLeft.getHeight())
+                            return this.rightRotation()
 
-                // big left rotation
-                else if (balance == 2 && rightLeft.getHeight() > rightRight.getHeight())
-                    return (Node(this.value, this.left, this.right.rightRotation())).leftRotation()
-
-                // big right rotation
-                else if (balance == -2 && leftRight.getHeight() > leftLeft.getHeight())
-                    return (Node(this.value, this.left.leftRotation(), this.right)).rightRotation()
-
-                else
-                    return Node(this.value, this.left.balance(), this.right.balance())
+                        // big right rotation
+                        else {
+                            val temp = this.left.leftRotation()
+                            return (Node(this.value, temp, this.right)).rightRotation()
+                        }
+                    }
+                    else -> return Node(this.value, this.left.balance(), this.right.balance())
+                }
             }
             else    -> throw Exception("Error")
         }
@@ -243,19 +250,18 @@ open public class AVLTree() : Set() {
 
     /** Returns tree which is union of given trees. */
     public override fun unite(set : Set) : AVLTree {
-        var tree = this
-        for (i in (set as AVLTree).toList()) {
+        var tree = Empty() as AVLTree
+        for (i in this.toList()) tree = tree.insert(i)
+        for (i in (set as AVLTree).toList())
             if (!this.contains(i)) tree = tree.insert(i)
-        }
         return tree
     }
 
     /** Returns tree which is intersection of given trees. */
     public override fun intersect(set : Set) : AVLTree {
         var tree = Empty() as AVLTree
-        for (i in (set as AVLTree).toList()) {
+        for (i in (set as AVLTree).toList())
             if (this.contains(i)) tree = tree.insert(i)
-        }
         return tree
     }
 
