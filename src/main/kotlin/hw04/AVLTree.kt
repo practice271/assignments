@@ -45,8 +45,7 @@ internal class AVLTree : IMap()
                 return lText + vText + rText
             }
 
-            if (this == null)
-                return ""
+            if (this == null) return ""
 
             val builder = StringBuilder()
             val lines = printTree_()
@@ -133,8 +132,8 @@ internal class AVLTree : IMap()
 
         when (Integer.compare(key, root.Key))
         {
-            -1      -> return SearchNode(root?.rightChild, key)
-            1       -> return SearchNode(root?.leftChild, key)
+            -1      -> return SearchNode(root.rightChild, key)
+            1       -> return SearchNode(root.leftChild, key)
             else    -> return true
         }
     }
@@ -195,7 +194,3 @@ internal class AVLTree : IMap()
     }
 }
 
-fun main (args : List<String>)
-{
-
-}
