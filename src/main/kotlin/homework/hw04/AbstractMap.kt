@@ -71,9 +71,13 @@ interface AbstractMap<K, V> where K : Comparable<K> {
         return newMap
     }
 
-    private fun toList() : List<Pair<K, V>> {
-        val list = ArrayList<Pair<K, V>>()
-        forEach { k, v -> list.add(Pair(k, v)) }
-        return list
+    /**
+     * Converts an AbstractMap to list and sorts it.
+     */
+    fun toSortedList() : List<Pair<K, V>> {
+        // <K : Comparable<K>, V> AbstractMap<K, V>.
+        val list = LinkedList<Pair<K, V>>()
+        this.forEach({ k, v -> list.add(k to v) })
+        return list.sortedBy { it.first }
     }
 }

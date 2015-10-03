@@ -8,7 +8,7 @@ package homework.hw04
  * @param V The type of tree's values.
  */
 class TreeMap<K, V>() : AbstractMap<K, V> where K : Comparable<K> {
-    internal var root : Node<K, V>? = null
+    var root : Node<K, V>? = null
 
     override fun insert(newKey : K, newValue : V) {
         root = insert(root, newKey, newValue)
@@ -23,8 +23,8 @@ class TreeMap<K, V>() : AbstractMap<K, V> where K : Comparable<K> {
     override fun forEach(f : (K, V) -> Unit) {
         fun <K : Comparable<K>, V> Node<K, V>.forEach_(f : (K, V) -> Unit) {
             f(key, value)
-            left.forEach_(f)
-            right.forEach_(f)
+            if (left != null) left.forEach_(f)
+            if (right != null) right.forEach_(f)
         }
         root?.forEach_(f)
     }
