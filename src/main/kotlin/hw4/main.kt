@@ -149,6 +149,8 @@ class TreeSet<T: Comparable<T>>() : Set<T> {
 
     override fun find(x: T): Boolean = t.find(x)
 
+    fun text() = t.text()
+
 }
 
 fun main(args: Array<String>) {
