@@ -15,7 +15,7 @@ public class hw03Tests
         tree = Add(tree, 3)
         tree = Add(tree, 2)
 
-        assertEquals(tree?.PrintTree(), "| ||  | 2| ||  | \n| 3| \n4\n| 5| \n")
+        assertEquals(tree?.printTree(), "| ||  | 2| ||  | \n| 3| \n4\n| 5| \n")
     }
 
     @Test fun Delete ()
@@ -27,7 +27,7 @@ public class hw03Tests
         tree = Add(tree, 3)
         tree = Add(tree, 2)
 
-        assertEquals(Remove(tree, 3)?.PrintTree(), "| 2| \n4\n| 5| \n")
+        assertEquals(Remove(tree, 3)?.printTree(), "| 2| \n4\n| 5| \n")
     }
 
     @Test fun Delete2 ()
@@ -39,7 +39,7 @@ public class hw03Tests
         tree = Add(tree, 3)
         tree = Add(tree, 2)
 
-        assertEquals(Remove(tree, 1)?.PrintTree(), "| ||  | 2| ||  | \n| 3| \n4\n| 5| \n")
+        assertEquals(Remove(tree, 1)?.printTree(), "| ||  | 2| ||  | \n| 3| \n4\n| 5| \n")
     }
 
     @Test fun Search ()

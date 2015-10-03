@@ -1,45 +1,48 @@
 package hw03
 
-class Node(value : Int, l : Node?, r: Node?)
+class Node (value : Int, l : Node?, r: Node?)
 {
     val Key : Int = value
-    var leftKid : Node? = l
-    var rightKid : Node? = r
+    var leftChild : Node? = l
+    var rightChild : Node? = r
 
-    var Height : Int = CalcHeight()
+    var Height : Int = calcHeight()
 
-    fun CalcHeight() : Int = Math.max(leftKid?.CalcHeight() ?: 0, rightKid?.CalcHeight() ?: 0) + 1
+    private fun calcHeight() : Int = Math.max(leftChild?.calcHeight() ?: 0, rightChild?.calcHeight() ?: 0) + 1
 
-    fun FixHeight ()
+    private fun FixHeight ()
     {
-        Height  = CalcHeight()
+        Height  = calcHeight()
     }
 
-    fun CalcBalance () = (leftKid?.CalcHeight() ?: 0) - (rightKid?.CalcHeight() ?: 0)
+    private fun calcBalance() = (leftChild?.calcHeight() ?: 0) - (rightChild?.calcHeight() ?: 0)
 
-    fun Balance () : Node?
+    public  fun balance() : Node?
     {
-        if (CalcBalance() == 2)
+        val checkBalance = calcBalance()
+
+        when (checkBalance)
         {
-            if ((rightKid?.CalcBalance() ?: -1) > 0)
-                rightKid = RightTurn(rightKid)
-            return LeftTurn(this)
+            2   ->  {
+                    if ((rightChild?.calcBalance() ?: -1) > 0)
+                        rightChild = rightChild?.rightTurn()
+                    return this.leftTurn()
+                    }
+            -2  ->  {
+                    if ((leftChild?.calcBalance() ?: 1) < 0)
+                        leftChild = leftChild?.leftTurn()
+                    return this.rightTurn()
+                    }
+            else -> return this
         }
-        else if (CalcBalance() == -2)
-        {
-            if ((leftKid?.CalcBalance() ?: 1) < 0)
-                leftKid = LeftTurn(leftKid)
-            return RightTurn(this)
-        }
-        else return this
     }
 
-    fun PrintTree() : String
+    public  fun printTree() : String
     {
-        fun PrintTree_() : List<String>
+        fun printTree_() : List<String>
         {
-            val lText = this.leftKid?.PrintTree()?.map { "| $it" } ?: listOf("")
-            val rText = this.rightKid?.PrintTree()?.map { "| $it" } ?: listOf("")
+            val lText = this.leftChild?.printTree()?.map { "| $it" } ?: listOf("")
+            val rText = this.rightChild?.printTree()?.map { "| $it" } ?: listOf("")
             val vText = listOf("$Key\n")
             return lText + vText + rText
         }
@@ -48,96 +51,99 @@ class Node(value : Int, l : Node?, r: Node?)
             return ""
 
         val builder = StringBuilder()
-        val lines = PrintTree_()
+        val lines = printTree_()
         lines.forEach { builder.append(it) }
         return builder.toString()
     }
+
+    private fun rightTurn() : Node?
+    {
+        val node : Node? = this.rightChild
+        this.rightChild = node?.leftChild
+        node?.leftChild = this
+        this.calcHeight()
+        node?.calcHeight()
+        return node
+    }
+
+    private fun leftTurn() : Node?
+    {
+        val node : Node? = this.leftChild
+        this.leftChild = node?.rightChild
+        node?.rightChild = this
+        this.calcHeight()
+        node?.calcHeight()
+        return node
+    }
 }
 
-fun RightTurn(badNode : Node?) : Node?
-{
-    val node : Node? = badNode?.rightKid
-    badNode?.rightKid = node?.leftKid
-    node?.leftKid = badNode
-    badNode?.CalcHeight()
-    node?.CalcHeight()
-    return node
-}
 
-fun LeftTurn(badNode : Node?) : Node?
-{
-    val node : Node? = badNode?.leftKid
-    badNode?.leftKid = node?.rightKid
-    node?.rightKid = badNode
-    badNode?.CalcHeight()
-    node?.CalcHeight()
-    return node
-}
 
 fun Add (root : Node?, value : Int) : Node?
 {
     if (root == null) return Node(value, null, null)
     if (value < root.Key)
-        root.leftKid = Add(root.leftKid, value)
+        root.leftChild = Add(root.leftChild, value)
     else
-        root.rightKid = Add(root.rightKid, value)
-    return root.Balance()
+        root.rightChild = Add(root.rightChild, value)
+    return root.balance()
 }
 
 fun Remove (root : Node?, key : Int) : Node?
 {
     fun findMin (root : Node?) : Node?
     {
-        if (root?.leftKid == null)
+        if (root?.leftChild == null)
             return root
         else
-            return findMin(root?.leftKid)
+            return findMin(root?.leftChild)
     }
 
-    fun removeMin(root : Node?) : Node?
+    fun removeMin (root : Node?) : Node?
     {
-        if (root?.leftKid == null)
-            return root?.rightKid
-        root?.leftKid = removeMin(root?.leftKid)
-        return root?.Balance()
+        if (root?.leftChild == null)
+            return root?.rightChild
+        root?.leftChild = removeMin(root?.leftChild)
+        return root?.balance()
     }
 
     if (root == null)
         return null
-    if (key < root.Key)
-        root.leftKid = Remove(root.leftKid, key)
-    else if (key > root.Key)
-        root.rightKid = Remove(root.rightKid, key)
-    else
+
+    when (Integer.compare(key, root.Key))
     {
-        val lNode : Node? = root.leftKid
-        val rNode : Node? = root.rightKid ?: return lNode
+        -1      -> root.leftChild = Remove(root.leftChild, key)
+        1       -> root.rightChild = Remove(root.rightChild, key)
+        else    ->
+                {
+                    val lNode : Node? = root.leftChild
+                    val rNode : Node? = root.rightChild ?: return lNode
 
-        val minNode : Node? = findMin(rNode)
-        minNode?.rightKid = removeMin(rNode)
-        minNode?.leftKid = lNode
+                    val minNode : Node? = findMin(rNode)
+                    minNode?.rightChild = removeMin(rNode)
+                    minNode?.leftChild = lNode
 
-        return minNode?.Balance()
+                    return minNode?.balance()
+                }
     }
 
-    return root.Balance()
+    return root.balance()
 }
 
-fun  SearchNode (root : Node?, key : Int) : Boolean
+fun SearchNode (root : Node?, key : Int) : Boolean
 {
     if (root == null)
         return false
-    if (root.Key < key)
-        return SearchNode(root?.rightKid, key)
-    if (root.Key > key)
-        return SearchNode(root?.leftKid, key)
-    else if (root.Key == key)
-        return true
 
-    return false
+    when (Integer.compare(key, root.Key))
+    {
+        -1      -> return SearchNode(root?.rightChild, key)
+        1       -> return SearchNode(root?.leftChild, key)
+        else    -> return true
+    }
 }
 
-fun main(args : Array<String>)
+fun main (args : Array<String>)
 {
     var tree : Node? = null
 
@@ -146,10 +152,10 @@ fun main(args : Array<String>)
     tree = Add(tree, 3)
     tree = Add(tree, 2)
 
-    print(tree?.PrintTree())
+    print(tree?.printTree())
 
     println(SearchNode(tree, 3))
     println(SearchNode(tree, 1))
 
-    println(Remove(tree, 3)?.PrintTree())
+    println(Remove(tree, 3)?.printTree())
 }
