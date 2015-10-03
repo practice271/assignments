@@ -4,7 +4,7 @@ package hw4
    for consistence with functional style */
 
 interface Set<T> {
-    fun insert(x: T): Set<T>
-    fun remove(x: T): Set<T>
+    fun insert(x: T)
+    fun remove(x: T)
     fun find(x: T): Boolean
 }

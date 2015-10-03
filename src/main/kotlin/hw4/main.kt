@@ -2,47 +2,57 @@ package hw4
 
 import java.io.*
 
-/* hw4 trees - functional-like style */
+/* hw3 trees - functional-like style */
 
-abstract class Tree<T: Comparable<T>>() : Set<T> {
+abstract class Tree<T: Comparable<T>>() {
     var h: Int = 0
     var d: Int = 0
+}
 
-    fun rotLeft(): Tree<T> =
+class Nil<T: Comparable<T>>(): Tree<T>()
+
+class Node<T: Comparable<T>>(val v: T, val l: Tree<T>, val r: Tree<T>): Tree<T>() {
+    init {
+        h = Math.max(l.h, r.h) + 1
+        d = l.h - r.h
+    }
+}
+
+fun <T : Comparable<T>>Tree<T>.rotLeft(): Tree<T> =
         if (this is Node && r is Node)
             Node(r.v, Node(v, l, r.l), r.r)
         else
             Nil()
 
-    fun rotRight(): Tree<T> =
+fun <T : Comparable<T>>Tree<T>.rotRight(): Tree<T> =
         if (this is Node && l is Node)
             Node(l.v, l.l, Node(v, l.r, r))
         else
             Nil()
 
-    fun rotLeftRight(): Tree<T> =
+fun <T : Comparable<T>>Tree<T>.rotLeftRight(): Tree<T> =
         if (this is Node)
             Node(v, l.rotLeft(), r).rotRight()
         else
             Nil()
 
-    fun rotRightLeft(): Tree<T> =
+fun <T : Comparable<T>>Tree<T>.rotRightLeft(): Tree<T> =
         if (this is Node)
             Node(v, l, r.rotRight()).rotLeft()
         else
             Nil()
 
-    override fun insert(x: T): Tree<T> =
+fun <T : Comparable<T>>Tree<T>.insert(x: T): Tree<T> =
         if (this is Node) (
-            if (x < v)
-                Node(v, l.insert(x), r)
-            else
-                Node(v, l, r.insert(x))
-            ).fix()
+                if (x < v)
+                    Node(v, l.insert(x), r)
+                else
+                    Node(v, l, r.insert(x))
+                ).fix()
         else
             Node(x, Nil(), Nil())
 
-    fun removeRightmost(): Pair<T, Tree<T>>? =
+fun <T : Comparable<T>>Tree<T>.removeRightmost(): Pair<T, Tree<T>>? =
         if (this is Node)
             if (r is Node) {
                 val t = r.removeRightmost()!!
@@ -52,27 +62,26 @@ abstract class Tree<T: Comparable<T>>() : Set<T> {
         else
             null /* Never reached, !! always OK */
 
-    override fun remove(x: T): Tree<T> =
+fun <T : Comparable<T>>Tree<T>.remove(x: T): Tree<T> =
         if (this is Node) (
-            if (x < v)
-                Node(v, l.remove(x), r)
-            else if (x > v)
-                Node(v, l, r.remove(x))
-            else
-                when {
-                    l is Node && r is Node -> {
-                        val t = l.removeRightmost()!!
-                        Node(t.first, t.second, r)
-                    }
-                    l is Node -> r
-                    r is Node -> l
-                    else -> this
-                }).fix()
+                if (x < v)
+                    Node(v, l.remove(x), r)
+                else if (x > v)
+                    Node(v, l, r.remove(x))
+                else
+                    when {
+                        l is Node && r is Node -> {
+                            val t = l.removeRightmost()!!
+                            Node(t.first, t.second, r)
+                        }
+                        l is Node -> r
+                        r is Node -> l
+                        else -> this
+                    }).fix()
         else
             Nil()
 
-
-    fun fix(): Tree<T> =
+fun <T : Comparable<T>>Tree<T>.fix(): Tree<T> =
         if (this is Node)
             when {
                 d == -2 ->
@@ -87,7 +96,7 @@ abstract class Tree<T: Comparable<T>>() : Set<T> {
         else
             Nil()
 
-    override fun find(x: T): Boolean =
+fun <T : Comparable<T>>Tree<T>.find(x: T): Boolean =
         if (this is Node)
             when {
                 x < v -> l.find(x)
@@ -97,44 +106,49 @@ abstract class Tree<T: Comparable<T>>() : Set<T> {
         else
             false
 
-    fun print(w: Writer) {
-        if (!(this is Node))
-            w.write("x")
-        else {
-            if (r is Node) {
-                r.printRec(true, w, "");
-            }
-            w.write(v.toString() + "\n");
-            if (l is Node) {
-                l.printRec(false, w, "");
-            }
+fun <T : Comparable<T>>Tree<T>.print(w: Writer) {
+    if (!(this is Node))
+        w.write("x")
+    else {
+        if (r is Node) {
+            r.printRec(true, w, "");
+        }
+        w.write(v.toString() + "\n");
+        if (l is Node) {
+            l.printRec(false, w, "");
         }
     }
+}
 
-    fun printRec(isr: Boolean, w: Writer, pre: String) {
-        if (!(this is Node))
-            return
-        if (r is Node)
-            r.printRec(true, w, pre + (if (isr) "     " else " |   "))
-        w.write(pre + (if (isr) " /" else " \\") + "--- " + v.toString() + "\n")
-        if (l is Node)
-            l.printRec(false, w, pre + (if (isr) " |   " else "     "))
-    }
+fun <T : Comparable<T>>Tree<T>.printRec(isr: Boolean, w: Writer, pre: String) {
+    if (!(this is Node))
+        return
+    if (r is Node)
+        r.printRec(true, w, pre + (if (isr) "     " else " |   "))
+    w.write(pre + (if (isr) " /" else " \\") + "--- " + v.toString() + "\n")
+    if (l is Node)
+        l.printRec(false, w, pre + (if (isr) " |   " else "     "))
+}
 
-    fun text(): String =
+fun <T : Comparable<T>>Tree<T>.text(): String =
         if (this is Node)
             "[" + v.toString() + "," + l.text() + "," + r.text() + "]"
         else
             "[]"
-}
 
-class Nil<T: Comparable<T>>(): Tree<T>()
+class TreeSet<T: Comparable<T>>() : Set<T> {
+    var t: Tree<T> = Nil()
 
-class Node<T: Comparable<T>>(val v: T, val l: Tree<T>, val r: Tree<T>): Tree<T>() {
-    init {
-        h = Math.max(l.h, r.h) + 1
-        d = l.h - r.h
+    override fun insert(x: T) {
+        t = t.insert(x)
     }
+
+    override fun remove(x: T) {
+        t = t.remove(x)
+    }
+
+    override fun find(x: T): Boolean = t.find(x)
+
 }
 
 fun main(args: Array<String>) {
