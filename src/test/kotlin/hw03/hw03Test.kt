@@ -17,13 +17,13 @@ public class hw03Test {
         t = insert(t, 4)
         assertEquals("null,3,(null,4,null)", t.treeToText())
         t = insert(t, 5)
-        assertEquals("null,3,(null,4,(null,5,null))", t.treeToText())
+        assertEquals("(null,3,null),4,(null,5,null)", t.treeToText())
         t = insert(t, 7)
         assertEquals("(null,3,null),4,(null,5,(null,7,null))", t.treeToText())
         t = insert(t, 2)
         assertEquals("((null,2,null),3,null),4,(null,5,(null,7,null))", t.treeToText())
         t = insert(t, 1)
-        assertEquals("(((null,1,null),2,null),3,null),4,(null,5,(null,7,null))", t.treeToText())
+        assertEquals("((null,1,null),2,(null,3,null)),4,(null,5,(null,7,null))", t.treeToText())
     }
 
     Test fun findingTest() {

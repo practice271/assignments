@@ -5,32 +5,35 @@ package hw03
  */
 
 
-open class Node (val key: Int, var height: Int, var left: Node?, var right: Node? ) {}
+class Node (val key: Int, var left_param: Node?, var right_param: Node? ) {
+    public var left: Node? = left_param
+        get() = $left
+        set(newLeft: Node?) {
+            $left = newLeft
+            height_f = calcHeight()
+        }
 
-
-
-fun height (p : Node?) :Int {
-    if (p != null) return p.height else return 0
+    public var right: Node? = right_param
+        get() = $right
+        set(newRight: Node?) {
+            $right = newRight
+            height_f = calcHeight()
+        }
+    private fun calcHeight() : Int =
+            1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
+    private var height_f : Int = calcHeight()
+    fun height(): Int = height_f
 }
 
 fun bfactor (p: Node?) : Int {
-    if (p != null) return height(p.right) - height(p.left)
-        else return 0
+    if (p != null) return ((p.right?.height() ?: 0) - (p.left?.height() ?: 0))
+    else return 0
 }
-
-fun fixheight (p: Node?) {
-        val hl = height(p?.left)
-        val hr = height(p?.right)
-        if (hl > hr) p?.height = hl + 1 else p?.height = hr + 1
-}
-
 
 fun rotateRight(p: Node?) : Node? {
     val tmp: Node? = p?.left
     p?.left = tmp?.right
     tmp?.right = p
-    fixheight(p)
-    fixheight(tmp)
     return tmp
 }
 
@@ -38,13 +41,10 @@ fun  rotateLeft (p: Node?) : Node? {
     val tmp: Node? = p?.right
     p?.right = tmp?.left
     tmp?.left = p
-    fixheight(p)
-    fixheight(tmp)
     return  tmp
 }
 
 fun balance (p: Node?) : Node? {
-    fixheight(p)
     if (bfactor(p) == 2) {
         if (bfactor(p?.right) < 0 ) p?.right = rotateRight(p?.right)
         return rotateLeft(p)
@@ -58,7 +58,7 @@ fun balance (p: Node?) : Node? {
 
 fun insert(p: Node?, k: Int) : Node?
 {
-    if( p == null ) return Node(k, 0, null, null)
+    if( p == null ) return Node(k, null, null)
     if( k < p.key)
         p.left = insert(p.left,k)
     else
@@ -83,29 +83,29 @@ fun find(p: Node?, x: Int): Boolean =
 
 fun removeMin(p: Node?): Node?
 {
-    if( p?.left == null )
+    if (p?.left == null)
         return p?.right
-    p!!.left = removeMin(p!!.left)
-    return balance(p)
+    else {
+        p?.left = removeMin(p?.left)
+        return balance(p)
+    }
 }
 
 fun remove(p: Node?, k: Int): Node?
 {
     if( p == null ) return null
-    if( k < p.key )
-        p.left = remove(p.left, k)
-        else
-            if( k > p.key )
-                p.right = remove(p.right, k)
-                else
-                    {
-                        var q : Node? = p.left
-                        var r : Node? = p.right ?: return q
-                        var min: Node? = findMin(r)
-                        min?.right = removeMin(r)
-                        min?.left = q
-                        return balance(min)
-                    }
+    when{
+        k < p.key -> p.left = remove(p.left, k)
+        k > p.key -> p.right = remove(p.right, k)
+        else -> {
+            var q : Node? = p.left
+            var r : Node? = p.right ?: return q
+            var min: Node? = findMin(r)
+            min?.right = removeMin(r)
+            min?.left = q
+            return balance(min)
+        }
+    }
     return balance(p)
 }
 
@@ -132,7 +132,7 @@ fun main(args: Array<String>) {
         t = remove(t, 2)
         println(t?.treeToText())
         println(find(t,6))
-    println(find(t,1))
-    println(find(t,5))
-    println(find(t,7))
+        println(find(t,1))
+        println(find(t,5))
+        println(find(t,7))
 }
