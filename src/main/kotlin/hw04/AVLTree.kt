@@ -1,6 +1,6 @@
 package hw04
 
-internal class AVLTree : IMap
+internal class AVLTree : IMap()
 {
     private inner class Node (value : Int, l : Node?, r: Node?) {
 
@@ -170,12 +170,32 @@ internal class AVLTree : IMap
         return SearchNode(root, value)
     }
 
-    override public fun union (otherNodes : IMap) : IMap
+    override public fun union (map: IMap) : IMap
     {
-        val newNodes : IMap = AVLTree()
-        if (isEmpty() || (otherNodes as AVLTree).isEmpty())
-            return newNodes
+        var newTree : IMap = AVLTree()
+        if (isEmpty() || (map as AVLTree).isEmpty())
+            return newTree
 
+        toList().forEach {
+            if(map.search(it)) newTree.insert(it.toInt())
+        }
 
+        return newTree
     }
+
+    override public fun intersection(map: IMap) : IMap
+    {
+        var newTree : IMap = this
+        if((newTree as AVLTree).isEmpty()) return map
+        if((map as AVLTree).isEmpty()) return newTree
+        map.toList().forEach {
+            if(!newTree.search(it.toInt())) newTree.insert(it.toInt())
+        }
+        return newTree
+    }
+}
+
+fun main (args : List<String>)
+{
+
 }
