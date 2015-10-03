@@ -8,7 +8,7 @@ internal class HashTable (HashKey : Int) : IMap()
 
     public val hashKey = HashKey
 
-    private fun toList() : List<Int>
+    public fun toList() : List<Int>
     {
         var list = emptyList<Int>()
         table.forEach { list += it }
@@ -49,8 +49,8 @@ internal class HashTable (HashKey : Int) : IMap()
         val resTable = this
         if (isEmpty()) return map
         if ((map as HashTable).isEmpty()) return resTable
-
-        toList().forEach {
+    
+        map.toList().forEach {
             if (!resTable.search(it)) resTable.insert(it)
         }
 

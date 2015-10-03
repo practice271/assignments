@@ -132,13 +132,13 @@ internal class AVLTree : IMap()
 
         when (Integer.compare(key, root.Key))
         {
-            -1      -> return SearchNode(root.rightChild, key)
-            1       -> return SearchNode(root.leftChild, key)
+            1      -> return SearchNode(root.rightChild, key)
+            -1       -> return SearchNode(root.leftChild, key)
             else    -> return true
         }
     }
 
-    private fun toList() : List<Int>
+    public fun toList() : List<Int>
     {
         fun Node.toList_ () : List<Int>
         {
