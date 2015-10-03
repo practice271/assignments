@@ -21,7 +21,7 @@ internal class HashMap<A> (arraySize : Int) : Map<A>() {
     override  public fun toList () : List<Pair<Int, A>> {
         var res = linkedListOf() : MutableList<Pair<Int, A>>
         for (i in values)
-            res.addAll(i)
+            res.add(i)
         return res
     }
 
