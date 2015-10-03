@@ -6,6 +6,6 @@ abstract public class SetInterface {
     abstract public fun search(k: Int):                Boolean
     abstract public fun union (s: SetInterface):       SetInterface
     abstract public fun intersection(s: SetInterface): SetInterface
-    //abstract public fun isEmpty():                     Boolean
-    //abstract override fun toString(): String
+    abstract public fun toList():                      List<Int>
+    abstract public fun isEmpty():                     Boolean
 }

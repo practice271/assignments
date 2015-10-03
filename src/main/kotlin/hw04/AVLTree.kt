@@ -1,15 +1,12 @@
 package hw04
 
-import java.util.*
-
-
-open public class AVLtree: SetInterface() {
+public class AVLtree: SetInterface() {
 
     //------------------------------NODE CLASS-----------------------------------
 
     private inner class Node(public var key: Int,
-                        left_param: Node?,
-                        right_param: Node?) {
+                             left_param: Node?,
+                             right_param: Node?) {
 
 
         public var left: Node? = left_param
@@ -81,7 +78,7 @@ open public class AVLtree: SetInterface() {
     //-------------------------------END OF NODE CLASS-------------------------
 
 
-    public var root: Node? = null
+    private var root: Node? = null
 
 
     private fun ins(k: Int, nd: Node?): Node {
@@ -102,7 +99,7 @@ open public class AVLtree: SetInterface() {
             }
         }
     }
-    override fun insert(k: Int) {
+    override public fun insert(k: Int) {
         root = ins(k, root)
     }
 
@@ -133,7 +130,7 @@ open public class AVLtree: SetInterface() {
         nd.rebalance()
         return nd
     }
-    override fun delete(k: Int) {
+    override public fun delete(k: Int) {
         root = del(k, root)
     }
 
@@ -146,11 +143,11 @@ open public class AVLtree: SetInterface() {
             else -> search(k, nd.left)
         }
     }
-    override fun search(k: Int): Boolean = search(k, root)
+    override public fun search(k: Int): Boolean = search(k, root)
 
-    private fun isEmpty(): Boolean = root == null
+    override public fun isEmpty(): Boolean = root == null
 
-    private  fun toList(): List<Int> {
+    override public fun toList(): List<Int> {
         fun Node.toList() : List<Int> {
             val lText = left?.toList() ?: listOf()
             val rText = right?.toList() ?: listOf()
@@ -161,7 +158,7 @@ open public class AVLtree: SetInterface() {
         return root?.toList() ?: listOf()
     }
 
-    override fun union(s: SetInterface): SetInterface {
+    override public fun union(s: SetInterface): SetInterface {
         val t: SetInterface = AVLtree()
         if(isEmpty() || (s as AVLtree).isEmpty()) return t
         toList().forEach {
@@ -170,7 +167,7 @@ open public class AVLtree: SetInterface() {
         return t
     }
 
-    override fun intersection(s: SetInterface): SetInterface {
+    override public fun intersection(s: SetInterface): SetInterface {
         val t: SetInterface = this
         if((t as AVLtree).isEmpty()) return s
         if((s as AVLtree).isEmpty()) return t
@@ -180,21 +177,21 @@ open public class AVLtree: SetInterface() {
         return t
     }
 
-/*
-    public fun toText() : String {
-        fun Node.toText(): List<String> {
-            val lText = left?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
-            val rText = right?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
-            val vText = listOf("($key)\n")
-            return rText + vText + lText
-        }
-        val builder = StringBuilder()
-        val lines = root?.toText() ?: listOf("_\n")
-        lines.forEach { builder.append(it) }
-        return builder.toString()
-    }*/
+    /*
+        public fun toText() : String {
+            fun Node.toText(): List<String> {
+                val lText = left?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
+                val rText = right?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
+                val vText = listOf("($key)\n")
+                return rText + vText + lText
+            }
+            val builder = StringBuilder()
+            val lines = root?.toText() ?: listOf("_\n")
+            lines.forEach { builder.append(it) }
+            return builder.toString()
+        }*/
 
-    /*override fun toString() : String {
+    /*override public fun toString() : String {
         fun Node.print() : String {
             val lText = left?.print() ?: ""
             val rText = right?.print() ?: ""
@@ -207,8 +204,16 @@ open public class AVLtree: SetInterface() {
 
 }
 
+/*
+fun toList(t: Array<LinkedList<Int>>): List<Int> {
+    var res: List<Int> = emptyList()
+    t.forEach { res += it }
+    return res
+}
 
 fun main(args: Array<String>) {
-
-}
+    val r = Array(4, { LinkedList<Int>() })
+    r.forEach { it.add(2) }
+    println(toList(r))
+}*/
 
