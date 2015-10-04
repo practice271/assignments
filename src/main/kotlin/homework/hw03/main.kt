@@ -1,175 +1,114 @@
 package homework.hw03
 
-open class AVLTree() {}
-class Node(var value:Int, var height:Int, var left:AVLTree, var right:AVLTree):AVLTree() {}
-class Leaf(var value:Int, var height:Int = 1):AVLTree() {}
-class Empty(var  height: Int = 0):AVLTree() {}
+class Node(val value: Int, var left_param: Node?, var right_param: Node?){
+    public var left: Node? = left_param
+        get() = $left
+        set(newLeft: Node?) {
+            $left = newLeft
+            height_f = calcHeight()
+        }
 
-fun AVLTree.getHeight():Int{
-    when(this){
-        is Node  -> return this.height
-        is Leaf  -> return this.height
-        is Empty -> return this.height
-        else     -> throw Exception("Error")
-    }
+    public var right: Node? = right_param
+        get() = $right
+        set(newRight: Node?) {
+            $right = newRight
+            height_f = calcHeight()
+        }
+    private fun calcHeight() : Int =
+            1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
+    private var height_f : Int = calcHeight()
+    fun height(): Int = height_f
 }
 
-fun AVLTree.getValue():Int{
-    when(this){
-        is Node  -> return this.value
-        is Leaf  -> return this.value
-        is Empty -> return 0
-        else     -> throw Exception("Error")
-    }
+fun getBalanceFactor(node : Node?):Int{
+    return (node?.right?.height() ?:0) - (node?.left?.height() ?:0)
 }
 
-fun AVLTree.getLeftTree():AVLTree{
-    when(this){
-        is Empty -> return this
-        is Leaf  -> return this
-        is Node  -> return left
-        else     -> throw Exception("Error")
-    }
-}
-
-fun AVLTree.getRightTree():AVLTree {
-    when (this){
-        is Empty -> return this
-        is Leaf  -> return this
-        is Node  -> return right
-        else -> throw Exception("Error")
-    }
-}
-
-fun AVLTree.setRightTree(tree:AVLTree){
-    when(this){
-        is Node -> this.right = tree
-    }
-}
-
-fun AVLTree.setLeftTree(tree:AVLTree){
-    when(this){
-        is Node -> this.left = tree
-        else    -> throw Exception("Error")
-    }
-}
-
-fun AVLTree.getBalanceFactor():Int{
-    when(this){
-        is Node  -> return this.right.getHeight() - this.left.getHeight()
-        is Leaf  -> return 0
-        is Empty -> return 0
-        else     -> throw Exception("Error")
-    }
-}
-
-fun AVLTree.fixHeight(){
-    val tmp =  Math.max(this.getRightTree().getHeight(), this.getLeftTree().getHeight()) + 1
-    when(this){
-        is Node ->  this.height = tmp
-        is Leaf ->  this.height = tmp
-        is Empty -> this.height = tmp
-    }
-}
-
-fun AVLTree.turnRight():AVLTree{
-    var tmp = this.getLeftTree()
-    this.setLeftTree(tmp.getRightTree())
-    tmp.setRightTree(this)
-    this.fixHeight()
-    tmp.fixHeight()
+fun turnRight(node : Node?):Node?{
+    var tmp     = node?.left
+    node?.left  = tmp?.right
+    tmp?.right  = node
     return tmp
 }
 
-fun AVLTree.turnLeft():AVLTree{
-    var tmp = this.getRightTree()
-    this.setRightTree(tmp.getLeftTree())
-    tmp.setLeftTree(this)
-    this.fixHeight()
-    tmp.fixHeight()
+fun turnLeft(node : Node?):Node?{
+    var tmp     = node?.right
+    node?.right = tmp?.left
+    tmp?.left   = node
     return tmp
 }
 
-fun AVLTree.balance():AVLTree{
-    this.fixHeight()
+fun balance(node : Node?):Node?{
+    when {
+        getBalanceFactor(node)  == 2 -> {
+            if (getBalanceFactor(node?.right) < 0) node?.right = turnRight(node?.right)
+            return turnLeft(node)
+        }
 
-    if (this.getBalanceFactor() == 2){
-        if (this.getRightTree().getBalanceFactor() < 0){
-            this.setRightTree(this.getRightTree().turnRight())
+        getBalanceFactor(node) == -2 -> {
+            if (getBalanceFactor(node?.left) > 0) node?.left = turnLeft(node?.left)
+            return turnRight(node)
         }
-        return this.turnLeft()
     }
-    if (this.getBalanceFactor() == -2){
-        if (this.getLeftTree().getBalanceFactor() > 0){
-            this.setLeftTree(this.getLeftTree().turnLeft())
-        }
-        return this.turnRight()
-    }
-    return this
+    return node
 }
 
-fun AVLTree.insert(key:Int):AVLTree{
-    when(this){
-        is Empty -> return Leaf(key)
-        is Leaf  -> {
-                if (key < this.getValue()){
-                    return Node(this.value, this.height+1, Leaf(key), Empty())
-                }
-                else{
-                    return Node(this.value, this.height+1, Empty(), Leaf(key))
-                }
-        }
-        is Node -> {
-            if (key < this.getValue()){
-                var tmp = this.getLeftTree()
-                this.setLeftTree(tmp.insert(key))
-            }
-            else{
-                var tmp = this.getRightTree()
-                this.setRightTree(tmp.insert(key))
-            }
-        }
-        else   -> throw Exception("Error")
+fun insert(key:Int, node : Node?):Node?{
+    when {
+        node == null     -> return Node(key, null, null)
+        key < node.value -> node.left = insert(key , node.left)
+        else             -> node.right = insert(key , node.right)
     }
-    return this.balance()
+    return balance(node)
 }
 
-fun AVLTree.findMin():AVLTree{
-    if (this is Node) return this.getLeftTree().findMin()
-    else return this
+fun findMin(node : Node?):Node?{
+    if (node!=null) return findMin(node.left)
+    else return null
 }
 
-fun AVLTree.removeMin():AVLTree{
-    var tmp = this.getLeftTree()
-    if (tmp is Empty) return this.getRightTree()
-    this.setLeftTree(this.getLeftTree().removeMin())
-    return this.balance()
-}
-
-/*
- * Not working remove method
- */
-
-fun AVLTree.remove(key:Int):AVLTree{
-    if (key < this.getValue()){
-        this.setLeftTree(this.getLeftTree().insert(key))
-    }
-    else if (key > this.getValue()){
-        this.setRightTree(this.getRightTree().insert(key))
-    }
+fun removeMin(node : Node?):Node?{
+    if (node?.left==null) return node?.right
     else{
-        var tmpLeft = this.getLeftTree()
-        var tmpRight = this.getRightTree()
-
-        if (tmpRight is Empty) return tmpLeft
-        var nodeMin = this.findMin()
-        nodeMin.setRightTree(tmpRight.removeMin())
-        nodeMin.setLeftTree(this)
-
+        node?.left = removeMin(node?.left)
+        return balance(node)
     }
-    return this.balance()
 }
 
-fun main(argv:Array<String>){
+fun remove(key:Int, node : Node?):Node?{
+    when{
+        node == null     -> return null
+        key < node.value -> {
+            node.left = remove(key, node.left)
+        }
+        key > node.value -> {
+            node.right = remove(key, node.right)
+        }
+        else             -> {
+            var tmpLeft  = node.left
+            var tmpRight = node.right ?: return tmpLeft
+            var nodeMin   = findMin(node)
+            nodeMin?.right = removeMin(tmpRight)
+            nodeMin?.left  = node
+        }
+    }
+    return balance(node)
+}
 
+fun find(key:Int,node: Node?):Boolean{
+    when{
+        node == null      -> return false
+        key < node.value  -> return find(key, node.left)
+        key > node.value  -> return find(key, node.right)
+        else              -> return true
+    }
+}
+
+fun Node?.treeToText():String{
+    if (this == null) return "null"
+    var leftStr: String
+    var rightStr: String
+    if (left == null) leftStr = "null" else leftStr = "(" + left!!.treeToText() + ")"
+    if (right == null) rightStr = "null" else rightStr = "(" + right!!.treeToText() + ")"
+    return leftStr + "," + value.toString() + "," + rightStr
 }
