@@ -6,16 +6,12 @@ import java.util.*
  * Created by Mikhail on 30.09.2015.
  */
 
-
 public class AvlTree: Set {
-
-    public class AvlNode(public var key: Int) {
-
+    private class AvlNode(public var key: Int) {
         public var left: AvlNode? = null
         public var right: AvlNode? = null
         public var parent: AvlNode? = null
         public var balance: Int = 0
-
         public override fun toString(): String {
             return "" + key
         }
@@ -29,7 +25,6 @@ public class AvlTree: Set {
     }
 
     private fun insertAVL(p: AvlNode?, q: AvlNode) {
-
         if (p == null) {
             this.root = q
             return
@@ -57,15 +52,12 @@ public class AvlTree: Set {
             }
             else -> return
         }
-
     }
 
     private fun rebalance(cur: AvlNode?) {
-
         var cur = cur
         setBalance(cur)
         val balance = cur?.balance
-
         when (balance) {
             -2 -> {
                 if (height(cur?.left?.left) >= height(cur?.left?.right)) {
@@ -81,7 +73,6 @@ public class AvlTree: Set {
                     cur = doubleRotateRightLeft(cur)
                 }
             }
-
         }
 
         if (cur?.parent != null) {
@@ -118,18 +109,15 @@ public class AvlTree: Set {
             r = successor(q)
             q?.key = r?.key
         }
-
         val p: AvlNode?
         if (r?.left != null) {
             p = r?.left
         } else {
             p = r?.right
         }
-
         if (p != null) {
             p.parent = r?.parent
         }
-
         if (r?.parent == null) {
             this.root = p
         } else {
@@ -143,19 +131,14 @@ public class AvlTree: Set {
     }
 
     private fun rotateLeft(node: AvlNode?): AvlNode? {
-
         val v = node?.right
         v?.parent = node?.parent
-
         node?.right = v?.left
-
         if (node?.right != null) {
             node?.right?.parent = node
         }
-
         v?.left = node
         node?.parent = v
-
         if (v?.parent != null) {
             if (v?.parent?.right == node) {
                 v?.parent?.right = v
@@ -163,24 +146,18 @@ public class AvlTree: Set {
                 v?.parent?.left = v
             }
         }
-
         setBalance(node)
         setBalance(v)
-
         return v
     }
 
     private fun rotateRight(node: AvlNode?): AvlNode? {
-
         val v = node?.left
         v?.parent = node?.parent
-
         node?.left = v?.right
-
         if (node?.left != null) {
             node?.left?.parent = node
         }
-
         v?.right = node
         node?.parent = v
         if (v?.parent != null) {
@@ -190,10 +167,8 @@ public class AvlTree: Set {
                 v?.parent?.left = v
             }
         }
-
         setBalance(node)
         setBalance(v)
-
         return v
     }
 
@@ -242,10 +217,10 @@ public class AvlTree: Set {
         if (n == null) {
             return false
         }
-        when (Integer.compare(n.key, x)) {
-            1    -> return searchNode(n.left, x)
-            -1   -> return searchNode(n.right, x)
-            else -> return true
+        when {
+            n.key > x -> return searchNode(n.left, x)
+            n.key < x -> return searchNode(n.right, x)
+            else      -> return true
         }
     }
 
@@ -296,8 +271,8 @@ public class AvlTree: Set {
         inorder(node.right, io)
     }
 
-    public fun toList(): List<Int> {
-        fun AvlNode.toList() : List<Int> {
+    override public fun toList(): List<Int> {
+        fun AvlNode.toList(): List<Int> {
             val lText = left?.toList() ?: listOf()
             val rText = right?.toList() ?: listOf()
             val vText = listOf(key)
@@ -306,16 +281,17 @@ public class AvlTree: Set {
         return root?.toList() ?: listOf()
     }
 
-    override public fun union(set : Set) : AvlTree {
+    override public fun union(set: Set): AvlTree {
         var tree = AvlTree()
         for (i in this.toList()) tree.insert(i)
-        for (i in (set as AvlTree).toList())
+        for (i in set.toList())
             if (!this.search(i)) tree.insert(i)
         return tree
     }
-    override public fun intersection(set : Set) : AvlTree {
+    
+    override public fun intersection(set: Set): AvlTree {
         var tree = AvlTree()
-        for (i in (set as AvlTree).toList())
+        for (i in set.toList())
             if (this.search(i)) tree.insert(i)
         return tree
     }

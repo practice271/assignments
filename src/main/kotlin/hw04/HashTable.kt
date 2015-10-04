@@ -21,7 +21,7 @@ class HashTable(private val size: Int): Set {
         return table[hashFun(x)].contains(x)
     }
 
-    public fun toList(): List<Int> {
+    override public fun toList(): List<Int> {
         var list = listOf<Int>()
         table.forEach { list += it }
         return list
@@ -30,7 +30,7 @@ class HashTable(private val size: Int): Set {
     override public fun union(set: Set): HashTable {
         var table = HashTable(size)
         for (i in this.toList()) table.insert(i)
-        for (i in (set as HashTable).toList()){
+        for (i in set.toList()){
             if (!this.search(i)) table.insert(i)
         }
         return table
@@ -38,7 +38,7 @@ class HashTable(private val size: Int): Set {
 
     override public fun intersection(set: Set): HashTable {
         var table = HashTable(size)
-        for (i in (set as HashTable).toList()) {
+        for (i in set.toList()) {
             if (this.search(i)) table.insert(i)
         }
         return table

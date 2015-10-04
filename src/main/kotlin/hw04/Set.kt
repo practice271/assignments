@@ -9,4 +9,5 @@ interface Set {
     public fun search(value: Int): Boolean
     public fun union(set: Set): Set
     public fun intersection(set: Set): Set
+    public fun toList(): List<Int>
 }
