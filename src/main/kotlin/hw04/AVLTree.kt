@@ -97,6 +97,8 @@ fun Tree.insertAVL (key: Int): Tree{
     }
 }
 
+/*convert tree to list*/
+
 fun Tree.toList(): List<Int>{
     when (this){
         is Empty -> return listOf()
@@ -185,6 +187,7 @@ fun Tree.removeAVL (key: Int): Tree{
     }
     return this
 }
+/* delete repetition in list */
 
 fun List<Int>.delRep(): List<Int>{
     val list = listOf(this[0]).toLinkedList()

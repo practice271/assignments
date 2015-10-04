@@ -60,5 +60,82 @@ public class hw04Test {
         val tree2 = AVLTree_set(Node (6,Empty(),Node(7,Node(3,Empty(),Empty()),Node(10,Empty(),Empty()))))
         assertEquals(listOf(6,3,7,10), tree1.intersection(tree2).toList())
     }
+    Test fun insertTest_HT1() {
+        val table1 = HashTable_set(4)
+        table1.insert(1)
+        table1.insert(5)
+        table1.insert(4)
+        table1.insert(9)
+        assertEquals(listOf(4,1,5,9), table1.toList())
+    }
+    Test fun removeTest_HT1() {
+        val table1 = HashTable_set(4)
+        table1.insert(1)
+        table1.insert(5)
+        table1.insert(4)
+        table1.insert(9)
+        table1.remove(0)
+        assertEquals(listOf(1,5,9), table1.toList())
+    }
+    Test fun searchTest_HT1() {
+        val table1 = HashTable_set(4)
+        table1.insert(1)
+        table1.insert(5)
+        table1.insert(4)
+        table1.insert(9)
+        assertEquals(true, table1.search(9))
+    }
+    Test fun searchTest_HT2() {
+        val table1 = HashTable_set(4)
+        table1.insert(1)
+        table1.insert(5)
+        table1.insert(4)
+        table1.insert(9)
+        assertEquals(false, table1.search(100))
+    }
+    Test fun unionTest_HT1() {
+        val table1 = HashTable_set(4)
+        val table2 = HashTable_set(2)
+        table1.insert(1)
+        table1.insert(5)
+        table1.insert(4)
+        table1.insert(9)
+        table2.insert(5)
+        table2.insert(10)
+        assertEquals(listOf(4,5,1,9,10), table1.union(table2).toList().delRep())
+    }
+    Test fun unionTest_HT2() {
+        val table1 = HashTable_set(2)
+        val table2 = HashTable_set(2)
+        table1.insert(1)
+        table1.insert(5)
+        table2.insert(5)
+        table2.insert(1)
+        assertEquals(listOf(5,1), table1.union(table2).toList().delRep())
+    }
+    Test fun intersectionTest_HT1() {
+        val table1 = HashTable_set(2)
+        val table2 = HashTable_set(2)
+        table1.insert(1)
+        table1.insert(5)
+        table2.insert(5)
+        table2.insert(1)
+        assertEquals(listOf(5,1), table1.intersection(table2).toList())
+    }
+    Test fun intersectionTest_HT2() {
+        val table1 = HashTable_set(3)
+        val table2 = HashTable_set(2)
+        table1.insert(1)
+        table1.insert(5)
+        table1.insert(9)
+        table2.insert(5)
+        table2.insert(0)
+        assertEquals(listOf(5), table1.intersection(table2).toList())
+    }
+
+
+
+
+
 
 }
