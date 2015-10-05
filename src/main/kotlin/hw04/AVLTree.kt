@@ -23,12 +23,8 @@ public class AVLtree: SetInterface() {
             }
 
         private var height_f : Int = calcHeight()
-
-
         private fun calcHeight() : Int = 1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
-
         private fun height(): Int = height_f
-
         private fun balance(): Int = (right?.height() ?: 0) - (left?.height() ?: 0)
 
         private fun ltrotate() {
@@ -160,7 +156,7 @@ public class AVLtree: SetInterface() {
 
     override public fun union(s: SetInterface): SetInterface {
         val t: SetInterface = AVLtree()
-        if(isEmpty() || (s as AVLtree).isEmpty()) return t
+        if(isEmpty() || s.isEmpty()) return t
         toList().forEach {
             if(s.search(it)) t.insert(it.toInt())
         }
@@ -169,51 +165,11 @@ public class AVLtree: SetInterface() {
 
     override public fun intersection(s: SetInterface): SetInterface {
         val t: SetInterface = this
-        if((t as AVLtree).isEmpty()) return s
-        if((s as AVLtree).isEmpty()) return t
+        if(t.isEmpty()) return s
+        if(s.isEmpty()) return t
         s.toList().forEach {
             if(!t.search(it.toInt())) t.insert(it.toInt())
         }
         return t
     }
-
-    /*
-        public fun toText() : String {
-            fun Node.toText(): List<String> {
-                val lText = left?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
-                val rText = right?.toText()?.map { "|  $it" } ?: listOf("|  _\n")
-                val vText = listOf("($key)\n")
-                return rText + vText + lText
-            }
-            val builder = StringBuilder()
-            val lines = root?.toText() ?: listOf("_\n")
-            lines.forEach { builder.append(it) }
-            return builder.toString()
-        }*/
-
-    /*override public fun toString() : String {
-        fun Node.print() : String {
-            val lText = left?.print() ?: ""
-            val rText = right?.print() ?: ""
-            val vText = key.toString() + " "
-            return vText + lText + rText
-        }
-
-        return root?.print() ?: "TIE"
-    }*/
-
 }
-
-/*
-fun toList(t: Array<LinkedList<Int>>): List<Int> {
-    var res: List<Int> = emptyList()
-    t.forEach { res += it }
-    return res
-}
-
-fun main(args: Array<String>) {
-    val r = Array(4, { LinkedList<Int>() })
-    r.forEach { it.add(2) }
-    println(toList(r))
-}*/
-

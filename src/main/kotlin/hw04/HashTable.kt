@@ -28,7 +28,7 @@ public class HashTable(public val arrsize: Int): SetInterface() {
     override fun search(k: Int): Boolean = table[k % arrsize].indexOf(k) != -1
 
     override fun union(s: SetInterface): SetInterface {
-        val resht = HashTable(Math.max(arrsize, (s as HashTable).arrsize))
+        val resht = HashTable(arrsize)
         if(isEmpty() || s.isEmpty()) return resht
         toList().forEach {
             if(s.search(it)) resht.insert(it)
@@ -38,8 +38,8 @@ public class HashTable(public val arrsize: Int): SetInterface() {
 
     override fun intersection(s: SetInterface): SetInterface {
         val resht: SetInterface = this
-        if((resht as HashTable).isEmpty()) return s
-        if((s as HashTable).isEmpty()) return resht
+        if(resht.isEmpty()) return s
+        if(s.isEmpty()) return resht
         s.toList().forEach {
             if(!resht.search(it)) resht.insert(it)
         }
