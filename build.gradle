@@ -11,7 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
-mainClassName = 'classroom.c02.C02Package'
+mainClassName = 'hw04.Hw04Package'
 
 sourceCompatibility = 1.5
 
