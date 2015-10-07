@@ -1,8 +1,5 @@
 package hw03
 
-/**
- * Created by Zarina Kurbatova on 02/10/15.
- */
 
 open class AVLTree() {
     public var root: Node? = null

@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
  * Created by z on 03.10.2015.
  */
 public class avlTree_Tests {
-    Test fun testSearch1() {
+    @Test fun testSearch1() {
         var tree: Node? =  Node(13,
                 Node(11,
                         Node(10, null, null),
@@ -19,7 +19,7 @@ public class avlTree_Tests {
         assertEquals(flag, true)
     }
 
-    Test fun testSearch2() {
+    @Test fun testSearch2() {
         var tree: Node? =  Node(13,
                 Node(11,
                         Node(10, null, null),
@@ -32,7 +32,7 @@ public class avlTree_Tests {
         assertEquals(flag, true)
     }
 
-    Test fun testInsert1() {
+    @Test fun testInsert1() {
         var tree: Node? =  Node(13,
                 Node(11,
                         Node(10, null, null),
@@ -47,7 +47,7 @@ public class avlTree_Tests {
         assertEquals(tree?.toString_(), result)
     }
 
-    Test fun testInsert2() {
+    @Test fun testInsert2() {
         var tree: Node? =  Node(3,
                 Node(1,
                         Node(0, null, null),
@@ -63,7 +63,7 @@ public class avlTree_Tests {
         assertEquals(tree?.toString_(), result)
     }
 
-    Test fun testRemove1() {
+    @Test fun testRemove1() {
         var tree: Node? =  Node(12,
                 Node(10,
                         Node(9, null, null),
@@ -80,7 +80,7 @@ public class avlTree_Tests {
         assertEquals(tree?.toString_(), result)
     }
 
-    Test fun testRemove2() {
+    @Test fun testRemove2() {
         var tree: Node? =  Node(-8,
                 Node(-10,
                         Node(-11, null, null),
