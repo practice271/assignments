@@ -1,0 +1,118 @@
+package hw04
+import org.junit.Test
+import kotlin.test.assertEquals
+
+class AVLTreeSetTest {
+
+    @Test fun testInsert1() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(9)
+        assertEquals(listOf(7,9), tree.toList())
+    }
+
+    @Test fun testInsert2() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(9)
+        tree.insert(11)
+        tree.insert(13)
+        assertEquals(listOf(7,9,11,13), tree.toList())
+    }
+
+    @Test fun testSearch1() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(9)
+        tree.insert(8)
+        tree.insert(12)
+        assertEquals(false, tree.search(4))
+    }
+
+    @Test fun testSearch2() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(9)
+        tree.insert(8)
+        tree.insert(4)
+        assertEquals(true, tree.search(4))
+    }
+
+    @Test fun unionTest1() {
+        var tree1 = AVLTreeSet()
+        var tree2 = AVLTreeSet()
+        tree1.insert(1)
+        tree1.insert(6)
+        tree1.insert(8)
+        tree2.insert(9)
+        tree2.insert(5)
+        tree2.insert(18)
+        assertEquals(listOf(1,5,6,8,9,18),tree1.union(tree2).toList())
+    }
+
+    @Test fun unionTest2() {
+        var tree1 = AVLTreeSet()
+        var tree2 = AVLTreeSet()
+        tree1.insert(9)
+        tree1.insert(14)
+        tree1.insert(7)
+        tree2.insert(15)
+        tree2.insert(6)
+        tree2.insert(18)
+        assertEquals(listOf(6,7,9,14,15,18),tree1.union(tree2).toList())
+    }
+
+    @Test fun intersectionTest1() {
+        var tree1 = AVLTreeSet()
+        var tree2 = AVLTreeSet()
+        tree1.insert(9)
+        tree1.insert(14)
+        tree1.insert(18)
+        tree2.insert(9)
+        tree2.insert(6)
+        tree2.insert(18)
+        assertEquals(listOf(9,18),tree1.insersection(tree2).toList())
+    }
+
+    @Test fun intersectionTest2() {
+        var tree1 = AVLTreeSet()
+        var tree2 = AVLTreeSet()
+        tree1.insert(8)
+        tree1.insert(14)
+        tree1.insert(18)
+        tree1.insert(18)
+        tree2.insert(9)
+        tree2.insert(8)
+        tree2.insert(12)
+        assertEquals(listOf(8),tree1.insersection(tree2).toList())
+    }
+
+ /*   @Test fun testDelete1() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(8)
+        tree.insert(9)
+        tree.insert(10)
+        tree.delete(7)
+        assertEquals(listOf(8,9,10), tree.toList())
+    }*/
+
+/*    @Test fun testDelete2() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(15)
+        tree.insert(19)
+        tree.insert(11)
+        tree.insert(17)
+        tree.insert(105)
+        tree.insert(20)
+        tree.insert(22)
+        tree.delete(15)
+        tree.delete(19)
+        assertEquals(listOf(17,7,11,22,20,105), tree.toList())
+    }*/
+
+
+
+
+}
