@@ -1,5 +1,5 @@
 # assignments
-[![Build Status](https://travis-ci.org/onewhl/assignments.svg?branch=hw02)](https://travis-ci.org/onewhl/assignments)
+[![Build Status](https://travis-ci.org/onewhl/assignments.svg?branch=hw04)](https://travis-ci.org/onewhl/assignments)
 The repository to fork and complete assignments in it.
 
 The result [table](https://docs.google.com/spreadsheets/d/1kmUJBEjTM9AaVXt_Cd_I2kif1Y99rwpd9gdsyaNQdRc/edit?usp=sharing).
