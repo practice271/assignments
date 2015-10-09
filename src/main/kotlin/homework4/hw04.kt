@@ -1,6 +1,5 @@
 package homework4
 import homework3.*
-
 interface  Set{
     public fun insert(value: Int):Set
     public fun delete(value: Int):Set
@@ -10,12 +9,22 @@ interface  Set{
     public fun intersect(set: Set): Set
 }
 
-public class AvlSet(var array: Array<Int>): Set{
-    private fun treeToArray(tree:avlTree?):Array<Int> {
+public class Tree(var tree: AvlTree?): Set{
+
+    override fun insert(value: Int):Set{
+        return Tree(tree?.insert(value))
+    }
+    override fun delete(value: Int):Set{
+        return Tree(tree?.delete(value))
+    }
+    override fun search(value: Int):Boolean{
+        return (tree as AvlTree).search(value)
+    }
+    override fun toArray():Array<Int>{
         var arr = emptyArray<Int>()
-        fun LCR(tr: avlTree?) {
-            if (tr == null) {
-            } else {
+        fun LCR(tr: AvlTree?) {
+            if (tr == null) {}
+            else {
                 LCR(tr.lTree)
                 arr = arr.plus(tr.key)
                 LCR(tr.rTree)
@@ -24,74 +33,52 @@ public class AvlSet(var array: Array<Int>): Set{
         LCR(tree)
         return arr
     }
-
-    private fun toTree(arr:Array<Int>):avlTree?{
-        var tree:avlTree? = null
-        arr.forEach{
-            tree = insert(tree, it)
-        }
-        return tree
-    }
-
-    private var tree = toTree(array)
-
-    override fun insert(value: Int):Set{
-        tree = insert(tree, value)
-        return AvlSet(treeToArray(tree))
-    }
-    override fun delete(value: Int):Set{
-        tree = delete(tree, value)
-        return AvlSet(treeToArray(tree))
-    }
-    override fun search(value: Int):Boolean{
-        return search(value, tree)
-    }
-    override fun toArray():Array<Int>{
-        return array
-    }
     override fun union(set: Set):Set{
-        var tree = toTree((set as AvlSet).array)
-        array.forEach {
-            tree = insert(tree, it)
-        }
-        return AvlSet(treeToArray(tree))
-    }
-
-    override fun intersect(set:Set):Set{
-        var arr = emptyArray<Int>()
+        var newTree = tree
         set.toArray().forEach {
-            if (search(it)) {arr = arr.plus(it)}
+            newTree?.insert(it)
         }
-        return AvlSet(arr)
+        return Tree(newTree)
+    }
+    override fun intersect(set:Set):Set{
+        var newTree = set
+        newTree.toArray().forEach {
+            if (!search(it)) {
+                newTree.delete(it)
+            }
+        }
+        return newTree
     }
 }
 
-public class HashSet(val size: Int):Set{
-    private fun hashF(value: Int) = value.hashCode() mod size
-    private var hashTable = arrayOfNulls<Int>(size)
+public class Hash(val size: Int):Set{
+    private fun hashF(value: Int) = value mod size
+    private var hashTable = Array<List<Int>>(size, {i -> listOf()})
 
     override fun insert(value: Int):Set{
-        if (hashTable[hashF(value)] == null) hashTable[hashF(value)] = value
+        if (!search(value)) hashTable[hashF(value)] = hashTable[hashF(value)] + value
         return this
     }
-
     override fun delete(value: Int):Set{
-        if (hashTable[hashF(value)] == value) hashTable[hashF(value)] = null
+        hashTable[hashF(value)] = hashTable[hashF(value)] - value
         return this
     }
     override fun search(value: Int):Boolean{
-        if (hashTable[hashF(value)] == null) return false
-        else return true
+        var flag = false
+        hashTable[hashF(value)].forEach {
+            if (it == value) flag = true
+        }
+        return flag
     }
     override fun toArray():Array<Int>{
         var arr = emptyArray<Int>()
         hashTable.forEach {
-            if(it != null) arr = arr.plus(it)
+            arr = arr.plus(it)
         }
         return arr
     }
     override fun union(set: Set):Set{
-        var newHash = HashSet((set as HashSet).size + size )
+        var newHash = Hash(size )
         set.toArray().forEach {
             newHash.insert(it)
         }
@@ -101,7 +88,7 @@ public class HashSet(val size: Int):Set{
         return newHash
     }
     override fun intersect(set: Set):Set{
-        var newHash = HashSet(size)
+        var newHash = Hash(size)
         set.toArray().forEach {
             newHash.insert(it)
         }
@@ -110,7 +97,4 @@ public class HashSet(val size: Int):Set{
         }
         return newHash
     }
-}
-
-fun main(args: Array<String>) {
 }
