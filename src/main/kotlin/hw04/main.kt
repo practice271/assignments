@@ -277,7 +277,12 @@ public class HashTable (public var values : Array<ArrayList<Int>>) : AbstractSet
    override public fun delete (value : Int) : HashTable? {
       val delHash = hash(value)
       var newArray = values
-      newArray[delHash].removeIf{it == value}
+      for (i in 0..newArray.size() - 1) {
+         if (newArray[delHash][i] == value) {
+            newArray[delHash].remove(i)
+            return HashTable(newArray)
+         }
+      }
       return HashTable(newArray)
    }
 
