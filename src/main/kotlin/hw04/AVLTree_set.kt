@@ -18,7 +18,7 @@ class AVLTree_set(tree: Tree): SetInterface{
     }
     public override fun union(set: SetInterface): SetInterface{
         var tree = Empty() as Tree
-        val set1 = (set as AVLTree_set)?.toList()
+        val set1 = set.toList()
         val set2 = this.toList()
         for (i in set2) tree = tree.insertAVL(i)
         for (i in set1) tree = tree.insertAVL(i)
@@ -27,7 +27,7 @@ class AVLTree_set(tree: Tree): SetInterface{
 
     public override fun intersection(set: SetInterface): SetInterface{
         var tree = Empty() as Tree
-        val set1 = (set as AVLTree_set)?.toList()
+        val set1 = set.toList()
         val set2 = this.toList()
         for (i in set2) if (set1.contains(i)){
             tree = tree.insertAVL(i)
