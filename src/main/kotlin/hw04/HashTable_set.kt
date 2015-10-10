@@ -30,7 +30,7 @@ public class HashTable_set (val size: Int): SetInterface{
     public override fun union(set: SetInterface): SetInterface{
         var res  = HashTable_set(size) as SetInterface
         val set1 = toList()
-        val set2 = (set as HashTable_set)?.toList()
+        val set2 = set.toList()
         for (i in set2) res = res.insert(i)
         for (i in set1) res = res.insert(i)
         return res
@@ -39,7 +39,7 @@ public class HashTable_set (val size: Int): SetInterface{
     public override fun intersection(set: SetInterface): SetInterface{
         var res = HashTable_set(size) as SetInterface
         val set1 = toList()
-        val set2 = (set as HashTable_set)?.toList()
+        val set2 = set.toList()
         for (i in set2) if (set1.contains(i)){
             res = res.insert(i)
         }
