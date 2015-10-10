@@ -95,31 +95,6 @@ public class HashTable_search
     }
 }
 
-public class HashTable_union
-{
-    var table1 : HashTable = HashTable(512)
-    var table2 : HashTable = HashTable(512)
-
-    @Test fun Test0()
-    {
-        table2.insert(2)
-
-        table1 = table1.union(table2) as HashTable
-
-        assertEquals(emptyList<Int>(), table1.toList())
-    }
-
-    @Test fun Test1()
-    {
-        table2.insert(2)
-        table1.insert(2)
-
-        table1 = table1.union(table2) as HashTable
-
-        assertEquals(listOf(2), table1.toList())
-    }
-}
-
 public class HashTable_intersection
 {
     var table1 : HashTable = HashTable(512)
@@ -129,7 +104,32 @@ public class HashTable_intersection
     {
         table2.insert(2)
 
-        table1 = table1.intersection(table2) as HashTable
+        table1 = table1.intersection(table2)
+
+        assertEquals(emptyList<Int>(), table1.toList())
+    }
+
+    @Test fun Test1()
+    {
+        table2.insert(2)
+        table1.insert(2)
+
+        table1 = table1.intersection(table2)
+
+        assertEquals(listOf(2), table1.toList())
+    }
+}
+
+public class HashTable_union
+{
+    var table1 : HashTable = HashTable(512)
+    var table2 : HashTable = HashTable(512)
+
+    @Test fun Test0()
+    {
+        table2.insert(2)
+
+        table1 = table1.union(table2)
 
         assertEquals(listOf(2), table1.toList())
     }
@@ -139,7 +139,7 @@ public class HashTable_intersection
         table2.insert(2)
         table1.insert(4)
 
-        table1 = table1.intersection(table2) as HashTable
+        table1 = table1.union(table2)
 
         assertEquals(listOf(2, 4), table1.toList())
     }

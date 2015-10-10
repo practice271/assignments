@@ -96,31 +96,6 @@ public class AVLTree_search
     }
 }
 
-public class AVLTree_union
-{
-    var tree1 : AVLTree = AVLTree()
-    var tree2 : AVLTree = AVLTree()
-
-    @Test fun Test0()
-    {
-        tree2.insert(2)
-
-        tree1 = tree1.union(tree2) as AVLTree
-
-        assertEquals(emptyList<Int>(), tree1.toList())
-    }
-
-    @Test fun Test1()
-    {
-        tree2.insert(2)
-        tree1.insert(2)
-
-        tree1 = tree1.union(tree2) as AVLTree
-
-        assertEquals(listOf(2), tree1.toList())
-    }
-}
-
 public class AVLTree_intersection
 {
     var tree1 : AVLTree = AVLTree()
@@ -130,7 +105,32 @@ public class AVLTree_intersection
     {
         tree2.insert(2)
 
-        tree1 = tree1.intersection(tree2) as AVLTree
+        tree1 = tree1.intersection(tree2)
+
+        assertEquals(emptyList<Int>(), tree1.toList())
+    }
+
+    @Test fun Test1()
+    {
+        tree2.insert(2)
+        tree1.insert(2)
+
+        tree1 = tree1.intersection(tree2)
+
+        assertEquals(listOf(2), tree1.toList())
+    }
+}
+
+public class AVLTree_union
+{
+    var tree1 : AVLTree = AVLTree()
+    var tree2 : AVLTree = AVLTree()
+
+    @Test fun Test0()
+    {
+        tree2.insert(2)
+
+        tree1 = tree1.union(tree2)
 
         assertEquals(listOf(2), tree1.toList())
     }
@@ -140,7 +140,7 @@ public class AVLTree_intersection
         tree2.insert(2)
         tree1.insert(4)
 
-        tree1 = tree1.intersection(tree2) as AVLTree
+        tree1 = tree1.union(tree2)
 
         assertEquals(listOf(2, 4), tree1.toList())
     }

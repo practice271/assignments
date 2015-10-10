@@ -1,6 +1,6 @@
 package hw04
 
-internal class AVLTree : IMap()
+internal class AVLTree : AbstractMap()
 {
     private inner class Node (value : Int, l : Node?, r: Node?) {
 
@@ -8,13 +8,14 @@ internal class AVLTree : IMap()
         var leftChild: Node? = l
         var rightChild: Node? = r
 
-        var Height: Int = calcHeight()
+        var height: Int = calcHeight()
 
 
-        private fun calcHeight(): Int = Math.max(leftChild?.calcHeight() ?: 0, rightChild?.calcHeight() ?: 0) + 1
+        private fun calcHeight(): Int = Math.max(leftChild?.calcHeight() ?: 0,
+                                                 rightChild?.calcHeight() ?: 0) + 1
 
         private fun FixHeight() {
-            Height = calcHeight()
+            height = calcHeight()
         }
 
         private fun calcBalance() = (leftChild?.calcHeight() ?: 0) - (rightChild?.calcHeight() ?: 0)
@@ -138,7 +139,7 @@ internal class AVLTree : IMap()
         }
     }
 
-    public fun toList() : List<Int>
+    override public fun toList() : List<Int>
     {
         fun Node.toList_ () : List<Int>
         {
@@ -169,26 +170,23 @@ internal class AVLTree : IMap()
         return SearchNode(root, value)
     }
 
-    override public fun union (map: IMap) : IMap
+    override public fun union (map: AbstractMap) : AVLTree
     {
-        var newTree : IMap = AVLTree()
-        if (isEmpty() || (map as AVLTree).isEmpty())
-            return newTree
+        var newTree = AVLTree()
+        map.toList().forEach { newTree.insert(it.toInt()) }
 
         toList().forEach {
-            if(map.search(it)) newTree.insert(it.toInt())
+            if(!map.search(it)) newTree.insert(it.toInt())
         }
 
         return newTree
     }
 
-    override public fun intersection(map: IMap) : IMap
+    override public fun intersection(map: AbstractMap) : AVLTree
     {
-        var newTree : IMap = this
-        if((newTree as AVLTree).isEmpty()) return map
-        if((map as AVLTree).isEmpty()) return newTree
+        var newTree = AVLTree()
         map.toList().forEach {
-            if(!newTree.search(it.toInt())) newTree.insert(it.toInt())
+            if(search(it.toInt())) newTree.insert(it.toInt())
         }
         return newTree
     }
