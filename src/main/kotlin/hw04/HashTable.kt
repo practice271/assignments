@@ -36,7 +36,7 @@ public class HashTable(): Set() {
         val firstList = this.toList()
         val secondList = set.toList()
         for (elem in firstList) result.insert(elem)
-        for (elem in secondList) if (result.search(elem) == false) result.insert(elem)
+        for (elem in secondList) if (!result.search(elem)) result.insert(elem)
         return result
     }
 

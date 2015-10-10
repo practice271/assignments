@@ -3,9 +3,9 @@ package hw04
 import java.util.*
 
 public class Node (var value: Int) {
-    var leftChild: Node? = null
-    var rightChild: Node? = null
-    var height = 1
+    private var leftChild: Node? = null
+    private var rightChild: Node? = null
+    private var height = 1
 
     constructor(value: Int, leftChild_: Node?, rightChild_: Node?, height: Int = 1) : this(value) {
         leftChild = leftChild_
