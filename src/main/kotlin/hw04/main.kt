@@ -10,7 +10,8 @@ abstract class AbstractSet {
    abstract public fun intersection (set : AbstractSet?) : AbstractSet?
 }
 
-public class AVLtree(public var value : Int, public var left : AVLtree?, public var right : AVLtree?): AbstractSet() {
+public class AVLtree(public var value : Int, public var left : AVLtree?, public
+                     var right : AVLtree?): AbstractSet() {
    private fun AVLtree?.height(): Int {
       when (this) {
          null -> return 0
@@ -19,33 +20,21 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
    }
 
    private fun AVLtree?.findMin(): Int {
-      if (this != null ) {
-         val l = this.left
-         if (l == null) {
-            return this.value
-         }
-         val ll = l.left
-         if (ll == null) {
-            return l.value
-         }
-         ll.findMin()
+      if (this == null) { return 0 }
+      val l = this.left
+      if (l == null) {
+         return this.value
       }
-      return 0
+      return l.left?.findMin() ?: l.value
    }
 
    private fun AVLtree?.findMax(): Int {
-      if (this != null ) {
-         val r = this.right
-         if (r == null) {
-            return this.value
-         }
-         val rr = r.right
-         if (rr == null) {
-            return r.value
-         }
-         rr.findMax()
+      if (this == null) { return 0 }
+      val r = this.right
+      if (r == null) {
+         return this.value
       }
-      return 0
+      return r.right?.findMax() ?: r.value
    }
 
    private fun rightRotation(): AVLtree {
@@ -60,7 +49,8 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
          }
          val lr = l.right
          if (lr != null) {
-            return AVLtree(lr.value, AVLtree (l.value, null, null), AVLtree(this.value, null, null))
+            return AVLtree(lr.value, AVLtree (l.value, null, null),
+                    AVLtree(this.value, null, null))
          }
          return this
       }
@@ -72,12 +62,14 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
             else -> return AVLtree(this.value, l.rightRotation(), r)
          }
          else -> when (ll) {
-            null -> return AVLtree(lr.value, AVLtree(l.value, null, lr.left), AVLtree(this.value, lr.right, null))
+            null -> return AVLtree(lr.value, AVLtree(l.value, null, lr.left),
+                    AVLtree(this.value, lr.right, null))
             else -> {
                if (ll.height() >= lr.height()) {
                   return AVLtree(l.value, l.left, AVLtree(this.value, lr, r.right))
                }
-               return AVLtree(lr.value, AVLtree(l.value, ll, lr.left), AVLtree(this.value, lr.right, this.right))
+               return AVLtree(lr.value, AVLtree(l.value, ll, lr.left),
+                       AVLtree(this.value, lr.right, this.right))
             }
          }
       }
@@ -95,7 +87,8 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
          }
          val rl = r.left
          if (rl != null) {
-            return AVLtree(rl.value, AVLtree (this.value, null, null), AVLtree(r.value, null, null))
+            return AVLtree(rl.value, AVLtree (this.value, null, null),
+                    AVLtree(r.value, null, null))
          }
          return this
       }
@@ -107,12 +100,14 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
             else -> return AVLtree(this.value, l, r.leftRotation())
          }
          else -> when (rr) {
-            null -> return AVLtree(rl.value, AVLtree(this.value, null, rl.left), AVLtree(r.value, rl.right, null))
+            null -> return AVLtree(rl.value, AVLtree(this.value, null, rl.left),
+                    AVLtree(r.value, rl.right, null))
             else -> {
                if (rr.height() >= rl.height()) {
                   return AVLtree(r.value, AVLtree(this.value, l.left, rl), r.right)
                }
-               return AVLtree(rl.value, AVLtree(this.value, this.left, rl.left), AVLtree(l.value, rl.left, rr))
+               return AVLtree(rl.value, AVLtree(this.value, this.left, rl.left),
+                       AVLtree(l.value, rl.left, rr))
             }
          }
       }
@@ -228,7 +223,8 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
       return lList + v + rList
    }
 
-   private fun AVLtree?.union_ (set: AbstractSet?, acc: AbstractSet?) : AbstractSet?{
+   private fun AVLtree?.union_ (set: AbstractSet?, acc: AbstractSet?)
+           : AbstractSet?{
       if (this == null){return acc}
       if (set == null) {return this}
       var new = acc
@@ -243,7 +239,8 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
       return this.union_(set, set)
    }
 
-   private fun AVLtree?.intersection_(t: AbstractSet?, acc: AVLtree?): AVLtree? {
+   private fun AVLtree?.intersection_(t: AbstractSet?, acc: AVLtree?)
+           : AVLtree? {
       if (t == null) {
          return null
       }
@@ -251,7 +248,8 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
          return acc
       }
       if (t.search (this.value)) {
-         return this.right.intersection_ (t, this.left.intersection_ (t, acc.insert_ (this.value)))
+         return this.right.intersection_ (t, this.left.intersection_ (t,
+                 acc.insert_ (this.value)))
       }
       return this.right.intersection_ (t, this.left.intersection_ (t, acc))
    }
@@ -262,9 +260,9 @@ public class AVLtree(public var value : Int, public var left : AVLtree?, public 
    }
 }
 
-public class HashTable (public var values : Array<ArrayList<Int>>) : AbstractSet(){
+public class HashTable (private var values : Array<ArrayList<Int>>) : AbstractSet(){
    private fun hash(v : Int): Int {
-      return v mod 10;
+      return v mod values.size();
    }
 
    override public fun insert (value : Int) : HashTable? {
@@ -296,7 +294,7 @@ public class HashTable (public var values : Array<ArrayList<Int>>) : AbstractSet
 
    override public fun toList () : List<Int> {
       var list : List<Int> = values[0]
-      for (i in 1..9) {
+      for (i in 1..values.size() - 1) {
          list = list + values[i]
       }
       return list
@@ -307,7 +305,7 @@ public class HashTable (public var values : Array<ArrayList<Int>>) : AbstractSet
          return this
       }
       var newSet = set
-      for (i in 0..9) {
+      for (i in 0..values.size() - 1) {
          for (j in 0..this.values[i].size() - 1) {
             if (!set.search (this.values[i][j])) {
                newSet = newSet?.insert (this.values[i][j]) ?: this
@@ -322,7 +320,7 @@ public class HashTable (public var values : Array<ArrayList<Int>>) : AbstractSet
          return this
       }
       var newSet = this
-      for (i in 0..9) {
+      for (i in 0..values.size() - 1) {
          for (j in 0..this.values[i].size() - 1) {
             if (!set.search (this.values[i][j])) {
                newSet.delete (this.values[i][j])
