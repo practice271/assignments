@@ -10,13 +10,11 @@ public class AVLtree: SetInterface() {
 
 
         public var left: Node? = left_param
-            get() = $left
             set(newLeft: Node?) {
                 $left = newLeft
                 height_f = calcHeight()
             }
         public var right: Node? = right_param
-            get() = $right
             set(newR: Node?) {
                 $right = newR
                 height_f = calcHeight()
@@ -116,10 +114,10 @@ public class AVLtree: SetInterface() {
             k > nd.key -> nd.right = del(k, nd.right)
             else -> {
                 nd.right ?: return nd.left
-                val min = nd.right!!.minnode()
-                min.right = nd.right!!.delmin()
-                min.left = nd.left
-                min.rebalance()
+                val min: Node? = nd.right?.minnode()
+                min?.right = nd.right?.delmin()
+                min?.left = nd.left
+                min?.rebalance()
                 return min
             }
         }
