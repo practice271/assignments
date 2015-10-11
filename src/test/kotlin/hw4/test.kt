@@ -33,7 +33,7 @@ public class TestAVL {
     }
 
     @Test fun interfaceTest() {
-        var t: TreeSet<Int> = TreeSet()
+        var t: TreeSet<Int> = TreeSet(Nil())
         for ((j, x) in i.withIndex()) {
             t.insert(x)
             assertEquals(t.text(), ie[j])

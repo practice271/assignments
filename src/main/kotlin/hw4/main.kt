@@ -5,16 +5,16 @@ import java.io.*
 /* hw3 trees - functional-like style */
 
 abstract class Tree<T: Comparable<T>>() {
-    var h: Int = 0
-    var d: Int = 0
+    var height: Int = 0
+    var diff: Int = 0
 }
 
 class Nil<T: Comparable<T>>(): Tree<T>()
 
 class Node<T: Comparable<T>>(val v: T, val l: Tree<T>, val r: Tree<T>): Tree<T>() {
     init {
-        h = Math.max(l.h, r.h) + 1
-        d = l.h - r.h
+        height = Math.max(l.height, r.height) + 1
+        diff = l.height - r.height
     }
 }
 
@@ -44,11 +44,11 @@ fun <T : Comparable<T>>Tree<T>.rotRightLeft(): Tree<T> =
 
 fun <T : Comparable<T>>Tree<T>.insert(x: T): Tree<T> =
         if (this is Node) (
-                if (x < v)
-                    Node(v, l.insert(x), r)
-                else
-                    Node(v, l, r.insert(x))
-                ).fix()
+            when {
+                x < v -> Node(v, l.insert(x), r)
+                x > v -> Node(v, l, r.insert(x))
+                else -> this
+            }).fix()
         else
             Node(x, Nil(), Nil())
 
@@ -84,11 +84,11 @@ fun <T : Comparable<T>>Tree<T>.remove(x: T): Tree<T> =
 fun <T : Comparable<T>>Tree<T>.fix(): Tree<T> =
         if (this is Node)
             when {
-                d == -2 ->
-                    if (r.d <= 0) this.rotLeft()
+                diff == -2 ->
+                    if (r.diff <= 0) this.rotLeft()
                     else this.rotRightLeft()
-                d == 2 ->
-                    if (l.d >= 0) this.rotRight()
+                diff == 2 ->
+                    if (l.diff >= 0) this.rotRight()
                     else this.rotLeftRight()
                 else ->
                     this
@@ -136,9 +136,14 @@ fun <T : Comparable<T>>Tree<T>.text(): String =
         else
             "[]"
 
-class TreeSet<T: Comparable<T>>() : Set<T> {
-    var t: Tree<T> = Nil()
+fun <T : Comparable<T>>Tree<T>.forAll(f: (T) -> Unit): Unit =
+    if (this is Node) {
+        l.forAll(f);
+        f(v);
+        r.forAll(f);
+    }
 
+class TreeSet<T: Comparable<T>>(var t: Tree<T>) : Set<T> {
     override fun insert(x: T) {
         t = t.insert(x)
     }
@@ -150,6 +155,23 @@ class TreeSet<T: Comparable<T>>() : Set<T> {
     override fun find(x: T): Boolean = t.find(x)
 
     fun text() = t.text()
+
+    override fun intersect(s: Set<T>): TreeSet<T> {
+        val x: TreeSet<T> = TreeSet(Nil())
+        forAll { (v) -> if (s.find(v)) x.insert(v) }
+        return x;
+    }
+
+    override fun union(s: Set<T>): TreeSet<T> {
+        val x: TreeSet<T> = TreeSet(Nil())
+        forAll { (v) -> x.insert(v) }
+        s.forAll { (v) -> x.insert(v) }
+        return x
+    }
+
+    override fun forAll(f: (T) -> Unit) {
+        t.forAll(f);
+    }
 
 }
 
