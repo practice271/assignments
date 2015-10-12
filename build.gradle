@@ -2,16 +2,16 @@ group 'assingments'
 version '1.0-SNAPSHOT'
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.2'
-  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+    gradleVersion = '2.2'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-defaultTasks 'test', 'run'
+defaultTasks 'test'
 
-mainClassName = 'classroom.c02.C02Package'
+mainClassName = 'homework.hw04.Hw04Package'
 
 sourceCompatibility = 1.5
 
@@ -24,7 +24,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 buildscript {
-    ext.kotlin_version = '0.13.1514'
+    ext.kotlin_version = '0.13.1513'
     repositories {
         mavenCentral()
     }
