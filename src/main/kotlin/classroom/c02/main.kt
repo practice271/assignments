@@ -1,5 +1,7 @@
 package classroom.c02
 
+import java.util.*
+
 /*
 abstract class Tree() {}
 class Empty(): Tree() {}
@@ -8,9 +10,27 @@ class Leaf(val value: Int) {}
 
 class Tree(
         val value: Int,
-        val left : Tree?,
-        val right: Tree?
+        left_param : Tree?,
+        right_param: Tree?
 ) {
+    public var left: Tree? = left_param
+        get() = $left
+        set(newLeft: Tree?) {
+            $left = newLeft
+            height_f = calcHeight()
+        }
+
+    public var right: Tree? = right_param
+        get() = $right
+        set(newRight: Tree?) {
+            $right = newRight
+            height_f = calcHeight()
+        }
+    private fun calcHeight() : Int =
+            1 + Math.max(left?.calcHeight() ?: 0, right?.calcHeight() ?: 0)
+    private var height_f : Int = calcHeight()
+    fun height(): Int = height_f
+
     fun <B> fold(fLeaf: (Int) -> B, fOneChild: (Int, B) -> B, fTwoChildren: (Int, B, B) -> B): B {
         val lRes = left ?.fold(fLeaf, fOneChild, fTwoChildren)
         val rRes = right?.fold(fLeaf, fOneChild, fTwoChildren)
@@ -43,9 +63,28 @@ fun getTree(v: Int): Tree? {
     return Tree(v, null, null)
 }
 
+fun asdf(a: Tree?): Pair<Int, Int> {
+    if (true) {
+        val left = 5 //...
+        val right = 5 //...
+        return  Pair(left, right)
+    }
+    val left = 6 //...
+    val right = 6 //...
+    return  Pair(left, right)
+
+
+    //val array: Array<List<Int>> = Array(100500, {ArrayList<Int>()})
+}
+
 fun main(args: Array<String>) {
-    val tree: Tree? = getTree(1)
-    val value: Int = tree?.value ?: 0
+    var tree: Tree? = getTree(1)
+    val tree_val = tree
+    if (tree_val != null) {
+        val value: Int = tree_val.value
+    }
+
+
     print(hello())
 }
 
