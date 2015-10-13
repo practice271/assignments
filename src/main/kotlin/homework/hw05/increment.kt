@@ -10,7 +10,7 @@ public fun newThread(block : () -> Unit) : Thread {
         }
     }
     thread.start()
-//  thread.join() result will be correct with this line
+    thread.join()
     return thread
 }
 
