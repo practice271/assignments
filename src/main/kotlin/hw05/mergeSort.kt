@@ -1,9 +1,17 @@
 package hw05
 
-import java.util.*
+import java.util.ArrayList
 import kotlin.concurrent.thread
-
-internal fun merge (first : List<Int>, second : List<Int>) : List<Int> {
+public fun <A> ArrayListInit(elemNum : Int, foo : (Int) -> A) : ArrayList<A> {
+    var res = arrayListOf<A>()
+    for (i in 0.. elemNum - 1) {
+        res.add(foo(i))
+    }
+    return res
+}
+// It'd be logical to use Array<Int>, but 'take' for Array returns List.
+// I can't imagine why it is so, 'cause it makes it inconvenient to work with Arrays.
+internal fun merge (first : List<Int>, second : List<Int>) : List<Int>{
     val res = arrayListOf() : ArrayList<Int>
     var i = 0
     var j = 0
@@ -28,7 +36,7 @@ internal fun merge (first : List<Int>, second : List<Int>) : List<Int> {
     return res
 }
 
-public fun mergesort(list: List<Int>) : List<Int> {
+public fun mergesort(list: List<Int>, threadNum : Int = 1) : List<Int> {
     val size = list.size()
     when (size) {
         0, 1 -> return list
@@ -40,15 +48,27 @@ public fun mergesort(list: List<Int>) : List<Int> {
         }
         else -> {
             val mid   = size / 2
-         //   val threadLeft = thread {mergesort(list.take(mid))}
-            val left  = mergesort(list.take(mid))
-            val right = mergesort(list.takeLast(size - mid))
+            var left = listOf() : List<Int>
+              //the value in 'left' is required to compile; it's useless, however, for it'll definitely be overwritten
+            var right : List<Int>
+
+
+            if (threadNum > 1) {
+                val threadLeft = thread {left = mergesort(list.take(mid), threadNum / 2)}
+                right = mergesort(list.takeLast(size - mid), threadNum / 2)
+                threadLeft.join()
+            }
+            else {
+                left  = mergesort(list.take(mid))
+                right = mergesort(list.takeLast(size - mid))
+            }
+
             return merge(left, right)
         }
     }
 }
 
 internal fun main(args : Array<String>) {
-    val l = listOf<Int>(1, 43, 12, 231231, 2, 0, -4)
+    val l = listOf(1, 43, 12, 231231, 2, 0, -4)
     println("${mergesort(l)}")
 }

@@ -13,6 +13,7 @@ internal fun parallelCounterWrong(threadCount : Int) : Int{
     return x
 }
 
+// After I wrote function below, I realised that it can't possibly be parallel. Well, let it be.
 internal fun parallelCounter(threadCount : Int) : Int{
     var x = 0
     val lock = Object()
@@ -22,17 +23,3 @@ internal fun parallelCounter(threadCount : Int) : Int{
 
     return x
 }
-
-//internal fun main(args : Array<String>) {
-//    println("${parallelCounterWrong(10000)}")
-//    println("${parallelCounterWrong(10000)}")
-//    println("${parallelCounterWrong(10000)}")
-//    println("${parallelCounterWrong(10000)}")
-//    println("${parallelCounterWrong(10000)}")
-//
-//    println("${parallelCounter(10000)}")
-//    println("${parallelCounter(10000)}")
-//    println("${parallelCounter(10000)}")
-//    println("${parallelCounter(10000)}")
-//    println("${parallelCounter(10000)}")
-//}
