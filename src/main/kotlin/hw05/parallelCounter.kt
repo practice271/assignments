@@ -3,7 +3,7 @@ package hw05
 import kotlin.concurrent.thread
 import kotlin.synchronized
 
-internal fun parallelCounterWrong(threadCount : Int) : Int{
+public fun parallelCounterWrong(threadCount : Int) : Int{
     var x = 0
     val threadArray = Array(threadCount, {thread {x++}})
 
@@ -14,7 +14,7 @@ internal fun parallelCounterWrong(threadCount : Int) : Int{
 }
 
 // After I wrote function below, I realised that it can't possibly be parallel. Well, let it be.
-internal fun parallelCounter(threadCount : Int) : Int{
+public  fun parallelCounter(threadCount : Int) : Int{
     var x = 0
     val lock = Object()
     val threadArray = Array(threadCount, {thread {synchronized(lock, {x++})}})

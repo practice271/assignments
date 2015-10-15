@@ -1,5 +1,5 @@
 # assignments
-[![Build Status](https://travis-ci.org/AwesomeLemon/assignments.svg?branch=master)](https://travis-ci.org/practice271/assignments)
+[![Build Status](https://travis-ci.org/practice271/assignments.svg?branch=master)](https://travis-ci.org/practice271/assignments)
 The repository to fork and complete assignments in it.
 
 The result [table](https://docs.google.com/spreadsheets/d/1kmUJBEjTM9AaVXt_Cd_I2kif1Y99rwpd9gdsyaNQdRc/edit?usp=sharing).
@@ -13,3 +13,18 @@ The result [table](https://docs.google.com/spreadsheets/d/1kmUJBEjTM9AaVXt_Cd_I2
 ### Homework 2 (15.09 - 29.09):
 1. (4 points) Previous homework using Unit tests and Gradle.
 2. (4 points) The computer network assignment from the spring term.
+
+### Homework 3 (22.09 - 06.10):
+1. (4 points) An AVL tree class (insertion, deletion, search). A pretty printer, which output reflects a tree structure.
+ A lot of unit tests.
+
+### Homework 4 (29.09 - 13.10):
+1. (4 points) An set interface class (insertion, deletion, search, union, intersection). Two implementations of this
+ interface: an AVL tree, an hash table.
+You are welcome to make a map interface and its implementations instead of a set.
+
+### Homework 5 (13.10 - 27.10):
+In this homework you can use whatever you want for organizing concurrency.
+
+1. (2 points) A parallel increment without synchronization.
+2. (3 points) A parallel mergesort.
