@@ -4,7 +4,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 public class C02Test {
-    Test fun helloTest() {
+    @Test fun helloTest() {
         assertEquals("Hello", hello())
     }
 }
