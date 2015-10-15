@@ -19,10 +19,8 @@ public object MergeSort {
             lThread.start()
             rThread.start()
 
-            try {
-                lThread.join()
-                rThread.join()
-            } catch (ie: InterruptedException) {}
+            lThread.join()
+            rThread.join()
 
             merge(left, right, a)
         }

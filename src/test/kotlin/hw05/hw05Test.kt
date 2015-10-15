@@ -5,57 +5,18 @@ import kotlin.test.assertEquals
 
 /*    Merge Sort Tests
 
-      1 Thread
-      1000 elements  =>       3 ms
-      2000 elements  =>       5 ms
-      4000 elements  =>       2 ms
-      8000 elements  =>       5 ms
-      16000 elements  =>       5 ms
-      32000 elements  =>      10 ms
-      64000 elements  =>      22 ms
-      128000 elements  =>      26 ms
-      256000 elements  =>      73 ms
-      512000 elements  =>     152 ms
-      1024000 elements  =>     288 ms
-
-      2 Threads
-      1000 elements  =>       4 ms
-      2000 elements  =>       2 ms
-      4000 elements  =>      15 ms
-      8000 elements  =>       3 ms
-      16000 elements  =>       4 ms
-      32000 elements  =>       9 ms
-      64000 elements  =>      23 ms
-      128000 elements  =>      21 ms
-      256000 elements  =>      40 ms
-      512000 elements  =>     107 ms
-      1024000 elements  =>     164 ms
-
-      4 Threads
-      1000 elements  =>       4 ms
-      2000 elements  =>       2 ms
-      4000 elements  =>       4 ms
-      8000 elements  =>       7 ms
-      16000 elements  =>       7 ms
-      32000 elements  =>      11 ms
-      64000 elements  =>      18 ms
-      128000 elements  =>      19 ms
-      256000 elements  =>      35 ms
-      512000 elements  =>      59 ms
-      1024000 elements  =>     167 ms
-
-      8 Threads
-      1000 elements  =>       6 ms
-      2000 elements  =>       3 ms
-      4000 elements  =>      10 ms
-      8000 elements  =>       7 ms
-      16000 elements  =>       6 ms
-      32000 elements  =>      10 ms
-      64000 elements  =>      18 ms
-      128000 elements  =>      19 ms
-      256000 elements  =>      30 ms
-      512000 elements  =>      66 ms
-      1024000 elements  =>     151 ms
+      elements            |  1 thread in ms | 2 threads | 4 threads | 8 threads
+      1000 elements       |  3              | 4         | 4         | 6
+      2000 elements       |  5              | 2         | 2         | 3
+      4000 elements       |  2              | 15        | 4         | 10
+      8000 elements       |  5              | 3         | 7         | 7
+      16000 elements      |  5              | 4         | 7         | 6
+      32000 elements      |  10             | 9         | 11        | 10
+      64000 elements      |  22             | 23        | 18        | 18
+      128000 elements     |  26             | 21        | 19        | 19
+      256000 elements     |  73             | 40        | 35        | 30
+      512000 elements     |  152            | 107       | 59        | 66
+      1024000 elements    |  288            | 164       | 167       | 151
  */
 
 public class HW05Test {
