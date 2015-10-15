@@ -4,6 +4,7 @@ import org.junit.Test
 import java.util.*
 import kotlin.test.assertEquals
 import kotlin.util.measureTimeMillis
+import utilities.ArrayListInit
 
 public class mergesortTest {
     @Test fun emptyTest1Thread() {
@@ -30,43 +31,34 @@ public class mergesortTest {
         val l = listOf(1, 2, 4, 3, 2, -1, 5)
         assertEquals(mergesort(l, 4), listOf(-1, 1, 2, 2, 3, 4, 5))
     }
+    val rnd = Random()
+    val l = ArrayListInit(10000000, {rnd.nextInt()})
+    var res = arrayListOf(1)
+    val l_sorted = l.sorted()
+    internal fun testMany (threadNum : Int) {
+        println("$threadNum threads: ${measureTimeMillis { res = mergesort(l, threadNum).toArrayList() }} ms")
+        assertEquals(res, l_sorted)
+    }
+    //While results of most tests are approximately stable 11s,
+    //4 threads and 8 threads are kinda strange: they're taking times from 5.5 to 12.5 randomly.
+    //The only reason I can come up with is that array matters:
+    //one is sorted faster on 4 threads, another on 8. But that's improbable
     @Test fun manyElementsTest1Thread() {
-        val rnd = Random()
-        var l = ArrayListInit(10000000, {rnd.nextInt()})
-        println("${measureTimeMillis { l = mergesort(l).toArrayList() }}")
-        assertEquals(l, l.sorted())
-    }//about 11.5s
-    @Test fun manyElementsTest4Threads() {
-        val rnd = Random()
-        var l = ArrayListInit(10000000, {rnd.nextInt()})
-        var res = arrayListOf(1)
-        println("${measureTimeMillis { res = mergesort(l, 4).toArrayList() }}")
-        assertEquals(res, l.sorted())
-    }//about 7.5s
-    @Test fun manyElementsTest8Threads() {
-        val rnd = Random()
-        var l = ArrayListInit(10000000, {rnd.nextInt()})
-        var res = arrayListOf(1)
-        println("${measureTimeMillis { res = mergesort(l, 8).toArrayList() }}")
-        assertEquals(res, l.sorted())
-    }//about 14s
-    @Test fun manyElementsTest17Threads() {
-        val rnd = Random()
-        var l = ArrayListInit(10000000, {rnd.nextInt()})
-        var res = arrayListOf(1)
-        println("${measureTimeMillis { res = mergesort(l, 17).toArrayList() }}")
-        assertEquals(res, l.sorted())
-    }//about 11s
+        testMany(1)
+    }
     @Test fun manyElementsTest2Threads() {
-        val rnd = Random()
-        var l = ArrayListInit(10000000, {rnd.nextInt()})
-        var res = arrayListOf(1)
-        println("${measureTimeMillis { res = mergesort(l, 2).toArrayList() }}")
-        assertEquals(res, l.sorted())
-    }//about 10.5s
-    @Test fun kotlinSort() {//just to compare
-        val rnd = Random()
-        var l = ArrayListInit(10000000, {rnd.nextInt()})
-        println("${measureTimeMillis { l.sorted()}}")
-    }//about 5s
+        testMany(2)
+    }
+    @Test fun manyElementsTest4Threads() {
+        testMany(4)
+    }
+    @Test fun manyElementsTest8Threads() {
+        testMany(8)
+    }
+    @Test fun manyElementsTest17Threads() {
+        testMany(13)
+    }
+    @Test fun manyElementsTest150Threads() {
+        testMany(150)
+    }
 }

@@ -2,13 +2,7 @@ package hw05
 
 import java.util.ArrayList
 import kotlin.concurrent.thread
-public fun <A> ArrayListInit(elemNum : Int, foo : (Int) -> A) : ArrayList<A> {
-    var res = arrayListOf<A>()
-    for (i in 0.. elemNum - 1) {
-        res.add(foo(i))
-    }
-    return res
-}
+
 // It'd be logical to use Array<Int>, but 'take' for Array returns List.
 // I can't imagine why it is so, 'cause it makes it inconvenient to work with Arrays.
 internal fun merge (first : List<Int>, second : List<Int>) : List<Int>{
