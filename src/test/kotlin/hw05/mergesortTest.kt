@@ -33,13 +33,13 @@ public class mergesortTest {
     }
     val rnd = Random()
     val l = ArrayListInit(10000000, {rnd.nextInt()})
-    var res = arrayListOf(1)
+    var res = arrayListOf() : ArrayList<Int>
     val l_sorted = l.sorted()
     internal fun testMany (threadNum : Int) {
         println("$threadNum threads: ${measureTimeMillis { res = mergesort(l, threadNum).toArrayList() }} ms")
         assertEquals(res, l_sorted)
     }
-    //While results of most tests are approximately stable 11s,
+    //While results of most tests are approximately stable,
     //4 threads and 8 threads are kinda strange: they're taking times from 5.5 to 12.5 randomly.
     //The only reason I can come up with is that array matters:
     //one is sorted faster on 4 threads, another on 8. But that's improbable
@@ -54,9 +54,6 @@ public class mergesortTest {
     }
     @Test fun manyElementsTest8Threads() {
         testMany(8)
-    }
-    @Test fun manyElementsTest17Threads() {
-        testMany(13)
     }
     @Test fun manyElementsTest150Threads() {
         testMany(150)

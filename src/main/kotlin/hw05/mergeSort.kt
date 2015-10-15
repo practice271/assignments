@@ -61,8 +61,3 @@ public fun mergesort(list: List<Int>, threadNum : Int = 1) : List<Int> {
         }
     }
 }
-
-internal fun main(args : Array<String>) {
-    val l = listOf(1, 43, 12, 231231, 2, 0, -4)
-    println("${mergesort(l)}")
-}
