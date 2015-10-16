@@ -3,8 +3,22 @@ package hw05
 import org.junit.Test
 import kotlin.test.assertEquals
 import java.util.ArrayList
+import kotlin.util.measureTimeMillis
 
 public class parallelMergeSortTest {
+    fun testBigArr(threads : Int) {
+        val arraySize = 1000000
+        var bigArr = ArrayList<Int>()
+        for (i in 1..arraySize)
+            bigArr.add(if (i % 2 == 0) i else arraySize - i)
+        val sortedBigArr = ArrayList<Int>()
+        for (i in 1..arraySize)
+            sortedBigArr.add(i)
+        val elapsedTime = measureTimeMillis({ bigArr = parallelMergeSort(bigArr, 1) })
+        println("$threads threads, $arraySize elements : $elapsedTime ms elapsed")
+        assertEquals(sortedBigArr, bigArr)
+    }
+
     @Test fun emptyArrayTest() {
         assertEquals(ArrayList<Int>(), parallelMergeSort(ArrayList<Int>(), 1))
         assertEquals(ArrayList<Int>(), parallelMergeSort(ArrayList<Int>(), 2))
@@ -25,6 +39,8 @@ public class parallelMergeSortTest {
         strArr = ArrayList<String>(listOf("abc", "abC", "aBc", "ab", "a"))
         val strRes = ArrayList<String>(listOf("a", "aBc", "ab", "abC", "abc"))
         assertEquals(strRes, parallelMergeSort(strArr, 1))
+
+        testBigArr(1)
     }
 
     @Test fun ArrayTestTwoThread() {
@@ -41,6 +57,8 @@ public class parallelMergeSortTest {
         strArr = ArrayList<String>(listOf("abc", "abC", "aBc", "ab", "a"))
         val strRes = ArrayList<String>(listOf("a", "aBc", "ab", "abC", "abc"))
         assertEquals(strRes, parallelMergeSort(strArr, 2))
+
+        testBigArr(2)
     }
 
     @Test fun ArrayTestSixteenThread() {
@@ -57,5 +75,7 @@ public class parallelMergeSortTest {
         strArr = ArrayList<String>(listOf("abc", "abC", "aBc", "ab", "a"))
         val strRes = ArrayList<String>(listOf("a", "aBc", "ab", "abC", "abc"))
         assertEquals(strRes, parallelMergeSort(strArr, 16))
+        
+        testBigArr(16)
     }
 }

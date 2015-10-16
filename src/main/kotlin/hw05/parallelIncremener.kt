@@ -14,7 +14,8 @@ fun notSynchronizedParallelIncrement(incNumber : Int, threadNumber : Int) : Int 
     val numberPerThread = incNumber / threadNumber
     var result = WrappedInteger(0)
     val threadArray = Array(threadNumber, { i ->
-        val number = if (i != threadNumber - 1) numberPerThread else incNumber - numberPerThread * (threadNumber - 1)
+        val number = if (i != threadNumber - 1) numberPerThread
+        else incNumber - numberPerThread * (threadNumber - 1)
         val thread = incThread(number, result)
         Thread(thread)
     })
