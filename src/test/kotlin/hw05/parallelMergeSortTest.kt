@@ -5,6 +5,13 @@ import kotlin.test.assertEquals
 import java.util.ArrayList
 import kotlin.util.measureTimeMillis
 
+/*
+        testBigArr:
+        1 threads, 1000000 elements :  3321 ms elapsed
+        2 threads, 1000000 elements :  2972 ms elapsed
+        16 threads, 1000000 elements : 4417 ms elapsed
+*/
+
 public class parallelMergeSortTest {
     fun testBigArr(threads : Int) {
         val arraySize = 1000000
