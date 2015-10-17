@@ -1,8 +1,5 @@
 package homework.hw05
-/*
-// @threadNumber - количество потоков
-// @totalCounter - сумма, до которой необходимо досчитать
-*/
+
 fun increment(threadNumber : Int, totalCounter: Int){
    var result = 0
    val step = totalCounter / threadNumber
@@ -65,7 +62,7 @@ public fun measureTimeMillis(block : () -> Unit) : Long {
 
 
 fun main(argv:Array<String>){
-    //increment(8, 100000) //Всегда разный показатель оканчательной суммы
+    //increment(8, 100000) //Always different results
 
     var arr = Array(1000000, {i -> -i})
     println("Elapsed Time: " + measureTimeMillis(fun(){sort(16, arr, 0 , arr.size()-1)}))
