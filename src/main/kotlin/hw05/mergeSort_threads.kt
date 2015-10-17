@@ -5,7 +5,7 @@ import java.util.*
 public fun mergeSort(array: Array<Int>,threadsNumber: Int): Array<Int>{
     var arr = array
     var helper = Array(arr.size(),{i -> 0})
-    
+
     if (arr.size() <= 1){return arr}
     fun merge(low: Int, middle: Int, high: Int){
         for (i in low..high) {helper[i] = arr[i]}
@@ -28,7 +28,6 @@ public fun mergeSort(array: Array<Int>,threadsNumber: Int): Array<Int>{
             k++
             i++
         }
-
     }
 
     fun mergesort(low: Int, high: Int, threadsNumber: Int){
