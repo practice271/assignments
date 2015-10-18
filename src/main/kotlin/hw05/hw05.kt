@@ -5,7 +5,6 @@ package hw05
  */
 
 import kotlin.concurrent.thread
-import kotlin.util.measureTimeMillis
 
 public fun incrementer (threadNumbers : Int): Int {
     var res = 0
@@ -18,7 +17,7 @@ public fun parallelMergeSort(a: IntArray, threadCount: Int) {
     if (threadCount <= 1) {
         mergeSort(a)
     } else if (a.size() >= 2) {
-        var left: IntArray = a.copyOfRange(a.size() - a.size(), a.size() / 2)
+        var left: IntArray = a.copyOfRange(0, a.size() / 2)
         var right: IntArray = a.copyOfRange(a.size() / 2, a.size())
         var lthread = thread { parallelMergeSort(left, threadCount / 2) }
         parallelMergeSort(right, threadCount / 2)
@@ -29,7 +28,7 @@ public fun parallelMergeSort(a: IntArray, threadCount: Int) {
 
 internal fun mergeSort(a: IntArray){
     if (a.size() >= 2){
-        var left: IntArray = a.copyOfRange(a.size() - a.size(), a.size()  / 2)
+        var left: IntArray = a.copyOfRange(0, a.size()  / 2)
         var right: IntArray = a.copyOfRange(a.size() / 2, a.size())
         mergeSort(left)
         mergeSort(right)
