@@ -60,7 +60,7 @@ public class FlyweightFactory
     }
 }
 
-public fun main (args : Array<String>)
+fun main (args : Array<String>)
 {
     var factory : FlyweightFactory  = FlyweightFactory();
     var characterCodes : Array<Int> = arrayOf(1, 2, 3);
