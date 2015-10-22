@@ -25,7 +25,7 @@ abstract class Document
     private var pages = LinkedList<Page>()
 
     public var Pages: LinkedList<Page> = pages
-        get() = $Pages
+        get() = field
 
     public fun Document() {
         CreatePages()
