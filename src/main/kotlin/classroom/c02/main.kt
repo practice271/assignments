@@ -1,5 +1,6 @@
 package classroom.c02
 
+import javafx.util.Pair
 import java.util.*
 
 /*
@@ -14,16 +15,16 @@ class Tree(
         right_param: Tree?
 ) {
     public var left: Tree? = left_param
-        get() = $left
+        get() = field
         set(newLeft: Tree?) {
-            $left = newLeft
+            field = newLeft
             height_f = calcHeight()
         }
 
     public var right: Tree? = right_param
-        get() = $right
+        get() = field
         set(newRight: Tree?) {
-            $right = newRight
+            field = newRight
             height_f = calcHeight()
         }
     private fun calcHeight() : Int =
@@ -71,7 +72,7 @@ fun asdf(a: Tree?): Pair<Int, Int> {
     }
     val left = 6 //...
     val right = 6 //...
-    return  Pair(left, right)
+    return Pair(left, right)
 
 
     //val array: Array<List<Int>> = Array(100500, {ArrayList<Int>()})
