@@ -11,3 +11,10 @@ public fun parallelIncrement(threadCount: Int): Int{
     for (thread in threadArray) thread.join()
     return x
 }
+
+fun main(args: Array<String>) {
+    println(parallelIncrement(10000))
+}
+
+// does not working correctly without sync
+// always giving different results

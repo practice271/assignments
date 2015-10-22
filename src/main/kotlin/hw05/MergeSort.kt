@@ -6,58 +6,84 @@ package hw05
 import java.util.*
 
 public object MergeSort {
-
+    var helper = Array(0, {0})
     public fun parallelMergeSort(a: IntArray, threadCount: Int) {
-        if (threadCount <= 1) {
-            mergeSort(a)
-        } else if (a.size() >= 2) {
-            val left = Arrays.copyOfRange(a, 0, a.size() / 2)
-            val right = Arrays.copyOfRange(a, a.size() / 2, a.size())
+        helper = Array(a.size(), {0})
+        fun parallelMergeSort_helper(left: Int, right: Int, a: IntArray, threadCount: Int) {
+            if (threadCount <= 1) {
+                mergeSort(a, left, right)
+            } else if (a.size() >= 2) {
+                val mid = (left + right) / 2
+                val lThread = Thread { parallelMergeSort_helper(left, mid, a, threadCount / 2)}
+                val rThread = Thread { parallelMergeSort_helper(mid + 1, right, a, threadCount / 2)}
+                lThread.start()
+                rThread.start()
+                lThread.join()
+                rThread.join()
 
-            val lThread = sorter(left, threadCount / 2)
-            val rThread = sorter(right, threadCount / 2)
-            lThread.start()
-            rThread.start()
-
-            lThread.join()
-            rThread.join()
-
-            merge(left, right, a)
-        }
-    }
-
-    private fun sorter(a: IntArray, threadCount: Int): Thread {
-        return object: Thread() {
-            override fun run() {
-                parallelMergeSort(a, threadCount)
+                merge(left, mid, right, a)
             }
         }
+        parallelMergeSort_helper(0, a.size() - 1, a, threadCount)
     }
 
-    private fun mergeSort(a: IntArray) {
-        if (a.size() >= 2) {
-            val left = Arrays.copyOfRange(a, 0, a.size() / 2)
-            val right = Arrays.copyOfRange(a, a.size() / 2, a.size())
-
-            mergeSort(left)
-            mergeSort(right)
-            merge(left, right, a)
+    private fun mergeSort(a: IntArray, l: Int, r: Int) {
+        if (l < r) {
+            val m = l + (r - l) / 2
+            mergeSort(a, l, m)
+            mergeSort(a, m + 1, r)
+            merge(l, m, r, a)
         }
     }
 
-    private fun merge(left: IntArray, right: IntArray, a: IntArray) {
-        var i1 = 0
-        var i2 = 0
-        a.indices.forEach {
-            if (i2 >= right.size() || (i1 < left.size() && left[i1] < right[i2])) {
-                a[it] = left[i1]
-                i1++
+    private fun merge(left: Int, middle: Int, right: Int, a: IntArray) {
+        for (i in left..right) helper[i] = a[i]
+
+        var start = left
+        var j = middle + 1
+        var i = left
+        while(start <= middle && j <= right) {
+            if(helper[start] <= helper[j]) {
+                a[i] = helper[start]
+                start++
             } else {
-                a[it] = right[i2]
-                i2++
+                a[i] = helper[j]
+                j++
             }
+            i++
+        }
+        while(start <= middle) {
+            a[i] = helper[start]
+            i++
+            start++
         }
     }
 }
+
+/*
+fun main(args: Array<String>) {
+    var LENGTH = 1000
+    val RUNS = 16
+    val RAND = Random(42)
+
+    fun createRandomArray(length: Int): IntArray {
+        val a = IntArray(length)
+        for (i in a.indices) {
+            a[i] = RAND.nextInt(1000)
+        }
+        return a
+    }
+    for (i in 1..RUNS) {
+        val a = createRandomArray(LENGTH)
+        val startTime1 = System.currentTimeMillis()
+        MergeSort.parallelMergeSort(a, 2)
+        val endTime1 = System.currentTimeMillis()
+
+        System.out.printf("%10d elements  =>  %6d ms \n", LENGTH, endTime1 - startTime1)
+        LENGTH *= 2
+    }
+}
+
+*/
 
 
