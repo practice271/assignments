@@ -28,3 +28,9 @@ In this homework you can use whatever you want for organizing concurrency.
 
 1. (2 points) A parallel increment without synchronization.
 2. (3 points) A parallel mergesort.
+
+### Homework 6 (20.10 - 03.11):
+1. (4 points) The tic-tac-toe game. Console and GUI interfaces. Tests
+for logical and console interface parts.
+2. * (4 points) The same task as 1st one, but on an infinity field.
+3. (4 points) Code review of 1st task.
