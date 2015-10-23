@@ -1,7 +1,7 @@
 package homeworks.hw05
 
 /**
- * Created by Илья on 17.10.2015.
+ * Created by Ilya on 17.10.2015.
  */
 
 import org.junit.Test
@@ -9,6 +9,7 @@ import kotlin.test.assertEquals
 import org.junit.Assert
 
 class hw05Test {
+
     @Test fun TestBadIncrement1() {
         var result = 0
         val last = 9
@@ -27,31 +28,31 @@ class hw05Test {
 
     @Test fun mergeSortTest1() {
         val array = arrayOf(1)
-        assertEquals(array, MergeSort().sort(array, 2))
+        assertEquals(array, sort(array, 2))
     }
 
     @Test fun mergeSortTest2() {
         val array    = arrayOf(3, 2, 5, 1, 3, 6, 8, 4, 9)
         val expected = arrayOf(1, 2, 3, 3, 4, 5, 6, 8, 9)
-        val result   = MergeSort().sort(array, 4)
+        val result = sort(array, 4)
         Assert.assertArrayEquals(expected, result)
     }
 
     @Test fun mergeSortTest3() {
         val array    = arrayOf(3, 2, 5, 1, 3, 6, 8, 4, 9)
         val expected = arrayOf(1, 2, 3, 3, 4, 5, 6, 8, 9)
-        val result   = MergeSort().sort(array, 8)
+        val result   = sort(array, 8)
         Assert.assertArrayEquals(expected, result)
     }
 
-    val max = 100000
+    val max = 10000000
     val expected_Array = Array(max, {i -> i + 1})
     val manyElements_Array = Array(max, {i -> max - i})
 
     private fun manyElementsTest(threadNum: Int) {
         val manyElementsArray = manyElements_Array
         val expected = expected_Array
-        val result = MergeSort().sort(manyElementsArray, threadNum)
+        val result = sort(manyElementsArray, threadNum)
         Assert.assertArrayEquals(expected, result)
         1+1
     }
@@ -75,11 +76,4 @@ class hw05Test {
     @Test fun manyElementsTimeTest5() {
         manyElementsTest(25)
     }
-    /*
-    1  thread  - 7s
-    2  threads - 5s
-    4  threads - 4s
-    8  threads - 3s
-    25 threads - 3s
-     */
 }

@@ -1,7 +1,7 @@
 package homeworks.hw05
 
 /**
- * Created by Илья on 17.10.2015.
+ * Created by Ilya on 17.10.2015.
  */
 
 import kotlin.concurrent.thread
@@ -15,72 +15,58 @@ public fun badIncrement(threadCount: Int): Int {
     return x
 }
 
-public class MergeSort {
-
-    private fun merge(arrayFirst: Array<Int>, arraySecond: Array<Int>): Array<Int> {
-        var i = 0 // go to the first array
-        var j = 0 // go to the second array
-        val length = arrayFirst.size() + arraySecond.size()
-        val merged: Array<Int> = Array(length, { i -> 0 })
-        /*
-        for (i in 0..length - 1) {
-            if (b < arrayRight.size() && a < arrayLeft.size()) {
-                if (arrayLeft[a] > arrayRight[b] && b < arrayRight.size()) {
-                    merged[i] = arrayRight[b++]
-                }
-                else {
-                    merged[i] = arrayLeft[a++]
-                }
-            }
-            else {
-                if (b < arrayRight.size()) {
-                    merged[i] = arrayRight[b++]
-                }
-                else {
-                    merged[i] = arrayLeft[a++]
-                }
-            }
-        }*/
-        //It may be better
-        for (k in 0..length - 1) {
-            if (i < arrayFirst.size() && j < arraySecond.size())
-                if (arrayFirst[i] > arraySecond[j] && j < arraySecond.size())
-                    merged[k] = arraySecond[j++]
-                else
-                    merged[k] = arrayFirst[i++]
-            else
-                if (j < arraySecond.size())
-                    merged[k] = arraySecond[j++]
-                else
-                    merged[k] = arrayFirst[i++]
-        }
-        return merged
+public fun sort(array: Array<Int>, threadNum: Int = 1): Array<Int> {
+    if (array.size() == 1) {
+        return array
     }
 
-    public fun sort(array: Array<Int>, threadNum: Int = 1): Array<Int> {
-        if (array.size() == 1) {
-            return array
+    var workArray = array
+    var helper = Array(workArray.size(), {0})
+
+    fun merge(start: Int, end: Int){
+        for (i in start..end) {
+            helper[i] = workArray[i]
         }
-        return mergeSort(array, 0, array.size() - 1, threadNum)
+        val middle = (end - start) / 2 + start
+        var i = start
+        var j = middle + 1
+        var k = start
+
+        while (i <= middle && j <= end) {
+            if (helper[i] <= helper[j]) {
+                workArray[k] = helper[i]
+                i++
+            } else {
+                workArray[k] = helper[j]
+                j++
+            }
+            k++
+        }
+        while (i <= middle) {
+            workArray[k] = helper[i]
+            k++
+            i++
+        }
+
     }
 
-    private fun mergeSort(array: Array<Int>, leftInt: Int, rightInt: Int, threadNum: Int = 1): Array<Int> {
-        if (leftInt == rightInt) {
-            return arrayOf(array[leftInt])
+    fun mergeSort(start: Int, end: Int, threadNum: Int = 1) {
+
+        if (start == end) {
+            return
         }
-
-        val middle = (rightInt - leftInt) / 2 + leftInt//+ 1
-        var leftArray = Array(middle, { 0 })
-        var rightArray: Array<Int>
-
+        val middle = (end - start) / 2 + start
         if (threadNum > 1) {
-            val threadLeft = thread { leftArray = mergeSort(array, leftInt, middle, threadNum / 2) }
-            rightArray = mergeSort(array, middle + 1, rightInt, threadNum / 2)
+            val threadLeft = thread { mergeSort(start, middle, threadNum / 2) }
+            mergeSort(middle + 1, end, threadNum / 2)
             threadLeft.join()
         } else {
-            leftArray = mergeSort(array, leftInt, middle)
-            rightArray = mergeSort(array, middle + 1, rightInt)
+            mergeSort(start, middle)
+            mergeSort(middle + 1, end)
         }
-        return merge(leftArray, rightArray)
+        merge(start, end)
     }
+
+    mergeSort(0, workArray.size() - 1, threadNum)
+    return workArray
 }
