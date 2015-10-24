@@ -7,16 +7,16 @@ public class Game
     private val checker : WinnerChecker = WinnerChecker()
     private var endGame : Boolean = false
 
-    fun newGame()
+    public fun newGame()
     {
-        field = Array(3, {i -> Array(3, {j -> '+'})})
+        field = Array(3, {i -> Array(3, {j -> '*'})})
         playerTurn = true
         endGame = false
     }
 
     private fun mark(x : Int, y : Int)
     {
-        if (field[x][y] != '+') {
+        if (field[x][y] != '*') {
            throw Exception("Bad choose")
         }
 
@@ -28,45 +28,49 @@ public class Game
         playerTurn = !playerTurn
     }
 
-    fun makeTurn(x : Int, y: Int) : Array<Array<Char>>
+    fun makeTurn(x : Int, y: Int)
     {
         mark(x, y)
         endGame = checker.goCheck(field)
-        return field
     }
 
     fun endOfGame() : Boolean
     {
         return endGame
     }
+
+    public fun getField() : Array<Array<Char>>
+    {
+        return field
+    }
 }
 
 public class WinnerChecker()
 {
-    var field : Array<Array<Char>> =   Array(3, {i -> Array(3, {j -> '+'})})
+    var field : Array<Array<Char>> =   Array(3, {i -> Array(3, {j -> '*'})})
 
     private fun Horizontal(x : Int, y : Int) : Boolean
     {
         val lead : Char = field[x][y]
-        return (field[x + 1][y] == lead && field[x + 2][y] == lead && lead != '+')
+        return (field[x + 1][y] == lead && field[x + 2][y] == lead && lead != '*')
     }
 
     private fun Vertical(x : Int, y : Int) : Boolean
     {
         val lead : Char = field[x][y]
-        return (field[x][y + 1] == lead && field[x][y + 2] == lead && lead != '+')
+        return (field[x][y + 1] == lead && field[x][y + 2] == lead && lead != '*')
     }
 
     private  fun LDiagonal(x : Int, y : Int) : Boolean
     {
         val lead : Char = field[x][y]
-        return (field[x + 1][y + 1] == lead && field[x + 2][y + 2] == lead && lead != '+')
+        return (field[x + 1][y + 1] == lead && field[x + 2][y + 2] == lead && lead != '*')
     }
 
     private  fun RDiagonal(x : Int, y : Int) : Boolean
     {
         val lead : Char = field[x][y]
-        return (field[x + 1][y - 1] == lead && field[x + 2][y - 2] == lead && lead != '+')
+        return (field[x + 1][y - 1] == lead && field[x + 2][y - 2] == lead && lead != '*')
     }
 
     public fun goCheck(fieldG :  Array<Array<Char>>) : Boolean

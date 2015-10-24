@@ -22,7 +22,8 @@ public class consoleGame()
         y = readLine() ?: ""
         if (x == "" || y == "")
             throw Exception("Wrong coordination")
-        field = game.makeTurn(x.toInt(), y.toInt())
+        game.makeTurn(x.toInt(), y.toInt())
+        field = game.getField()
     }
 
     fun consoleGame()
@@ -44,7 +45,7 @@ public class consoleGame()
             }
             catch(e : Exception)
             {
-                println("Repeat you choose\n")
+                println("Wrong input. Repeat you choose\n")
             }
         }
 
@@ -63,8 +64,8 @@ public class consoleGame()
     }
 }
 
-fun main(args : Array<String>)
+/*fun main(args : Array<String>)
 {
     val gameInterface : consoleGame = consoleGame()
     gameInterface.consoleGame()
-}
+}*/
