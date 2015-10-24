@@ -1,8 +1,8 @@
-group 'assignments'
+group 'assingments'
 version '1.0-SNAPSHOT'
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.1'
+  gradleVersion = '2.2'
   distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
@@ -11,6 +11,8 @@ apply plugin: 'application'
 
 defaultTasks 'test'//, 'run'
 mainClassName = 'hw06.Hw06Package'
+
+mainClassName = 'classroom.c02.MainKt'
 
 sourceCompatibility = 1.5
 
@@ -24,7 +26,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 buildscript {
-    ext.kotlin_version = '0.13.1513'
+    ext.kotlin_version = '1.0.0-beta-1038'
     repositories {
         mavenCentral()
     }
