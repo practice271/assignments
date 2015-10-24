@@ -2,7 +2,6 @@ package homework.hw06
 
 import homework.hw06.cli.printGrid
 import org.junit.Test
-import java.io.BufferedReader
 import java.io.Writer
 import kotlin.test.assertEquals
 
@@ -68,7 +67,7 @@ class Hw06Test {
         assertEquals(Core.ErrorCode.ERROR, Core.instance.makeMove(1, 1))
     }
 
-    @Test fun testGridPrinting() {
+    @Test fun testConsolePrinting() {
         Core.instance.restart()
         Core.instance.makeMove(0, 0)
         Core.instance.makeMove(0, 2)
@@ -77,6 +76,21 @@ class Hw06Test {
         val writer = CustomWriter()
         printGrid(writer)
         assertEquals("X . O \n. O . \nX . . \n", writer.getBuffer())
+    }
+
+    @Test fun testConsoleNotOverwritingSymbols() {
+        var writer = CustomWriter()
+        Core.instance.restart()
+        Core.instance.makeMove(1, 1)
+        Core.instance.makeMove(1, 1)
+        printGrid(writer)
+        assertEquals(". . . \n. X . \n. . . \n", writer.getBuffer())
+        writer = CustomWriter()
+        assertEquals("", writer.getBuffer())
+        Core.instance.makeMove(2, 2)
+        Core.instance.makeMove(2, 2)
+        printGrid(writer)
+        assertEquals(". . . \n. X . \n. . O \n", writer.getBuffer())
     }
 
     class CustomWriter() : Writer() {
