@@ -50,14 +50,28 @@ class Hw06Test {
 
     @Test fun testDraw() {
         Core.instance.restart()
-        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(1, 1))
         assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(0, 0))
         assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(0, 1))
-        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(2, 1))
         assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(0, 2))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(1, 1))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(1, 0))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(2, 0))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(1, 2))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(2, 2))
+        assertEquals(Core.ErrorCode.DRAW, Core.instance.makeMove(2, 1))
+    }
+
+    @Test fun testManyMovesButNotDraw() {
+        Core.instance.restart()
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(0, 0))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(0, 1))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(0, 2))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(2, 0))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(1, 1))
         assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(1, 0))
         assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(1, 2))
-        assertEquals(Core.ErrorCode.DRAW, Core.instance.makeMove(2, 2))
+        assertEquals(Core.ErrorCode.OK, Core.instance.makeMove(2, 1))
+        assertEquals(Core.ErrorCode.WIN, Core.instance.makeMove(2, 2))
     }
 
     @Test fun testWrongMoves() {

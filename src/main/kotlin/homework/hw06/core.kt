@@ -7,7 +7,7 @@ package homework.hw06
 class Core private constructor () {
     private var gridContent = Array(gridSize, { IntArray(gridSize) })
     private var crossesMove = true
-    private var freeCellsNumber = gridSize * gridSize - 1
+    private var freeCellsNumber = gridSize * gridSize
 
     companion object {
         /**
@@ -39,10 +39,12 @@ class Core private constructor () {
                 && (gridContent[x][y] == cellNone)) {
             gridContent[x][y] = if (crossesMove) cellX else cellO
             crossesMove = !crossesMove
-            if (--freeCellsNumber == 0) {
-                return ErrorCode.DRAW
+            val hasWinner = isGameFinished(x, y)
+            return when {
+                hasWinner -> ErrorCode.WIN
+                --freeCellsNumber == 0 -> ErrorCode.DRAW
+                else -> ErrorCode.OK
             }
-            return if (isGameFinished(x, y)) ErrorCode.WIN else ErrorCode.OK
         }
         else {
             return ErrorCode.ERROR
@@ -55,11 +57,11 @@ class Core private constructor () {
     public fun restart() {
         gridContent = Array(gridSize, { IntArray(gridSize) })
         crossesMove = true
-        freeCellsNumber = gridSize * gridSize - 1
+        freeCellsNumber = gridSize * gridSize
     }
 
     /**
-     * Checks whether the game was finished after a symbol was put into cell [[x], [y]].
+     * Checks whether the game someone won after a symbol was put into cell [[x], [y]].
      */
     private fun isGameFinished(x : Int, y : Int) : Boolean {
         var cellValue = gridContent[x][y]
