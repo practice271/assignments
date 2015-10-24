@@ -15,11 +15,6 @@ class game {
         button.setLabel('X')
         assertEquals ('X', button.getLabel())
     }
-    @Test fun TestConsoleGame() {
-        val buttons = CButtonField()
-        buttons.select(1,1)
-        assertEquals ('X', buttons.map[0].getLabel())
-    }
     @Test fun TestConsoleGameWin() {
         val buttons = CButtonField()
         buttons.select(1,1)

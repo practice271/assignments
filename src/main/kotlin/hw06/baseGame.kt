@@ -30,7 +30,7 @@ open public class LogicalButtonField (protected val size : Int ) {// protected
         return  players
     }
     private val size2 = size * size
-    internal  val map = Array(size2, {i-> LogicalButton()})
+    protected val map = Array(size2, {i-> LogicalButton()})
     private var place  = size2
 
     public  fun isTie(): Boolean {
