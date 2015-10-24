@@ -14,7 +14,7 @@ public fun incWithoutSync(numberOfThreads : Int) : Int{
 }
 
 public fun sorting(arr:Array<Int>,  numberOfThreads: Int): Array<Int> {
-    var tmpArray = Array(arr.size(), {_ -> 0})
+    var tmpArray = Array(arr.size(), {i -> 0})
     fun mergeSort(l: Int, r: Int, numberOfThreads: Int) {
         val size = r - l + 1
         val middle = l + size / 2
@@ -62,7 +62,7 @@ public fun sorting(arr:Array<Int>,  numberOfThreads: Int): Array<Int> {
 }
 
 private fun duration(size: Int, threadNum:Int):Long {
-    val arr = Array(size, {_ -> Random().nextInt()})
+    val arr = Array(size, {i -> Random().nextInt()})
     return measureTimeMillis {sorting(arr, threadNum)  }
 }
 
@@ -97,6 +97,3 @@ Threads: 2	 Size: 1000000	 Time: 589
 Threads: 4	 Size: 1000000	 Time: 480
 Threads: 8	 Size: 1000000	 Time: 500
 */
-
-fun main(args: Array<String>) {
-}
