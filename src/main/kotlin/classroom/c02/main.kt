@@ -14,16 +14,16 @@ class Tree(
         right_param: Tree?
 ) {
     public var left: Tree? = left_param
-        get() = $left
+        get() = field
         set(newLeft: Tree?) {
-            $left = newLeft
+            field = newLeft
             height_f = calcHeight()
         }
 
     public var right: Tree? = right_param
-        get() = $right
+        get() = field
         set(newRight: Tree?) {
-            $right = newRight
+            field = newRight
             height_f = calcHeight()
         }
     private fun calcHeight() : Int =
