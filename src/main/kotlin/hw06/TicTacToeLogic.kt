@@ -6,30 +6,30 @@ public abstract class TicTacToeLogic {
         //field will always be square
 
     //'x' is 0, 'o' is 1, nothing is 2
-    internal val field = Array(size, {Array(size, {2})})
+    val field = Array(size, {Array(size, {2})})
     internal var gameOnFlag = false
 
     //North-West to South-east diagonal line
-    internal fun checkDiagonalNW_SE(mark : Int) : Boolean {
+    fun checkDiagonalNW_SE(mark : Int) : Boolean {
         for (i in 0..size - 1)
             if (field[i][i] != mark) return false
         return true
     }
 
     //North-East to South-west diagonal line
-    internal fun checkDiagonalNE_SW(mark : Int) : Boolean {
+    fun checkDiagonalNE_SW(mark : Int) : Boolean {
         for (i in 0..size - 1)
             if (field[i][size - 1 - i] != mark) return false
         return true
     }
 
-    internal fun checkColumn(j : Int, mark: Int) : Boolean {
+    fun checkColumn(j : Int, mark: Int) : Boolean {
         for (i in 0..size - 1)
             if (field[i][j] != mark) return false
         return true
     }
 
-    internal fun checkRow(i : Int, mark: Int) : Boolean {
+    fun checkRow(i : Int, mark: Int) : Boolean {
         for (j in 0..size - 1)
             if (field[i][j] != mark) return false
         return true
@@ -37,7 +37,7 @@ public abstract class TicTacToeLogic {
 
     abstract internal fun gameOver(mark : Int)
 
-    internal fun checkVictory(i : Int, j : Int, mark : Int) : Boolean {
+    fun checkVictory(i : Int, j : Int, mark : Int) : Boolean {
         var res = false
 
         if (i == j)
