@@ -1,8 +1,7 @@
 package hw06
 
 /*
-* Tic-Tac-Toe game. Implementation of the internal logic.
-*
+* Tic-Tac-Toe game. Implementation of the internal logic
 * */
 
 

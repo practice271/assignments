@@ -9,7 +9,7 @@ import javax.swing.*
 * Tic-Tac-Toe GUI
 * */
 
-public class GameGui(): JFrame() {
+public class GameGUI(): JFrame() {
     private val gameLogic = TLogic()
     private val frame = JFrame("Tic-Tac-Toe")
     private val panel = JPanel()
@@ -46,8 +46,10 @@ public class GameGui(): JFrame() {
                 turnCount = 0
                 buttons.forEach { it.text = "" }
                 label.text = "Start the game, player 1!"
-                if(isOver)
+                if(isOver) {
                     buttons.forEach { it.isEnabled = true }
+                    isOver = false
+                }
             }
         })
 
@@ -55,7 +57,7 @@ public class GameGui(): JFrame() {
         for (i in 0..8) {
             buttons[i].addActionListener(object : ActionListener {
                 override fun actionPerformed(e: ActionEvent?) {
-                    val idX = i / 3 // coordinates of the current button
+                    val idX = i / 3 // "coordinates" of the current button on the field
                     val idY = i % 3
                     var symbol = if(gameLogic.getPlayer() == 1) "X" else "O"
                     var moved = gameLogic.move(idX, idY)
@@ -93,5 +95,5 @@ public class GameGui(): JFrame() {
 }
 
 fun main(args: Array<String>) {
-    Console().play()
+    GameGUI().play()
 }

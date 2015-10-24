@@ -15,7 +15,6 @@ public class Console() {
         var cx: Int
         var cy: Int
         var moved: Boolean
-        //var cw = ""
         println("To exit the game enter 11.\nTo restart the game enter 10.\nMake a move, player 1!")
         while(i <= 9) {
             cx = sc.nextInt()
@@ -47,7 +46,3 @@ public class Console() {
     }
 }
 
-
-/*fun main(args: Array<String>) {
-    Console().play()
-}*/
