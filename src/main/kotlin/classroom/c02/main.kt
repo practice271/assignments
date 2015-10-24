@@ -1,5 +1,7 @@
 package classroom.c02
 
+import java.util.*
+
 /*
 abstract class Tree() {}
 class Empty(): Tree() {}
@@ -12,16 +14,16 @@ class Tree(
         right_param: Tree?
 ) {
     public var left: Tree? = left_param
-        get() = $left
+        get() = field
         set(newLeft: Tree?) {
-            $left = newLeft
+            field = newLeft
             height_f = calcHeight()
         }
 
     public var right: Tree? = right_param
-        get() = $right
+        get() = field
         set(newRight: Tree?) {
-            $right = newRight
+            field = newRight
             height_f = calcHeight()
         }
     private fun calcHeight() : Int =
@@ -59,6 +61,20 @@ fun getTree(v: Int): Tree? {
         return null
     }
     return Tree(v, null, null)
+}
+
+fun asdf(a: Tree?): Pair<Int, Int> {
+    if (true) {
+        val left = 5 //...
+        val right = 5 //...
+        return  Pair(left, right)
+    }
+    val left = 6 //...
+    val right = 6 //...
+    return  Pair(left, right)
+
+
+    //val array: Array<List<Int>> = Array(100500, {ArrayList<Int>()})
 }
 
 fun main(args: Array<String>) {
