@@ -2,34 +2,46 @@ package homework.hw06
 
 /**
  * TicTacToe logic.
- * expected time: 4 h
- * actual time: (19:30-20:00, 23:00-)
  * @author Kirill Smirenko, group 271
  */
 class Core private constructor () {
-    private val gridSize = 3
-    private val cellNone = 0
-    private val cellX = 1
-    private val cellO = -1
-
     private var gridContent = Array(gridSize, { IntArray(gridSize) })
     private var crossesMove = true
+    private var freeCellsNumber = gridSize * gridSize - 1
 
     companion object {
         /**
          * A Core singleton.
          */
         public val instance = Core()
+        // constants
+        public val gridSize = 3
+        public val cellNone = 0
+        public val cellX = 1
+        public val cellO = -1
     }
 
-    public fun getGridSize() = gridSize
+    init {
+        for (i in 0..gridSize - 1) {
+            for (j in 0..gridSize - 1) {
+                gridContent[i][j] = cellNone
+            }
+        }
+    }
+
+    public operator fun get(i : Int, j : Int) = gridContent[i][j]
 
     /**
      * Saves info about last move, and returns whether the game has finished, or the input info was erroneous.
      */
     public fun makeMove(x : Int, y : Int) : ErrorCode {
-        if (gridContent[x][y] == cellNone) {
+        if ((x >= 0) && (x < gridSize) && (y >= 0) && (y < gridSize)
+                && (gridContent[x][y] == cellNone)) {
             gridContent[x][y] = if (crossesMove) cellX else cellO
+            crossesMove = !crossesMove
+            if (--freeCellsNumber == 0) {
+                return ErrorCode.DRAW
+            }
             return if (isGameFinished(x, y)) ErrorCode.WIN else ErrorCode.OK
         }
         else {
@@ -43,6 +55,7 @@ class Core private constructor () {
     public fun restart() {
         gridContent = Array(gridSize, { IntArray(gridSize) })
         crossesMove = true
+        freeCellsNumber = gridSize * gridSize - 1
     }
 
     /**
@@ -72,6 +85,6 @@ class Core private constructor () {
     }
 
     public enum class ErrorCode {
-        OK, WIN, ERROR
+        OK, WIN, DRAW, ERROR
     }
 }
