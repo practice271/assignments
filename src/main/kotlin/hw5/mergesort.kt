@@ -4,7 +4,7 @@ import java.util.*
 import kotlin.concurrent.thread
 
 fun <T: Comparable<T>>Array<T>.mergesort() {
-    sort(this, 0, this.size() - 1)
+    sort(this, 0, this.size - 1)
 }
 
 fun <T: Comparable<T>>sort(a: Array<T>, lo: Int, hi: Int) {
@@ -22,14 +22,12 @@ fun <T: Comparable<T>>merge(a: Array<T>, lo: Int, mid: Int, hi: Int) {
     var i = lo
     var j = mid + 1
     while (i <= mid || j <= hi) {
-        if (i > mid)
-            b.add(a[j++])
-        else if (j > hi)
-            b.add(a[i++])
-        else if (a[i] < a[j])
-            b.add(a[i++])
-        else
-            b.add(a[j++])
+        when {
+            i > mid -> b.add(a[j++])
+            j > hi -> b.add(a[i++])
+            a[i] < a[j] -> b.add(a[i++])
+            else -> b.add(a[j++])
+        }
     }
     i = lo
     b.forEach { t -> a[i++] = t }

@@ -4,15 +4,20 @@ import java.util.*
 import kotlin.concurrent.thread
 
 class Counter(val initial: Int) {
-    private var current = initial
+    public var current = initial; private set
 
-    fun get() = current
-
-    fun inc(v: Int) {
+    private fun inc(v: Int) {
         current += v
     }
 
-    fun runThreads(count: Int) {
+    /*
+    * Example:
+    * Run:
+    * i.runThreads(10000)
+    * Result:
+    * i.current == 9995
+    * */
+    public fun runThreads(count: Int) {
         var l = LinkedList<Thread>()
         (1..count).forEach { l.add(thread(true) { inc(1) }) }
         l.forEach { t -> t.join() }
