@@ -48,6 +48,6 @@ public class consoleGame() {
         }
     }
 }
-fun main(args : Array<String>) {
+/*fun main(args : Array<String>) {
     consoleGame()
-}
+}*/
