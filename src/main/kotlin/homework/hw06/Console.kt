@@ -7,8 +7,44 @@
 
 package homework.hw06
 
+import java.io.PrintStream
+
 /** Implementation of console version of the game. */
-public class Console() {
+public class Console(private val stream : PrintStream) {
+
+    /** Parser for input strings. */
+    private class Parser(private val str : String) {
+        private var x = 0
+        private var y = 0
+        private var correct = true
+
+        init {
+            when (str.length) {
+                3 -> {
+                    x = str[0].toInt() - 48
+                    y = str[2].toInt() - 48
+                    if (str[1] != ' ' || x > 3 || x < 1 || y > 3 || y < 1) correct = false
+                }
+                else -> correct = false
+            }
+        }
+
+        /** Returns true if input data is correct. */
+        public fun isCorrect() : Boolean {
+            return correct
+        }
+
+        /** Returns first digit. */
+        public fun getX() : Int {
+            return x
+        }
+
+        /** Returns second digit. */
+        public fun getY() : Int {
+            return y
+        }
+    }
+
     private val game = GameLogic()
     private var symbol = 'x'
 
@@ -28,62 +64,64 @@ public class Console() {
         println("collect three his symbols in any row, column or diagonal.\n")
     }
 
-    /** Returns string which contains game field. */
-    private fun drawField() : String {
+    /** Draws game field. */
+    private fun drawField() {
         val f = game.getField()
-        var result = ""
         for (i in 0 .. 2) {
-            result += " ${f[i * 3]} | ${f[i * 3 + 1]} | ${f[i * 3 + 2]} \n"
-            if (i < 2) result  += "===+===+===\n"
+            stream.print(" ${f[i * 3]} | ${f[i * 3 + 1]} | ${f[i * 3 + 2]} \n")
+            if (i < 2) stream.print("===+===+===\n")
         }
-        return result
     }
 
     /** Makes next move and prints current state. */
-    public fun nextMove(str : String) : String {
-        val state = game.move(symbol, str)
-        var result = ""
+    public fun nextMove(str : String) {
+        val parser = Parser(str)
+        val state  =
+            when(parser.isCorrect()) {
+                true  -> game.move(symbol, parser.getX(), parser.getY())
+                false -> "Error: incorrect data"
+            }
 
         if (!state.startsWith("Error")) {
-            result += drawField()
+            drawField()
+            println()
 
             if (state == "ok") {
                 when (symbol) {
                     'x' -> {
                         symbol = 'o'
-                        result += "\nYour move, player2"
+                        println("Your move, player2")
                     }
                     else -> {
                         symbol = 'x'
-                        result += "\nYour move, player1"
+                        println("Your move, player1")
                     }
                 }
             }
             else {
-                result += "\n$state"
-                result += "\n\nEnter '/start' to start new game or '/exit' to exit"
+                stream.print("$state\n")
+                println("\nEnter '/start' to start new game or '/exit' to exit")
             }
         }
-        else result = state
-        return result
+        else stream.print("$state\n")
     }
 }
 
-fun main(args : Array<String>) {
-    var game = Console()
+public fun main(args : Array<String>) {
+    var game = Console(System.out)
     game.help()
 
     var data = ""
     println("Your move, player1")
     loop@ while (data != "/exit") {
-        data = System.`in`.bufferedReader().readLine()
+        data = readLine() ?: "/exit"
         when(data) {
             "/exit"  -> break@loop
             "/start" -> {
-                game = Console()
+                game = Console(System.out)
                 println("Your move, player1")
             }
-            else -> println(game.nextMove(data))
+            else -> game.nextMove(data)
         }
     }
 }

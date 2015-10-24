@@ -56,8 +56,7 @@ public class Game() : JFrame() {
             button.addActionListener(object : ActionListener {
                 override fun actionPerformed(e: ActionEvent) {
                     if (button.text == " ") {
-                        val temp = (i.div(3) + 1).toString() + " " + (i.mod(3) + 1).toString()
-                        val state = game.move(symbol[0], temp)
+                        val state = game.move(symbol[0], i.div(3) + 1, i.mod(3) + 1)
                         if (state == "ok") {
                             button.text = symbol
                             when (symbol) {

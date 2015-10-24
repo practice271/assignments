@@ -7,45 +7,18 @@
 
 package homework.hw06
 
+/** Contains main logic of the game. */
 public class GameLogic() {
-    /** Parser for input strings. */
-    private class Parser(private val str : String) {
-        private var x = 0
-        private var y = 0
-        private var correct = true
-
-        init {
-            when (str.length) {
-                3 -> {
-                    x = str[0].toInt() - 49
-                    y = str[2].toInt() - 49
-                    if (str[1] != ' ' || x > 2 || x < 0 || y > 2 || y < 0) correct = false
-                }
-                else -> correct = false
-            }
-        }
-
-        /** Returns true if input data is correct. */
-        public fun isCorrect() : Boolean {
-            return correct
-        }
-
-        /** Returns first digit. */
-        public fun getX() : Int {
-            return x
-        }
-
-        /** Returns second digit. */
-        public fun getY() : Int {
-            return y
-        }
-    }
-
     private val field = Array(9, { i -> ' ' })
+
+    /** Checks that input data is correct. */
+    private fun isCorrect(symbol : Char, x : Int, y : Int) : Boolean {
+        return (x > 0 && x < 4 && y > 0 && y < 4 && (symbol == 'x' || symbol == 'o'))
+    }
 
     /** Checks that given cell is empty. */
     private fun isEmpty(x : Int, y : Int) : Boolean {
-        return (field[x * 3 + y] == ' ')
+        return (field[(x - 1) * 3 + (y - 1)] == ' ')
     }
 
     /** Checks that field contains spaces. */
@@ -73,17 +46,11 @@ public class GameLogic() {
     }
 
     /** Tries to put symbol into given cell and processes errors. */
-    public fun move(symbol : Char, str : String) : String {
-        val p = Parser(str)
-        val x = p.getX()
-        val y = p.getY()
+    public fun move(symbol : Char, x : Int, y : Int) : String {
+        if (!isCorrect(symbol, x, y)) return "Error: incorrect data"
 
-        if (!p.isCorrect() || (symbol != 'x' && symbol != 'o'))
-            return "Error: incorrect data"
-        if (isEmpty(x, y) && !isFinished())
-            field[x * 3 + y] = symbol
-        else
-            return "Error: incorrect move"
+        if (isEmpty(x, y) && !isFinished()) field[(x - 1) * 3 + y - 1] = symbol
+        else return "Error: incorrect move"
 
         if (win('x')) return "Crosses wins"
         if (win('o')) return "Ouths wins"

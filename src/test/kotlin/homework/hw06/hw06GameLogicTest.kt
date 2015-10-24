@@ -16,8 +16,7 @@ public class hw06GameLogicTest {
     private fun createSituation(arr : Array<Char>) : GameLogic {
         val game = GameLogic()
         for (i in 0 .. 8) {
-            val temp = (i.div(3) + 1).toString() + " " + (i.mod(3) + 1).toString()
-            game.move(arr[i], temp)
+            game.move(arr[i], i.div(3) + 1, i.mod(3) + 1)
         }
         return game
     }
@@ -32,7 +31,7 @@ public class hw06GameLogicTest {
      */
     @Test fun test01() {
         val game   = GameLogic()
-        val state  = game.move('x', "1 2")
+        val state  = game.move('x', 1, 2)
         val field  = game.getField()
         val result = arrayOf(' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ')
 
@@ -50,7 +49,7 @@ public class hw06GameLogicTest {
      */
     @Test fun test02() {
         val game  = createSituation(arrayOf(' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' '))
-        val state = game.move('o', "1 2")
+        val state = game.move('o', 1, 2)
         assertEquals("Error: incorrect move", state)
     }
 
@@ -64,7 +63,7 @@ public class hw06GameLogicTest {
      */
     @Test fun test03() {
         val game   = createSituation(arrayOf(' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' '))
-        val state  = game.move('o', "2 2")
+        val state  = game.move('o', 2, 2)
         val field  = game.getField()
         val result = arrayOf(' ', 'x', ' ', ' ', 'o', ' ', ' ', ' ', ' ')
 
@@ -82,21 +81,7 @@ public class hw06GameLogicTest {
      */
     @Test fun test04() {
         val game  = createSituation(arrayOf(' ', 'x', ' ', ' ', 'o', ' ', ' ', ' ', ' '))
-        val state = game.move('x', "4 1")
-        assertEquals("Error: incorrect data", state)
-    }
-
-    /** First player puts 'x' into 1 three
-     *
-     *     | x |
-     *  ===+===+===
-     *     | o |     ->  Error: incorrect data
-     *  ===+===+===
-     *     |   |
-     */
-    @Test fun test05() {
-        val game  = createSituation(arrayOf(' ', 'x', ' ', ' ', 'o', ' ', ' ', ' ', ' '))
-        val state = game.move('x', "1 three")
+        val state = game.move('x', 4, 1)
         assertEquals("Error: incorrect data", state)
     }
 
@@ -108,9 +93,9 @@ public class hw06GameLogicTest {
      *  ===+===+===      ===+===+===
      *   x |   | o        x | x | o
      */
-    @Test fun test06() {
+    @Test fun test05() {
         val game   = createSituation(arrayOf('x', 'x', 'o', 'o', 'o', 'x', 'x', ' ', 'o'))
-        val state  = game.move('x', "3 2")
+        val state  = game.move('x', 3, 2)
         val field  = game.getField()
         val result = arrayOf('x', 'x', 'o', 'o', 'o', 'x', 'x', 'x', 'o')
 
@@ -126,9 +111,9 @@ public class hw06GameLogicTest {
      *  ===+===+===      ===+===+===
      *   x | x | o        x | x | o
      */
-    @Test fun test07() {
+    @Test fun test06() {
         val game   = createSituation(arrayOf('x', 'x', 'o', ' ', 'o', ' ', 'x', 'x', 'o'))
-        val state  = game.move('o', "2 3")
+        val state  = game.move('o', 2, 3)
         val field  = game.getField()
         val result = arrayOf('x', 'x', 'o', ' ', 'o', 'o', 'x', 'x', 'o')
 
@@ -144,9 +129,9 @@ public class hw06GameLogicTest {
      *  ===+===+===      ===+===+===
      *   o |   | x        o |   | x
      */
-    @Test fun test08() {
+    @Test fun test07() {
         val game   = createSituation(arrayOf(' ', 'o', 'x', ' ', 'x', 'o', 'o', ' ', 'x'))
-        val state  = game.move('x', "1 1")
+        val state  = game.move('x', 1, 1)
         val field  = game.getField()
         val result = arrayOf('x', 'o', 'x', ' ', 'x', 'o', 'o', ' ', 'x')
 
