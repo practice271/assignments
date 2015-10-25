@@ -5,7 +5,7 @@ import javax.swing.*
 import java.awt.event.*
 import java.util.LinkedList
 
-class RectangleProgram : TicTacToe () {
+class ticTacToeGraphics : TicTacToe () {
     private var jframe = JFrame()
     private val buttons = Array(3, { Array(3, { JButton("") }) })
     private val restartButton = JButton("Reset")
@@ -45,26 +45,27 @@ class RectangleProgram : TicTacToe () {
         public override fun actionPerformed(e: ActionEvent) {
             val movingPlayer = getMovingPlayer()
             val tryMove = tryMakeMove(x, y)
-            if (tryMove == MoveResult.NON_EMPTY_CELL)
-                statusLabel.setText("Cell is not empty!")
-            else if (tryMove == MoveResult.GAME_ENDED)
-                statusLabel.setText("Start new game!")
-            else if (tryMove == MoveResult.OK) {
-                buttons[x][y].setText(if (movingPlayer == Player.FIRST) "X" else "O")
-                statusLabel.setText("Set " + (if (movingPlayer == Player.FIRST) "O" else "X") + "!")
-                val winner = getWinner()
-                if (winner != null) {
-                    statusLabel.setText("Player " + (if (winner == Player.FIRST) "I " else "II ") + "won!")
-                    var winningLine = LinkedList<Pair<Int, Int>>()
-                    for (i in 0..2) {
-                        if (checkLine(i)) winningLine.addAll(listOf(Pair(i, 0), Pair(i, 1), Pair(i, 2)))
-                        if (checkColumn(i)) winningLine.addAll(listOf(Pair(0, i), Pair(1, i), Pair(2, i)))
-                        if (checkDiagonal1()) winningLine.addAll(listOf(Pair(0, 0), Pair(1, 1), Pair(2, 2)))
-                        if (checkDiagonal2()) winningLine.addAll(listOf(Pair(0, 2), Pair(1, 1), Pair(2, 0)))
-                    }
-                    for (pair in winningLine) buttons[pair.first][pair.second].setForeground(Color.red)
-                } else if (!containEmptyCell()) statusLabel.setText("Draw!")
+            when (tryMove) {
+                MoveResult.NON_EMPTY_CELL -> statusLabel.setText("Cell is not empty!")
+                MoveResult.GAME_ENDED -> statusLabel.setText("Start new game!")
+                MoveResult.OK -> {
+                    buttons[x][y].setText(if (movingPlayer == Player.FIRST) "X" else "O")
+                    statusLabel.setText("Set " + (if (movingPlayer == Player.FIRST) "O" else "X") + "!")
+                    val winner = getWinner()
+                    if (winner != null) {
+                        statusLabel.setText("Player " + (if (winner == Player.FIRST) "I " else "II ") + "won!")
+                        var winningLine = LinkedList<Pair<Int, Int>>()
+                        for (i in 0..2) {
+                            if (checkLine(i)) winningLine.addAll(listOf(Pair(i, 0), Pair(i, 1), Pair(i, 2)))
+                            if (checkColumn(i)) winningLine.addAll(listOf(Pair(0, i), Pair(1, i), Pair(2, i)))
+                            if (checkDiagonal1()) winningLine.addAll(listOf(Pair(0, 0), Pair(1, 1), Pair(2, 2)))
+                            if (checkDiagonal2()) winningLine.addAll(listOf(Pair(0, 2), Pair(1, 1), Pair(2, 0)))
+                        }
+                        for (pair in winningLine) buttons[pair.first][pair.second].setForeground(Color.red)
+                    } else if (!containEmptyCell()) statusLabel.setText("Draw!")
+                }
             }
+
         }
     }
 
@@ -83,6 +84,5 @@ class RectangleProgram : TicTacToe () {
 
 /*
 fun main(args:Array<String>) {
-    RectangleProgram()
-}
+    ticTacToeGraphics()
 */
