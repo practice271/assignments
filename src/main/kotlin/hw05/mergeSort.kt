@@ -2,63 +2,54 @@ package hw05
 
 public fun mergeSort (countThreads : Int, arr : Array<Int>) : Array<Int>
 {
-    fun merge (leftArr : Array<Int>, rightArr : Array<Int>) : Array<Int>
+    val resArr = Array(arr.count(), {i -> 0})
+
+    fun merge (left : Int, mid : Int, right : Int)
     {
         var i = 0
         var j = 0
 
-        val lengthLeft = leftArr.count()
-        val lengthRight = rightArr.count()
-
-        val resArr = Array(lengthLeft + lengthRight, {i -> 0})
+        val lengthLeft = mid - left
+        val lengthRight = right - mid + 1
 
         while (i < lengthLeft && j < lengthRight)
         {
-            if (leftArr[i] <= rightArr[j])
+            if (arr[i + left] <= arr[j + mid + 1])
             {
-                resArr[i + j] = leftArr[i]
+                resArr[left + i + j] = arr[left + i]
                 i++
             }
             else
             {
-                resArr[i + j] = rightArr[j]
+                resArr[left + i + j] = arr[mid + j + 1]
                 j++
             }
         }
 
         while (i < lengthLeft)
         {
-            resArr[i + j] = leftArr[i]
+            resArr[left + i + j] = arr[left + i]
             i++
         }
 
         while (j < lengthRight)
         {
-            resArr[i + j] = rightArr[j]
+            resArr[left + i + j] = arr[mid + 1 + j]
             j++
         }
-
-        return resArr
     }
 
-    fun sort (baseArr : Array<Int>, countThread : Int) : Array<Int>
+    fun sort (left : Int, right : Int, countThread : Int)
     {
-        if (baseArr.count() == 1) return baseArr
+        if (right - left == 0) return
 
-        val mid = baseArr.count() / 2
-        var leftArr = Array (mid, {i -> 0})
-        var rightArr = Array (baseArr.count() - mid, {i -> 0})
-
-        for (i in 0..(mid - 1))
-            leftArr[i] = baseArr[i]
-        for (i in mid..(baseArr.count() - 1))
-            rightArr[i - mid] = baseArr[i]
+        val mid = (right - left) / 2
 
         if (countThread > 1)
         {
             val thr = countThread / 2
-            val lThread = Thread {leftArr = sort(leftArr, thr)}
-            val rThread = Thread {rightArr = sort(rightArr, countThread - thr)}
+            val lThread = Thread {sort(left, mid, thr)}
+            val rThread = Thread {sort(mid + 1, right, countThread - thr)}
 
             lThread.start()
             rThread.start()
@@ -66,14 +57,18 @@ public fun mergeSort (countThreads : Int, arr : Array<Int>) : Array<Int>
             lThread.join()
             rThread.join()
 
-            return merge(leftArr, rightArr)
+            merge(left, mid, right)
+            return
         }
 
-        leftArr = sort(leftArr, countThread)
-        rightArr = sort(rightArr, countThread)
+        sort(left, mid, countThread)
+        sort(mid + 1, right, countThread)
 
-        return merge(leftArr, rightArr)
+        merge(left, mid, right)
     }
 
-    return sort(arr, countThreads)
+    sort(0, arr.count() - 1, countThreads)
+
+    return resArr
 }
+

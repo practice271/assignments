@@ -18,3 +18,11 @@ fun main (args : Array<String>)
 {
     println (badIncrement(10000))
 }
+
+/*
+Input: 10000
+Output: 9997-10000
+
+Input: 100000
+Output: 99994-99998
+ */
