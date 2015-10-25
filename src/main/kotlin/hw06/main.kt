@@ -63,7 +63,7 @@ private var array: ArrayList<ArrayList<Boolean?>> = arrayListOf(
         arrayListOf<Boolean?>(null, null, null))
 
 public class ConsoleGame : Game(array, 0, null) {
-    internal fun printMap() {
+    fun printMap() {
         for (i in 0..2) {
             println("|${map[i][0].toChar()} |" +
                     " ${map[i][1].toChar()} | ${map[i][2].toChar()}|")
