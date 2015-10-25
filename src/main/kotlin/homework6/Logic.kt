@@ -2,8 +2,8 @@ package homework6
 
 public class LogicGames(){
     internal  enum class State{Player1, Player2, Win, Standoff}
-    internal  enum class Mark{X, O, *}
-    internal  var field: Array<Array<Mark>> = Array(3, {i -> Array(3, {e -> Mark.*})})
+    internal  enum class Mark{X, O, z}
+    internal  var field: Array<Array<Mark>> = Array(3, {i -> Array(3, {e -> Mark.z})})
     internal  var state: State = State.Player1
     internal  var winner: State? = null
 
@@ -19,27 +19,27 @@ public class LogicGames(){
         var flag = true
         field.forEach {
             for (x in 0..2) {
-                if (it[x] == Mark.*) flag = false
+                if (it[x] == Mark.z) flag = false
             }
         }
         var tmp = state
         for (x in 0..2) {
-            if ((field[x][0] == field[x][1]) && (field[x][1] == field[x][2]) && (field[x][0] != Mark.*)) {
+            if ((field[x][0] == field[x][1]) && (field[x][1] == field[x][2]) && (field[x][0] != Mark.z)) {
                 state = State.Win
                 winner = tmp
             }
-            if ((field[0][x] == field[1][x]) && (field[1][x] == field[2][x]) && (field[0][x] != Mark.*)) {
+            if ((field[0][x] == field[1][x]) && (field[1][x] == field[2][x]) && (field[0][x] != Mark.z)) {
                 state = State.Win
                 winner = tmp
 
             }
         }
-        if ((field[0][0] == field[1][1]) && (field[1][1] == field[2][2]) && (field[0][0] != Mark.*)) {
+        if ((field[0][0] == field[1][1]) && (field[1][1] == field[2][2]) && (field[0][0] != Mark.z)) {
             state = State.Win
             winner = tmp
 
         }
-        if ((field[0][2] == field[1][1]) && (field[1][1] == field[2][0]) && (field[0][2] != Mark.*)) {
+        if ((field[0][2] == field[1][1]) && (field[1][1] == field[2][0]) && (field[0][2] != Mark.z)) {
             state = State.Win
             winner = tmp
         }
