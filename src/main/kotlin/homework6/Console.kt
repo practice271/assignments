@@ -11,7 +11,7 @@ public class Console() {
         }
     }
     internal  fun move(x: Int, y: Int){
-        if (game.field[x][y] == LogicGames.Mark._) {
+        if (game.field[x][y] == LogicGames.Mark.*) {
             if (game.state == LogicGames.State.Player1) game.field[x][y] = LogicGames.Mark.X
             else game.field[x][y] = LogicGames.Mark.O
             output()
