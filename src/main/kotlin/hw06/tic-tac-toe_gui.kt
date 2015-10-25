@@ -1,6 +1,6 @@
-/**Я сочувствую тому, кто будет это проверять.
- * Постараюсь сделать код более оптимальным и читабельным, но не раньше среды.
- * И тестов нет, я не знаю как в них можно впихнуть этот код*/
+/**I sympathize with those who will check this code.
+* Try to make the code more efficient and readable, but not beforeВ Wednesday.
+* And there is no test, I do not know how they do with this code*/
 
 package hw06
 
