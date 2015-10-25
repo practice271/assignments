@@ -28,34 +28,33 @@ public class TicTacToeConsole : TicTacToe() {
         outStream.write(help + "\n")
         outStream.flush()
         var bf = BufferedReader(inputStream)
-        while (getWinner() == null) {
+        var fieldContainsEmptyCell = true
+        while (getWinner() == null && fieldContainsEmptyCell) {
             val str = bf.readLine()
             if (str == "EXIT") break
             else if (str.length() != 3 || str[1] != ' ' ||
-                    !Character.isDigit(str[0]) || !Character.isDigit(str[2])) {
+                    !Character.isDigit(str[0]) || !Character.isDigit(str[2]))
                 outStream.write("Wrong input format. " + help + "\n")
-                outStream.flush()
-            } else {
+            else {
                 var tryMove = tryMakeMove(Character.getNumericValue(str[0]), Character.getNumericValue(str[2]))
-                if (tryMove == MoveResult.NON_EMPTY_CELL) {
-                    outStream.write("Cell is not empty!\n")
-                    outStream.flush()
-                } else if (tryMove == MoveResult.NON_EXISTENT_CELL) {
-                    outStream.write("This cell does not exist. " + help + "\n")
-                    outStream.flush()
-                } else {
-                    display(outStream)
-                    val winner = getWinner()
-                    if (winner != null) {
-                        outStream.write("Player " + (if (winner == Player.FIRST) "I" else "II") + " won!\n")
-                        outStream.flush()
-                    } else if (!containEmptyCell()) {
-                        outStream.write("Draw!\n")
-                        outStream.flush()
-                        break
+                when (tryMove) {
+                    MoveResult.NON_EMPTY_CELL ->
+                        outStream.write("Cell is not empty!\n")
+                    MoveResult.NON_EXISTENT_CELL ->
+                        outStream.write("This cell does not exist. " + help + "\n")
+                    else -> {
+                        display(outStream)
+                        val winner = getWinner()
+                        if (winner != null)
+                            outStream.write("Player " + (if (winner == Player.FIRST) "I" else "II") + " won!\n")
+                        else if (!containEmptyCell()) {
+                            outStream.write("Draw!\n")
+                            fieldContainsEmptyCell = false
+                        }
                     }
                 }
             }
+            outStream.flush()
         }
     }
 }
@@ -63,7 +62,6 @@ public class TicTacToeConsole : TicTacToe() {
 /*
 fun main(args: Array<String>) {
     val game = TicTacToeConsole()
-
     game.startGame()
 }
 */
