@@ -11,7 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
-mainClassName = 'classroom.c02.C02Package'
+mainClassName = 'classroom.c02.MainKt'
 
 sourceCompatibility = 1.5
 
@@ -24,7 +24,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 buildscript {
-    ext.kotlin_version = '0.14.449'
+    ext.kotlin_version = '1.0.0-beta-1038'
     repositories {
         mavenCentral()
     }
