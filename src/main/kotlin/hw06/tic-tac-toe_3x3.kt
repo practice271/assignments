@@ -11,20 +11,14 @@ public class Console(){
 
     public fun nextStroke(player: Int,playerStroke: Int): String{
         val state = logic.reader(player,playerStroke)
-        val win = logic.winer()
-        if (state == 0){
-            if (win == 1){
-                println("1st player wins!")
-                return "end"
-            }
-            if (win == 2){
-                println("2nd player wins!")
-                return "end"
-            }
+        val win = logic.findWiner()
+        if (state == 0 && win != 0){
+            println("Player ${win} wins!")
+            return "Player wins!"
         }
         if (logic.availableStroke()){
             println("Dead heat!")
-            return "end"
+            return "Dead heat!"
         }
         if (state == -2) {
             println("Cell is not available.Try again")
@@ -43,24 +37,11 @@ public class Console(){
     var player = 1
     var state = ""
     var playerStroke = 0
-    while (state != "end") {
-        if (player == 1){
-            println("Player 1, your stroke")
-            playerStroke = readLine()?.toInt()?: -3
-            state = game.nextStroke(1,playerStroke)
-            when (state){
-                "try again" -> player = 1
-                else -> player = 2
-            }
-        }
-        else{
-            println("Player 2, your stroke")
-            playerStroke = readLine()?.toInt()?: -3
-            state = game.nextStroke(2,playerStroke)
-            when (state){
-                "try again" -> player = 2
-                else -> player = 1
-            }
-        }
+    while (state != "Player wins!" && state != "Dead heat!") {
+        println("Player $player, your stroke")
+        println("Enter the number of cell")
+        playerStroke = readLine()?.toInt()?: -3
+        state = game.nextStroke(player,playerStroke)
+        if (state != "try again") player = 3 - player
     }
 }*/
