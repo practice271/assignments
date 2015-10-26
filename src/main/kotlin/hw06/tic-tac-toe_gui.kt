@@ -1,7 +1,3 @@
-/**I sympathize with those who will check this code.
-  * Try to make the code more efficient and readable, but not before Wednesday.
-  * And there is no test, I do not know how they do with this code*/
-
 package hw06
 
 import java.awt.*
