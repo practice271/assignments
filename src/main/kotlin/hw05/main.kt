@@ -42,7 +42,7 @@ private fun merge (array : ArrayList<Int>, beg1 : Int, end1 : Int,
    var newArr = array
    for (i in beg2..end2) {
       val v = newArr[i]
-      newArr.remove(i)
+      newArr.removeAt(i)
       newArr = insert(array, v, beg1, end1 + i - beg2)
    }
    return newArr
