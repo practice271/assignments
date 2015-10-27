@@ -6,20 +6,20 @@ import kotlin.test.assertEquals
 public class ticTacToeLogicTest() {
     @Test fun getMovingPlayerTest() {
         val game = TicTacToe()
-        assertEquals(Player.FIRST, game.getMovingPlayer())
+        assertEquals(Player.FIRST, game.moveOf)
         game.tryMakeMove(1, 1)
-        assertEquals(Player.SECOND, game.getMovingPlayer())
+        assertEquals(Player.SECOND, game.moveOf)
         game.tryMakeMove(1, 1)
-        assertEquals(Player.SECOND, game.getMovingPlayer())
+        assertEquals(Player.SECOND, game.moveOf)
         game.tryMakeMove(10, 10)
-        assertEquals(Player.SECOND, game.getMovingPlayer())
+        assertEquals(Player.SECOND, game.moveOf)
         game.tryMakeMove(0, 0)
-        assertEquals(Player.FIRST, game.getMovingPlayer())
+        assertEquals(Player.FIRST, game.moveOf)
     }
 
     @Test fun getWinnerTest() {
         val game = TicTacToe()
-        assertEquals(null, game.getWinner())
+        assertEquals(null, game.winner)
         game.tryMakeMove(0, 0)
         game.tryMakeMove(0, 0)
         game.tryMakeMove(1, 1)
@@ -27,14 +27,14 @@ public class ticTacToeLogicTest() {
         game.tryMakeMove(1, 0)
         game.tryMakeMove(0, 2)
         game.tryMakeMove(2, 2)
-        assertEquals(Player.FIRST, game.getWinner())
+        assertEquals(Player.FIRST, game.winner)
     }
 
-    @Test fun containEmptyCellTest() {
+    @Test fun movesNumberTest() {
         val game = TicTacToe()
-        assertEquals(true, game.containEmptyCell())
+        assertEquals(0, game.movesNumber)
         game.tryMakeMove(0, 0)
-        assertEquals(true, game.containEmptyCell())
+        assertEquals(1, game.movesNumber)
         game.tryMakeMove(0, 1)
         game.tryMakeMove(0, 2)
         game.tryMakeMove(1, 0)
@@ -42,9 +42,9 @@ public class ticTacToeLogicTest() {
         game.tryMakeMove(1, 1)
         game.tryMakeMove(2, 0)
         game.tryMakeMove(2, 2)
-        assertEquals(true, game.containEmptyCell())
+        assertEquals(8, game.movesNumber)
         var x = game.tryMakeMove(2, 1)
-        assertEquals(false, game.containEmptyCell())
+        assertEquals(9, game.movesNumber)
     }
 
     @Test fun tryMakeMoveTest() {

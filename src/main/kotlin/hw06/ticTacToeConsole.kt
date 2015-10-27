@@ -13,9 +13,12 @@ public class TicTacToeConsole : TicTacToe() {
             }
         }
 
-        val str = "${printCell(field[0][0])} ${printCell(field[0][1])} ${printCell(field[0][2])}\n" +
-                "${printCell(field[1][0])} ${printCell(field[1][1])} ${printCell(field[1][2])}\n" +
-                "${printCell(field[2][0])} ${printCell(field[2][1])} ${printCell(field[2][2])}\n"
+        var str = ""
+        for (i in 0..2) {
+            for (j in 0..2) str += "${printCell(field[i][j])} "
+            str += "\n"
+        }
+
         outStream.write(str)
         outStream.flush()
     }
@@ -29,10 +32,10 @@ public class TicTacToeConsole : TicTacToe() {
         outStream.flush()
         var bf = BufferedReader(inputStream)
         var fieldContainsEmptyCell = true
-        while (getWinner() == null && fieldContainsEmptyCell) {
+        while (winner == null && fieldContainsEmptyCell) {
             val str = bf.readLine()
             if (str == "EXIT") break
-            else if (str.length() != 3 || str[1] != ' ' ||
+            if (str.length != 3 || str[1] != ' ' ||
                     !Character.isDigit(str[0]) || !Character.isDigit(str[2]))
                 outStream.write("Wrong input format. " + help + "\n")
             else {
@@ -44,10 +47,10 @@ public class TicTacToeConsole : TicTacToe() {
                         outStream.write("This cell does not exist. " + help + "\n")
                     else -> {
                         display(outStream)
-                        val winner = getWinner()
+                        val winner = winner
                         if (winner != null)
                             outStream.write("Player " + (if (winner == Player.FIRST) "I" else "II") + " won!\n")
-                        else if (!containEmptyCell()) {
+                        else if (movesNumber == 9) {
                             outStream.write("Draw!\n")
                             fieldContainsEmptyCell = false
                         }

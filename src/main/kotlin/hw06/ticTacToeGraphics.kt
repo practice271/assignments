@@ -43,7 +43,7 @@ class ticTacToeGraphics : TicTacToe () {
 
     private inner class CellPressedHandler(private val x: Int, private val y: Int) : ActionListener {
         public override fun actionPerformed(e: ActionEvent) {
-            val movingPlayer = getMovingPlayer()
+            val movingPlayer = moveOf
             val tryMove = tryMakeMove(x, y)
             when (tryMove) {
                 MoveResult.NON_EMPTY_CELL -> statusLabel.setText("Cell is not empty!")
@@ -51,18 +51,18 @@ class ticTacToeGraphics : TicTacToe () {
                 MoveResult.OK -> {
                     buttons[x][y].setText(if (movingPlayer == Player.FIRST) "X" else "O")
                     statusLabel.setText("Set " + (if (movingPlayer == Player.FIRST) "O" else "X") + "!")
-                    val winner = getWinner()
+                    val winner = winner
                     if (winner != null) {
                         statusLabel.setText("Player " + (if (winner == Player.FIRST) "I " else "II ") + "won!")
-                        var winningLine = LinkedList<Pair<Int, Int>>()
+                        var winningSequence = LinkedList<Pair<Int, Int>>()
                         for (i in 0..2) {
-                            if (checkLine(i)) winningLine.addAll(listOf(Pair(i, 0), Pair(i, 1), Pair(i, 2)))
-                            if (checkColumn(i)) winningLine.addAll(listOf(Pair(0, i), Pair(1, i), Pair(2, i)))
-                            if (checkDiagonal1()) winningLine.addAll(listOf(Pair(0, 0), Pair(1, 1), Pair(2, 2)))
-                            if (checkDiagonal2()) winningLine.addAll(listOf(Pair(0, 2), Pair(1, 1), Pair(2, 0)))
+                            if (checkLine(i)) winningSequence.addAll(listOf(Pair(i, 0), Pair(i, 1), Pair(i, 2)))
+                            if (checkColumn(i)) winningSequence.addAll(listOf(Pair(0, i), Pair(1, i), Pair(2, i)))
                         }
-                        for (pair in winningLine) buttons[pair.first][pair.second].setForeground(Color.red)
-                    } else if (!containEmptyCell()) statusLabel.setText("Draw!")
+                        if (checkDiagonal1()) winningSequence.addAll(listOf(Pair(0, 0), Pair(1, 1), Pair(2, 2)))
+                        if (checkDiagonal2()) winningSequence.addAll(listOf(Pair(0, 2), Pair(1, 1), Pair(2, 0)))
+                        for (pair in winningSequence) buttons[pair.first][pair.second].setForeground(Color.red)
+                    } else if (movesNumber == 9) statusLabel.setText("Draw!")
                 }
             }
 
@@ -85,4 +85,5 @@ class ticTacToeGraphics : TicTacToe () {
 /*
 fun main(args:Array<String>) {
     ticTacToeGraphics()
+}
 */

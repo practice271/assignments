@@ -38,7 +38,7 @@ public class ticTacToeConsoleTest() {
         override fun read(cbuf: CharArray, off: Int, len: Int): Int {
             var n = 0
             for (i in off..off + len - 1)
-                if (str.length() > i) {
+                if (str.length > i) {
                     cbuf[i] = str[i]
                     n++
                 } else break
@@ -77,30 +77,30 @@ public class ticTacToeConsoleTest() {
         val testWriter = TestWriter()
         var field = String()
 
-        field = "- - -\n" +
-                "- X -\n" +
-                "- - -\n"
+        field = "- - - \n" +
+                "- X - \n" +
+                "- - - \n"
         testReader.str = "1 1\nEXIT\n"
         game.startGame(testReader, testWriter)
         assertEquals(field, testWriter.lastUpdate)
 
-        field = "- - -\n" +
-                "- X -\n" +
-                "- - O\n"
+        field = "- - - \n" +
+                "- X - \n" +
+                "- - O \n"
         testReader.str = "1 1\n2 2\nEXIT\n"
         game.startGame(testReader, testWriter)
         assertEquals(field, testWriter.lastUpdate)
 
-        field = "- - -\n" +
-                "X X -\n" +
-                "- - O\n"
+        field = "- - - \n" +
+                "X X - \n" +
+                "- - O \n"
         testReader.str = "1 1\n2 2\n1 0\nEXIT\n"
         game.startGame(testReader, testWriter)
         assertEquals(field, testWriter.lastUpdate)
 
-        field = "- - -\n" +
-                "X X -\n" +
-                "- O O\n"
+        field = "- - - \n" +
+                "X X - \n" +
+                "- O O \n"
         testReader.str = "1 1\n2 2\n1 0\n2 1\nEXIT\n"
         game.startGame(testReader, testWriter)
         assertEquals(field, testWriter.lastUpdate)

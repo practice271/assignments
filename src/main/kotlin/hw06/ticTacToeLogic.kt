@@ -14,14 +14,16 @@ public enum class MoveResult {
 
 public open class TicTacToe() {
     protected var field = Array(3, { Array(3, { Cell.EMPTY }) })
-    private var moveOf = Player.FIRST
-    private var winner: Player? = null
-
-    public fun getMovingPlayer() = moveOf
-    public fun getWinner() = winner
+    public var moveOf = Player.FIRST
+        private set
+    public var winner: Player? = null
+        private set
+    public var movesNumber = 0
+        private set
 
     private fun switchMove() {
         moveOf = if (moveOf == Player.FIRST) Player.SECOND else Player.FIRST
+        movesNumber++
     }
 
     protected fun clear() {
@@ -30,14 +32,7 @@ public open class TicTacToe() {
                 field[i][j] = Cell.EMPTY
         moveOf = Player.FIRST
         winner = null
-    }
-
-    public fun containEmptyCell(): Boolean {
-        var emptyCellExist = false
-        for (i in 0..2)
-            for (j in 0..2)
-                if (field[i][j] == Cell.EMPTY) emptyCellExist = true
-        return emptyCellExist
+        movesNumber = 0
     }
 
     public fun tryMakeMove(x: Int, y: Int): MoveResult {
