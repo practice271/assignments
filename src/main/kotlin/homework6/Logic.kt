@@ -1,13 +1,13 @@
 package homework6
 
 public class LogicGames() {
-    internal enum class State {Player1, Player2, Win, Standoff }
-    internal enum class Mark {X, O, I }
-    internal var field: Array<Array<Mark>> = Array(3, { i -> Array(3, { i -> Mark.I }) })
-    internal var state: State = State.Player1
-    internal var winner: String = "Player1"
+    public enum class State {Player1, Player2, Win, Standoff }
+    public enum class Mark {X, O, I }
+    public var field: Array<Array<Mark>> = Array(3, { i -> Array(3, { i -> Mark.I }) })
+    public var state: State = State.Player1
+    public var winner: String = "Player1"
 
-    internal fun checkState(): State {
+    fun checkState(): State {
         //check for empty fields
         var flag = true
         field.forEach {
@@ -46,7 +46,7 @@ public class LogicGames() {
         return state
     }
     //conditionally correct coordinates
-    internal  fun move(x: Int, y: Int) {
+    fun move(x: Int, y: Int) {
         if (state == State.Player1) field[x][y] = Mark.X
         else field[x][y] = Mark.O
     }
