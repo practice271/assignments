@@ -1,30 +1,21 @@
 package homework6
 
-
 public class Console() {
-    var game = LogicGames()
+    private var game = LogicGames()
 
-    internal fun output(){
+    private  fun output(){
         game.field.forEach {
             for (x in 0..2) print(it[x].toString() +  " ")
             println()
         }
     }
-    internal  fun move(x: Int, y: Int){
-        if (game.field[x][y] == LogicGames.Mark.z) {
-            if (game.state == LogicGames.State.Player1) game.field[x][y] = LogicGames.Mark.X
-            else game.field[x][y] = LogicGames.Mark.O
-            output()
-            game.checkState()
-            if ((game.state != LogicGames.State.Win)&&(game.state != LogicGames.State.Standoff)) read()
-        }
-        else {
-            println("Field busy")
-            read()
+    private  fun endOfGame() {
+        when (game.state) {
+            LogicGames.State.Win -> println("${game.winner} win!")
+            else -> println("Standoff!")
         }
     }
-
-    internal fun read() {
+    private  fun read() {
         val line: String? = readLine()
         if ((line?.length() != 3) || (line == null)) {
             println("Wrong input")
@@ -34,11 +25,24 @@ public class Console() {
             var x = line[0].toInt() - 48
             var y = line[2].toInt() - 48
             if (!((x in 0..2) && (y in 0..2))) {
-                println("Field 3*3")
+                println("Wrong input")
                 read()
             }
-            else move(x, y)
+            else {
+                if (game.field[x][y] != LogicGames.Mark.I) {
+                    println("Field busy")
+                    read()
+                }
+                else {
+                    game.move(x, y)
+                    output()
+                    val state = game.checkState()
+                    if ((state == LogicGames.State.Win) || (state == LogicGames.State.Standoff)) endOfGame()
+                    else read()
+                }
+            }
         }
     }
 }
+
 
