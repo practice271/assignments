@@ -79,6 +79,7 @@ public class GameGUI(): JFrame() {
                     if(turnCount == 9) {
                         label.text = "It's a tie!"
                         buttons.forEach { it.isEnabled = false }
+                        isOver = true
                     }
                 }
             })
@@ -92,8 +93,10 @@ public class GameGUI(): JFrame() {
     public fun play() {
         frame.isVisible = true
     }
-}
 
-fun main(args: Array<String>) {
-    GameGUI().play()
+    companion object {
+        @JvmStatic fun main(args: Array<String>) {
+            GameGUI().play()
+        }
+    }
 }
