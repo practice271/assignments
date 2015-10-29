@@ -39,9 +39,6 @@ public fun printCongratulations(player: String) {
     JOptionPane.showMessageDialog(null, "YOU WIN, ${player}!")
 }
 
-public fun main(args:Array<String>) {
-    GameGUI()
-}
 
 
 
