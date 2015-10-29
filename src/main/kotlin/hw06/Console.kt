@@ -9,7 +9,7 @@ public class Console() {
     public var arr: Array<Char> = arrayOf(' ', ' ', ' ',
                                           ' ', ' ', ' ',
                                           ' ', ' ', ' ')
-    public var flag: Boolean = false
+    public var flag: Boolean = false // need this variable for check win
     public fun rulesOfGame() {
         println("==================")
         println("Tie-tac-toe game!")
@@ -38,8 +38,8 @@ public class Console() {
         }
     }
 
-    public fun readValue(data: String, n: Int) {
-        var k = data.toInt()
+    public fun readValue(data: String, n: Int) { // player points a data on keyboard(number; f.e. 0,1,2..)
+        var k = data.toInt()                     // varible n saves steps (steps: 0 - x, 1 - o , 2 - x, ..)
         if (n % 2 == 0 ) {
             arr[k] = 'x'
         } else {
@@ -103,8 +103,10 @@ public class Console() {
         }
         if (pl == 'x') {
             println("Congratulations, x!\n")
+            printCongratulations("X")
         } else {
             println("Congratulations, o!\n")
+            printCongratulations("Y")
         }
     }
 
@@ -125,3 +127,5 @@ public class Console() {
         }
     }
 }
+
+
