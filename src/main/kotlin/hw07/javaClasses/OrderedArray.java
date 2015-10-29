@@ -24,22 +24,33 @@ public class OrderedArray<E extends Comparable<? super E>>
     public  int	size(){
         return size;
     }
+
+    private void resize () {
+        size_basic *= 2;
+        E[] arr2 = (E[]) Array.newInstance(arr[0].getClass(), size_basic);
+        for (int i = 0; i < size; i++) {
+            arr2[i] = arr[i];
+        }
+        arr = arr2;
+    }
     @Override
     public void add (E elem){
-        if (size < size_basic){
-            arr[size] = elem;
-            size ++;
+        if (size == size_basic) {
+            resize();
         }
-        else {
-            size_basic *= 2;
-            E[] arr2 = (E[]) Array.newInstance(arr[0].getClass(), size_basic);
-            for (int i = 0 ; i < size; i++){
-                arr2[i] = arr[i];
+        for (int i = size - 1; i >= 0; i -- ){
+            if (arr[i].compareTo(elem) > 0){
+                arr[i + 1] = arr[i];
             }
-            arr2[size] = elem;
-            size ++;
-            arr = arr2;
+            else {
+                arr[i + 1] = elem;
+                size ++;
+                return;
+            }
         }
+        arr [0] = elem;
+        size ++;
+        return;
     }
     @Override
     public  E get(int index){
@@ -48,14 +59,6 @@ public class OrderedArray<E extends Comparable<? super E>>
         }
         throw new ArrayIndexOutOfBoundsException();
     }
-     @Override
-     public  void set(int index, E element){
-         if ((index < size) && (0 <= index)){
-             arr[index] = element;
-             return;
-         }
-         throw new ArrayIndexOutOfBoundsException();
-     }
     @Override
     public void removeAt(int index){
         if ((index >= size) && (0 > index)){
@@ -69,13 +72,5 @@ public class OrderedArray<E extends Comparable<? super E>>
     @Override
     public void	clear() {
         size = 0;
-    }
-    @Override
-    public void	reverse() {
-        E[] arr2 = (E[]) Array.newInstance(arr[0].getClass(), size_basic);
-        for (int i = 0 ; i < size; i++){
-            arr2[i] = arr[size - i - 1];
-        }
-        arr = arr2;
     }
 }

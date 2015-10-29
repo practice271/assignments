@@ -23,7 +23,7 @@ public abstract class AbstractOrderedList<E extends Comparable<? super E> >
         }
         return true;
     }
-    //@Override
+    @Override
     public int hashCode() {
         int size = size();
         int sum = 0;
@@ -48,12 +48,10 @@ public abstract class AbstractOrderedList<E extends Comparable<? super E> >
         return size() == 0;
     }
     public  abstract int	size();
-    public abstract void add(E e);
+    public abstract void add( E e);
     public  abstract E	get(int index);
-    public  abstract void set(int index, E element);
     public abstract void removeAt(int index);
     public abstract void clear();
-    public abstract void reverse();
 }
 
 

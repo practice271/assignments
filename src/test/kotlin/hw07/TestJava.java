@@ -14,7 +14,7 @@ import static org.junit.Assert.assertFalse;
 
 public class TestJava {
     private OrderedArray<String> arr = new OrderedArray<String>(1, "500");
-    private OrderedList<String>  list= new OrderedList<String>( "500", null);
+    private OrderedList<String>  list= new OrderedList<String>( "500");
     @Test
     public void isEmpty1() {
         assertFalse(arr.isEmpty());
@@ -38,50 +38,58 @@ public class TestJava {
     @Test
     public void addGetArray() {
         addFirstElem();
+        arr.add("900");
         assertEquals("500", arr.get(0));
         assertEquals("600", arr.get(1));
+        assertEquals("900", arr.get(2));
+    }
+    @Test
+    public void addGetArray2() {
+        addFirstElem();
+        arr.add("4");
+        assertEquals("4", arr.get(0));
+        assertEquals("500", arr.get(1));
+        assertEquals("600", arr.get(2));
+    }
+    @Test
+    public void addGetArray3() {
+        addFirstElem();
+        arr.add("55");
+        assertEquals("500", arr.get(0));
+        assertEquals("55", arr.get(1));
+        assertEquals("600", arr.get(2));
     }
     @Test
     public void addGetList() {
         addFirstElem();
-        list.add("9");
+        list.add("900");
         assertEquals("500", list.get(0));
         assertEquals("600", list.get(1));
-        assertEquals("9", list.get(2));
+        assertEquals("900", list.get(2));
     }
     @Test
-    public void setArray () {
+    public void addGetList2() {
         addFirstElem();
-        arr.set(1,"00");
-        assertEquals("500", arr.get(0));
-        assertEquals("00", arr.get(1));
+        list.add("4");
+//        assertEquals("4", list.get(0));
+        assertEquals("500", list.get(1));
+        assertEquals("600", list.get(2));
     }
     @Test
-    public void setList1 () {
-        // 500 600
+    public void addGetList3() {
         addFirstElem();
-
-        list.set(1,"0");
+        list.add("55");
         assertEquals("500", list.get(0));
-        assertEquals("0", list.get(1));
-    }
-    @Test
-    public void setList2 () {
-        // 500 600 9
-        addFirstElem();
-        list.add("9");
-        list.set(1,"0");
-        assertEquals("500", list.get(0));
-        assertEquals("0", list.get(1));
-        assertEquals("9", list.get(2));
+        assertEquals("55", list.get(1));
+        assertEquals("600", list.get(2));
     }
     // 500 600 9 10
     private void init(){
         addFirstElem();
         arr.add("9");
         list.add("9");
-        arr.add("10");
-        list.add("10");
+        arr.add("99");
+        list.add("99");
     }
     @Test
     public void removeArrayFirst () {
@@ -89,7 +97,7 @@ public class TestJava {
         arr.removeAt(0);
         assertEquals("600", arr.get(0));
         assertEquals("9", arr.get(1));
-        assertEquals("10", arr.get(2));
+        assertEquals("99", arr.get(2));
         assertEquals(3, arr.size());
     }
     @Test
@@ -98,7 +106,7 @@ public class TestJava {
         arr.removeAt(1);
         assertEquals("500", arr.get(0));
         assertEquals("9", arr.get(1));
-        assertEquals("10", arr.get(2));
+        assertEquals("99", arr.get(2));
         assertEquals(3, arr.size());
     }
     @Test
@@ -116,7 +124,7 @@ public class TestJava {
         list.removeAt(0);
         assertEquals("600", list.get(0));
         assertEquals("9", list.get(1));
-        assertEquals("10", list.get(2));
+        assertEquals("99", list.get(2));
         assertEquals(3, list.size());
     }
     @Test
@@ -125,7 +133,7 @@ public class TestJava {
         list.removeAt(1);
         assertEquals("500", list.get(0));
         assertEquals("9", list.get(1));
-        assertEquals("10", list.get(2));
+        assertEquals("99", list.get(2));
         assertEquals(3, list.size());
     }
     @Test
@@ -156,26 +164,6 @@ public class TestJava {
         assertEquals(1, list.size());
     }
     @Test
-    public void reverseArray () {
-        init();
-        arr.reverse();
-        assertEquals("10", arr.get(0));
-        assertEquals("9", arr.get(1));
-        assertEquals("600", arr.get(2));
-        assertEquals("500", arr.get(3));
-        assertEquals(4, arr.size());
-    }
-    @Test
-    public void reverseList () {
-        init();
-        list.reverse();
-        assertEquals("10", list.get(0));
-        assertEquals("9", list.get(1));
-        assertEquals("600", list.get(2));
-        assertEquals("500", list.get(3));
-        assertEquals(4, list.size());
-    }
-    @Test
     public void equal () {
         init();
         assertTrue(list.equals(arr));
@@ -186,18 +174,18 @@ public class TestJava {
     }
     public void compare1 () {
         init();
-        list.set(3, "99");
+        list.add("99");
         assertEquals(1, list.compareTo(arr));
     }
     public void compare2 () {
         init();
-        arr.set(3, "99");
-        assertEquals(1, list.compareTo(arr));
+        arr.add("99");
+        assertEquals(-1, list.compareTo(arr));
     }
     public void compare3 () {
         init();
-        arr.add("99");
-        assertEquals(-1, list.compareTo(arr));
+        arr.add("0");
+        assertEquals(1, list.compareTo(arr));
     }
     public void hashCode1 () {
         init();

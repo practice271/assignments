@@ -2,7 +2,7 @@ package hw07.javaClasses;
 
 /* OrderedList made by Guzel Garifullina
    Estimated time  1 hour
-   real time       2 hours
+   real time       3 hours
 */
 
 public class OrderedList<E extends Comparable<? super E>>
@@ -11,7 +11,12 @@ public class OrderedList<E extends Comparable<? super E>>
     private E last;
     private OrderedList list;
 
-    public OrderedList(E last, OrderedList list) {
+    public OrderedList(E last) {
+        this.last = last;
+        size = 1;
+        list = null;
+    }
+    private OrderedList(E last, OrderedList list) {
         this.last = last;
         this.list = list;
         if (list == null){
@@ -25,15 +30,32 @@ public class OrderedList<E extends Comparable<? super E>>
     public  int	size(){
         return size;
     }
+
+    private OrderedList<E> addLoc (OrderedList l, E elem){
+        if (l == null){
+            return new OrderedList<E>(elem, null);
+        }
+        int comp = l.last.compareTo(elem);
+        if (comp <= 0){
+            return new OrderedList<E>(elem,l);
+        }
+        return new OrderedList<E>((E)l.last, addLoc(l.list, elem));
+    }
     @Override
-    public void add (E elem){
+    public void add ( E elem){
         if (size == 0){
             last = elem;
             size ++;
             return;
         }
-        list = new OrderedList(last, list);
-        last = elem;
+        if (last.compareTo(elem) < 0){
+            list = new OrderedList(last, list);
+            last = elem;
+            size ++;
+            return;
+        }
+
+        list = addLoc(list, elem);
         size ++;
     }
 
@@ -54,24 +76,7 @@ public class OrderedList<E extends Comparable<? super E>>
         //our traversal from last to first
         return getLoc(list, 0, size - index - 2);
     }
-    private OrderedList setLoc (OrderedList l,E elem, int i, int index){
-        if (i < index){
-            return new OrderedList(l.last, setLoc(l.list, elem, i + 1, index));
-        }
-        return new OrderedList(elem, l.list);
-    }
-    @Override
-    public  void set(int index, E elem){
-        if ((index >= size) || (index < 0)){
-            throw new ArrayIndexOutOfBoundsException();
-        }
-        if (index == size -1){
-            last = elem;
-        }
-        else {
-            list = setLoc(list, elem, 0, size - index - 2);
-        }
-    }
+
     private OrderedList remLoc (OrderedList l, int i, int index){
         if (i < index){
             return new OrderedList(l.last, remLoc(l.list,i + 1, index));
@@ -99,21 +104,6 @@ public class OrderedList<E extends Comparable<? super E>>
     public void	clear() {
         size = 0;
         list = null;
-    }
-    private OrderedList reverseLoc (OrderedList l, OrderedList acc){
-        if (l.list == null){
-            return new OrderedList(l.last, acc );
-        }
-        return reverseLoc (l.list, new OrderedList (l.last, acc));
-    }
-    @Override
-    public void	reverse() {
-        if (size == 0 || size == 1){
-            return;
-        }
-        OrderedList<E> l = reverseLoc(list, new  OrderedList<E>(last, null) );
-        list = l.list;
-        last = l.last;
     }
 }
 
