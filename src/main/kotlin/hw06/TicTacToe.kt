@@ -10,19 +10,20 @@ import java.io.InputStreamReader
 class TicTacToe {
 
     public var board = Array(3) { CharArray(3) }
-    var player1: String = " "
-    var player2: String = " "
+
+    var player1: String = "Player1"
+    var player2: String = "Player2"
     var currentPlayer: Int = 0
-    var marker1: Char = ' '
-    var marker2: Char = ' '
+    var marker1: Char = 'X'
+    var marker2: Char = 'O'
     var plays: Int = 0
     private val reader = BufferedReader(InputStreamReader(System.`in`))
 
     public fun init() {
         var counter = 0
         for (i in 0..2) {
-            for (i1 in 0..2) {
-                board[i][i1] = Character.forDigit(++counter, 10)
+            for (j in 0..2) {
+                board[i][j] = Character.forDigit(++counter, 10)
             }
         }
         currentPlayer = 1
@@ -40,9 +41,9 @@ class TicTacToe {
 
     public fun placeMarker(play: Int): Boolean {
         for (i in 0..2) {
-            for (i1 in 0..2) {
-                if (board[i][i1] == Character.forDigit(play, 10)) {
-                    board[i][i1] = if ((currentPlayer == 1)) marker1 else marker2
+            for (j in 0..2) {
+                if (board[i][j] == Character.forDigit(play, 10)) {
+                    board[i][j] = if ((currentPlayer == 1)) marker1 else marker2
                     return true
                 }
             }
@@ -54,40 +55,40 @@ class TicTacToe {
         //Checking rows
         var current = ' '
         for (i in 0..2) {
-            var i1 = 0
-            while (i1 < 3) {
-                if (!Character.isLetter(board[i][i1])) {
+            var j = 0
+            while (j < 3) {
+                if (!Character.isLetter(board[i][j])) {
                     break
                 }
-                if (i1 == 0) {
-                    current = board[i][i1]
-                } else if (current != board[i][i1]) {
+                if (j == 0) {
+                    current = board[i][j]
+                } else if (current != board[i][j]) {
                     break
                 }
-                if (i1 == 2) {
+                if (j == 2) {
                     //Found winner
                     return true
                 }
-                i1++
+                j++
             }
         }
         //Checking columns
         for (i in 0..2) {
             current = ' '
-            var i1 = 0
-            while (i1 < 3) {
-                if (!Character.isLetter(board[i1][i])) {
+            var j = 0
+            while (j < 3) {
+                if (!Character.isLetter(board[j][i])) {
                     break
                 }
-                if (i1 == 0) {
-                    current = board[i1][i]
-                } else if (current != board[i1][i]) {
+                if (j == 0) {
+                    current = board[j][i]
+                } else if (current != board[j][i]) {
                     break
                 }
-                if (i1 == 2) {
+                if (j == 2) {
                     return true
                 }
-                i1++
+                j++
             }
         }
         current = board[0][0]
@@ -110,8 +111,8 @@ class TicTacToe {
     public fun drawBoard(): String {
         val builder = StringBuilder("Game board: \n")
         for (i in 0..2) {
-            for (i1 in 0..2) {
-                builder.append("[" + board[i][i1] + "]")
+            for (j in 0..2) {
+                builder.append("[" + board[i][j] + "]")
             }
             builder.append("\n")
         }

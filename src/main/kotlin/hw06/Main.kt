@@ -17,10 +17,6 @@ object Console {
         val game = TicTacToe()
 
         println("Welcome! Tic Tac Toe is a two player game.")
-        game.player1 = "Player1"
-        game.player2 = "Player2"
-        game.marker1 = 'X'
-        game.marker2 = 'O'
 
         var continuePlaying = true
 
@@ -38,8 +34,8 @@ object Console {
                 while (!validPick) {
                     print("It is $player's turn. Pick a square: ")
                     val square = game.prompt
-                    if (square.length() == 1 && Character.isDigit(square.toCharArray()[0])) {
-                        var pick = 0
+                    if (square.length == 1 && Character.isDigit(square.toCharArray()[0])) {
+                        var pick: Int
                         pick = Integer.parseInt(square)
                         validPick = game.placeMarker(pick)
                     }
@@ -78,10 +74,7 @@ object GUI {
 
         val frame = JFrame("Tic Tac Toe")
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        game.player1 = "Player1"
-        game.player2 = "Player2"
-        game.marker1 = 'X'
-        game.marker2 = 'O'
+
         game.init()
         val panel = JPanel()
         panel.layout = GridLayout(3, 3)
@@ -141,7 +134,7 @@ object GUI {
     private fun clearButtons() {
         for (i in 0..2) {
             for (j in 0..2) {
-                buttons[i][j].setText(" ")
+                buttons[i][j].text = " "
             }
         }
         game.init()
@@ -149,8 +142,8 @@ object GUI {
 }
 
 fun main(args: Array<String>) {
-/*   val main = Console
-    main.playConsole()*/
+    //val main = Console
+    //main.playConsole()
     val main = GUI
     main.gamePanel()
 }
