@@ -30,13 +30,21 @@ public class GameGUI():JFrame() {
                 buttons[i].text = arrayMove.arr[i].toString()
                 flag = arrayMove.checkWin()
                 step++
+                if (flag) {printCongratulations(step)}
             }
         }
     }
+
+
+    public fun printCongratulations(step:Int) {
+        var player: String = "X"
+            if (step % 2 == 0) {player = "O"}
+            JOptionPane.showMessageDialog(null, "YOU WIN, ${player}!")
+    }
 }
 
-public fun printCongratulations(player: String) {
-    JOptionPane.showMessageDialog(null, "YOU WIN, ${player}!")
+public fun main(args: Array<String>){
+    GameGUI()
 }
 
 

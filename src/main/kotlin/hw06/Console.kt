@@ -103,10 +103,8 @@ public class Console() {
         }
         if (pl == 'x') {
             println("Congratulations, x!\n")
-            printCongratulations("X")
         } else {
             println("Congratulations, o!\n")
-            printCongratulations("Y")
         }
     }
 
