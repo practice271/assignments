@@ -120,10 +120,14 @@ object GUI {
             }
 
             if (game.winner()) {
-                again = JOptionPane.showConfirmDialog(null, letter + " wins the game!  Do you want to play again?", letter + "won!", JOptionPane.YES_NO_OPTION)
+                again = JOptionPane.showConfirmDialog(null, letter
+                        + " wins the game!  Do you want to play again?", letter
+                        + "won!", JOptionPane.YES_NO_OPTION)
                 clearButtons()
             } else if (game.plays == 9 && !game.winner()) {
-                again = JOptionPane.showConfirmDialog(null, "The game was tie!  Do you want to play again?", "Tie game!", JOptionPane.YES_NO_OPTION)
+                again = JOptionPane.showConfirmDialog(null,
+                        "The game was tie!  Do you want to play again?", "Tie game!",
+                        JOptionPane.YES_NO_OPTION)
                 clearButtons()
             }
             if (again == JOptionPane.NO_OPTION) {
