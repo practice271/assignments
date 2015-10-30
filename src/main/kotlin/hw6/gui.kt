@@ -27,7 +27,7 @@ class UI: Application() {
     private val lattice: MutableList<Shape> = LinkedList()
     private val R = Rectangle(0.0, 0.0, 300.0, 300.0)
 
-    override fun start(primaryStage: Stage) {
+    public override fun start(primaryStage: Stage) {
 
         field.setOnMouseClicked { e -> clickField(e) }
         root.children.add(field)
@@ -130,17 +130,20 @@ class UI: Application() {
     }
 
     private fun updateStyle() {
-        val baseColor = if (game.run) Color.GRAY
-                        else Color.WHITE
+        val baseColor =
+                if (game.run) Color.GRAY else Color.WHITE
 
-        val playerColor = if (game.run) baseColor.darker()
-                          else baseColor.brighter()
+        val playerColor =
+                if (game.run) baseColor.darker() else baseColor.brighter()
 
-        val oppositeColor = if (game.run) baseColor.brighter()
-                            else baseColor.darker()
+        val oppositeColor =
+                if (game.run) baseColor.brighter() else baseColor.darker()
 
-        fun colorFor(p: Player) = if (game.next == p) playerColor
-                                  else oppositeColor
+        fun colorFor(p: Player) =
+                if (game.next == p &&
+                        (game.run ||
+                                !(game.winner == Player.EMPTY)))
+                    playerColor else oppositeColor
 
         val crossColor = colorFor(Player.CROSS)
         val circleColor = colorFor(Player.CIRCLE)

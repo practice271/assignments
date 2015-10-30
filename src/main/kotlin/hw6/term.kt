@@ -3,7 +3,7 @@ package hw6
 class Term {
     private val game = TicTacToe()
 
-    fun run() {
+    public fun run() {
         println("Game starts")
         while (game.run) {
             printField()

@@ -6,15 +6,15 @@ enum class Player {
 
 class TicTacToe {
     private val fd = Array(3, { Array(3, { i -> Player.EMPTY }) })
-    var moves = 0; private set
-    var winner = Player.EMPTY; private set
-    var next = Player.CROSS; private set
-    var run = true; private set
+    public var moves = 0; private set
+    public var winner = Player.EMPTY; private set
+    public var next = Player.CROSS; private set
+    public var run = true; private set
     private val w = IntArray(8)
 
-    operator fun get(i: Int, j: Int) = fd[i][j]
+    public operator fun get(i: Int, j: Int) = fd[i][j]
 
-    fun move(i: Int, j: Int): Boolean {
+    public fun move(i: Int, j: Int): Boolean {
         if (fd[i][j] == Player.EMPTY && run) {
             fd[i][j] = next
             var d = when (next) {
