@@ -21,12 +21,17 @@ public class LinkedOrderedList<T extends Comparable<T>> extends AbstractOrderedL
             size++;
             return;
         }
+        if (value.compareTo(head.value) < 0) {
+            head.next = new Node(head.value, head.next);
+            head.value = value;
+            size++;
+            return;
+        }
         Node curNode = head;
-        while ((head.next != null) && (curNode.value.compareTo(value) <= 0)) {
+        while ((curNode.next != null) && (curNode.next.value.compareTo(value) <= 0)) {
             curNode = curNode.next;
         }
-        curNode.next = new Node(curNode.value, curNode.next);
-        curNode.value = value;
+        curNode.next = new Node(value, curNode.next);
         size++;
     }
 
@@ -64,9 +69,8 @@ public class LinkedOrderedList<T extends Comparable<T>> extends AbstractOrderedL
         return size;
     }
 
-
     @Override
-    public boolean equals(Object other) { // TODO
+    public boolean equals(Object other) {
         if (!(other instanceof LinkedOrderedList)) {
             return false;
         }
@@ -87,7 +91,7 @@ public class LinkedOrderedList<T extends Comparable<T>> extends AbstractOrderedL
     }
 
     @Override
-    public int hashCode() { // TODO
+    public int hashCode() {
         int h = 0;
         int i = 0;
         Node curNode = head;

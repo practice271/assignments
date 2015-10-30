@@ -26,7 +26,7 @@ public class ArrayOrderedList<T extends Comparable<T>> extends AbstractOrderedLi
     public void add(T value) {
         // expanding the array when needed
         if (size + 1 >= items.length) {
-            T[] newItems = (T[]) Array.newInstance(items.getClass().getComponentType(), items.length + CLUSTER_SIZE);
+            T[] newItems = (T[]) new Comparable[items.length + CLUSTER_SIZE];
             System.arraycopy(items, 0, newItems, 0, size);
             items = newItems;
         }
