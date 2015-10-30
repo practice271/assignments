@@ -14,16 +14,16 @@ class Tree(
         right_param: Tree?
 ) {
     public var left: Tree? = left_param
-        get() = $left
+        get() = field
         set(newLeft: Tree?) {
-            $left = newLeft
+            field = newLeft
             height_f = calcHeight()
         }
 
     public var right: Tree? = right_param
-        get() = $right
+        get() = field
         set(newRight: Tree?) {
-            $right = newRight
+            field = newRight
             height_f = calcHeight()
         }
     private fun calcHeight() : Int =
@@ -63,7 +63,7 @@ fun getTree(v: Int): Tree? {
     return Tree(v, null, null)
 }
 
-fun asdf(a: Tree?): Pair<Int, Int> {
+fun asdf(/*a: Tree?*/): Pair<Int, Int> {
     if (true) {
         val left = 5 //...
         val right = 5 //...
@@ -82,6 +82,7 @@ fun main(args: Array<String>) {
     val tree_val = tree
     if (tree_val != null) {
         val value: Int = tree_val.value
+        println(value)
     }
 
 

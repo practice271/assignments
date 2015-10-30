@@ -17,5 +17,5 @@ class ListBox<T> : IBox<T> {
     // ITERATOR PATTERN
     override fun iterator() : Iterator<T> = ListBoxIterator(this)
 
-    fun size() = _values.size()
+    fun size() = _values.size
 }
