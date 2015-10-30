@@ -23,22 +23,6 @@ data class OrderedList<E : Comparable<E>>
             size = list.size() + 1
         }
     }
-    public fun equals(other: OrderedList<E>): Boolean {
-        val size = size()
-        if (size != other.size()) {
-            return false
-        }
-        if (size == 0) {
-            return true
-        }
-        for (i in 0..size - 1) {
-            if (get(i) != other.get(i)) {
-                return false
-            }
-        }
-        return true
-    }
-
     fun compareTo(other: OrderedList<out E>): Int {
         val size = size()
         if (size > other.size()) {

@@ -10,6 +10,7 @@ data class OrderedArray<E : Comparable<E>>
     private  class Elem<E : Comparable<E>> (private val elem : E){
         fun get () : E = elem;
     }
+    //because my array consists of classes
     public fun equals(other: OrderedArray<E>): Boolean {
         val size = size()
         if (size != other.size()) {
