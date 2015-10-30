@@ -1,15 +1,15 @@
-package homework.hw07;
+package homework.hw07.javaimp;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 
 /**
- * Array implementation of IOrderedList
+ * Array implementation of AbstractOrderedList
  *
  * @author Kirill Smirenko, group 271
  */
-public class ArrayOrderedList<T extends Comparable<T>> extends IOrderedList<T> {
+public class ArrayOrderedList<T extends Comparable<T>> extends AbstractOrderedList<T> {
     private final int CLUSTER_SIZE = 10;
 
     private T[] items;
@@ -24,6 +24,7 @@ public class ArrayOrderedList<T extends Comparable<T>> extends IOrderedList<T> {
     @Override
     @SuppressWarnings("unchecked")
     public void add(T value) {
+        // expanding the array when needed
         if (size + 1 >= items.length) {
             T[] newItems = (T[]) Array.newInstance(items.getClass().getComponentType(), items.length + CLUSTER_SIZE);
             System.arraycopy(items, 0, newItems, 0, size);
@@ -34,6 +35,7 @@ public class ArrayOrderedList<T extends Comparable<T>> extends IOrderedList<T> {
         while ((index < size) && (items[index].compareTo(value) <= 0)) {
             index++;
         }
+        // inserting new value
         if ((size > 0) && (index < size)) {
             System.arraycopy(items, index, items, index + 1, size - index);
         }
@@ -51,10 +53,11 @@ public class ArrayOrderedList<T extends Comparable<T>> extends IOrderedList<T> {
 
     @Override
     public void removeAt(int index) {
-        if ((index > 0) && (index < size)) {
-            System.arraycopy(items, index + 1, items, index, size - index - 1);
-            size--;
+        if ((index <= 0) || (index >= size)) {
+            return;
         }
+        System.arraycopy(items, index + 1, items, index, size - index - 1);
+        size--;
     }
 
     @Override
@@ -86,21 +89,5 @@ public class ArrayOrderedList<T extends Comparable<T>> extends IOrderedList<T> {
             h = 23 * h + items[i].hashCode();
         }
         return h;
-    }
-
-    public int compareTo(@NotNull IOrderedList<? extends T> other) {
-        // compares lexicographically
-        int lim = Math.min(size, other.size());
-        int i = 0;
-        while (i < lim) {
-            T v1 = items[i];
-            T v2 = other.get(i);
-            int res = v1.compareTo(v2);
-            if (res != 0) {
-                return res;
-            }
-            i++;
-        }
-        return size - other.size();
     }
 }

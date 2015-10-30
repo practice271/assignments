@@ -1,5 +1,8 @@
 package homework.hw07
 
+import homework.hw07.javaimp.AbstractOrderedList
+import homework.hw07.javaimp.ArrayOrderedList
+import homework.hw07.javaimp.LinkedOrderedList
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -26,12 +29,32 @@ class Hw07Test {
         val list2 = ArrayOrderedList<String>()
         testEquals(list1, list2)
     }
+    
+    @Test fun testJavaLinkedAdd() {
+        val list = LinkedOrderedList<String>()
+        testAdd(list)
+    }
 
-    fun testAdd(list : IOrderedList<String>) {
+    @Test fun testJavaLinkedRemove() {
+        val list = LinkedOrderedList<String>()
+        testRemove(list)
+    }
+
+    @Test fun testJavaLinkedCompare() {
+        val list1 = LinkedOrderedList<String>()
+        val list2 = LinkedOrderedList<String>()
+        testCompare(list1, list2)
+    }
+
+    @Test fun testJavaLinkedEquals() {
+        val list1 = LinkedOrderedList<String>()
+        val list2 = LinkedOrderedList<String>()
+        testEquals(list1, list2)
+    }
+
+    fun testAdd(list : AbstractOrderedList<String>) {
         assertEquals(0, list.size()) // for clean testing
         val s = arrayOf("a", "aa", "aaa", "aaaa", "aaaaa", "aaab", "ab", "b", "bbb", "kotlin", "test")
-        list.add(s[0])
-        list.add(s[10])
         list.add(s[1])
         list.add(s[9])
         list.add(s[5])
@@ -41,13 +64,15 @@ class Hw07Test {
         list.add(s[4])
         list.add(s[2])
         list.add(s[6])
+        list.add(s[0]) // to head
+        list.add(s[10]) // to tail
         assertEquals(11, list.size())
         for (i in 0..10) {
             assertEquals(s[i], list.get(i))
         }
     }
 
-    fun testRemove(list : IOrderedList<String>) {
+    fun testRemove(list : AbstractOrderedList<String>) {
         assertEquals(0, list.size())
         val s = arrayOf("a", "aa", "aaa")
         list.add(s[1])
@@ -61,7 +86,7 @@ class Hw07Test {
         assertEquals(s[2], list.get(1))
     }
 
-    fun testCompare(list1 : IOrderedList<String>, list2 : IOrderedList<String>) {
+    fun testCompare(list1 : AbstractOrderedList<String>, list2 : AbstractOrderedList<String>) {
         assertEquals(0, list1.size())
         assertEquals(0, list2.size())
         assertEquals(0, list1.compareTo(list2))
@@ -73,7 +98,7 @@ class Hw07Test {
         assertTrue { list1.compareTo(list2) > 0 }
     }
 
-    fun testEquals(list1 : IOrderedList<String>, list2 : IOrderedList<String>) {
+    fun testEquals(list1 : AbstractOrderedList<String>, list2 : AbstractOrderedList<String>) {
         assertEquals(0, list1.size())
         assertEquals(0, list2.size())
         list1.add("aa")
