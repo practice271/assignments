@@ -54,7 +54,6 @@ public class OrderedList<E extends Comparable<? super E>>
             size ++;
             return;
         }
-
         list = addLoc(list, elem);
         size ++;
     }

@@ -24,7 +24,6 @@ public class OrderedArray<E extends Comparable<? super E>>
     public  int	size(){
         return size;
     }
-
     private void resize () {
         size_basic *= 2;
         E[] arr2 = (E[]) Array.newInstance(arr[0].getClass(), size_basic);
@@ -48,6 +47,7 @@ public class OrderedArray<E extends Comparable<? super E>>
                 return;
             }
         }
+        //elem is smallest
         arr [0] = elem;
         size ++;
         return;
@@ -61,7 +61,7 @@ public class OrderedArray<E extends Comparable<? super E>>
     }
     @Override
     public void removeAt(int index){
-        if ((index >= size) && (0 > index)){
+        if ((index >= size) || (0 > index)){
             throw new ArrayIndexOutOfBoundsException();
         }
         for (int i = index; i < size - 1; i ++){

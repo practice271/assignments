@@ -53,5 +53,3 @@ public abstract class AbstractOrderedList<E extends Comparable<? super E> >
     public abstract void removeAt(int index);
     public abstract void clear();
 }
-
-
