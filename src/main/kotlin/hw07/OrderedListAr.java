@@ -1,17 +1,25 @@
 package hw07;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Array.*;
-
 public class OrderedListAr <A extends Comparable<? super A>>
         extends OrderedList<A> {
     private A[] vals;
     private int size;
+    private int trueSize;
     private boolean isAscending;
+    private final static int MIN_ARRAY_SIZE = 16;
+
+    private void enlargeArray() {
+        size *= 2;
+        A[] newAr = (A[]) new Comparable[size];
+        System.arraycopy(vals, 0, newAr, 0, size / 2);
+        vals = newAr;
+    }
     OrderedListAr (A[] array, boolean ifAscending){
+        if (array == null) {
+            trueSize = 0;
+        }
         size = array.length * 2;
-        vals = (A[]) new Object[size];
-        vals = (A[]) new Array.newInstance(array.getClass().getComponentType(), size);
+        vals = (A[]) new Comparable[size];
         isAscending = ifAscending;
         System.arraycopy(array, 0, vals, 0, array.length);
     }
@@ -31,36 +39,30 @@ public class OrderedListAr <A extends Comparable<? super A>>
 
     @Override
     public int getSize() {
-        return size;
+        return trueSize;
     }
 
     @Override
     public A getVal(int index) {
-        if (index >= size) return null;
+        if (index >= trueSize) return null;
         return vals[index];
     }
 
     private void moveR(int ind) {
         if (ind == size) {
-            size *= 2;
-            A[] newAr = (A[]) new Object[size];
-            System.arraycopy(vals, 0, newAr, 0, size / 2);
-            vals = newAr;
+            enlargeArray();
 
             vals[ind + 1] = vals[ind];
             vals[ind] = null;
             return;
         }
         if (vals[size - 1] == null) {//dubious
-            for (int i = size - 1; i > ind; i--)
+            for (int i = trueSize - 1; i > ind; i--)
                 vals[i] = vals[i - 1];
             vals[ind] = null;
             return;
         }
-        size *= 2;
-        A[] newAr = (A[]) new Object[size];
-        System.arraycopy(vals, 0, newAr, 0, size / 2);
-        vals = newAr;
+        enlargeArray();
 
         for (int i = size / 2; i > ind; i--)//`size/ 2` will be enough
             vals[i] = vals[i - 1];
@@ -69,7 +71,7 @@ public class OrderedListAr <A extends Comparable<? super A>>
 
     private void moveL(int ind) {
         if (ind <= 0) return;
-        for (int i = ind; i < size - 1; i++)
+        for (int i = ind; i < trueSize - 1; i++)
             vals[i] = vals[i + 1];
         vals[size - 1] = null;
     }
@@ -98,20 +100,27 @@ public class OrderedListAr <A extends Comparable<? super A>>
 
     @Override
     public void setVal(A val) {
+        if (trueSize == 0) {
+            size = MIN_ARRAY_SIZE;
+            vals = (A[]) new Comparable[size];
+            vals[0] = val;
+        }
         setValue(val, 0, size - 1);
+        trueSize++;
     }
 
     @Override
     public void delVal(int index) {
-        if (index < size) {
+        if (index > -1 && index < trueSize) {
             moveL(index + 1);
+            trueSize--;
         }
     }
 
     @Override
     public int hashCode() {
         int hashCode = 1;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < trueSize; i++) {
             A curVal = vals[i];
             hashCode = 31 * hashCode + (curVal == null ? 0 : curVal.hashCode());
         }
@@ -124,7 +133,7 @@ public class OrderedListAr <A extends Comparable<? super A>>
         OrderedList otherList = (OrderedList) other;
         boolean res = true;
         if (size != otherList.getSize()) return false;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < trueSize; i++) {
             A curThis = vals[i];
             //unfortunately, I can't assign `otherList.getVal(i)` to a variable, for it has unknown type.
             if (curThis == null && otherList.getVal(i) != null) return false;
@@ -138,13 +147,13 @@ public class OrderedListAr <A extends Comparable<? super A>>
 
     @Override
     public int compareTo (OrderedList<? extends A> other) {
-        int minSize = Math.min(size, other.getSize());
+        int minSize = Math.min(trueSize, other.getSize());
         for (int i = 0; i < minSize; i++) {
             int curCompare = vals[i].compareTo(other.getVal(i));
             if (curCompare != 0) return curCompare;
         }
-        if (size < other.getSize()) return -1;
-        if (size > other.getSize()) return 1;
+        if (trueSize < other.getSize()) return -1;
+        if (trueSize > other.getSize()) return 1;
         return 0;
     }
 }

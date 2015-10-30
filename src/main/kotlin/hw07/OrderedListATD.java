@@ -15,8 +15,7 @@ public class OrderedListATD <A extends Comparable<? super A>>
         List tail;
         ListNotEmpty(A[] data) {
             Arrays.sort(data);
-            for (int i = 0; i < data.length; i++)
-                push(data[i]);
+            for (A aData : data) push(aData);
         }
 
         ListNotEmpty(A headIn, List tailIn) {
@@ -30,10 +29,16 @@ public class OrderedListATD <A extends Comparable<? super A>>
         }
     }
 
-    OrderedListATD (A[] array, boolean ifAscending){
-        size = array.length;
+    OrderedListATD (A[] array, boolean ifAscending) {
         isAscending = ifAscending;
-        vals = new ListNotEmpty(array);
+        if (array == null) {
+            size = 0;
+            vals = new ListEmpty();
+        }
+        else{
+            size = array.length;
+            vals = new ListNotEmpty(array);
+        }
     }
 
     private boolean isInOrder(A fst, A snd) {
@@ -47,7 +52,6 @@ public class OrderedListATD <A extends Comparable<? super A>>
 
     private ListNotEmpty addVal(A val, List l) {
         if (l instanceof OrderedListATD.ListEmpty) return (new ListNotEmpty(val, l));
-        //if (((ListNotEmpty) vals).tail instanceof ListEmpty) return
         ListNotEmpty listGood = ((ListNotEmpty) l);
         if (isInOrder(val, listGood.head)) return (new ListNotEmpty(val, l));
         return (new ListNotEmpty(listGood.head, addVal(val, listGood.tail)));
@@ -90,6 +94,7 @@ public class OrderedListATD <A extends Comparable<? super A>>
     public void delVal(int index) {
         if (index < size) {
             delFromDepth(index, vals);
+            size--;
         }
     }
 
@@ -106,22 +111,44 @@ public class OrderedListATD <A extends Comparable<? super A>>
 
     private boolean checkEquality(List l, OrderedList other, int ind) {
         if (other.getVal(ind) == null) {
-            if (l instanceof OrderedListATD.ListEmpty) return true;
-            return false;
+            return (l instanceof OrderedListATD.ListEmpty);
         }
         if (l instanceof OrderedListATD.ListEmpty) return false;
         ListNotEmpty listGood = ((ListNotEmpty) l);
-        if (listGood.head.equals(other.getVal(ind))) return checkEquality(listGood.tail, other, ind + 1);
-        return false;
+        return listGood.head.equals(other.getVal(ind)) && checkEquality(listGood.tail, other, ind + 1);
     }
 
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof OrderedList)) return false;
+        if (((OrderedList) other).getSize() == 0) {
+            if (vals instanceof OrderedListATD.ListEmpty) return true;
+            return false;
+        }
         OrderedList otherList = (OrderedList) other;
-        boolean res = true;
-        if (size != otherList.getSize()) return false;
-        return checkEquality(vals, otherList, 0);
+        return size == otherList.getSize() && checkEquality(vals, otherList, 0);
+    }
+
+//    private int compare(OrderedList other, List l, int ind) {
+//        if (other.getVal(ind) == null) {
+//            return (l instanceof OrderedListATD.ListEmpty);
+//        }
+//        if (l instanceof OrderedListATD.ListEmpty) return false;
+//        ListNotEmpty listGood = ((ListNotEmpty) l);
+//        return listGood.head.equals(other.getVal(ind)) && checkEquality(listGood.tail, other, ind + 1);
+//    }
+
+    @Override
+    public int compareTo (OrderedList<? extends A> other) {
+        return 0;
+//        int minSize = Math.min(size, other.getSize());
+//        for (int i = 0; i < minSize; i++) {
+//            int curCompare = vals[i].compareTo(other.getVal(i));
+//            if (curCompare != 0) return curCompare;
+//        }
+//        if (size < other.getSize()) return -1;
+//        if (size > other.getSize()) return 1;
+//        return 0;
     }
 /*
     @Override
