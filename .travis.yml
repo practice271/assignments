@@ -2,4 +2,4 @@
 language: java
 script: ./gradlew
 jdk:
-  - openjdk7
+  - oraclejdk7
