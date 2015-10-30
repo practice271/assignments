@@ -12,12 +12,13 @@ import java.util.*
 import javax.swing.JFrame
 
 public class GeneralField (private val size : Int, frame: JFrame)  {
-    private val guiField = Array(size , {i ->JButton("")})
+    private val guiField = Array(size , {JButton("")})
     private val logField = LogicalButtonField(size = 3)
     init {
         for (i in 0 .. (size - 1)) {
             guiField[i].verticalTextPosition = AbstractButton.CENTER
             guiField[i].horizontalTextPosition = AbstractButton.LEADING
+            guiField[i].font = Font("Arial", Font.BOLD, 50)
             guiField[i].addActionListener(object : ActionListener {
                 override fun actionPerformed(e: ActionEvent) {
                     if (logField.isSelected(i)) {
@@ -28,12 +29,14 @@ public class GeneralField (private val size : Int, frame: JFrame)  {
 
                     val player = logField.getPlayer()
                     guiField[i].text = "$player"
+                    val color = if (player == 'X') Color(0x2E2EFE) else Color(0xFF00FF)
+                    guiField[i].foreground =color
                     logField.setLabel(i, player)
 
                     var text = ""
                     when {
                         logField.isVictory() ->{
-                            text = "Payer $player win!\nRestart?\n"
+                            text = "Player $player win!\nRestart?\n"
 
                         }
                         logField.isTie() -> {
@@ -73,7 +76,7 @@ public class Gui() : JFrame(){
     private  val gField = GeneralField(size, this)
     init {
         title = "Tic Tac Toe"
-        setSize (600, 600)
+        setSize (300, 300)
         setLocationRelativeTo(null)
 
         this.layout =GridLayout(3,3)

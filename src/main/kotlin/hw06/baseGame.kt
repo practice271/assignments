@@ -23,14 +23,13 @@ open public class LogicalButton(){
         isSel = false
     }
 }
-// change all protected
-open public class LogicalButtonField (protected val size : Int ) {// protected
+open public class LogicalButtonField (protected val size : Int ) {
     private var players = 'X'
     public fun getPlayer() : Char {
         return  players
     }
     private val size2 = size * size
-    protected val map = Array(size2, {i-> LogicalButton()})
+    protected val map = Array(size2, { LogicalButton()})
     private var place  = size2
 
     public  fun isTie(): Boolean {
