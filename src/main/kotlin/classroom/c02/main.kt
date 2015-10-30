@@ -4,7 +4,7 @@ import java.util.*
 
 /*
 abstract class Tree() {}
-class Empty(): Tree() {}
+class ListEmpty(): Tree() {}
 class Leaf(val value: Int) {}
 */
 
@@ -74,7 +74,7 @@ fun asdf(a: Tree?): Pair<Int, Int> {
     return  Pair(left, right)
 
 
-    //val array: Array<List<Int>> = Array(100500, {ArrayList<Int>()})
+    //val array: Array<ListNotEmpty<Int>> = Array(100500, {ArrayList<Int>()})
 }
 
 fun main(args: Array<String>) {
