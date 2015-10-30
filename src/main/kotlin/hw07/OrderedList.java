@@ -42,6 +42,11 @@ public class OrderedList<T extends Comparable<T>>
             currentNode = currentNode.next;
             return res;
         }
+
+        @Override
+        public void remove() {
+            return;
+        }
     }
 
     private ListNode<T> head = null;
