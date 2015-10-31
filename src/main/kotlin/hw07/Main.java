@@ -3,7 +3,7 @@ package hw07;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayOrdList<String> arr = new ArrayOrdList<>(1, "zebra");
+        ArrayOrdList<String> arr = new ArrayOrdList<String>(1, "zebra");
         System.out.println("Size = " + (arr.size()));
         arr.add("monkey");
         arr.add("panda");
