@@ -93,11 +93,11 @@ public class OrderedListATD <A extends Comparable<? super A>>
 
     public List delFromDepth(int depth, List l) {
         if (l instanceof OrderedListATD.ListEmpty) return l;
+        ListNotEmpty listGood = (ListNotEmpty) l;
         if (depth == 0) {
-            return ((ListNotEmpty) l).tail;
+            return  listGood.tail;
         }
-        //return delFromDepth(depth - 1, ((ListNotEmpty) l).tail);
-        return new ListNotEmpty(((ListNotEmpty) l).head, delFromDepth(depth - 1, ((ListNotEmpty) l).tail));
+        return new ListNotEmpty(listGood.head, delFromDepth(depth - 1,  listGood.tail));
     }
 
     @Override
@@ -111,7 +111,7 @@ public class OrderedListATD <A extends Comparable<? super A>>
     private int calcHashCode(int hash, List l) {
         if (l instanceof OrderedListATD.ListEmpty) return hash;
         ListNotEmpty listGood = ((ListNotEmpty) l);
-        return (calcHashCode(hash * 31 + listGood.head.hashCode(), listGood.tail));
+        return calcHashCode(hash * 31 + listGood.head.hashCode(), listGood.tail);
     }
 
     @Override
@@ -132,8 +132,7 @@ public class OrderedListATD <A extends Comparable<? super A>>
     public boolean equals(Object other) {
         if (!(other instanceof OrderedList)) return false;
         if (((OrderedList) other).getSize() == 0) {
-            if (vals instanceof OrderedListATD.ListEmpty) return true;
-            return false;
+            return vals instanceof OrderedListATD.ListEmpty;
         }
         OrderedList otherList = (OrderedList) other;
         return size == otherList.getSize() && checkEquality(vals, otherList, 0);

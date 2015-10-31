@@ -6,10 +6,6 @@ public class OrderedListAr <A extends Comparable<? super A>>
         extends OrderedList<A> {
 
     private A[] vals;
-    public A[] getVals() {
-        return vals;
-    }
-
     private int size;
     private int trueSize;
     private boolean isAscending;
@@ -39,8 +35,6 @@ public class OrderedListAr <A extends Comparable<? super A>>
             System.arraycopy(array, 0, vals, 0, array.length);
         }
     }
-
-
 
     private boolean isInOrder(A fst, A snd) {
         return ((fst.compareTo(snd) <= 0) == isAscending);
@@ -76,22 +70,19 @@ public class OrderedListAr <A extends Comparable<? super A>>
             return;
         }
         if (vals[size - 1] == null) {//dubious
-            for (int i = trueSize; i > ind; i--)
-                vals[i] = vals[i - 1];
+            System.arraycopy(vals, ind, vals, ind + 1, trueSize - ind);
             vals[ind] = null;
             return;
         }
         enlargeArray();
 
-        for (int i = size / 2; i > ind; i--)//`size/ 2` will be enough
-            vals[i] = vals[i - 1];
+        System.arraycopy(vals, ind, vals, ind + 1, size / 2 - ind);
         vals[ind] = null;
     }
 
     private void moveL(int ind) {
         if (ind <= 0) return;
-        for (int i = ind; i < trueSize - 1; i++)
-            vals[i] = vals[i + 1];
+        System.arraycopy(vals, ind + 1, vals, ind, trueSize - 1 - ind);
         vals[trueSize - 1] = null;
     }
 
