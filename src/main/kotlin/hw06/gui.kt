@@ -14,12 +14,9 @@ public class GameFrame : JFrame ()
     public fun createGUI()
     {
         val areaTF = JTextField("  Player 'x' to go  ")
-        val array : ArrayList<ArrayList<Boolean?>> =
-                arrayListOf(arrayListOf<Boolean?>(null,null,null),
-                        arrayListOf<Boolean?>(null,null,null),
-                        arrayListOf<Boolean?>(null,null,null))
         var buttons = Array(9,{i -> JButton("")})
-        val game = Game(array,0,null)
+        val game = Game()
+        game.beginGame()
         var player = false
         val panel = JPanel()
         val frame = JFrame("Tic-tac-toe")
@@ -43,6 +40,10 @@ public class GameFrame : JFrame ()
                             game.map = arrayListOf(arrayListOf<Boolean?>(null,null,null),
                                     arrayListOf<Boolean?>(null,null,null),
                                     arrayListOf<Boolean?>(null,null,null))
+                            if (game.winner == null) {
+                                areaTF.text = " Game over, mo winners. \n" +
+                                        " Player 'x' to go"
+                            }
                             game.winner = null
                             player = false
                         }

@@ -9,13 +9,19 @@ class hw06Tests {
             arrayListOf<Boolean?>(false,false,null),
             arrayListOf<Boolean?>(true,true,null),
             arrayListOf<Boolean?>(null,null,null))
-    var simpleGame : Game = Game(simpleArray, 4, null)
+    var simpleGame : Game = Game()
     @Test fun simpleGameTest1 () {
+        simpleGame.map = simpleArray
+        simpleGame.filling = 4
+        simpleGame.winner = null
         simpleGame.move(0,2,false)
         assertEquals(simpleGame.winner, false)
     }
 
     @Test fun simpleGameTest2 () {
+        simpleGame.map = simpleArray
+        simpleGame.filling = 4
+        simpleGame.winner = null
         simpleGame.move(0,2,true)
         assertEquals(simpleGame.winner, null)
     }
@@ -24,12 +30,18 @@ class hw06Tests {
             arrayListOf<Boolean?>(false,true,null),
             arrayListOf<Boolean?>(true,false,null),
             arrayListOf<Boolean?>(null,null,null))
-    var diagonal : Game = Game(diagonalArray, 4, null)
+    var diagonal : Game = Game()
     @Test fun diagonalGame1 () {
+        diagonal.map = diagonalArray
+        diagonal.filling = 4
+        diagonal.winner = null
         diagonal.move(2,2,false)
         assertEquals(diagonal.winner, false)
     }
     @Test fun diagonalGame2 () {
+        diagonal.map = diagonalArray
+        diagonal.filling = 4
+        diagonal.winner = null
         diagonal.move(0,2,true)
         assertEquals(diagonal.winner, null)
     }
@@ -38,8 +50,11 @@ class hw06Tests {
             arrayListOf<Boolean?>(false,null,null),
             arrayListOf<Boolean?>(null,null,null),
             arrayListOf<Boolean?>(null,null,null))
-    var filledCell : Game = Game(array, 1, null)
+    var filledCell : Game = Game()
     @Test fun tryToFillFilledCell () {
+        filledCell.map = array
+        filledCell.filling = 1
+        filledCell.winner = null
         filledCell.move(0,0,true)
         assertEquals(filledCell.map[0][0], false)
     }

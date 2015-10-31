@@ -8,9 +8,23 @@ internal fun Boolean?.toChar () : Char {
         true -> return '0'
     }
 }
+open class Game {
+    public var map : ArrayList<ArrayList<Boolean?>> = arrayListOf(
+            arrayListOf<Boolean?>(null, null, null),
+            arrayListOf<Boolean?>(null, null, null),
+            arrayListOf<Boolean?>(null, null, null))
+    public var filling : Int = 0
+    public var winner : Boolean? = null
 
-open class Game (var map : ArrayList<ArrayList<Boolean?>>,
-            var filling : Int, var winner : Boolean?) {
+    public fun beginGame() {
+        map = arrayListOf(
+                arrayListOf<Boolean?>(null, null, null),
+                arrayListOf<Boolean?>(null, null, null),
+                arrayListOf<Boolean?>(null, null, null))
+        filling = 0
+        winner = null
+    }
+
     public fun move (coord1 : Int, coord2 : Int, player : Boolean) {
         if ((map[coord1][coord2] == null || filling == 9) && winner == null) {
             map[coord1][coord2] = player
@@ -62,7 +76,7 @@ private var array: ArrayList<ArrayList<Boolean?>> = arrayListOf(
         arrayListOf<Boolean?>(null, null, null),
         arrayListOf<Boolean?>(null, null, null))
 
-public class ConsoleGame : Game(array, 0, null) {
+public class ConsoleGame : Game() {
     fun printMap() {
         for (i in 0..2) {
             println("|${map[i][0].toChar()} |" +
@@ -72,11 +86,11 @@ public class ConsoleGame : Game(array, 0, null) {
     public fun play () {
         println("Player 'x' to go. To start print two numbers :\n" +
                 " 1 - line number, 2 - column number.")
+        this.beginGame()
         var player = false
         while (winner == null && filling != 9) {
             var str = readLine()
-            var arr: ArrayList<Int> = arrayListOf()
-            val coords = parser(str, arr)
+            val coords = parser(str, arrayListOf())
             val fill = filling
             move(coords[0], coords[1], player)
             printMap()
@@ -85,29 +99,15 @@ public class ConsoleGame : Game(array, 0, null) {
         when (winner) {
             null -> {
                 println("Game over, no winners")
-                array = arrayListOf(
-                        arrayListOf<Boolean?>(null, null, null),
-                        arrayListOf<Boolean?>(null, null, null),
-                        arrayListOf<Boolean?>(null, null, null))
-                ConsoleGame().play()
             }
             false -> {
                 println("Game over, 'x' player won!")
-                array = arrayListOf(
-                        arrayListOf<Boolean?>(null, null, null),
-                        arrayListOf<Boolean?>(null, null, null),
-                        arrayListOf<Boolean?>(null, null, null))
-                ConsoleGame().play()
             }
             true -> {
                 println("Game over, '0' player won!")
-                array = arrayListOf(
-                        arrayListOf<Boolean?>(null, null, null),
-                        arrayListOf<Boolean?>(null, null, null),
-                        arrayListOf<Boolean?>(null, null, null))
-                ConsoleGame().play()
             }
         }
+        ConsoleGame().play()
     }
 }
 
