@@ -1,6 +1,6 @@
 package homework.hw07.kotlinimp
 
-import homework.hw07.javaimp.AbstractOrderedList
+import homework.hw07.AbstractOrderedList
 
 /**
  * Array implementation of AbstractOrderedList
@@ -11,13 +11,13 @@ class ArrayOrderedList<T : Comparable<T>>
 constructor() : AbstractOrderedList<T>() {
     private val CLUSTER_SIZE = 10
 
-    private var items : Array<T?> = arrayOfNulls<T>(CLUSTER_SIZE)
+    private var items : Array<T> = arrayOfNulls<Comparable<Any>>(CLUSTER_SIZE) as Array<T>
     private var size : Int = 0
 
     override fun add(value : T) {
         // expanding the array when needed
         if (size + 1 >= items.size) {
-            val newItems = arrayOfNulls<T>(items.size + CLUSTER_SIZE) as Array<T>
+            val newItems = arrayOfNulls<Comparable<Any>>(items.size + CLUSTER_SIZE) as Array<T>
             System.arraycopy(items, 0, newItems, 0, size)
             items = newItems
         }

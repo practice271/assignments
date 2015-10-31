@@ -1,9 +1,9 @@
 package homework.hw07.javaimp;
 
 import homework.hw07.Hw07Test
-import org.junit.Test;
+import org.junit.Test
 
-public class Hw07JavaTest {
+class Hw07JavaTest {
     @Test fun testJavaArrayAdd() {
         val list = ArrayOrderedList<String>()
         Hw07Test.testAdd(list)

@@ -1,5 +1,7 @@
 package homework.hw07.javaimp;
 
+import homework.hw07.AbstractOrderedList;
+
 /**
  * Linked list implementation of AbstractOrderedList
  *

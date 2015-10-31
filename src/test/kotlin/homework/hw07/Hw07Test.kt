@@ -1,6 +1,6 @@
 package homework.hw07
 
-import homework.hw07.javaimp.AbstractOrderedList
+import homework.hw07.AbstractOrderedList
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 

@@ -1,8 +1,6 @@
 package homework.hw07.javaimp;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.Array;
+import homework.hw07.AbstractOrderedList;
 
 /**
  * Array implementation of AbstractOrderedList

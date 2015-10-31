@@ -1,4 +1,4 @@
-package homework.hw07.javaimp;
+package homework.hw07;
 
 import org.jetbrains.annotations.NotNull;
 

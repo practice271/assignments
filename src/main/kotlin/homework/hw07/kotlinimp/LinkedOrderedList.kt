@@ -1,6 +1,6 @@
 package homework.hw07.kotlinimp
 
-import homework.hw07.javaimp.AbstractOrderedList
+import homework.hw07.AbstractOrderedList
 
 /**
  * Linked list implementation of AbstractOrderedList
@@ -12,25 +12,26 @@ class LinkedOrderedList<T : Comparable<T>> : AbstractOrderedList<T>() {
     private var size : Int = 0
 
     override fun add(value : T) {
-        if (head == null) {
+        val headSnap = head // to avoid using "!!"
+        if (headSnap == null) {
             head = Node(value, null)
             size++
             return
         }
-        if (value.compareTo(head!!.value) < 0) {
-            head!!.next = Node(head!!.value, head!!.next)
-            head!!.value = value
+        if (value.compareTo(headSnap.value) < 0) {
+            // TODO: CHECK
+            headSnap.next = Node(headSnap.value, headSnap.next)
+            headSnap.value = value
+            //head = headSnap
             size++
             return
         }
-        if (head != null) {
-            var curNode = head
-            while ((curNode!!.next != null) && (curNode.next!!.value.compareTo(value) <= 0)) {
-                curNode = curNode.next
-            }
-            curNode.next = Node(value, curNode.next)
-            size++
+        var curNode = headSnap
+        while ((curNode?.next != null) && (curNode?.next!!.value.compareTo(value) <= 0)) {
+            curNode = curNode?.next
         }
+        curNode?.next = Node(value, curNode?.next)
+        size++
     }
 
     override fun get(index : Int) : T {
@@ -40,7 +41,7 @@ class LinkedOrderedList<T : Comparable<T>> : AbstractOrderedList<T>() {
         var i = 0
         var curNode = head
         while (i < index) {
-            curNode = curNode!!.next
+            curNode = curNode?.next
             i++
         }
         return curNode!!.value
@@ -53,10 +54,10 @@ class LinkedOrderedList<T : Comparable<T>> : AbstractOrderedList<T>() {
         var i = 0
         var curNode = head
         while (i < index - 1) {
-            curNode = curNode!!.next
+            curNode = curNode?.next
             i++
         }
-        curNode!!.next = curNode.next!!.next
+        curNode?.next = curNode?.next?.next
         size--
     }
 

@@ -1,8 +1,6 @@
 package homework.hw07.kotlinimp
 
 import homework.hw07.Hw07Test
-import homework.hw07.kotlinimp.ArrayOrderedList
-import homework.hw07.kotlinimp.LinkedOrderedList
 import org.junit.Test
 
 class Hw07KotlinTest {
