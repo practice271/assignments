@@ -22,7 +22,7 @@ abstract class Iterator() {
 
 class Empty() : Tree() {}
 
-// it's syntax sugar for Node(value, ListEmpty(), ListEmpty())
+// it's syntax sugar for Node(value, Empty(), Empty())
 class Leaf(val _value : Int) : Node(_value, Empty(), Empty()) {}
 
 open class Node(val value : Int, val left : Tree, val right : Tree) : Tree() {

@@ -29,7 +29,7 @@ public class Pair
         return first.hashCode() * 31 + second.hashCode();
     }
 
-   // @Override
+    @Override
     public int compareTo(Pair<? extends A, ? extends B> other) {
         double firstCompare = first.compareTo(other.first);
         if (firstCompare > 0) { return  1; }
