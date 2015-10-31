@@ -15,22 +15,22 @@ public class Console() {
             else -> println("Standoff!")
         }
     }
-    private  fun read() {
+    public fun read() {
         val line: String? = readLine()
         if ((line?.length() != 3) || (line == null)) {
             println("Wrong input")
             read()
         }
         else {
-            var x = line[0].toInt() - 48
-            var y = line[2].toInt() - 48
+            var x = Character.getNumericValue(line[0])
+            var y = Character.getNumericValue(line[2])
             if (!((x in 0..2) && (y in 0..2))) {
                 println("Wrong input")
                 read()
             }
             else {
                 if (game.field[x][y] != LogicGames.Mark.I) {
-                    println("Field busy")
+                    println("Field is already occupied")
                     read()
                 }
                 else {
@@ -44,5 +44,10 @@ public class Console() {
         }
     }
 }
-
+/*
+fun main(args: Array<String>) {
+    val c = Console()
+    c.read()
+}
+*/
 

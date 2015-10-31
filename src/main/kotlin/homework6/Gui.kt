@@ -44,9 +44,8 @@ public class GUI() {
 
     private fun checkWin() {
         var message: String
-        if (!(game.state == LogicGames.State.Win) && !(game.state == LogicGames.State.Standoff)) {
-        } else {
-            if (game.state == LogicGames.State.Win) message = game.winner + " win!"
+        if ((game.state == LogicGames.State.Win) || (game.state == LogicGames.State.Standoff)) {
+            if (game.state == LogicGames.State.Win) message = "${game.winner} win!"
             else message = "Standoff!"
             JOptionPane.showMessageDialog(null, message)
             for (i in 0..2) {
