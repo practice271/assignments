@@ -145,15 +145,4 @@ class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
             i++
         }
     }
-
-}
-
-open class A()
-{
-
-}
-
-public class B() : A()
-{
-
 }
