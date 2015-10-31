@@ -1,5 +1,5 @@
 /*
- * Homework 6 (19.10.2015)
+ * Homework 6 (20.10.2015)
  * Console version of the game.
  *
  * Author: Mikhail Kita, group 271
@@ -21,8 +21,8 @@ public class Console(private val stream : PrintStream) {
         init {
             when (str.length) {
                 3 -> {
-                    x = str[0].toInt() - 48
-                    y = str[2].toInt() - 48
+                    x = Character.getNumericValue(str[0])
+                    y = Character.getNumericValue(str[2])
                     if (str[1] != ' ' || x > 3 || x < 1 || y > 3 || y < 1) correct = false
                 }
                 else -> correct = false
@@ -59,9 +59,9 @@ public class Console(private val stream : PrintStream) {
         println("/start -- start new game")
         println("/exit  -- exit the game")
         println("\nHow to play:")
-        println("Enter two numbers through one space - coordinates of cell,")
-        println("where do you want to put your symbol. Wins player who will")
-        println("collect three his symbols in any row, column or diagonal.\n")
+        println("Enter two numbers in the range from 1 to 3 through one space -")
+        println("coordinates of cell, where do you want to put your symbol. Wins player")
+        println("who will collect three his symbols in any row, column or diagonal.\n")
     }
 
     /** Draws game field. */
@@ -77,10 +77,8 @@ public class Console(private val stream : PrintStream) {
     public fun nextMove(str : String) {
         val parser = Parser(str)
         val state  =
-            when(parser.isCorrect()) {
-                true  -> game.move(symbol, parser.getX(), parser.getY())
-                false -> "Error: incorrect data"
-            }
+            if (parser.isCorrect()) game.move(symbol, parser.getX(), parser.getY())
+            else "Error: incorrect data"
 
         if (!state.startsWith("Error")) {
             drawField()

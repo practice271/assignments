@@ -1,5 +1,5 @@
 /*
- * Homework 6 (19.10.2015)
+ * Homework 6 (20.10.2015)
  * Tests for game interface
  *
  * Author: Mikhail Kita, group 271

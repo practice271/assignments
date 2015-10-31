@@ -1,5 +1,5 @@
 /*
- * Homework 6 (19.10.2015)
+ * Homework 6 (20.10.2015)
  * Graphic version of the game.
  *
  * Author: Mikhail Kita, group 271

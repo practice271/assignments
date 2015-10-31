@@ -1,5 +1,5 @@
 /*
- * Homework 6 (19.10.2015)
+ * Homework 6 (20.10.2015)
  * Logical part of the tic-tac-toe game.
  *
  * Author: Mikhail Kita, group 271
@@ -9,7 +9,7 @@ package homework.hw06
 
 /** Contains main logic of the game. */
 public class GameLogic() {
-    private val field = Array(9, { i -> ' ' })
+    private val field = Array(9, { ' ' })
 
     /** Checks that input data is correct. */
     private fun isCorrect(symbol : Char, x : Int, y : Int) : Boolean {
