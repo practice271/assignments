@@ -1,7 +1,7 @@
 package hw07;
 
 /**
- * Created by Jinx on 31.10.2015.
+ * Created by Antropov Igor on 31.10.2015.
  */
 
 
