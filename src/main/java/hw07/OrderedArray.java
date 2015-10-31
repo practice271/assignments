@@ -4,7 +4,7 @@ package hw07;
 import java.lang.reflect.Array;
 
 /**
- * Created by Jinx on 31.10.2015.
+ * Created by Antropov Igor on 31.10.2015.
  */
 
 public class OrderedArray<E extends Comparable<? super E>> extends AbstractOrderedList<E>  {
