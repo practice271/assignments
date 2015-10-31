@@ -1,4 +1,4 @@
-package Visitor
+package patterns.Visitor
 
 public interface ItemElement {
     public fun accept(visitor: ShoppingCartVisitor): Int
