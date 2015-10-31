@@ -83,7 +83,7 @@ class KotlinAtdOrderList<T : Comparable<T>>() : OrderList<T>() {
         var temp: Node<T>? = list
         while (index > 0) {
             temp = temp!!.next
-            index--
+            index--;
         }
         return temp!!.value
     }
@@ -100,22 +100,22 @@ class KotlinAtdOrderList<T : Comparable<T>>() : OrderList<T>() {
 
 class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
 
-    private var arr: Array<T>? = arrayOfNulls<Comparable<Any>>(10) as Array<T>
+    private var arr: Array<T> = arrayOfNulls<Comparable<Any>>(10) as Array<T>
     private var count = 0
 
     override fun add(value: T) {
-        if (count == arr!!.size - 1) bigger()
+        if (count == arr.size - 1) bigger()
         var i = 0
-        while (i < count && arr!![i].compareTo(value) == -1) i++
+        while (i < count && arr[i].compareTo(value) == -1) i++
         toRight(i)
-        arr!![i] = value
+        arr[i] = value
         count++
     }
 
     private fun bigger() {
-        val newarr = arrayOfNulls<Comparable<Any>>(arr!!.size + 10) as Array<T>
-        for (i in arr!!.indices) {
-            newarr[i] = arr!![i]
+        val newarr = arrayOfNulls<Comparable<Any>>(arr.size + 10) as Array<T>
+        for (i in arr.indices) {
+            newarr[i] = arr[i]
         }
         arr = newarr
     }
@@ -123,10 +123,10 @@ class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
     private fun toRight(index: Int) {
 
         if (count === 0)
-            arr!![1] = arr!![0]
+            arr[1] = arr[0]
         else
             for (i in count downTo index + 1) {
-                arr!![i] = arr!![i - 1]
+                arr[i] = arr[i - 1]
             }
     }
 
@@ -135,15 +135,25 @@ class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
     }
 
     override fun get(index: Int): T {
-        return arr!![index]
+        return arr[index]
     }
 
     fun print() {
         var i = 0
-        while ((i < size()) and (arr!![i] != null)) {
-            println(arr!![i])
+        while (i < size()) {
+            println(arr[i])
             i++
         }
     }
+
+}
+
+open class A()
+{
+
+}
+
+public class B() : A()
+{
 
 }
