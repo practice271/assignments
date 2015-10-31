@@ -1,12 +1,23 @@
 package hw07;
 
+import java.util.Arrays;
+
 public class OrderedListAr <A extends Comparable<? super A>>
         extends OrderedList<A> {
+
     private A[] vals;
+    public A[] getVals() {
+        return vals;
+    }
+
     private int size;
     private int trueSize;
     private boolean isAscending;
+
     private final static int MIN_ARRAY_SIZE = 16;
+    public int getMinArraySize() {
+        return MIN_ARRAY_SIZE;
+    }
 
     private void enlargeArray() {
         size *= 2;
@@ -14,19 +25,22 @@ public class OrderedListAr <A extends Comparable<? super A>>
         System.arraycopy(vals, 0, newAr, 0, size / 2);
         vals = newAr;
     }
+
     OrderedListAr (A[] array, boolean ifAscending){
         if (array == null) {
             trueSize = 0;
         }
-        size = array.length * 2;
-        vals = (A[]) new Comparable[size];
-        isAscending = ifAscending;
-        System.arraycopy(array, 0, vals, 0, array.length);
+        else {
+            trueSize = array.length;
+            size = array.length * 2;
+            vals = (A[]) new Comparable[size];
+            isAscending = ifAscending;
+            Arrays.sort(array, this::isInOrderInt);
+            System.arraycopy(array, 0, vals, 0, array.length);
+        }
     }
 
-    public A[] getVals() {
-        return vals;
-    }
+
 
     private boolean isInOrder(A fst, A snd) {
         return ((fst.compareTo(snd) <= 0) == isAscending);
@@ -37,6 +51,11 @@ public class OrderedListAr <A extends Comparable<? super A>>
          */
     }
 
+    private int isInOrderInt(A fst, A snd) {
+        if (isInOrder(fst, snd))  return -1;
+        return 1;
+    }
+
     @Override
     public int getSize() {
         return trueSize;
@@ -44,7 +63,7 @@ public class OrderedListAr <A extends Comparable<? super A>>
 
     @Override
     public A getVal(int index) {
-        if (index >= trueSize) return null;
+        if (index >= trueSize || index < 0) return null;
         return vals[index];
     }
 
@@ -57,7 +76,7 @@ public class OrderedListAr <A extends Comparable<? super A>>
             return;
         }
         if (vals[size - 1] == null) {//dubious
-            for (int i = trueSize - 1; i > ind; i--)
+            for (int i = trueSize; i > ind; i--)
                 vals[i] = vals[i - 1];
             vals[ind] = null;
             return;
@@ -73,10 +92,10 @@ public class OrderedListAr <A extends Comparable<? super A>>
         if (ind <= 0) return;
         for (int i = ind; i < trueSize - 1; i++)
             vals[i] = vals[i + 1];
-        vals[size - 1] = null;
+        vals[trueSize - 1] = null;
     }
 
-    private void setValue(A val, int l, int r) {
+    private void addValInRange(A val, int l, int r) {
         int mid = (r - l) / 2 + l;
         if (r - l <= 1) {
             if (isInOrder(val, vals[mid])) {
@@ -86,33 +105,36 @@ public class OrderedListAr <A extends Comparable<? super A>>
             }
             moveR(mid + 1);
             vals[mid + 1] = val;
+            return;
         }
-        if (val.equals(mid)) {
+        if (val.equals(vals[mid])) {
             moveR(mid);//logically, it'd be `mid + 1`, but it's possible it does not exist.
             vals[mid] = val;
             return;
         }
         if (isInOrder(val, vals[mid]))
-            setValue(val, l, mid);
+            addValInRange(val, l, mid);
         else
-            setValue(val, mid + 1, r);
+            addValInRange(val, mid + 1, r);
     }
 
     @Override
-    public void setVal(A val) {
+    public void addVal(A val) {
         if (trueSize == 0) {
             size = MIN_ARRAY_SIZE;
             vals = (A[]) new Comparable[size];
             vals[0] = val;
+            trueSize++;
+            return;
         }
-        setValue(val, 0, size - 1);
+        addValInRange(val, 0, trueSize - 1);
         trueSize++;
     }
 
     @Override
     public void delVal(int index) {
         if (index > -1 && index < trueSize) {
-            moveL(index + 1);
+            moveL(index);
             trueSize--;
         }
     }
@@ -132,7 +154,7 @@ public class OrderedListAr <A extends Comparable<? super A>>
         if (!(other instanceof OrderedList)) return false;
         OrderedList otherList = (OrderedList) other;
         boolean res = true;
-        if (size != otherList.getSize()) return false;
+        if (trueSize != otherList.getSize()) return false;
         for (int i = 0; i < trueSize; i++) {
             A curThis = vals[i];
             //unfortunately, I can't assign `otherList.getVal(i)` to a variable, for it has unknown type.
