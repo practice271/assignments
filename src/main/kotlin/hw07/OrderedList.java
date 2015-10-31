@@ -1,32 +1,30 @@
 package hw07;
 
 import java.util.AbstractCollection;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class OrderedList<T extends Comparable<T>>
         extends AbstractCollection<T>
-        implements Comparable<OrderedList<T>>,
-                   Collection<T> {
+        implements Comparable<OrderedList<T>> {
 
-    private class ListNode<T> {
+    private class ListNode {
 
         public T value;
-        public ListNode<T> next;
+        public ListNode next;
 
-        public ListNode(T v, ListNode<T> n) {
+        public ListNode(T v, ListNode n) {
             value = v;
             next = n;
         }
     }
 
-    private class ListIterator<T> implements Iterator<T> {
-        public ListIterator(ListNode<T> head) {
+    private class ListIterator implements Iterator<T> {
+        public ListIterator(ListNode head) {
             currentNode = head;
         }
 
-        public ListNode<T> currentNode;
+        public ListNode currentNode;
 
         @Override
         public boolean hasNext() {
@@ -49,7 +47,7 @@ public class OrderedList<T extends Comparable<T>>
         }
     }
 
-    private ListNode<T> head = null;
+    private ListNode head = null;
     private int size = 0;
 
     @Override
@@ -94,18 +92,18 @@ public class OrderedList<T extends Comparable<T>>
 
     @Override
     public Iterator<T> iterator() {
-        return new ListIterator<T>(head);
+        return new ListIterator(head);
     }
 
     @Override
     public boolean add(T t) {
-        ListNode<T> current = head, last = null;
+        ListNode current = head, last = null;
         while (current != null &&
                current.value.compareTo(t) < 0) {
             last = current;
             current = current.next;
         }
-        ListNode<T> node = new ListNode<T>(t, current);
+        ListNode node = new ListNode(t, current);
         if (current == head) {
             head = node;
         } else {
