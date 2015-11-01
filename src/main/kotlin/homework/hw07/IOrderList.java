@@ -51,6 +51,8 @@ public abstract class IOrderList<T extends Comparable<? super T>> implements Com
 
     public abstract void add(T val);
 
+    public  abstract void remove(T val);
+
     public abstract int size();
 
     public abstract T get(int index);
