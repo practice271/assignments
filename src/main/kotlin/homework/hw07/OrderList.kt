@@ -44,6 +44,8 @@ abstract  class OrderList<T : Comparable<T>> : Comparable<OrderList<out T>> {
 
     abstract fun add(value: T)
 
+    abstract fun remove(value : T)
+
     abstract fun size(): Int
 
     abstract operator fun get(index: Int): T
@@ -65,11 +67,32 @@ class KotlinAtdOrderList<T : Comparable<T>>() : OrderList<T>() {
     private fun insert(value: T, node: Node<T>?): Node<T> {
         when (node) {
             null -> return Node(value, null)
-            else ->
-            {
+            else -> {
                 if (node.value.compareTo(value) >= 0)
                     return Node(value, Node(node.value, node.next))
                 return Node(node.value, insert(value, node.next))
+            }
+        }
+    }
+
+
+    override fun remove(value: T) {
+        if (list != null) list = delete(value, list)
+    }
+
+    private fun delete(value: T, node: Node<T>?): Node<T>? {
+        when (node) {
+            null -> return null
+            else -> {
+
+                if (node.value.equals(value)) return node.next
+                when (node.next) {
+                    null -> return null
+                    else -> {
+                        if (node.next!!.value != value) return delete(value, node.next)
+                        return Node(node.value, node.next!!.next)
+                    }
+                }
             }
         }
     }
@@ -104,6 +127,16 @@ class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
     private var count = 0
 
     override fun add(value: T) {
+        fun toRight(index: Int) {
+
+            if (count === 0)
+                arr[1] = arr[0]
+            else
+                for (i in count downTo index + 1) {
+                    arr[i] = arr[i - 1]
+                }
+        }
+
         if (count == arr.size - 1) bigger()
         var i = 0
         while (i < count && arr[i].compareTo(value) == -1) i++
@@ -113,6 +146,7 @@ class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
     }
 
     private fun bigger() {
+
         val newarr = arrayOfNulls<Comparable<Any>>(arr.size + 10) as Array<T>
         for (i in arr.indices) {
             newarr[i] = arr[i]
@@ -120,15 +154,17 @@ class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
         arr = newarr
     }
 
-    private fun toRight(index: Int) {
-
-        if (count === 0)
-            arr[1] = arr[0]
-        else
-            for (i in count downTo index + 1) {
-                arr[i] = arr[i - 1]
+    override fun remove(value: T) {
+        fun toLeft(index: Int) {
+            for (i in index..count) {
+                arr[i] = arr[i + 1]
             }
+        }
+        var i = 0
+        while (i < count && arr[i] != value) i++
+        toLeft(i)
     }
+
 
     override fun size(): Int {
         return count

@@ -22,6 +22,7 @@ public class AtdOrderList<T extends Comparable<? super T>> extends IOrderList<T>
         count++;
     }
 
+
     private Node insert(T val, Node node) {
         if (node == null)
             return new Node(val, null);
@@ -29,6 +30,17 @@ public class AtdOrderList<T extends Comparable<? super T>> extends IOrderList<T>
             return new Node(val, new Node(node.value, node.next));
         else
             return new Node(node.value, insert(val, node.next));
+    }
+
+    @Override
+    public void remove(T val) {
+        if(list != null) list = delete(val,list);
+    }
+
+    private Node delete(T val, Node node){
+        if (node.value.equals(val)) return node.next;
+        if(!node.next.value.equals(val)) return delete(val, node.next);
+        return new Node(node.value, node.next.next);
     }
 
     @Override

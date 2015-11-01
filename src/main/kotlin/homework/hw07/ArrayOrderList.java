@@ -41,6 +41,20 @@ public class ArrayOrderList<T extends Comparable<? super T>>
     }
 
     @Override
+    public void remove(T val) {
+        int i = 0;
+        while(i<count && !arr[i].equals(val)) i++;
+        toLeft(i);
+    }
+
+    private void toLeft(int index)
+    {
+        for(int i = index; i<= count; i++)
+        {
+            arr[i] = arr[i+1];
+        }
+    }
+    @Override
     public int size() {
         return count;
     }
