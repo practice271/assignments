@@ -8,19 +8,10 @@ class OrderedListKT<A : Comparable<A>> : AOrderedListKT<A>() {
 
     inner class Node(var item: A) {
         var next: Node? = null
-
-        init {
-            next = null
-        }
     }
 
     private var head: Node? = null
     private var size: Int = 0
-
-    init {
-        head = null
-        size = 0
-    }
 
     override fun add(item: A) {
         val newNode = Node(item)
@@ -33,9 +24,7 @@ class OrderedListKT<A : Comparable<A>> : AOrderedListKT<A>() {
                     newNode.next = head
                     head = newNode
                     size++
-                }
-
-        else {
+        } else {
             var after = head?.next
             var before: Node? = head
             while (after != null) {
