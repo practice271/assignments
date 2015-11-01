@@ -11,11 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test'
 
-<<<<<<< HEAD
 mainClassName = 'homework.Hw07.Hw07Package'
-=======
-mainClassName = 'classroom.c04.Main'
->>>>>>> refs/remotes/practice271/master
 
 sourceCompatibility = 1.5
 
