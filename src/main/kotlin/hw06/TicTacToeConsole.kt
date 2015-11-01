@@ -30,7 +30,7 @@ public class TicTacToeConsole : TicTacToeLogic() {
 
     override fun gameOver (mark : Int) {
         gameOnFlag = false
-
+        if (mark == 2) println("It's a draw!")
         println("${marksLook[mark]} wins!")
     }
 
@@ -50,7 +50,8 @@ public class TicTacToeConsole : TicTacToeLogic() {
         }
         field[i][j] = mark
         drawField()
-        checkVictory(i, j, mark)
+        if (checkDraw()) gameOver(2)
+        checkVictory(i, j)
         return ""
     }
 }

@@ -20,13 +20,16 @@ class TicTacToeGUI : JFrame(){
         override fun gameOver(mark : Int) {
             gameOnFlag = false
             for (btn in btns) btn.isEnabled = false
-            text.text = "${marksLookSymbol[mark]} wins!"
+            if (mark == 2) text.text = "It's a draw!"
+            else
+                text.text = "${marksLookSymbol[mark]} wins!"
         }
 
         fun setMark(i: Int, j: Int, mark: Int) : String {
             text.text = "'${marksLookSymbol[lastScanned % 2]}' move next"
             field[i][j] = mark
-            checkVictory(i, j, mark)
+            if (checkDraw()) gameOver(2)
+            checkVictory(i, j)
             return ""
         }
 

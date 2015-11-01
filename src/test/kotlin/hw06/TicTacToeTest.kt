@@ -11,9 +11,7 @@ public class TicTacToeTest {
         ttt.field[0][0] = 1
         ttt.field[1][0] = 1
         ttt.field[2][0] = 1
-        assertTrue(ttt.checkColumn(0, 1), "Checking for the right mark in the right column")
-        assertFalse(ttt.checkColumn(0, 0), "Checking for the wrong mark in the right column")
-        assertFalse(ttt.checkColumn(1, 1), "Checking for the right mark in the wrong column")
+        assertTrue(ttt.checkColumn(0), "Checking for the right mark in the right column")
     }
 
     @Test fun checkRowTest() {
@@ -21,9 +19,7 @@ public class TicTacToeTest {
         ttt.field[0][0] = 0
         ttt.field[0][1] = 0
         ttt.field[0][2] = 0
-        assertTrue(ttt.checkRow(0, 0), "Checking for the right mark in the right row")
-        assertFalse(ttt.checkRow(0, 1), "Checking for the wrong mark in the right row")
-        assertFalse(ttt.checkRow(1, 0), "Checking for the right mark in the wrong row")
+        assertTrue(ttt.checkRow(0), "Checking for the right mark in the right row")
     }
 
     @Test fun checkDiagonalNW_SETest() {
@@ -31,8 +27,7 @@ public class TicTacToeTest {
         ttt.field[0][0] = 0
         ttt.field[1][1] = 0
         ttt.field[2][2] = 0
-        assertTrue(ttt.checkDiagonalNW_SE(0), "Checking for the right mark")
-        assertFalse(ttt.checkDiagonalNW_SE(1), "Checking for the wrong mark")
+        assertTrue(ttt.checkDiagonalNW_SE(), "Checking for the right mark")
     }
 
     @Test fun checkDiagonalNE_SWTest() {
@@ -40,8 +35,7 @@ public class TicTacToeTest {
         ttt.field[0][2] = 0
         ttt.field[1][1] = 0
         ttt.field[2][0] = 0
-        assertTrue(ttt.checkDiagonalNE_SW(0), "Checking for the right mark")
-        assertFalse(ttt.checkDiagonalNE_SW(1), "Checking for the wrong mark")
+        assertTrue(ttt.checkDiagonalNE_SW(), "Checking for the right mark")
     }
 
     @Test fun checkVictoryTest() {
@@ -49,12 +43,11 @@ public class TicTacToeTest {
         ttt.field[0][2] = 0
         ttt.field[1][1] = 0
         ttt.field[2][0] = 0
-        assertTrue (ttt.checkVictory(0, 2, 0), "Checking for the right mark")
-        assertTrue (ttt.checkVictory(1, 1, 0), "Checking for the right mark")
-        assertTrue (ttt.checkVictory(2, 0, 0), "Checking for the right mark")
+        assertTrue (ttt.checkVictory(0, 2), "Checking for the right mark")
+        assertTrue (ttt.checkVictory(1, 1), "Checking for the right mark")
+        assertTrue (ttt.checkVictory(2, 0), "Checking for the right mark")
 
-        assertFalse(ttt.checkVictory(0, 2, 1), "Checking for the wrong mark")
-        assertFalse(ttt.checkVictory(2, 2, 0), "Checking in the wrong place")
+        assertFalse(ttt.checkVictory(2, 2), "Checking in the wrong place")
     }
 
     @Test fun setMarkTest() {
