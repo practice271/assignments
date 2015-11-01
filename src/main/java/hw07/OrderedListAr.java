@@ -16,24 +16,23 @@ public class OrderedListAr <A extends Comparable<? super A>>
     }
 
     private void enlargeArray() {
+        A[] newAr = (A[]) new Comparable[size * 2];
+        System.arraycopy(vals, 0, newAr, 0, size);
         size *= 2;
-        A[] newAr = (A[]) new Comparable[size];
-        System.arraycopy(vals, 0, newAr, 0, size / 2);
         vals = newAr;
     }
 
     OrderedListAr (A[] array, boolean ifAscending){
         if (array == null) {
             trueSize = 0;
+            return;
         }
-        else {
-            trueSize = array.length;
-            size = array.length * 2;
-            vals = (A[]) new Comparable[size];
-            isAscending = ifAscending;
-            Arrays.sort(array, this::isInOrderInt);
-            System.arraycopy(array, 0, vals, 0, array.length);
-        }
+        trueSize = array.length;
+        size = array.length * 2;
+        vals = (A[]) new Comparable[size];
+        isAscending = ifAscending;
+        Arrays.sort(array, this::isInOrderInt);
+        System.arraycopy(array, 0, vals, 0, array.length);
     }
 
     private boolean isInOrder(A fst, A snd) {
@@ -148,11 +147,11 @@ public class OrderedListAr <A extends Comparable<? super A>>
         if (trueSize != otherList.getSize()) return false;
         for (int i = 0; i < trueSize; i++) {
             A curThis = vals[i];
-            //unfortunately, I can't assign `otherList.getVal(i)` to a variable, for it has unknown type.
-            if (curThis == null && otherList.getVal(i) != null) return false;
-            if (curThis != null && otherList.getVal(i) == null) return false;
-            if (!(curThis == null && otherList.getVal(i) == null))
-                res = res && curThis.equals(otherList.getVal(i));
+            Comparable curOther = otherList.getVal(i);
+            if (curThis == null && curOther != null) return false;
+            if (curThis != null && curOther == null) return false;
+            if (!(curThis == null && curOther == null))
+                res = res && curThis.equals(curOther);
             //if both are nulls, we shouldn't do anything.
         }
         return res;
