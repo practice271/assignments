@@ -4,9 +4,13 @@ import java.util.Arrays;
 
 public class OrderedListATD <A extends Comparable<? super A>>
         extends OrderedList<A> {
-    private List vals;
+    public List vals;
     private int size;
     private boolean isAscending;
+
+    public List getVals() {
+        return vals;
+    }
 
     abstract protected class List {};
     protected class ListEmpty extends List {};
@@ -32,6 +36,15 @@ public class OrderedListATD <A extends Comparable<? super A>>
             tail = new ListNotEmpty(head, tail);
             head = val;
         }
+    }
+
+    public List getNext(List cur) {
+        if (cur instanceof OrderedListATD.ListNotEmpty) {
+            ListNotEmpty curGood = (ListNotEmpty) cur;
+            if (curGood.tail instanceof OrderedListATD.ListNotEmpty)
+                return curGood.tail;
+        }
+        return null;
     }
 
     private int isInOrderInt(A fst, A snd) {

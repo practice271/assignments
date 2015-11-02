@@ -142,12 +142,32 @@ public class OrderedListAr <A extends Comparable<? super A>>
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof OrderedList)) return false;
+
         OrderedList otherList = (OrderedList) other;
+        boolean otherIsList = false;
+        OrderedListATD.List otherATDcurVal = null;
+
+        if (other instanceof OrderedListATD) {
+            otherIsList = true;
+            otherATDcurVal = ((OrderedListATD) otherList).getVals();
+        }
+
         boolean res = true;
         if (trueSize != otherList.getSize()) return false;
+
         for (int i = 0; i < trueSize; i++) {
             A curThis = vals[i];
-            Comparable curOther = otherList.getVal(i);
+            Comparable curOther = null;
+            if (otherIsList) {
+                if (otherATDcurVal instanceof OrderedListATD.ListNotEmpty) {
+                    OrderedListATD.ListNotEmpty atdGood = (OrderedListATD.ListNotEmpty) otherATDcurVal;
+                    curOther       = atdGood.head;
+                    otherATDcurVal = atdGood.tail;
+                }
+            }
+            else {
+                curOther = otherList.getVal(i);
+            }
             if (curThis == null && curOther != null) return false;
             if (curThis != null && curOther == null) return false;
             if (!(curThis == null && curOther == null))
