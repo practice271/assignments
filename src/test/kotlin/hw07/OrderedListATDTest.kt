@@ -104,6 +104,18 @@ class OrderedListATDKotlinTest {
     }
 
     @Test
+    fun testEqualsDifferentImplementations() {
+        val b = arrayOf(1, 2, 4)
+        val a = OrderedListATDKotlin(b, true)
+        val c = OrderedListArKotlin(b, true)
+        Assert.assertTrue(a.equals(c))
+        a.addVal(12)
+        Assert.assertFalse(a.equals(c))
+        c.addVal(12)
+        Assert.assertTrue(a.equals(c))
+    }
+
+    @Test
     fun testEqualsSameValsDifferentOrders() {
         val a = arrayOf(1, 2, 4)
         val b = arrayOf(4, 2, 1)
@@ -131,7 +143,7 @@ class OrderedListATDKotlinTest {
         val b = arrayOf(-1, 1, 4)
         val aList = OrderedListATDKotlin(a, true)
         val bList = OrderedListATDKotlin(b, true)
-        Assert.assertEquals(-1, aList.compareTo(bList).toLong())
+        Assert.assertEquals(-1, aList.compareTo(bList))
     }
 
     @Test
@@ -140,7 +152,16 @@ class OrderedListATDKotlinTest {
         val b = arrayOf(-1, 1, 2)
         val aList = OrderedListATDKotlin(a, true)
         val bList = OrderedListATDKotlin(b, true)
-        Assert.assertEquals(0, aList.compareTo(bList).toLong())
+        Assert.assertEquals(0, aList.compareTo(bList))
+    }
+
+    @Test
+    fun testCompareSameSizeEqualDifferentImplementations() {
+        val a = arrayOf(-1, 1, 2)
+        val b = arrayOf(-1, 1, 2)
+        val aList = OrderedListATD(a, true)
+        val bList = OrderedListAr(b, true)
+        Assert.assertEquals(0, aList.compareTo(bList))
     }
 
     @Test
@@ -149,6 +170,6 @@ class OrderedListATDKotlinTest {
         val b = arrayOf(-1, 1)
         val aList = OrderedListATDKotlin(a, true)
         val bList = OrderedListATDKotlin(b, true)
-        Assert.assertEquals(1, aList.compareTo(bList).toLong())
+        Assert.assertEquals(1, aList.compareTo(bList))
     }
 }

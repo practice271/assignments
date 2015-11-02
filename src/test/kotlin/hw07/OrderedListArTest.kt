@@ -106,14 +106,27 @@ class OrderedListArKotlinTest {
     }
 
     @Test
+    fun testEqualsDifferentImplementations() {
+        val b = arrayOf(1, 2, 4)
+        val a = OrderedListArKotlin(b, true)
+        val c = OrderedListATDKotlin(b, true)
+        //Kotlin and Idea doesn't allow to do a==c, though declaration of == IS equals()
+        Assert.assertTrue(a.equals(c))
+        a.addVal(12)
+        Assert.assertFalse(a.equals(c))
+        c.addVal(12)
+        Assert.assertTrue(a.equals(c))
+    }
+
+    @Test
     fun testEqualsSameValsDifferentOrders() {
         val a = arrayOf(1, 2, 4)
         val b = arrayOf(4, 2, 1)
         val c = OrderedListArKotlin(a, true)
         val descending = OrderedListArKotlin(b, false)
         val ascending = OrderedListArKotlin(b, true)
-        Assert.assertFalse(c == descending)
-        Assert.assertTrue(c == ascending)
+        Assert.assertFalse(c.equals(descending))
+        Assert.assertTrue(c.equals(ascending))
     }
 
     @Test
@@ -133,7 +146,7 @@ class OrderedListArKotlinTest {
         val b = arrayOf(-1, 1, 4)
         val aList = OrderedListArKotlin(a, true)
         val bList = OrderedListArKotlin(b, true)
-        Assert.assertEquals(-1, aList.compareTo(bList).toLong())
+        Assert.assertEquals(-1, aList.compareTo(bList))
     }
 
     @Test
@@ -142,7 +155,16 @@ class OrderedListArKotlinTest {
         val b = arrayOf(-1, 1, 2)
         val aList = OrderedListArKotlin(a, true)
         val bList = OrderedListArKotlin(b, true)
-        Assert.assertEquals(0, aList.compareTo(bList).toLong())
+        Assert.assertEquals(0, aList.compareTo(bList))
+    }
+
+    @Test
+    fun testCompareSameSizeEqualDifferentImplementations() {
+        val a = arrayOf(-1, 1, 2)
+        val b = arrayOf(-1, 1, 2)
+        val aList = OrderedListATD(a, true)
+        val bList = OrderedListAr(b, true)
+        Assert.assertEquals(0, bList.compareTo(aList))
     }
 
     @Test
@@ -151,6 +173,6 @@ class OrderedListArKotlinTest {
         val b = arrayOf(-1, 1)
         val aList = OrderedListArKotlin(a, true)
         val bList = OrderedListArKotlin(b, true)
-        Assert.assertEquals(1, aList.compareTo(bList).toLong())
+        Assert.assertEquals(1, aList.compareTo(bList))
     }
 }

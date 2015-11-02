@@ -131,21 +131,68 @@ class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAsc
         return hashCode
     }
 
+//    override fun equals(other: Any?): Boolean {
+//        if (other !is OrderedListKotlin<*>) return false
+//        var res = true
+//        val otherList = other as OrderedListKotlin<A>
+//        if (trueSize != otherList.getSize()) return false
+//        for (i in 0..trueSize - 1) {
+//            val curThis = vals[i]
+//            //unfortunately, I can't assign `otherList.getVal(i)` to a variable, for it has unknown type.
+//            if (curThis == null && otherList.getVal(i) != null) return false
+//            if (curThis != null && otherList.getVal(i) == null) return false
+//            if (!(curThis == null && otherList.getVal(i) == null))
+//                res = res && curThis == otherList.getVal(i)
+//            //if both are nulls, we shouldn't do anything.
+//        }
+//        return res
+//    }
+
     override fun equals(other: Any?): Boolean {
         if (other !is OrderedListKotlin<*>) return false
+
+        var otherIsAtd = false
+
+        var otherIter: OrderedListATDKotlin.ListIterator? = null
+        if (other is OrderedListATDKotlin<*>) {
+            otherIsAtd = true
+            otherIter = other.ListIterator(other.vals)
+        }
+
         var res = true
-        val otherList = other as OrderedListKotlin<A>
-        if (trueSize != otherList.getSize()) return false
+        if (trueSize != other.getSize()) return false
+
         for (i in 0..trueSize - 1) {
             val curThis = vals[i]
-            //unfortunately, I can't assign `otherList.getVal(i)` to a variable, for it has unknown type.
-            if (curThis == null && otherList.getVal(i) != null) return false
-            if (curThis != null && otherList.getVal(i) == null) return false
-            if (!(curThis == null && otherList.getVal(i) == null))
-                res = res && curThis == otherList.getVal(i)
+            val curOther = if (otherIsAtd) (otherIter?.next() ?: throw(errorInAddingException)) else other.getVal(i)
+            if (curThis == null && curOther != null) return false
+            if (curThis != null && curOther == null) return false
+            if (!(curThis == null && curOther == null))
+                res = res && curThis == curOther
             //if both are nulls, we shouldn't do anything.
         }
         return res
+    }
+
+    override public fun compareTo(other: OrderedListKotlin<out A>): Int {
+        val minSize = Math.min(trueSize, other.getSize())
+
+        var isAtd = false
+        var otherIter: OrderedListATD.ListIterator? = null
+        if (other is OrderedListATD<*>) {
+            isAtd = true
+            otherIter = other.ListIterator(other.getVals())
+        }
+
+        for (i in 0..minSize - 1) {
+            val thisCur = vals[i] ?: throw(errorInAddingException)
+            val curCompare = if (isAtd) thisCur.compareTo(otherIter?.next() as A? ?: throw(errorInAddingException))
+                else thisCur.compareTo(other.getVal(i) ?: throw(errorInAddingException))
+            if (curCompare != 0) return curCompare
+        }
+        if (trueSize < other.getSize()) return -1
+        if (trueSize > other.getSize()) return 1
+        return 0
     }
 
     private val MIN_ARRAY_SIZE = 16

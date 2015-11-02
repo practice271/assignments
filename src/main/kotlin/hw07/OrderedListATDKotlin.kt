@@ -1,10 +1,11 @@
 package hw07
 
-import java.util.Arrays
+import java.util.*
 import kotlin.properties.Delegates
 
 class OrderedListATDKotlin<A : Comparable<A>> (array: Array<A>?, private val isAscending: Boolean) : OrderedListKotlin<A>() {
-    private var vals: List by Delegates.notNull<List>();
+    public var vals: List by Delegates.notNull<List>();
+
     private var size: Int = 0
     override fun getSize() : Int {
         return size;
@@ -43,6 +44,31 @@ class OrderedListATDKotlin<A : Comparable<A>> (array: Array<A>?, private val isA
             //without regard for demanded order.
             tail = ListNotEmpty(head, tail)
             head = value
+        }
+    }
+
+    inner class ListIterator(list: List) : Iterator<A> {
+        var currentNode: ListNotEmpty? = null
+
+        init {
+            currentNode = if (list is OrderedListATDKotlin.ListEmpty) null else list as ListNotEmpty
+        }
+
+        override fun hasNext(): Boolean {
+            return currentNode != null
+        }
+
+        override fun next(): A {
+            val curNodeVal = currentNode
+            if (curNodeVal == null)
+                throw NoSuchElementException()
+
+            val res = curNodeVal.head
+            currentNode = if (curNodeVal.tail is OrderedListATDKotlin.ListEmpty)
+                null
+            else
+                curNodeVal.tail as ListNotEmpty
+            return res
         }
     }
 
@@ -111,20 +137,71 @@ class OrderedListATDKotlin<A : Comparable<A>> (array: Array<A>?, private val isA
         return calcHashCode(1, vals)
     }
 
-    private fun checkEquality(l: List, other: OrderedListKotlin<A>, ind: Int): Boolean {
-        if (other.getVal(ind) == null) {
-            return (l is ListEmpty)
-        }
-        if (l is ListEmpty) return false
-        val listGood = (l as ListNotEmpty)
-        return listGood.head == other.getVal(ind) && checkEquality(listGood.tail, other, ind + 1)
-    }
+//    private fun checkEquality(l: List, other: OrderedListKotlin<A>, ind: Int): Boolean {
+//        if (other.getVal(ind) == null) {
+//            return (l is ListEmpty)
+//        }
+//        if (l is ListEmpty) return false
+//        val listGood = (l as ListNotEmpty)
+//        return listGood.head == other.getVal(ind) && checkEquality(listGood.tail, other, ind + 1)
+//    }
+//
+//    override fun equals(other: Any?): Boolean {
+//        if (other !is OrderedListKotlin<*>) return false
+//        if (other.getSize() == 0) {
+//            return vals is ListEmpty
+//        }
+//        return size == other.getSize() && checkEquality(vals, other as OrderedListKotlin<A>, 0)
+//    }
 
     override fun equals(other: Any?): Boolean {
         if (other !is OrderedListKotlin<*>) return false
-        if (other.getSize() == 0) {
-            return vals is ListEmpty
+        val thisIter = ListIterator(vals)
+
+        var otherIsAtd = false
+
+        var otherIter: OrderedListATDKotlin.ListIterator? = null
+        if (other is OrderedListATDKotlin<*>) {
+            otherIsAtd = true
+            otherIter = other.ListIterator(other.vals)
         }
-        return size == other.getSize() && checkEquality(vals, other as OrderedListKotlin<A>, 0)
+
+        var res = true
+        if (size != other.getSize()) return false
+
+        for (i in 0..size - 1) {
+            val curThis = thisIter.next()
+            val curOther = if (otherIsAtd) (otherIter?.next() ?: throw(errorInAddingException)) else other.getVal(i)
+            if (curThis == null && curOther != null) return false
+            if (curThis != null && curOther == null) return false
+            if (!(curThis == null && curOther == null))
+                res = res && curThis == curOther
+            //if both are nulls, we shouldn't do anything.
+        }
+        return res
+    }
+
+    override operator fun compareTo(other: OrderedListKotlin<out A>): Int {
+        val minSize = Math.min(size, other.getSize())
+        val thisIter = ListIterator(vals)
+
+        var isAtd = false
+        var otherIter: ListIterator? = null
+        if (other is OrderedListATDKotlin<*>) {
+            isAtd = true
+            otherIter = ListIterator(other.vals)
+        }
+
+        for (i in 0..minSize - 1) {
+            val curCompare = if (isAtd)
+                thisIter.next().compareTo(otherIter?.next() ?: throw(errorInAddingException))
+            else
+                thisIter.next().compareTo(other.getVal(i) ?: throw(errorInAddingException))
+
+            if (curCompare != 0) return curCompare
+        }
+        if (size < other.getSize()) return -1
+        if (size > other.getSize()) return 1
+        return 0
     }
 }
