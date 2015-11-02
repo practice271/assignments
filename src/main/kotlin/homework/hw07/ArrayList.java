@@ -75,7 +75,7 @@ public class ArrayList<T extends Comparable<T>> extends IOrderedList<T> {
     /** Adds elements from given list into current list. */
     @Override
     public void concat(IOrderedList<T> newList) {
-        ArrayList<T> temp = new ArrayList<>();
+        ArrayList<T> temp = new ArrayList<T>();
 
         for (int i = 0; i <  currentIndex; i++) temp.push(list[i]);
         for (T t : newList) temp.push(t);

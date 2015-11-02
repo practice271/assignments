@@ -92,7 +92,7 @@ public class ADTList<T extends Comparable<T>> extends IOrderedList<T> {
     /** Adds elements from given list into current list. */
     @Override
     public void concat(IOrderedList<T> newList) {
-        ADTList<T> temp = new ADTList<>();
+        ADTList<T> temp = new ADTList<T>();
 
         for (int i = 0; i < currentSize; i++) {
             temp.push(list.head);
