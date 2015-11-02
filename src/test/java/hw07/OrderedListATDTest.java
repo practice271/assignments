@@ -109,6 +109,18 @@ public class OrderedListATDTest {
     }
 
     @Test
+    public void testEqualsDifferentImplementations() throws Exception {
+        Integer[] b= {1, 2, 4};
+        OrderedListATD<Integer> a = new OrderedListATD<Integer> (b, true);
+        OrderedListAr<Integer> c = new OrderedListAr<Integer> (b, true);
+        Assert.assertTrue(a.equals(c));
+        a.addVal(12);
+        Assert.assertFalse(a.equals(c));
+        c.addVal(12);
+        Assert.assertTrue(a.equals(c));
+    }
+
+    @Test
     public void testEqualsSameValsDifferentOrders() throws Exception {
         Integer[] a = {1, 2, 4};
         Integer[] b = {4, 2, 1};
@@ -145,6 +157,15 @@ public class OrderedListATDTest {
         Integer[] b = {-1, 1, 2};
         OrderedListATD<Integer> aList = new OrderedListATD<Integer> (a, true);
         OrderedListATD<Integer> bList = new OrderedListATD<Integer> (b, true);
+        Assert.assertEquals(0, aList.compareTo(bList));
+    }
+
+    @Test
+    public void testCompareSameSizeEqualDifferentImplementations() throws Exception {
+        Integer[] a = {-1, 1, 2};
+        Integer[] b = {-1, 1, 2};
+        OrderedListATD<Integer> aList = new OrderedListATD<Integer> (a, true);
+        OrderedListAr<Integer> bList = new OrderedListAr<Integer> (b, true);
         Assert.assertEquals(0, aList.compareTo(bList));
     }
 

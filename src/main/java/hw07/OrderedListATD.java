@@ -1,6 +1,8 @@
 package hw07;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class OrderedListATD <A extends Comparable<? super A>>
         extends OrderedList<A> {
@@ -38,13 +40,28 @@ public class OrderedListATD <A extends Comparable<? super A>>
         }
     }
 
-    public List getNext(List cur) {
-        if (cur instanceof OrderedListATD.ListNotEmpty) {
-            ListNotEmpty curGood = (ListNotEmpty) cur;
-            if (curGood.tail instanceof OrderedListATD.ListNotEmpty)
-                return curGood.tail;
+    public class ListIterator implements Iterator<A> {
+        public ListIterator (List list) {
+            currentNode = list instanceof OrderedListATD.ListEmpty ? null : (ListNotEmpty) list;
         }
-        return null;
+
+        public ListNotEmpty currentNode;
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public A next() {
+            if (currentNode == null)
+                throw new NoSuchElementException();
+
+            A res = currentNode.head;
+            currentNode = currentNode.tail instanceof OrderedListATD.ListEmpty ? null
+                    : (ListNotEmpty) currentNode.tail;
+            return res;
+        }
     }
 
     private int isInOrderInt(A fst, A snd) {
@@ -141,21 +158,62 @@ public class OrderedListATD <A extends Comparable<? super A>>
         return listGood.head.equals(other.getVal(ind)) && checkEquality(listGood.tail, other, ind + 1);
     }
 
+//    @Override
+//    public boolean equals(Object other) {
+//        if (!(other instanceof OrderedList)) return false;
+//        if (((OrderedList) other).getSize() == 0) {
+//            return vals instanceof OrderedListATD.ListEmpty;
+//        }
+//        OrderedList otherList = (OrderedList) other;
+//        return size == otherList.getSize() && checkEquality(vals, otherList, 0);
+//    }
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof OrderedList)) return false;
-        if (((OrderedList) other).getSize() == 0) {
-            return vals instanceof OrderedListATD.ListEmpty;
-        }
+        ListIterator thisIter  = new ListIterator(vals);
+
         OrderedList otherList = (OrderedList) other;
-        return size == otherList.getSize() && checkEquality(vals, otherList, 0);
+        boolean otherIsAtd = false;
+
+        OrderedListATD.ListIterator otherIter = null;
+        if (other instanceof OrderedListATD) {
+            otherIsAtd = true;
+            OrderedListATD otherAsAtd = (OrderedListATD) other;
+            otherIter = otherAsAtd.new ListIterator(otherAsAtd.getVals());
+        }
+
+        boolean res = true;
+        if (size != otherList.getSize()) return false;
+
+        for (int i = 0; i < size; i++) {
+            A curThis = thisIter.next();
+            Comparable curOther;
+            curOther = otherIsAtd ? otherIter.next() : otherList.getVal(i);
+            if (curThis == null && curOther != null) return false;
+            if (curThis != null && curOther == null) return false;
+            if (!(curThis == null && curOther == null))
+                res = res && curThis.equals(curOther);
+            //if both are nulls, we shouldn't do anything.
+        }
+        return res;
     }
 
     @Override
     public int compareTo(OrderedList<? extends A> other) {
         int minSize = Math.min(size, other.getSize());
+        ListIterator thisIter  = new ListIterator(vals);
+
+        boolean isAtd = false;
+        ListIterator otherIter = null;
+        if (other instanceof OrderedListATD) {
+            isAtd = true;
+            otherIter = new ListIterator(((OrderedListATD) other).getVals());
+        }
+
         for (int i = 0; i < minSize; i++) {
-            int curCompare = getVal(i).compareTo(other.getVal(i));
+            int curCompare = isAtd ? thisIter.next().compareTo(otherIter.next())
+                    : thisIter.next().compareTo(other.getVal(i));
+
             if (curCompare != 0) return curCompare;
         }
         if (size < other.getSize()) return -1;

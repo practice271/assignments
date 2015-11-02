@@ -144,12 +144,13 @@ public class OrderedListAr <A extends Comparable<? super A>>
         if (!(other instanceof OrderedList)) return false;
 
         OrderedList otherList = (OrderedList) other;
-        boolean otherIsList = false;
-        OrderedListATD.List otherATDcurVal = null;
+        boolean otherIsAtd = false;
 
+        OrderedListATD.ListIterator otherIter = null;
         if (other instanceof OrderedListATD) {
-            otherIsList = true;
-            otherATDcurVal = ((OrderedListATD) otherList).getVals();
+            otherIsAtd = true;
+            OrderedListATD otherAsAtd = (OrderedListATD) other;
+            otherIter = otherAsAtd.new ListIterator(otherAsAtd.getVals());
         }
 
         boolean res = true;
@@ -157,17 +158,8 @@ public class OrderedListAr <A extends Comparable<? super A>>
 
         for (int i = 0; i < trueSize; i++) {
             A curThis = vals[i];
-            Comparable curOther = null;
-            if (otherIsList) {
-                if (otherATDcurVal instanceof OrderedListATD.ListNotEmpty) {
-                    OrderedListATD.ListNotEmpty atdGood = (OrderedListATD.ListNotEmpty) otherATDcurVal;
-                    curOther       = atdGood.head;
-                    otherATDcurVal = atdGood.tail;
-                }
-            }
-            else {
-                curOther = otherList.getVal(i);
-            }
+            Comparable curOther;
+            curOther = otherIsAtd ? otherIter.next() : otherList.getVal(i);
             if (curThis == null && curOther != null) return false;
             if (curThis != null && curOther == null) return false;
             if (!(curThis == null && curOther == null))
@@ -180,8 +172,17 @@ public class OrderedListAr <A extends Comparable<? super A>>
     @Override
     public int compareTo (OrderedList<? extends A> other) {
         int minSize = Math.min(trueSize, other.getSize());
+
+        boolean isAtd = false;
+        OrderedListATD.ListIterator otherIter = null;
+        if (other instanceof OrderedListATD) {
+            isAtd = true;
+            OrderedListATD otherAsAtd = (OrderedListATD) other;
+            otherIter = otherAsAtd.new ListIterator(otherAsAtd.getVals());
+        }
+
         for (int i = 0; i < minSize; i++) {
-            int curCompare = vals[i].compareTo(other.getVal(i));
+            int curCompare = isAtd ? vals[i].compareTo((A) otherIter.next()) : vals[i].compareTo(other.getVal(i));
             if (curCompare != 0) return curCompare;
         }
         if (trueSize < other.getSize()) return -1;

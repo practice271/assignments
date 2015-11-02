@@ -163,6 +163,15 @@ public class OrderedListArTest {
     }
 
     @Test
+    public void testCompareSameSizeEqualDifferentImplementations() throws Exception {
+        Integer[] a = {-1, 1, 2};
+        Integer[] b = {-1, 1, 2};
+        OrderedListATD<Integer> aList = new OrderedListATD<Integer> (a, true);
+        OrderedListAr<Integer> bList = new OrderedListAr<Integer> (b, true);
+        Assert.assertEquals(0, bList.compareTo(aList));
+    }
+
+    @Test
     public void testCompareDiffSize() throws Exception {
         Integer[] a = {-1, 1, 2};
         Integer[] b = {-1, 1};
