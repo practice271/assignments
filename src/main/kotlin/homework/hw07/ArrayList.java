@@ -8,16 +8,16 @@
 package homework.hw07;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 /** Implementation of IOrderedList<T> using arrays. */
-public class ArrayList<T extends Comparable<T>> implements IOrderedList<T> {
-    private int currentSize = 10;
-    private T[] list = newArray();
+public class ArrayList<T extends Comparable<T>> extends IOrderedList<T> {
+    private T[] list = newArray(10);
     private int currentIndex = 0;
 
     /** Creates new array. */
-    private T[] newArray() {
-        return (T[]) new Comparable[currentSize];
+    private T[] newArray(int size) {
+        return (T[]) new Comparable[size];
     }
 
     /** Checks if the list is empty. */
@@ -35,19 +35,15 @@ public class ArrayList<T extends Comparable<T>> implements IOrderedList<T> {
     /** Puts element into the list. */
     @Override
     public void push(T elem) {
-        T[] temp = newArray();
+        int size = list.length;
         currentIndex++;
 
-        if (currentIndex > currentSize - 1) {
-            currentSize += 10;
-            temp = newArray();
-        }
+        if (currentIndex > list.length) size += 10;
+        T[] temp = newArray(size);
 
-        int pos = 0;
-        for (int i = 0; i < currentIndex - 1; i++) {
-            if (list[i] == null || elem.compareTo(list[i]) > 0) break;
-            else pos++;
-        }
+        int pos;
+        for (pos = 0; pos < currentIndex - 1; pos++)
+            if (elem.compareTo(list[pos]) > 0) break;
 
         if (pos > 0) System.arraycopy(list, 0, temp, 0, pos);
         temp[pos] = elem;
@@ -65,7 +61,7 @@ public class ArrayList<T extends Comparable<T>> implements IOrderedList<T> {
     @Override
     public void remove(int index) {
         currentIndex--;
-        System.arraycopy(list, index + 1, list, index, currentSize - 1 - index);
+        System.arraycopy(list, index + 1, list, index, list.length - 1 - index);
     }
 
     /** Returns element on given index and deletes it from the list. */
@@ -79,19 +75,16 @@ public class ArrayList<T extends Comparable<T>> implements IOrderedList<T> {
     /** Adds elements from given list into current list. */
     @Override
     public void concat(IOrderedList<T> newList) {
-        ArrayList<T> temp = new ArrayList<T>();
+        ArrayList<T> temp = new ArrayList<>();
 
-        for (int i = 0; i <  currentIndex; i++)
-            temp.push(list[i]);
-        for (int i = 0; i < newList.length(); i++)
-            temp.push(newList.take(i));
+        for (int i = 0; i <  currentIndex; i++) temp.push(list[i]);
+        for (T t : newList) temp.push(t);
 
         currentIndex = temp.length();
-        if (currentSize < temp.length()) {
-            currentSize = temp.length();
-            list = newArray();
-        }
-        for (int i = 0; i < temp.length(); i++) list[i] = temp.take(i);
+        if (list.length < temp.length()) list = newArray(temp.length());
+
+        Iterator<T> iter = temp.iterator();
+        for (int i = 0; i < temp.length(); i++) list[i] = iter.next();
     }
 
     /** Prints the list. */
@@ -100,23 +93,25 @@ public class ArrayList<T extends Comparable<T>> implements IOrderedList<T> {
         System.out.println(Arrays.toString(list));
     }
 
-    /** Returns hash code of the list. */
+    /** Iterator for ArrayList. */
     @Override
-    public int hashCode() {
-        int hash = 0;
-        for (int i = 0; i < currentIndex; i++)
-            hash = Math.abs((hash + list[i].hashCode()) * 31);
-        return hash;
-    }
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            int index = 0;
 
-    /** Checks equality between given object and the list. */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof IOrderedList && ((IOrderedList) obj).length() == currentIndex) {
-            for (int i = 0; i < currentIndex; i++)
-                if (list[i] != ((IOrderedList) obj).take(i)) return false;
-            return true;
-        }
-        return false;
+            @Override
+            public boolean hasNext() {
+                return (index < currentIndex);
+            }
+
+            @Override
+            public T next() {
+                index++;
+                return list[index - 1];
+            }
+
+            @Override
+            public void remove() {}
+        };
     }
 }

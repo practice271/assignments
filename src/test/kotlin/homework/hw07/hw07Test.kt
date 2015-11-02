@@ -1,6 +1,6 @@
 /*
  * Homework 7 (27.10.2015)
- * Tests array list
+ * Tests for realisations of ordered list
  *
  * Author: Mikhail Kita, group 271
  */
@@ -136,10 +136,10 @@ public class hw07Test() {
     }
 
     @Test fun testKotlinArrayList() {
-        test(KotlinArrayList<Int>(10))
+        test(KotlinArrayList<Int>())
     }
 
     @Test fun testKotlinADTList() {
-        test(KotlinADTList<Int>(0))
+        test(KotlinADTList<Int>())
     }
 }

@@ -7,8 +7,10 @@
 
 package homework.hw07;
 
+import java.util.Iterator;
+
 /** Implementation of IOrderedList<T> using abstract data type. */
-public class ADTList<T extends Comparable<T>> implements IOrderedList<T> {
+public class ADTList<T extends Comparable<T>> extends IOrderedList<T> {
 
     /** ADT for list. */
     private class Cons {
@@ -90,18 +92,16 @@ public class ADTList<T extends Comparable<T>> implements IOrderedList<T> {
     /** Adds elements from given list into current list. */
     @Override
     public void concat(IOrderedList<T> newList) {
-        ADTList<T> temp = new ADTList<T>();
+        ADTList<T> temp = new ADTList<>();
 
         for (int i = 0; i < currentSize; i++) {
             temp.push(list.head);
             list = list.tail;
         }
-        for (int i = 0; i < newList.length(); i++)
-            temp.push(newList.take(i));
+        for (T t : newList) temp.push(t);
 
         currentSize += newList.length();
-        for (int i = 0; i < temp.length(); i++)
-            list = insert(list, temp.take(i));
+        for (T t : temp) list = insert(list, t);
     }
 
     /** Gets string from given ADT list. */
@@ -117,29 +117,26 @@ public class ADTList<T extends Comparable<T>> implements IOrderedList<T> {
         System.out.println("[" + getString(list) + "]");
     }
 
-    /** Returns hash code of the list. */
+    /** Iterator for ADTList. */
     @Override
-    public int hashCode() {
-        int hash = 0;
-        Cons newList = list;
-        for (int i = 0; i < currentSize; i++) {
-            hash = Math.abs((hash + newList.head.hashCode()) * 31);
-            newList = newList.tail;
-        }
-        return hash;
-    }
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            Cons t = list;
 
-    /** Checks equality between given object and the list. */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof IOrderedList && ((IOrderedList) obj).length() == currentSize) {
-            Cons newList = list;
-            for (int i = 0; i < currentSize; i++) {
-                if (newList.head != ((IOrderedList) obj).take(i)) return false;
-                newList = newList.tail;
+            @Override
+            public boolean hasNext() {
+                return (t != null);
             }
-            return true;
-        }
-        return false;
+
+            @Override
+            public T next() {
+                T temp = t.head;
+                t = t.tail;
+                return temp;
+            }
+
+            @Override
+            public void remove() {}
+        };
     }
 }

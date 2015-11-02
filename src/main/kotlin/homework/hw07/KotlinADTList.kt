@@ -8,12 +8,13 @@
 package homework.hw07
 
 /** Implementation of IOrderedList using abstract data type. */
-data class KotlinADTList<T : Comparable<T>>(private var currentSize : Int) : IOrderedList<T> {
+class KotlinADTList<T : Comparable<T>>() : IOrderedList<T>() {
 
     /** ADT for list. */
     private inner class Cons(var head : T, var tail : Cons?)
 
     private var list : Cons? = null
+    private var currentSize = 0
 
     /** Checks if the list is empty. */
     override fun isEmpty() : Boolean {
@@ -81,13 +82,10 @@ data class KotlinADTList<T : Comparable<T>>(private var currentSize : Int) : IOr
             temp.push(list?.head)
             list = list?.tail
         }
-        for (i in 0 .. newList.length() - 1)
-            temp.push(newList.take(i))
+        for (t in newList) temp.push(t)
 
         currentSize += newList.length()
-        for (i in 0 .. temp.length() - 1) {
-            list = insert(list, temp.take(i))
-        }
+        for (t in temp) list = insert(list, t)
     }
 
     /** Gets string from given ADT list. */
@@ -102,28 +100,23 @@ data class KotlinADTList<T : Comparable<T>>(private var currentSize : Int) : IOr
         println("[" + getString(list) + "]")
     }
 
-    /** Returns hash code of the list. */
-    override fun hashCode() : Int {
-        var hash = 0
-        var newList : Cons? = list
-        for (i in 0 .. currentSize - 1) {
-            if (newList != null)
-                hash = Math.abs((hash + newList.head.hashCode()) * 31)
-            newList = newList?.tail
-        }
-        return hash
-    }
+    /** Iterator for KotlinADTList. */
+    override fun iterator(): MutableIterator<T> {
+        return object : MutableIterator<T> {
+            internal var t = list
 
-    /** Checks equality between given object and the list. */
-    override fun equals(other : Any?) : Boolean {
-        if (other is IOrderedList<*> && other.length() == currentSize) {
-            var newList : Cons? = list
-            for (i in 0 .. currentSize - 1) {
-                if (newList?.head != other.take(i)) return false
-                newList = newList?.tail
+            override fun hasNext(): Boolean {
+                return (t != null)
             }
-            return true
+
+            override fun next(): T {
+                val temp = t?.head
+                t = t?.tail
+                return temp ?: throw Exception("List is empty")
+            }
+
+            override fun remove() {
+            }
         }
-        return false
     }
 }
