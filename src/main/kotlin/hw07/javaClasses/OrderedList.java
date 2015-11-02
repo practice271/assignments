@@ -9,16 +9,16 @@ public class OrderedList<E extends Comparable<? super E>>
         extends AbstractOrderedList< E >{
     private int size = 0;
     private E last;
-    private OrderedList list;
+    private OrderedList tail;
 
     public OrderedList(E last) {
         this.last = last;
         size = 1;
-        list = null;
+        tail = null;
     }
     private OrderedList(E last, OrderedList list) {
         this.last = last;
-        this.list = list;
+        this.tail = list;
         if (list == null){
             size = 1;
         }
@@ -26,11 +26,6 @@ public class OrderedList<E extends Comparable<? super E>>
             size = list.size() + 1;
         }
     }
-    @Override
-    public  int	size(){
-        return size;
-    }
-
     private OrderedList<E> addLoc (OrderedList l, E elem){
         if (l == null){
             return new OrderedList<E>(elem, null);
@@ -39,7 +34,11 @@ public class OrderedList<E extends Comparable<? super E>>
         if (comp <= 0){
             return new OrderedList<E>(elem,l);
         }
-        return new OrderedList<E>((E)l.last, addLoc(l.list, elem));
+        return new OrderedList<E>((E)l.last, addLoc(l.tail, elem));
+    }
+    @Override
+    public  int	size(){
+        return size;
     }
     @Override
     public void add ( E elem){
@@ -49,18 +48,18 @@ public class OrderedList<E extends Comparable<? super E>>
             return;
         }
         if (last.compareTo(elem) < 0){
-            list = new OrderedList(last, list);
+            tail = new OrderedList(last, tail);
             last = elem;
             size ++;
             return;
         }
-        list = addLoc(list, elem);
+        tail = addLoc(tail, elem);
         size ++;
     }
 
     private E getLoc (OrderedList l, int i, int index){
         if (i < index){
-            return getLoc(l.list, i + 1, index);
+            return getLoc(l.tail, i + 1, index);
         }
         return (E) l.last;
     }
@@ -73,17 +72,17 @@ public class OrderedList<E extends Comparable<? super E>>
             return last;
         }
         //our traversal from last to first
-        return getLoc(list, 0, size - index - 2);
+        return getLoc(tail, 0, size - index - 2);
     }
 
     private OrderedList remLoc (OrderedList l, int i, int index){
         if (i < index){
-            return new OrderedList(l.last, remLoc(l.list,i + 1, index));
+            return new OrderedList(l.last, remLoc(l.tail,i + 1, index));
         }
         if (i == size - 1){ //first elem
             return null;
         }
-        return l.list;
+        return l.tail;
     }
     @Override
     public void removeAt(int index) {
@@ -91,18 +90,17 @@ public class OrderedList<E extends Comparable<? super E>>
             throw new ArrayIndexOutOfBoundsException();
         }
         if (index == size - 1) {
-            last = (E) list.last;
-            list = list.list;
+            last = (E) tail.last;
+            tail = tail.tail;
             size --;
             return;
         }
-        list = remLoc(list, 0, size - index - 2);
+        tail = remLoc(tail, 0, size - index - 2);
         size --;
     }
     @Override
     public void	clear() {
         size = 0;
-        list = null;
+        tail = null;
     }
 }
-

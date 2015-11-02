@@ -28,18 +28,11 @@ data class OrderedArray<E : Comparable<E>>
     }
     private var size_basic = Math.max(100, size_)
     private var size = size_
-    private var arr =
-            Array<Elem<E>>(size_basic, { Elem(defaultElem) })
-
-    fun compareTo(other: OrderedArray<out E>): Int {
+    private var arr = Array<Elem<E>>(size_basic, { Elem(defaultElem) })
+    public fun compareTo(other: OrderedArray<out E>): Int {
         val size = size()
-        if (size > other.size()) {
-            return 1
-        }
-        if (size < other.size()) {
-            return -1
-        }
-
+        if (size > other.size()) {return 1 }
+        if (size < other.size()) {return -1 }
         for (i in 0..size - 1) {
             val comp = get(i).compareTo(other[i])
             if (comp != 0) {
@@ -48,18 +41,17 @@ data class OrderedArray<E : Comparable<E>>
         }
         return 0
     }
-    fun isEmpty(): Boolean{
+    public fun isEmpty(): Boolean{
         return size == 0
     }
-    fun size(): Int {
+    public fun size(): Int {
         return size
     }
     private fun resize() {
         size_basic *= 2
-        val arr2 = Array<Elem<E>>(size_basic, {i -> arr[i]})
-        arr = arr2
+        arr = Array<Elem<E>>(size_basic, {i -> arr[i]})
     }
-    fun add(elem: E) {
+    public fun add(elem: E) {
         if (size == size_basic) {
             resize()
         }
@@ -77,15 +69,13 @@ data class OrderedArray<E : Comparable<E>>
         size++
         return
     }
-
-    fun get(index: Int): E {
+    public fun get(index: Int): E {
         if ((index < size) && (0 <= index)) {
             return arr[index].get()
         }
         throw ArrayIndexOutOfBoundsException()
     }
-
-    fun removeAt(index: Int) {
+    public fun removeAt(index: Int) {
         if ((index >= size) && (0 > index)) {
             throw ArrayIndexOutOfBoundsException()
         }
@@ -94,8 +84,7 @@ data class OrderedArray<E : Comparable<E>>
         }
         size--
     }
-
-    fun clear() {
+    public fun clear() {
         size = 0
     }
 }
