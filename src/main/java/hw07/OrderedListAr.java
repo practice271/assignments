@@ -1,6 +1,7 @@
 package hw07;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class OrderedListAr <A extends Comparable<? super A>>
         extends OrderedList<A> {
@@ -146,11 +147,11 @@ public class OrderedListAr <A extends Comparable<? super A>>
         OrderedList otherList = (OrderedList) other;
         boolean otherIsAtd = false;
 
-        OrderedListATD.ListIterator otherIter = null;
+        Iterator<A> otherIter  = null;
         if (other instanceof OrderedListATD) {
             otherIsAtd = true;
             OrderedListATD otherAsAtd = (OrderedListATD) other;
-            otherIter = otherAsAtd.new ListIterator(otherAsAtd.getVals());
+            otherIter = otherAsAtd.iterator();
         }
 
         boolean res = true;
@@ -174,11 +175,11 @@ public class OrderedListAr <A extends Comparable<? super A>>
         int minSize = Math.min(trueSize, other.getSize());
 
         boolean isAtd = false;
-        OrderedListATD.ListIterator otherIter = null;
+        Iterator<A> otherIter  = null;
         if (other instanceof OrderedListATD) {
             isAtd = true;
             OrderedListATD otherAsAtd = (OrderedListATD) other;
-            otherIter = otherAsAtd.new ListIterator(otherAsAtd.getVals());
+            otherIter = otherAsAtd.iterator();
         }
 
         for (int i = 0; i < minSize; i++) {

@@ -131,32 +131,15 @@ class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAsc
         return hashCode
     }
 
-//    override fun equals(other: Any?): Boolean {
-//        if (other !is OrderedListKotlin<*>) return false
-//        var res = true
-//        val otherList = other as OrderedListKotlin<A>
-//        if (trueSize != otherList.getSize()) return false
-//        for (i in 0..trueSize - 1) {
-//            val curThis = vals[i]
-//            //unfortunately, I can't assign `otherList.getVal(i)` to a variable, for it has unknown type.
-//            if (curThis == null && otherList.getVal(i) != null) return false
-//            if (curThis != null && otherList.getVal(i) == null) return false
-//            if (!(curThis == null && otherList.getVal(i) == null))
-//                res = res && curThis == otherList.getVal(i)
-//            //if both are nulls, we shouldn't do anything.
-//        }
-//        return res
-//    }
-
     override fun equals(other: Any?): Boolean {
         if (other !is OrderedListKotlin<*>) return false
 
         var otherIsAtd = false
 
-        var otherIter: OrderedListATDKotlin.ListIterator? = null
+        var otherIter: Iterator<A>? = null
         if (other is OrderedListATDKotlin<*>) {
             otherIsAtd = true
-            otherIter = other.ListIterator(other.vals)
+            otherIter = other.iterator() as Iterator<A>?
         }
 
         var res = true
@@ -178,10 +161,10 @@ class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAsc
         val minSize = Math.min(trueSize, other.getSize())
 
         var isAtd = false
-        var otherIter: OrderedListATD.ListIterator? = null
-        if (other is OrderedListATD<*>) {
+        var otherIter: Iterator<A>? = null
+        if (other is OrderedListATDKotlin<*>) {
             isAtd = true
-            otherIter = other.ListIterator(other.getVals())
+            otherIter = other.iterator() as Iterator<A>?
         }
 
         for (i in 0..minSize - 1) {

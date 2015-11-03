@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class OrderedListATD <A extends Comparable<? super A>>
-        extends OrderedList<A> {
+        extends OrderedList<A> implements Iterable<A> {
     public List vals;
     private int size;
     private boolean isAscending;
@@ -14,10 +14,17 @@ public class OrderedListATD <A extends Comparable<? super A>>
         return vals;
     }
 
+    @Override
+    public Iterator<A> iterator() {
+        if (vals instanceof OrderedListATD.ListEmpty) {throw new NullPointerException();}
+        else return ((ListNotEmpty) vals).iterator();
+    }
+
+
     abstract protected class List {};
     protected class ListEmpty extends List {};
 
-    protected class ListNotEmpty extends List {
+    protected class ListNotEmpty extends List implements Iterable<A>{
         A head;
         List tail;
 
@@ -38,6 +45,12 @@ public class OrderedListATD <A extends Comparable<? super A>>
             tail = new ListNotEmpty(head, tail);
             head = val;
         }
+
+        @Override
+        public Iterator<A> iterator() {
+            return new ListIterator(this);
+        }
+
     }
 
     public class ListIterator implements Iterator<A> {
@@ -149,37 +162,19 @@ public class OrderedListATD <A extends Comparable<? super A>>
         return calcHashCode(1, vals);
     }
 
-    private boolean checkEquality(List l, OrderedList other, int ind) {
-        if (other.getVal(ind) == null) {
-            return (l instanceof OrderedListATD.ListEmpty);
-        }
-        if (l instanceof OrderedListATD.ListEmpty) return false;
-        ListNotEmpty listGood = ((ListNotEmpty) l);
-        return listGood.head.equals(other.getVal(ind)) && checkEquality(listGood.tail, other, ind + 1);
-    }
-
-//    @Override
-//    public boolean equals(Object other) {
-//        if (!(other instanceof OrderedList)) return false;
-//        if (((OrderedList) other).getSize() == 0) {
-//            return vals instanceof OrderedListATD.ListEmpty;
-//        }
-//        OrderedList otherList = (OrderedList) other;
-//        return size == otherList.getSize() && checkEquality(vals, otherList, 0);
-//    }
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof OrderedList)) return false;
-        ListIterator thisIter  = new ListIterator(vals);
+        Iterator<A> thisIter  = iterator();
 
         OrderedList otherList = (OrderedList) other;
         boolean otherIsAtd = false;
 
-        OrderedListATD.ListIterator otherIter = null;
+        Iterator<A> otherIter  = null;
         if (other instanceof OrderedListATD) {
             otherIsAtd = true;
             OrderedListATD otherAsAtd = (OrderedListATD) other;
-            otherIter = otherAsAtd.new ListIterator(otherAsAtd.getVals());
+            otherIter = otherAsAtd.iterator();
         }
 
         boolean res = true;
@@ -201,13 +196,13 @@ public class OrderedListATD <A extends Comparable<? super A>>
     @Override
     public int compareTo(OrderedList<? extends A> other) {
         int minSize = Math.min(size, other.getSize());
-        ListIterator thisIter  = new ListIterator(vals);
+        Iterator<A> thisIter  = iterator();
 
         boolean isAtd = false;
-        ListIterator otherIter = null;
+        Iterator<A> otherIter  = null;
         if (other instanceof OrderedListATD) {
             isAtd = true;
-            otherIter = new ListIterator(((OrderedListATD) other).getVals());
+            otherIter = ((OrderedListATD) other).iterator();
         }
 
         for (int i = 0; i < minSize; i++) {
