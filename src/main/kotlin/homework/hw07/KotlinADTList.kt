@@ -115,8 +115,7 @@ class KotlinADTList<T : Comparable<T>>() : IOrderedList<T>() {
                 return temp ?: throw Exception("List is empty")
             }
 
-            override fun remove() {
-            }
+            override fun remove() {}
         }
     }
 }

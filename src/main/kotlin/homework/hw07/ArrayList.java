@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 /** Implementation of IOrderedList<T> using arrays. */
 public class ArrayList<T extends Comparable<T>> extends IOrderedList<T> {
-    private T[] list = newArray(10);
+    private T[] list = newArray(1);
     private int currentIndex = 0;
 
     /** Creates new array. */
@@ -38,7 +38,7 @@ public class ArrayList<T extends Comparable<T>> extends IOrderedList<T> {
         int size = list.length;
         currentIndex++;
 
-        if (currentIndex > list.length) size += 10;
+        if (currentIndex > list.length) size *= 2;
         T[] temp = newArray(size);
 
         int pos;
@@ -61,7 +61,14 @@ public class ArrayList<T extends Comparable<T>> extends IOrderedList<T> {
     @Override
     public void remove(int index) {
         currentIndex--;
-        System.arraycopy(list, index + 1, list, index, list.length - 1 - index);
+        if (currentIndex * 2 < list.length) {
+            T [] temp = newArray(list.length / 2);
+            System.arraycopy(list, 0, temp, 0, index);
+            System.arraycopy(list, index + 1, temp, index, currentIndex - index);
+            list = temp;
+        }
+        else
+            System.arraycopy(list, index + 1, list, index, list.length - 1 - index);
     }
 
     /** Returns element on given index and deletes it from the list. */

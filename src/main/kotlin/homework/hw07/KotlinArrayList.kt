@@ -11,7 +11,7 @@ import java.util.Arrays
 
 /** Implementation of IOrderedList using arrays. */
 class KotlinArrayList<T : Comparable<T>>() : IOrderedList<T>() {
-    private var list = newArray(10)
+    private var list = newArray(1)
     private var currentIndex = 0
 
     /** Creates new array. */
@@ -34,7 +34,7 @@ class KotlinArrayList<T : Comparable<T>>() : IOrderedList<T>() {
         var size = list.size
         currentIndex++
 
-        if (currentIndex > list.size) size += 10
+        if (currentIndex > list.size) size *= 2
         val temp = newArray(size)
 
         var pos = 0
@@ -57,7 +57,13 @@ class KotlinArrayList<T : Comparable<T>>() : IOrderedList<T>() {
     /** Deletes element on given index. */
     override fun remove(index : Int) {
         currentIndex--
-        System.arraycopy(list, index + 1, list, index, list.size - 1 - index)
+        if (currentIndex * 2 < list.size) {
+            val temp = newArray(list.size / 2)
+            System.arraycopy(list, 0, temp, 0, index)
+            System.arraycopy(list, index + 1, temp, index, currentIndex - index)
+            list = temp
+        } else
+            System.arraycopy(list, index + 1, list, index, list.size - 1 - index)
     }
 
     /** Returns element on given index and deletes it from the list. */
