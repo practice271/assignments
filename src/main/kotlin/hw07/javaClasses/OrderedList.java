@@ -48,6 +48,8 @@ public class OrderedList<E extends Comparable<? super E>>
                 throw new NoSuchElementException();
             }
         }
+        public void remove() {
+            throw new UnsupportedOperationException("no changes allowed");}
     }
     public Iterator<E> iterator(){
         return new LIterator();
