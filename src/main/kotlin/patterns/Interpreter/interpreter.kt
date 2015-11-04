@@ -1,38 +1,38 @@
-package Interpreter
+package patterns.Interpreter
 
 import java.util.*
 
 public abstract class Expression {
-    public abstract fun interpret(tokens: Map<String, Expression>): Int
+    public abstract fun interpret(context: Map<String, Expression>): Int
 }
 
 public class Number(private val number: Int) : Expression() {
-    override fun interpret(tokens: Map<String, Expression>): Int {
+    override fun interpret(context: Map<String, Expression>): Int {
         return number
     }
 }
 
 public class Variable(private val variable: String) : Expression() {
-    override fun interpret(tokens: Map<String, Expression>): Int {
-        return tokens.get(variable)?.interpret(tokens) ?: variable.toInt()
+    override fun interpret(context: Map<String, Expression>): Int {
+        return context.get(variable)?.interpret(context) ?: variable.toInt()
     }
 }
 
 public class Plus(var leftOperand: Expression, var rightOperand: Expression) : Expression() {
-    override fun interpret(tokens: Map<String, Expression>): Int {
-        return leftOperand.interpret(tokens) + rightOperand.interpret(tokens)
+    override fun interpret(context: Map<String, Expression>): Int {
+        return leftOperand.interpret(context) + rightOperand.interpret(context)
     }
 }
 
 public class Minus(var leftOperand: Expression, var rightOperand: Expression) : Expression() {
-    override fun interpret(tokens: Map<String, Expression>): Int {
-        return leftOperand.interpret(tokens) - rightOperand.interpret(tokens)
+    override fun interpret(context: Map<String, Expression>): Int {
+        return leftOperand.interpret(context) - rightOperand.interpret(context)
     }
 }
 
 public class Multi(var leftOperand: Expression, var rightOperand: Expression) : Expression() {
-    override fun interpret(tokens: Map<String, Expression>): Int {
-        return leftOperand.interpret(tokens) * rightOperand.interpret(tokens)
+    override fun interpret(context: Map<String, Expression>): Int {
+        return leftOperand.interpret(context) * rightOperand.interpret(context)
     }
 }
 
