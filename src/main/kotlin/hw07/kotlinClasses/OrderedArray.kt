@@ -12,7 +12,8 @@ data class OrderedArray<E : Comparable<E>>
     private  class Elem<E : Comparable<E>> (private val elem : E){
         fun get () : E = elem;
     }
-    private var size_basic = Math.max(100, size_)
+    private var initSize = 100
+    private var size_basic = Math.max(initSize, size_)
     private var size = size_
     private var arr = Array<Elem<E>>(size_basic, { Elem(defaultElem) })
 
@@ -44,27 +45,19 @@ data class OrderedArray<E : Comparable<E>>
         val listIt = iterator()
         val otherIt = other.iterator()
         while (listIt.hasNext()) {
-            if (listIt.next() != otherIt.next()) {
-                return false
-            }
+            if (listIt.next() != otherIt.next()) {return false}
         }
         return true
     }
     operator fun compareTo(other:  OrderedArray<out E>): Int {
         val size = size()
-        if (size > other.size()) {
-            return 1
-        }
-        if (size < other.size()) {
-            return -1
-        }
+        if (size > other.size()) {return 1}
+        if (size < other.size()) {return -1}
         val arrIt = iterator()
         val otherIt = other.iterator()
         while (arrIt.hasNext()) {
             val comp = arrIt.next().compareTo(otherIt.next())
-            if (comp != 0) {
-                return comp
-            }
+            if (comp != 0) {return comp}
         }
         return 0
     }
@@ -74,13 +67,14 @@ data class OrderedArray<E : Comparable<E>>
     public fun size(): Int {
         return size
     }
-    private fun resize() {
-        size_basic *= 2
+    private fun resize(up : Boolean) {
+        if (up) {size_basic *= 2}
+        else {size_basic /= 2 }
         arr = Array<Elem<E>>(size_basic, {i -> arr[i]})
     }
     public fun add(elem: E) {
         if (size == size_basic) {
-            resize()
+            resize(true)
         }
         for (i in size - 1 downTo 0) {
             if (arr[i].get().compareTo(elem) > 0) {
@@ -110,6 +104,9 @@ data class OrderedArray<E : Comparable<E>>
             arr[i] = arr[i + 1]
         }
         size--
+        if ((size == size_basic / 2 - initSize) && (size_basic > initSize)) {
+            resize(false)
+        }
     }
     public fun clear() {
         size = 0

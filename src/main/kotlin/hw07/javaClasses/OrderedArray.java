@@ -10,7 +10,8 @@ import java.util.NoSuchElementException;
 
 public class OrderedArray<E extends Comparable<? super E>>
         extends AbstractOrderedList< E > {
-    private int size_basic = 100;
+    private int initSize = 100;
+    private int size_basic = initSize;
     private int size = 0;
     private E[] arr;
 
@@ -43,8 +44,9 @@ public class OrderedArray<E extends Comparable<? super E>>
     public  int	size(){
         return size;
     }
-    private void resize () {
-        size_basic *= 2;
+    private void resize (boolean up ) {
+        if (up) { size_basic *= 2;}
+        else {size_basic /= 2;}
         E[] arr2 = (E[]) Array.newInstance(arr[0].getClass(), size_basic);
         for (int i = 0; i < size; i++) {
             arr2[i] = arr[i];
@@ -54,7 +56,7 @@ public class OrderedArray<E extends Comparable<? super E>>
     @Override
     public void add (E elem){
         if (size == size_basic) {
-            resize();
+            resize(true);
         }
         for (int i = size - 1; i >= 0; i -- ){
             if (arr[i].compareTo(elem) > 0){
@@ -87,6 +89,9 @@ public class OrderedArray<E extends Comparable<? super E>>
             arr[i] = arr [i + 1];
         }
         size --;
+        if ((size == size_basic / 2 - initSize) && (size_basic > initSize) ) {
+            resize(false);
+        }
     }
     @Override
     public void	clear() {
