@@ -5,9 +5,11 @@ package hw07.javaClasses;
    real time       2 hours
 */
 import java.lang.reflect.Array;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class OrderedArray<E extends Comparable<? super E>>
-        extends AbstractOrderedList< E >{
+        extends AbstractOrderedList< E > {
     private int size_basic = 100;
     private int size = 0;
     private E[] arr;
@@ -19,6 +21,23 @@ public class OrderedArray<E extends Comparable<? super E>>
             arr[i] =  defaultElem;
         }
         this.size = size;
+    }
+    private class AIterator implements Iterator<E> {
+        private int index = 0;
+        public boolean hasNext(){
+            return (index < size()) ;
+        }
+        public E next(){
+            if (hasNext()){
+                return arr[index ++];
+            }
+            else {
+                throw new NoSuchElementException();
+            }
+        }
+    }
+    public Iterator<E> iterator(){
+        return new AIterator();
     }
     @Override
     public  int	size(){
@@ -53,16 +72,16 @@ public class OrderedArray<E extends Comparable<? super E>>
         return;
     }
     @Override
-    public  E get(int index){
+    public  E get(int index) throws OutOfBoundException {
         if ((index < size) && (0 <= index)){
             return arr[index];
         }
-        throw new ArrayIndexOutOfBoundsException();
+        throw new OutOfBoundException();
     }
     @Override
-    public void removeAt(int index){
+    public void removeAt(int index) throws OutOfBoundException {
         if ((index >= size) || (0 > index)){
-            throw new ArrayIndexOutOfBoundsException();
+            throw new OutOfBoundException();
         }
         for (int i = index; i < size - 1; i ++){
             arr[i] = arr [i + 1];

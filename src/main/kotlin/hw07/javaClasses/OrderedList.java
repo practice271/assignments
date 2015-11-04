@@ -5,36 +5,62 @@ package hw07.javaClasses;
    real time       3 hours
 */
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class OrderedList<E extends Comparable<? super E>>
-        extends AbstractOrderedList< E >{
+        extends AbstractOrderedList<E>{
     private int size = 0;
-    private E last;
+    private E first;
     private OrderedList tail;
 
-    public OrderedList(E last) {
-        this.last = last;
+    public OrderedList(E first) {
+        this.first = first;
         size = 1;
         tail = null;
     }
-    private OrderedList(E last, OrderedList list) {
-        this.last = last;
-        this.tail = list;
-        if (list == null){
+    private OrderedList(E first, OrderedList tail) {
+        this.first = first;
+        this.tail = tail;
+        if (tail == null){
             size = 1;
         }
         else {
-            size = list.size() + 1;
+            size = tail.size() + 1;
         }
+    }
+    private class LIterator implements Iterator<E>{
+        private OrderedList<E> list;
+        public LIterator(){
+            if (size() == 0){list = null;}
+            else {list = new OrderedList<E>(first, tail);}
+        }
+        public boolean hasNext(){
+            return (list != null) ;
+        }
+        public E next(){
+            if (hasNext()){
+                E f = list.first;
+                list = list.tail;
+                return f;
+            }
+            else {
+                throw new NoSuchElementException();
+            }
+        }
+    }
+    public Iterator<E> iterator(){
+        return new LIterator();
     }
     private OrderedList<E> addLoc (OrderedList l, E elem){
         if (l == null){
             return new OrderedList<E>(elem, null);
         }
-        int comp = l.last.compareTo(elem);
-        if (comp <= 0){
+        int comp = l.first.compareTo(elem);
+        if (comp >= 0){
             return new OrderedList<E>(elem,l);
         }
-        return new OrderedList<E>((E)l.last, addLoc(l.tail, elem));
+        return new OrderedList<E>((E)l.first, addLoc(l.tail, elem));
     }
     @Override
     public  int	size(){
@@ -43,13 +69,13 @@ public class OrderedList<E extends Comparable<? super E>>
     @Override
     public void add ( E elem){
         if (size == 0){
-            last = elem;
+            first = elem;
             size ++;
             return;
         }
-        if (last.compareTo(elem) < 0){
-            tail = new OrderedList(last, tail);
-            last = elem;
+        if (first.compareTo(elem) >= 0){
+            tail = new OrderedList(first, tail);
+            first = elem;
             size ++;
             return;
         }
@@ -61,41 +87,40 @@ public class OrderedList<E extends Comparable<? super E>>
         if (i < index){
             return getLoc(l.tail, i + 1, index);
         }
-        return (E) l.last;
+        return (E) l.first;
     }
     @Override
-    public  E get(int index){
+    public  E get(int index) throws OutOfBoundException {
         if ((index >= size) || (index < 0)){
-            throw new ArrayIndexOutOfBoundsException();
+            throw new OutOfBoundException();
         }
-        if (index == size -1){
-            return last;
+        if (index == 0){
+            return first;
         }
-        //our traversal from last to first
-        return getLoc(tail, 0, size - index - 2);
+        return getLoc(tail, 1, index);
     }
 
     private OrderedList remLoc (OrderedList l, int i, int index){
         if (i < index){
-            return new OrderedList(l.last, remLoc(l.tail,i + 1, index));
+            return new OrderedList(l.first, remLoc(l.tail,i + 1, index));
         }
-        if (i == size - 1){ //first elem
+        if (i == size - 1){ //last elem
             return null;
         }
         return l.tail;
     }
     @Override
-    public void removeAt(int index) {
+    public void removeAt(int index) throws OutOfBoundException {
         if ((index >= size) || (index < 0)) {
-            throw new ArrayIndexOutOfBoundsException();
+            throw new OutOfBoundException();
         }
-        if (index == size - 1) {
-            last = (E) tail.last;
+        if (index == 0) {
+            first = (E) tail.first;
             tail = tail.tail;
             size --;
             return;
         }
-        tail = remLoc(tail, 0, size - index - 2);
+        tail = remLoc(tail, 1, index);
         size --;
     }
     @Override

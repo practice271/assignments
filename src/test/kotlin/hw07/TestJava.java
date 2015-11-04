@@ -7,6 +7,7 @@ package hw07;
 
 import hw07.javaClasses.OrderedArray;
 import hw07.javaClasses.OrderedList;
+import hw07.javaClasses.OutOfBoundException;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -36,7 +37,7 @@ public class TestJava {
         assertEquals(2, list.size());
     }
     @Test
-    public void addGetArray() {
+    public void addGetArray() throws OutOfBoundException {
         addFirstElem();
         arr.add("900");
         assertEquals("500", arr.get(0));
@@ -44,7 +45,7 @@ public class TestJava {
         assertEquals("900", arr.get(2));
     }
     @Test
-    public void addGetArray2() {
+    public void addGetArray2() throws OutOfBoundException {
         addFirstElem();
         arr.add("4");
         assertEquals("4", arr.get(0));
@@ -52,7 +53,7 @@ public class TestJava {
         assertEquals("600", arr.get(2));
     }
     @Test
-    public void addGetArray3() {
+    public void addGetArray3() throws OutOfBoundException {
         addFirstElem();
         arr.add("55");
         assertEquals("500", arr.get(0));
@@ -60,7 +61,7 @@ public class TestJava {
         assertEquals("600", arr.get(2));
     }
     @Test
-    public void addGetList() {
+    public void addGetList() throws OutOfBoundException {
         addFirstElem();
         list.add("900");
         assertEquals("500", list.get(0));
@@ -68,15 +69,15 @@ public class TestJava {
         assertEquals("900", list.get(2));
     }
     @Test
-    public void addGetList2() {
+    public void addGetList2() throws OutOfBoundException {
         addFirstElem();
         list.add("4");
-//        assertEquals("4", list.get(0));
+        assertEquals("4", list.get(0));
         assertEquals("500", list.get(1));
         assertEquals("600", list.get(2));
     }
     @Test
-    public void addGetList3() {
+    public void addGetList3() throws OutOfBoundException {
         addFirstElem();
         list.add("55");
         assertEquals("500", list.get(0));
@@ -92,7 +93,7 @@ public class TestJava {
         list.add("99");
     }
     @Test
-    public void removeArrayFirst () {
+    public void removeArrayFirst () throws OutOfBoundException {
         init();
         arr.removeAt(0);
         assertEquals("600", arr.get(0));
@@ -101,7 +102,7 @@ public class TestJava {
         assertEquals(3, arr.size());
     }
     @Test
-    public void removeArrayMiddle () {
+    public void removeArrayMiddle () throws OutOfBoundException {
         init();
         arr.removeAt(1);
         assertEquals("500", arr.get(0));
@@ -110,7 +111,7 @@ public class TestJava {
         assertEquals(3, arr.size());
     }
     @Test
-    public void removeArrayLast () {
+    public void removeArrayLast () throws OutOfBoundException {
         init();
         arr.removeAt(3);
         assertEquals("500", arr.get(0));
@@ -119,7 +120,7 @@ public class TestJava {
         assertEquals(3, arr.size());
     }
     @Test
-    public void removeListFirst () {
+    public void removeListFirst () throws OutOfBoundException {
         init();
         list.removeAt(0);
         assertEquals("600", list.get(0));
@@ -128,7 +129,7 @@ public class TestJava {
         assertEquals(3, list.size());
     }
     @Test
-    public void removeListMiddle () {
+    public void removeListMiddle () throws OutOfBoundException {
         init();
         list.removeAt(1);
         assertEquals("500", list.get(0));
@@ -137,7 +138,7 @@ public class TestJava {
         assertEquals(3, list.size());
     }
     @Test
-    public void removeListLast () {
+    public void removeListLast () throws OutOfBoundException {
         init();
         list.removeAt(3);
         assertEquals("500", list.get(0));
@@ -146,7 +147,7 @@ public class TestJava {
         assertEquals(3, list.size());
     }
     @Test
-    public void clearArray () {
+    public void clearArray () throws OutOfBoundException {
         init();
         arr.clear();
         assertTrue(arr.isEmpty());
@@ -155,7 +156,7 @@ public class TestJava {
         assertEquals(1, arr.size());
     }
     @Test
-    public void clearList () {
+    public void clearList () throws OutOfBoundException {
         init();
         list.clear();
         assertTrue(list.isEmpty());

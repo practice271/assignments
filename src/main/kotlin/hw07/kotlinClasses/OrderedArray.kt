@@ -1,17 +1,39 @@
 package hw07.kotlinClasses
 
+import java.util.*
+
 /* OrderedArray made by Guzel Garifullina
    Estimated time  1 hour
    real time       1 hour
 */
 
 data class OrderedArray<E : Comparable<E>>
-                (private val size_: Int,private val defaultElem: E)  {
+                (private val size_: Int,private val defaultElem: E): Iterable<E> {
     private  class Elem<E : Comparable<E>> (private val elem : E){
         fun get () : E = elem;
     }
+    private var size_basic = Math.max(100, size_)
+    private var size = size_
+    private var arr = Array<Elem<E>>(size_basic, { Elem(defaultElem) })
+
+    private inner class AIterator : Iterator<E> {
+        private var index = 0
+        override fun hasNext(): Boolean {
+            return (index < size())
+        }
+        override fun next(): E {
+            if (hasNext()) {
+                return arr[index++].get()
+            } else {
+                throw NoSuchElementException()
+            }
+        }
+    }
+    override operator fun iterator(): Iterator<E> {
+        return AIterator()
+    }
     //because my array consists of classes
-    public fun equals(other: OrderedArray<E>): Boolean {
+    fun equals(other: OrderedArray<E>): Boolean {
         val size = size()
         if (size != other.size()) {
             return false
@@ -19,22 +41,27 @@ data class OrderedArray<E : Comparable<E>>
         if (size == 0) {
             return true
         }
-        for (i in 0..size - 1) {
-            if (get(i) != (other.get(i))) {
+        val listIt = iterator()
+        val otherIt = other.iterator()
+        while (listIt.hasNext()) {
+            if (listIt.next() != otherIt.next()) {
                 return false
             }
         }
         return true
     }
-    private var size_basic = Math.max(100, size_)
-    private var size = size_
-    private var arr = Array<Elem<E>>(size_basic, { Elem(defaultElem) })
-    public fun compareTo(other: OrderedArray<out E>): Int {
+    operator fun compareTo(other:  OrderedArray<out E>): Int {
         val size = size()
-        if (size > other.size()) {return 1 }
-        if (size < other.size()) {return -1 }
-        for (i in 0..size - 1) {
-            val comp = get(i).compareTo(other[i])
+        if (size > other.size()) {
+            return 1
+        }
+        if (size < other.size()) {
+            return -1
+        }
+        val arrIt = iterator()
+        val otherIt = other.iterator()
+        while (arrIt.hasNext()) {
+            val comp = arrIt.next().compareTo(otherIt.next())
             if (comp != 0) {
                 return comp
             }
