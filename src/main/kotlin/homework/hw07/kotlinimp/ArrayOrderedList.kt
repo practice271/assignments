@@ -34,12 +34,7 @@ constructor() : AbstractOrderedList<T>() {
         size++
     }
 
-    override fun get(index : Int) : T {
-        if ((index < 0) || (index >= size)) {
-            throw IndexOutOfBoundsException()
-        }
-        return items[index]
-    }
+    override fun get(index : Int) : T = items[index]
 
     override fun removeAt(index : Int) {
         if ((index <= 0) || (index >= size)) {
@@ -53,26 +48,24 @@ constructor() : AbstractOrderedList<T>() {
         return size
     }
 
-    override fun equals(other : Any?) : Boolean {
-        if (other !is ArrayOrderedList<*>) {
-            return false
-        }
-        if (other.size() != size) {
-            return false
-        }
-        for (i in 0..size - 1) {
-            if (items[i] !== other.get(i)) {
-                return false
-            }
-        }
-        return true
-    }
-
     override fun hashCode() : Int {
         var h = 0
         for (i in 0..size - 1) {
             h = 23 * h + items[i].hashCode()
         }
         return h
+    }
+
+    override fun iterator() : MutableIterator<T> = LinkedOrderedListIterator<T>(this)
+
+    private class LinkedOrderedListIterator<T : Comparable<T>>(private val list : ArrayOrderedList<T>) : MutableIterator<T> {
+        private var index = 0
+
+        override fun hasNext() = index < list.size
+
+        override fun next() : T = list.items[index++]
+
+        override fun remove() {
+        }
     }
 }

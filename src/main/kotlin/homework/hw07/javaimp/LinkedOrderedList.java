@@ -2,6 +2,8 @@ package homework.hw07.javaimp;
 
 import homework.hw07.AbstractOrderedList;
 
+import java.util.Iterator;
+
 /**
  * Linked list implementation of AbstractOrderedList
  *
@@ -72,27 +74,6 @@ public class LinkedOrderedList<T extends Comparable<T>> extends AbstractOrderedL
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof LinkedOrderedList)) {
-            return false;
-        }
-        LinkedOrderedList otherList = (LinkedOrderedList) other;
-        if (otherList.size() != size) {
-            return false;
-        }
-        int i = 0;
-        Node curNode = head;
-        while (i < size) {
-            if (curNode.value != otherList.get(i)) {
-                return false;
-            }
-            curNode = curNode.next;
-            i++;
-        }
-        return true;
-    }
-
-    @Override
     public int hashCode() {
         int h = 0;
         int i = 0;
@@ -103,6 +84,10 @@ public class LinkedOrderedList<T extends Comparable<T>> extends AbstractOrderedL
             i++;
         }
         return h;
+    }
+
+    public Iterator<T> iterator() {
+        return new LinkedOrderedListIterator(head);
     }
 
     private class Node {
@@ -117,6 +102,27 @@ public class LinkedOrderedList<T extends Comparable<T>> extends AbstractOrderedL
         public Node(T value) {
             this.value = value;
             this.next = null;
+        }
+    }
+
+    private class LinkedOrderedListIterator implements Iterator<T> {
+        private Node node;
+
+        public LinkedOrderedListIterator(Node node) {
+            this.node = node;
+        }
+
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        public T next() {
+            T val = node.value;
+            node = node.next;
+            return val;
+        }
+
+        public void remove() {
         }
     }
 }

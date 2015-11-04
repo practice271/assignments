@@ -65,25 +65,6 @@ class LinkedOrderedList<T : Comparable<T>> : AbstractOrderedList<T>() {
         return size
     }
 
-    override fun equals(other : Any?) : Boolean {
-        if (other !is LinkedOrderedList<*>) {
-            return false
-        }
-        if (other.size() != size) {
-            return false
-        }
-        var i = 0
-        var curNode = head
-        while (curNode != null) {
-            if (curNode.value !== other.get(i)) {
-                return false
-            }
-            curNode = curNode.next
-            i++
-        }
-        return true
-    }
-
     override fun hashCode() : Int {
         var h = 0
         var curNode = head
@@ -92,6 +73,25 @@ class LinkedOrderedList<T : Comparable<T>> : AbstractOrderedList<T>() {
             curNode = curNode.next
         }
         return h
+    }
+
+    override fun iterator() : MutableIterator<T> = LinkedOrderedListIterator<T>(head)
+
+    private class LinkedOrderedListIterator<T : Comparable<T>>(private var node : Node<T>?) : MutableIterator<T> {
+        override fun hasNext() : Boolean = node != null
+
+        override fun next() : T {
+            val nodeSnap = node
+            if (nodeSnap != null) {
+                val value = nodeSnap.value
+                node = node?.next
+                return value
+            }
+            throw IllegalStateException()
+        }
+
+        override fun remove() {
+        }
     }
 
     data class Node<T>(var value : T, var next : Node<T>?)

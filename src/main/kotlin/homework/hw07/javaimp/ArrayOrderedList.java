@@ -2,6 +2,8 @@ package homework.hw07.javaimp;
 
 import homework.hw07.AbstractOrderedList;
 
+import java.util.Iterator;
+
 /**
  * Array implementation of AbstractOrderedList
  *
@@ -43,9 +45,6 @@ public class ArrayOrderedList<T extends Comparable<T>> extends AbstractOrderedLi
 
     @Override
     public T get(int index) {
-        if ((index < 0) || (index >= size)) {
-            throw new IndexOutOfBoundsException();
-        }
         return items[index];
     }
 
@@ -64,28 +63,36 @@ public class ArrayOrderedList<T extends Comparable<T>> extends AbstractOrderedLi
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof ArrayOrderedList)) {
-            return false;
-        }
-        ArrayOrderedList otherList = (ArrayOrderedList) other;
-        if (otherList.size() != size) {
-            return false;
-        }
-        for (int i = 0; i < size; i++) {
-            if (items[i] != otherList.get(i)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public int hashCode() {
         int h = 0;
         for (int i = 0; i < size; i++) {
             h = 23 * h + items[i].hashCode();
         }
         return h;
+    }
+
+    public Iterator<T> iterator() {
+        return new ArrayOrderedListIterator(this);
+    }
+
+    private class ArrayOrderedListIterator implements Iterator<T> {
+        private final ArrayOrderedList<T> list;
+        private int index;
+
+        public ArrayOrderedListIterator(ArrayOrderedList<T> list) {
+            this.list = list;
+            index = 0;
+        }
+
+        public boolean hasNext() {
+            return index < list.size;
+        }
+
+        public T next() {
+            return list.items[index++];
+        }
+
+        public void remove() {
+        }
     }
 }
