@@ -84,7 +84,7 @@ public class hashmapTest {
     }
     @Test fun uniteEmpty() {
         val a = HashMap<Int>(100)
-        val b = null : NodeAvl<Int>?
+        val b  : NodeAvl<Int>? = null
         val c = a.unite(b)
         org.junit.Assert.assertArrayEquals(c.toList().toTypedArray(), arrayOf())
     }

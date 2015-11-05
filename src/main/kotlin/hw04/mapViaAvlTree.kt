@@ -11,8 +11,22 @@ abstract public class Map<A> () {
 }
 
 
-internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
-                           var leftChild : NodeAvl<A>?, var rightChild : NodeAvl<A>?) : hw04.Map<A>(){
+public class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
+           var leftChild : NodeAvl<A>?, var rightChild : NodeAvl<A>?) : hw04.Map<A>(), Iterable<A>{
+
+    override fun iterator(): Iterator<A> {
+        return HashMapIterator()
+    }
+
+    inner class HashMapIterator() : Iterator<A>{
+        override fun hasNext(): Boolean {
+            throw UnsupportedOperationException()
+        }
+
+        override fun next(): A {
+            throw UnsupportedOperationException()
+        }
+    }
 
     override public fun insert (value : Pair<Int, A>) : NodeAvl<A> {
         return add(value, this)
@@ -44,7 +58,7 @@ internal class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
     override public fun intersect (map2 : Map<A>) : NodeAvl<A>? {
         val map1 = toList()
         val map2 = map2.toList()
-        var res = null : NodeAvl<A>?
+        var res : NodeAvl<A>? = null
         for (i in map2) {
             if (map1.hasSecondValueInPair(i)) res = add(i, res)
         }
