@@ -27,7 +27,8 @@ class BasicFunctionTest {
         map.insert(5, "050")
         map.insert(0, "000")
         map.insert(5, "051")
-        assertEquals(listOf(0 to "000", 2 to "020", 5 to "051"), map.toSortedList())
+        val list = map.toSortedList()
+        assertEquals(listOf(0 to "000", 2 to "020", 5 to "051"), list)
     }
 
     private fun testRemove(emptyMap : AbstractMap<Int, String>) {

@@ -11,7 +11,7 @@ import java.util.*
  */
 class HashMap<K, V>() : AbstractMap<K, V> where K : Comparable<K> {
     private val TABLE_SIZE = 1024
-    private val hashTable = Array<ArrayList<MapEntry<K, V>>>(TABLE_SIZE, { _ -> ArrayList<MapEntry<K, V>>() })
+    private val hashTable = Array<ArrayList<MapEntry<K, V>>>(TABLE_SIZE, { ArrayList<MapEntry<K, V>>() })
 
     override fun insert(newKey : K, newValue : V) {
         remove(newKey)
@@ -19,32 +19,58 @@ class HashMap<K, V>() : AbstractMap<K, V> where K : Comparable<K> {
         hashTable[index].add(MapEntry(newKey, newValue))
     }
 
+    override fun insert(newEntry : MapEntry<K, V>) {
+        remove(newEntry.key)
+        val index = newEntry.key.hashCode() % TABLE_SIZE
+        hashTable[index].add(newEntry)
+    }
+
     override fun search(key : K) : V? {
         val tableIndex = key.hashCode() % TABLE_SIZE
-        val listIndex = hashTable[tableIndex].indexOf(MapEntry(key, null))
+        val listIndex = hashTable[tableIndex].indexOfRaw(MapEntry(key, null))
         return if (listIndex != -1)
             hashTable[tableIndex].elementAt(listIndex).value
         else null
     }
 
     override fun remove(key : K) {
-        fun Pair<K, V>.equals(another : Pair<K, V>) = (this.first.equals(another.first))
+        fun MapEntry<K, V>.equals(another : MapEntry<K, V>) = (this.key.equals(another.key))
         val index = key.hashCode() % TABLE_SIZE
-        hashTable[index].remove(MapEntry(key, null)) // NB: will it work?
-    }
-
-    override fun forEach(f : (K, V) -> Unit) {
-        for (list in hashTable) {
-            for (entry in list) {
-                f(entry.key, entry.value)
-            }
-        }
+        hashTable[index].removeRaw(MapEntry(key, null))
     }
 
     override fun newClassInstance() : AbstractMap<K, V> = HashMap<K, V>()
 
-    class MapEntry<K, V>(val key : K, val value : V) {
-        override fun equals(other : Any?) : Boolean = (other is MapEntry<*, *>) && (key?.equals(other.key) ?: false)
-        override fun hashCode() : Int = key?.hashCode() ?: 0
+    override fun iterator() : Iterator<MapEntry<K, V>> = HashMapIterator(this)
+
+    private class HashMapIterator<K : Comparable<K>, V>(map : HashMap<K, V>) : Iterator<MapEntry<K, V>> {
+        private val arrayIterator = map.hashTable.iterator()
+        private var listIterator = nextListIterator()
+
+        override fun hasNext() : Boolean {
+            if (listIterator.hasNext()) return true
+            try {
+                listIterator = nextListIterator()
+                return listIterator.hasNext()
+            }
+            catch (e : NoSuchElementException) {
+                return false
+            }
+        }
+
+        override fun next() : MapEntry<K, V> {
+            if (!listIterator.hasNext()) {
+                listIterator = nextListIterator()
+            }
+            return listIterator.next()
+        }
+
+        private fun nextListIterator() : Iterator<MapEntry<K, V>> {
+            while (arrayIterator.hasNext()) {
+                val list = arrayIterator.next()
+                if (list.size > 0) return list.iterator()
+            }
+            return EmptyIterator<MapEntry<K, V>>()
+        }
     }
 }

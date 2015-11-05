@@ -9,12 +9,17 @@ import java.util.*
  * @param K The type of map's keys (must be comparable).
  * @param V The type of map's values.
  */
-interface AbstractMap<K, V> where K : Comparable<K> {
+interface AbstractMap<K, V> : Iterable<MapEntry<K, V>> where K : Comparable<K> {
 
     /**
      * Inserts a new entry ([newKey], [newValue]) into the map.
      */
     fun insert(newKey : K, newValue : V)
+
+    /**
+     * Inserts [newEntry] into the map.
+     */
+    fun insert(newEntry : MapEntry<K, V>)
 
     /**
      * Returns the value of the entry with [key], if found, or null otherwise.
@@ -35,7 +40,7 @@ interface AbstractMap<K, V> where K : Comparable<K> {
      * Applies [f] to each of the map entries.
      * The order depends on AbstractMap implementation and cannot be guaranteed or predicted.
      */
-    fun forEach(f : (K, V) -> Unit)
+    //fun forEach(f : (K, V) -> Unit)
 
     /**
      * Creates and returns a new empty instance of the same class as this object's.
@@ -48,10 +53,12 @@ interface AbstractMap<K, V> where K : Comparable<K> {
      */
     fun uniteWith(anotherMap : AbstractMap<K, V>) : AbstractMap<K, V> {
         val newMap = newClassInstance()
-        forEach { k, v -> newMap.insert(k, v) }
-        anotherMap.forEach { k, v ->
-            if (!this.contains(k)) {
-                newMap.insert(k, v)
+        for (entry in this) {
+            newMap.insert(entry)
+        }
+        for (entry in anotherMap) {
+            if (!this.contains(entry.key)) {
+                newMap.insert(entry)
             }
         }
         return newMap
@@ -63,9 +70,9 @@ interface AbstractMap<K, V> where K : Comparable<K> {
      */
     fun intersectWith(anotherMap : AbstractMap<K, V>) : AbstractMap<K, V> {
         val newMap = newClassInstance()
-        forEach { k, v ->
-            if (anotherMap.contains(k)) {
-                newMap.insert(k, v)
+        for (entry in this) {
+            if (anotherMap.contains(entry.key)) {
+                newMap.insert(entry)
             }
         }
         return newMap
@@ -77,7 +84,21 @@ interface AbstractMap<K, V> where K : Comparable<K> {
     fun toSortedList() : List<Pair<K, V>> {
         // <K : Comparable<K>, V> AbstractMap<K, V>.
         val list = LinkedList<Pair<K, V>>()
-        this.forEach({ k, v -> list.add(k to v) })
+        for (entry in this) {
+            list.add(entry.key to entry.value)
+        }
         return list.sortedBy { it.first }
+    }
+}
+
+public data class MapEntry<K, V>(val key : K, val value : V) {
+    override fun equals(other : Any?) : Boolean = (other is MapEntry<*, *>) && (key?.equals(other.key) ?: false)
+    override fun hashCode() : Int = key?.hashCode() ?: 0
+}
+
+internal class EmptyIterator<A>() : Iterator<A> {
+    override fun hasNext() : Boolean = false
+    override fun next() : A {
+        throw NoSuchElementException()
     }
 }
