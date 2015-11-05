@@ -153,4 +153,16 @@ public class avlTreeTest {
         val c = b.intersect(a)
         org.junit.Assert.assertArrayEquals(c?.toList()?.toTypedArray(), arrayOf(2.toPair(), 1.toPair(), 3.toPair()))
     }
+
+    @Test fun iteratorTest() {
+        //Testing LCR iterator, others are practically the same
+        //We basically test that we visit all nodes in right order and don't break
+        val a = NodeAvl(Pair(2,2), 0, NodeAvl(
+                Pair(3, 3), 1,
+                NodeAvl(Pair(4, 4), 0, null, null), null), NodeAvl(Pair(1, 1), 0, null, null))
+        val res = "4 3 2 1 "
+        val sb = StringBuilder()
+        for (i in a) sb.append(i.second.toString() + " ")
+        assertEquals(res, sb.toString())
+    }
 }

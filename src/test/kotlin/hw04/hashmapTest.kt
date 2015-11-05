@@ -135,4 +135,18 @@ public class hashmapTest {
         val c = a.intersect(b)
         org.junit.Assert.assertArrayEquals(c?.toList()?.toTypedArray(), arrayOf(1.toPair(), 2.toPair(), 3.toPair()))
     }
+
+    @Test fun iteratorTest() {
+        //Testing LCR iterator, others are practically the same
+        //We basically test that we visit all nodes in right order and don't break
+        val a = HashMap<Int>(10)
+        a.insert(1.toPair())
+        a.insert(2.toPair())
+        a.insert(3.toPair())
+        a.insert(Pair(1, 9))
+        val res = "1 9 2 3 "
+        val sb = StringBuilder()
+        for (i in a) sb.append(i.second.toString() + " ")
+        assertEquals(res, sb.toString())
+    }
 }

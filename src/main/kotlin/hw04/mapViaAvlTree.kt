@@ -1,5 +1,7 @@
 package hw04
 
+import java.util.*
+
 abstract public class Map<A> () {
     abstract public fun insert      (value : Pair<Int, A>) : Map<A>
     abstract public fun delete      (key : Int) : Map<A>?
@@ -11,20 +13,71 @@ abstract public class Map<A> () {
 }
 
 
-public class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
-           var leftChild : NodeAvl<A>?, var rightChild : NodeAvl<A>?) : hw04.Map<A>(), Iterable<A>{
+public class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0, var leftChild : NodeAvl<A>?,
+                        var rightChild : NodeAvl<A>?) : hw04.Map<A>(), Iterable<Pair<Int, A>>{
 
-    override fun iterator(): Iterator<A> {
-        return HashMapIterator()
+    override fun iterator(): Iterator<Pair<Int, A>> {
+        return LCRNodeIterator(this)
     }
 
-    inner class HashMapIterator() : Iterator<A>{
-        override fun hasNext(): Boolean {
-            throw UnsupportedOperationException()
+    inner private class EmptyIterator() : Iterator<Pair<Int, A>> {
+        override fun hasNext(): Boolean = false
+        override fun next(): Pair<Int, A> { throw NoSuchElementException()
         }
+    }
 
-        override fun next(): A {
-            throw UnsupportedOperationException()
+    inner private abstract class NodeIterator(protected val node: NodeAvl<A>): Iterator<Pair<Int, A>> {
+        protected val lIterator: Iterator<Pair<Int, A>> =
+                node.leftChild?.iterator() ?: EmptyIterator()
+        protected val rIterator: Iterator<Pair<Int, A>> =
+                node.rightChild?.iterator() ?: EmptyIterator()
+        protected var observed: Boolean = false
+        protected var lHasNext: Boolean = true
+            get() = if (field) { field = lIterator.hasNext(); field } else false
+        protected var rHasNext: Boolean = true
+            get() = if (field) { field = rIterator.hasNext(); field } else false
+
+        override fun hasNext(): Boolean {
+            if (!observed) return true
+            if (lHasNext ) return true
+            if (rHasNext ) return true
+            return false
+        }
+    }
+
+    private inner class LCRNodeIterator(node: NodeAvl<A>): NodeIterator(node) {
+        override fun next(): Pair<Int, A> {
+            if (lHasNext ) return lIterator.next()
+            if (!observed) {
+                observed = true
+                return node.value
+            }
+            if (rHasNext ) return rIterator.next()
+            throw NoSuchElementException()
+        }
+    }
+
+    private inner class CLRNodeIterator(node: NodeAvl<A>): NodeIterator(node) {
+        override fun next(): Pair<Int, A> {
+            if (!observed) {
+                observed = true
+                return node.value
+            }
+            if (lHasNext ) return lIterator.next()
+            if (rHasNext ) return rIterator.next()
+            throw NoSuchElementException()
+        }
+    }
+
+    private inner class LRCNodeIterator(node: NodeAvl<A>): NodeIterator(node) {
+        override fun next(): Pair<Int, A> {
+            if (lHasNext ) return lIterator.next()
+            if (rHasNext ) return rIterator.next()
+            if (!observed) {
+                observed = true
+                return node.value
+            }
+            throw NoSuchElementException()
         }
     }
 
@@ -163,48 +216,49 @@ public class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0,
         }
     }
 }
-    public fun <A> add(num: Pair<Int, A>, tree: NodeAvl<A>?): NodeAvl<A> {
-        if (tree == null) return NodeAvl<A>(num, 0, null, null)
-        if (tree.value.second == num.second) return tree
-        if (num.first < tree.value.first)
-            return NodeAvl(tree.value, tree.diff + 1, add(num, tree.leftChild), tree.rightChild).balance()
 
-        return NodeAvl(tree.value, tree.diff - 1, tree.leftChild, add(num, tree.rightChild)).balance()
-    }
+public fun <A> add(num: Pair<Int, A>, tree: NodeAvl<A>?): NodeAvl<A> {
+    if (tree == null) return NodeAvl<A>(num, 0, null, null)
+    if (tree.value.second == num.second) return tree
+    if (num.first < tree.value.first)
+        return NodeAvl(tree.value, tree.diff + 1, add(num, tree.leftChild), tree.rightChild).balance()
 
-    public fun <A> search(key : Int, tree : NodeAvl<A>?) : A? {
-        if (tree == null)            return null //whoever wanted value that isn't here deserves null
-        if (tree.value.first == key) return tree.value.second
-        if (tree.value.first <  key) return search(key, tree.rightChild)
-        return search(key, tree.leftChild)
-    }
+    return NodeAvl(tree.value, tree.diff - 1, tree.leftChild, add(num, tree.rightChild)).balance()
+}
 
-    public fun <A> del(num : Int, tree : NodeAvl<A>?) : NodeAvl<A>? {
-        if (tree == null) return null //if there's nothing to delete, nothing will be deleted
-        if (num == tree.value.first) {
-            if (tree.leftChild != null) {
-                val substitute = tree.leftChild!!.findBiggest()
-                val newLeftChild = del(substitute.first,tree.leftChild)
-                return NodeAvl(substitute, tree.diff - 1, newLeftChild, tree.rightChild).balance()
-            }
-            if (tree.rightChild != null) {
-                val substitute = tree.rightChild!!.findSmallest()
-                val newRightChild = del(substitute.first,tree.rightChild)
-                return NodeAvl(substitute, tree.diff + 1, tree.leftChild, newRightChild).balance()
-            }
-            return null
+public fun <A> search(key : Int, tree : NodeAvl<A>?) : A? {
+    if (tree == null)            return null //whoever wanted value that isn't here deserves null
+    if (tree.value.first == key) return tree.value.second
+    if (tree.value.first <  key) return search(key, tree.rightChild)
+    return search(key, tree.leftChild)
+}
+
+public fun <A> del(num : Int, tree : NodeAvl<A>?) : NodeAvl<A>? {
+    if (tree == null) return null //if there's nothing to delete, nothing will be deleted
+    if (num == tree.value.first) {
+        if (tree.leftChild != null) {
+            val substitute = tree.leftChild!!.findBiggest()
+            val newLeftChild = del(substitute.first,tree.leftChild)
+            return NodeAvl(substitute, tree.diff - 1, newLeftChild, tree.rightChild).balance()
         }
-        if (num < tree.value.first) {
-            val newLeftChild = del(num,tree.leftChild)
-            return NodeAvl(tree.value, tree.diff - 1, newLeftChild, tree.rightChild).balance()
+        if (tree.rightChild != null) {
+            val substitute = tree.rightChild!!.findSmallest()
+            val newRightChild = del(substitute.first,tree.rightChild)
+            return NodeAvl(substitute, tree.diff + 1, tree.leftChild, newRightChild).balance()
         }
-        val newRightChild = del(num,tree.rightChild)
-        return NodeAvl(tree.value, tree.diff + 1, tree.leftChild, newRightChild).balance()
+        return null
     }
-    public fun <A> printTree (spaces : String, node : NodeAvl<A>?) {
-        if (node == null) { print("null"); return}
-        print("${node.value}\n$spaces|---")
-        printTree(spaces + "        ", node.rightChild)
-        print("\n$spaces|\n$spaces|---")
-        printTree(spaces + "        ", node.leftChild)
+    if (num < tree.value.first) {
+        val newLeftChild = del(num,tree.leftChild)
+        return NodeAvl(tree.value, tree.diff - 1, newLeftChild, tree.rightChild).balance()
     }
+    val newRightChild = del(num,tree.rightChild)
+    return NodeAvl(tree.value, tree.diff + 1, tree.leftChild, newRightChild).balance()
+}
+public fun <A> printTree (spaces : String, node : NodeAvl<A>?) {
+    if (node == null) { print("null"); return}
+    print("${node.value}\n$spaces|---")
+    printTree(spaces + "        ", node.rightChild)
+    print("\n$spaces|\n$spaces|---")
+    printTree(spaces + "        ", node.leftChild)
+}

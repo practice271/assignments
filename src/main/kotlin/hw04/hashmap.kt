@@ -5,19 +5,17 @@ import kotlin.properties.Delegates
 public class HashMap<A> (arraySize : Int) : Map<A>(), Iterable<Pair<Int,A>> {
     val values = Array(arraySize, {linkedListOf<Pair<Int,A>>()})
 
-    override fun iterator(): Iterator<Pair<Int,A>> {
-        return HashMapIterator()
-    }
+    override fun iterator(): Iterator<Pair<Int,A>> = HashMapIterator()
 
     inner class HashMapIterator() : Iterator<Pair<Int,A>>{
         var curList = 0
-        var curElem = 0
         var curIter by Delegates.notNull<Iterator<Pair<Int, A>>>()
         init {
             while (curList < values.size - 1 && values[curList].isEmpty()) curList++
             curIter = values[curList].iterator()
         }
         override fun hasNext(): Boolean {
+            if (curList >= values.size) return false
             if (curIter.hasNext()) return true
 
             curList++
