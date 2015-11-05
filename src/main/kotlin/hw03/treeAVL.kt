@@ -1,15 +1,24 @@
 package hw03
 
+import java.util.*
+
 /*  AVL tree: search, add, remove element  made by Guzel Garifullina
    Estimated time 3 hour
    real time      4 hours
 */
-abstract class AVL<T : Comparable<T>> {
+abstract class AVL<T : Comparable<T>> : Iterable<T> {
     abstract internal fun calcHeightAndDiff() : Pair<Int, Int>
     abstract internal fun height(): Int
     abstract internal fun diff() : Int
 }
 open class Empty <T : Comparable<T>>() : AVL<T>(){
+    private class EmptyIterator<T>(): Iterator<T> {
+        override fun hasNext(): Boolean = false
+        override fun next(): T { throw NoSuchElementException()}
+    }
+    override operator fun iterator(): Iterator<T> {
+        return EmptyIterator()
+    }
     override internal fun calcHeightAndDiff() : Pair<Int, Int>
     { return Pair(-1, 0)}
     override internal fun height(): Int{
@@ -21,25 +30,56 @@ open class Empty <T : Comparable<T>>() : AVL<T>(){
 }
 open class Node<T : Comparable<T>> (val key : T,
                  left : AVL<T>,
-                 right : AVL<T>) : AVL<T>(){
+                 right : AVL<T>) : AVL<T>() {
     public var leftChild: AVL<T> = left
-        get() = $leftChild
+        get() = field
         set(newLeft: AVL<T>) {
-            $leftChild = newLeft
+            field = newLeft
             heightAndDiff = calcHeightAndDiff()
         }
     public var rightChild: AVL<T> = right
-        get() = $rightChild
+        get() = field
         set(newRight: AVL<T>) {
-            $rightChild = newRight
+            field = newRight
             heightAndDiff = calcHeightAndDiff()
         }
+    private class NodeIterator<T : Comparable<T>> (private val node : Node<T>): Iterator<T> {
+        private  val lIt = node.leftChild.iterator()
+        private  val rIt = node.rightChild.iterator()
+        private var notWatchedLeft = lIt.hasNext()
+        private var notWatchedRoot = true
+        private var notWatchedRight = rIt.hasNext()
+        override fun hasNext(): Boolean = notWatchedRoot || notWatchedRight
+        override fun next(): T {
+            val res : T
+            when {
+                notWatchedLeft -> {
+                    res = lIt.next()
+                    notWatchedLeft = lIt.hasNext()
+                }
+                notWatchedRoot -> {
+                    res = node.key
+                    notWatchedRoot = false
+                }
+                notWatchedRight -> {
+                    res = rIt.next()
+                    notWatchedRight = rIt.hasNext()
+                }
+                else -> throw NoSuchElementException()
+            }
+            return res
+        }
+    }
+    override operator fun iterator(): Iterator<T> {
+        return NodeIterator(this)
+    }
     //suppose that children has right heights
     override internal fun calcHeightAndDiff() : Pair<Int, Int>{
         val height =  Math.max(rightChild.height(), leftChild.height()) + 1
         val diff  = rightChild.height() -  leftChild.height()
         return Pair(height, diff)
     }
+
     private var heightAndDiff : Pair<Int, Int> = calcHeightAndDiff()
     override fun height(): Int = heightAndDiff.first
     override fun diff() : Int  =  heightAndDiff.second

@@ -6,8 +6,8 @@ import java.util.*
    Estimated time 15 minutes
    real time      10 minutes
 */
-public interface AbstractSet<T : Comparable<T>> {
-    abstract protected fun makeEmpty()
+public interface AbstractSet<T : Comparable<T>> : Iterable<T>{
+    abstract public  fun makeEmpty()
     abstract public fun insert (value : T)
     abstract public fun delete (value : T) : Boolean
     abstract public fun search (value : T) : Boolean

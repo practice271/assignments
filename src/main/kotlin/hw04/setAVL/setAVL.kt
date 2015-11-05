@@ -24,7 +24,10 @@ public fun <T : Comparable<T>>AVL<T>.toList (): ArrayList<T> {
 }
 public class setAVL<T : Comparable<T>> : AbstractSet<T> {
     private  var tree : AVL<T> = Empty()
-    override protected fun makeEmpty() {
+    override operator fun iterator(): Iterator<T> {
+        return tree.iterator()
+    }
+    override public fun makeEmpty() {
         tree = Empty()
     }
     override  public fun insert  (value : T){
