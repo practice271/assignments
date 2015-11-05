@@ -1,5 +1,7 @@
 package classroom.c02
 
+import java.util.*
+
 /*
 abstract class Tree() {}
 class Empty(): Tree() {}
@@ -61,11 +63,26 @@ fun getTree(v: Int): Tree? {
     return Tree(v, null, null)
 }
 
+fun asdf(/*a: Tree?*/): Pair<Int, Int> {
+    if (true) {
+        val left = 5 //...
+        val right = 5 //...
+        return  Pair(left, right)
+    }
+    val left = 6 //...
+    val right = 6 //...
+    return  Pair(left, right)
+
+
+    //val array: Array<List<Int>> = Array(100500, {ArrayList<Int>()})
+}
+
 fun main(args: Array<String>) {
     var tree: Tree? = getTree(1)
     val tree_val = tree
     if (tree_val != null) {
         val value: Int = tree_val.value
+        println(value)
     }
 
 
