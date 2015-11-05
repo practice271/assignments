@@ -16,14 +16,11 @@ abstract public class Map<A> () {
 public class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0, var leftChild : NodeAvl<A>?,
                         var rightChild : NodeAvl<A>?) : hw04.Map<A>(), Iterable<Pair<Int, A>>{
 
-    override fun iterator(): Iterator<Pair<Int, A>> {
-        return LCRNodeIterator(this)
-    }
+    override fun iterator(): Iterator<Pair<Int, A>> = CLRNodeIterator(this)
 
     inner private class EmptyIterator() : Iterator<Pair<Int, A>> {
         override fun hasNext(): Boolean = false
-        override fun next(): Pair<Int, A> { throw NoSuchElementException()
-        }
+        override fun next(): Pair<Int, A> = throw NoSuchElementException()
     }
 
     inner private abstract class NodeIterator(protected val node: NodeAvl<A>): Iterator<Pair<Int, A>> {
@@ -90,7 +87,7 @@ public class NodeAvl<A>(var value : Pair<Int, A>, var diff : Int = 0, var leftCh
     override public fun search (key : Int) : A? {
         return search(key, this)
     }
-    override internal fun toList () : MutableList<Pair<Int, A>> {
+    override internal fun toList () : List<Pair<Int, A>> {
         val res = linkedListOf(value)
         val left = leftChild?.toList() ?: linkedListOf()
         res.addAll(left)
