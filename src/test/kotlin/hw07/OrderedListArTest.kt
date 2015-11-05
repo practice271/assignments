@@ -92,6 +92,33 @@ class OrderedListArKotlinTest {
         a.delVal(17)
         Assert.assertTrue(a == resList)
     }
+    
+    @Test
+    fun testHashCodeForEqual() {
+        val in1 = arrayOf(1, 2, 4)
+        val in2 = arrayOf(1, 2, 4)
+        val a = OrderedListAr(in1, true)
+        val b = OrderedListAr(in2, true)
+        Assert.assertEquals(a.hashCode(), b.hashCode())
+    }
+
+    @Test
+    fun testHashCodeForInequal() {
+        val in1 = arrayOf(1, 2, 4)
+        val in2 = arrayOf(4, 3, 1)
+        val a = OrderedListAr(in1, true)
+        val b = OrderedListAr(in2, true)
+        Assert.assertNotEquals(a.hashCode(), b.hashCode())
+    }
+
+    @Test
+    fun testHashCodeDifferentImplementations() {
+        val in1 = arrayOf(1, 2, 4)
+        val in2 = arrayOf(1, 2, 4)
+        val a = OrderedListAr(in1, true)
+        val b = OrderedListATD(in2, true)
+        Assert.assertEquals(a.hashCode(), b.hashCode())
+    }
 
     @Test
     fun testEquals1() {

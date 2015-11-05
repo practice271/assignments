@@ -138,6 +138,24 @@ class OrderedListATDKotlinTest {
     }
 
     @Test
+    fun testHashCodeForEqual() {
+        val in1 = arrayOf(1, 2, 4)
+        val in2 = arrayOf(1, 2, 4)
+        val a = OrderedListATD(in1, true)
+        val b = OrderedListATD(in2, true)
+        Assert.assertEquals(a.hashCode().toLong(), b.hashCode().toLong())
+    }
+
+    @Test
+    fun testHashCodeForInequal() {
+        val in1 = arrayOf(1, 2, 4)
+        val in2 = arrayOf(4, 3, 1)
+        val a = OrderedListATD(in1, true)
+        val b = OrderedListATD(in2, true)
+        Assert.assertNotEquals(a.hashCode().toLong(), b.hashCode().toLong())
+    }
+
+    @Test
     fun testCompareSameSizeNotEqual() {
         val a = arrayOf(-1, 1, 2)
         val b = arrayOf(-1, 1, 4)

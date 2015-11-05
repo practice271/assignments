@@ -94,8 +94,30 @@ public class OrderedListArTest {
     }
 
     @Test
-    public void testHashCode() throws Exception {
+    public void testHashCodeForEqual() throws Exception {
+        Integer[] in1 = {1, 2, 4};
+        Integer[] in2 = {1, 2, 4};
+        OrderedListAr<Integer> a = new OrderedListAr<Integer> (in1, true);
+        OrderedListAr<Integer> b = new OrderedListAr<Integer> (in2, true);
+        Assert.assertEquals(a.hashCode(), b.hashCode());
+    }
 
+    @Test
+     public void testHashCodeForInequal() throws Exception {
+        Integer[] in1 = {1, 2, 4};
+        Integer[] in2 = {4, 3, 1};
+        OrderedListAr<Integer> a = new OrderedListAr<Integer> (in1, true);
+        OrderedListAr<Integer> b = new OrderedListAr<Integer> (in2, true);
+        Assert.assertNotEquals(a.hashCode(), b.hashCode());
+    }
+
+    @Test
+    public void testHashCodeDifferentImplementations() throws Exception {
+        Integer[] in1 = {1, 2, 4};
+        Integer[] in2 = {1, 2, 4};
+        OrderedListAr<Integer> a = new OrderedListAr<Integer> (in1, true);
+        OrderedListATD<Integer> b = new OrderedListATD<Integer> (in2, true);
+        Assert.assertEquals(a.hashCode(), b.hashCode());
     }
 
     @Test
