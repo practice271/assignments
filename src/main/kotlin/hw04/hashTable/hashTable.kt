@@ -11,8 +11,8 @@ import java.util.*
 */
 
 public class hashTable<T : Comparable<T>>() : AbstractSet<T> {
-    internal  var size = 100
-    internal var elemAmount = 0
+    public var size = 100
+    public var elemAmount = 0
     private  fun returnEmpty() : ArrayList<ArrayList<T>>{
         var arr = ArrayList<ArrayList<T>>()
         for (i in 0.. (size - 1)){

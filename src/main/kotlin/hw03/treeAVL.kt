@@ -7,9 +7,9 @@ import java.util.*
    real time      4 hours
 */
 abstract class AVL<T : Comparable<T>> : Iterable<T> {
-    abstract internal fun calcHeightAndDiff() : Pair<Int, Int>
-    abstract internal fun height(): Int
-    abstract internal fun diff() : Int
+    abstract public  fun calcHeightAndDiff() : Pair<Int, Int>
+    abstract public  fun height(): Int
+    abstract public  fun diff() : Int
 }
 open class Empty <T : Comparable<T>>() : AVL<T>(){
     private class EmptyIterator<T>(): Iterator<T> {
@@ -19,12 +19,12 @@ open class Empty <T : Comparable<T>>() : AVL<T>(){
     override operator fun iterator(): Iterator<T> {
         return EmptyIterator()
     }
-    override internal fun calcHeightAndDiff() : Pair<Int, Int>
+    override public  fun calcHeightAndDiff() : Pair<Int, Int>
     { return Pair(-1, 0)}
-    override internal fun height(): Int{
+    override public fun height(): Int{
         return -1
     }
-    override internal fun diff() : Int{
+    override public fun diff() : Int{
         return 0
     }
 }
@@ -74,7 +74,7 @@ open class Node<T : Comparable<T>> (val key : T,
         return NodeIterator(this)
     }
     //suppose that children has right heights
-    override internal fun calcHeightAndDiff() : Pair<Int, Int>{
+    override public fun calcHeightAndDiff() : Pair<Int, Int>{
         val height =  Math.max(rightChild.height(), leftChild.height()) + 1
         val diff  = rightChild.height() -  leftChild.height()
         return Pair(height, diff)
@@ -136,7 +136,7 @@ public fun <T : Comparable<T>> AVL<T>.find (elem : T): Boolean {
     }
 }
 
-internal fun unWrap<T : Comparable<T>> (tree: AVL<T>) : Node<T>{
+public fun unWrap<T : Comparable<T>> (tree: AVL<T>) : Node<T>{
     when (tree){
         is Empty -> throw Exception("Can't unWrap")
         is Node  -> return tree
