@@ -11,7 +11,11 @@ apply plugin: 'application'
 
 defaultTasks 'test'
 
+<<<<<<< HEAD
 mainClassName = 'hw04.Hw04Package'
+=======
+mainClassName = 'classroom.c05.MainKt'
+>>>>>>> refs/remotes/practice271/master
 
 sourceCompatibility = 1.5
 
@@ -24,7 +28,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 buildscript {
-    ext.kotlin_version = '0.12.1230'
+    ext.kotlin_version = '1.0.0-beta-1038'
     repositories {
         mavenCentral()
     }
