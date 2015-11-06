@@ -1,9 +1,47 @@
-package hw04
+package hw08
 
-import java.util.LinkedList
+import java.util.*
+
+internal class ArrayOfElemOrNullIterator<A>(private var array : Array<A?>) : Iterator<A> {
+    var index = 0
+    override public fun hasNext() : Boolean {
+        for (i in index .. array.size - 1)
+            if (array[i] != null) {
+                index = i
+                return true
+            }
+        return false
+    }
+    override public fun next() : A {
+        if (!hasNext()) throw NoSuchElementException()
+        return array[index++] as A
+    }
+}
+
+internal class HashMapIterator<Key, Value>(private val array : Array<LinkedList<Pair<Key, Value>>?>)
+: Iterator<Pair<Key, Value>> {
+    var arrayIterator = ArrayOfElemOrNullIterator(array)
+    var listIterOrNull : Iterator<Pair<Key, Value>>? = null
+    override public fun hasNext() : Boolean {
+        if (listIterOrNull != null)
+            if (listIterOrNull!!.hasNext()) return true
+        return arrayIterator.hasNext()
+    }
+    override public fun next() : Pair<Key, Value> {
+        if (listIterOrNull != null)
+            if (listIterOrNull!!.hasNext()) return listIterOrNull!!.next()
+        if (!arrayIterator.hasNext())
+            throw NoSuchElementException()
+        listIterOrNull = arrayIterator.next().iterator()
+        return listIterOrNull!!.next()
+    }
+}
+
 class HashMap<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key> {
     private val arraySize = 1000
     private val array: Array<LinkedList<Pair<Key, Value>>?> = Array(arraySize, { null })
+
+    override public fun iterator() : Iterator<Pair<Key, Value>> = HashMapIterator(array)
 
     private fun getHashCode(key: Key) = key.hashCode() % arraySize
 
@@ -25,6 +63,7 @@ class HashMap<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key
         while (iterator.hasNext())
             if (iterator.next().first == key) {
                 iterator.remove()
+                if (array[arrayIndex]!!.size == 0) array[arrayIndex] = null
                 return
             }
     }

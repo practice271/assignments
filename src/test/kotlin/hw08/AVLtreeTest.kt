@@ -1,8 +1,7 @@
-package hw04
+package hw08
 
 import org.junit.Test
 import kotlin.test.assertEquals
-import java.util.LinkedList
 
 public class AVLtreeTest {
 
@@ -25,12 +24,12 @@ public class AVLtreeTest {
                 "{{{null,2400,null},2500,{null,2600,null}},2700,{null,2800,null}}}"
     }
 
-    Test fun emptyTreeTest() {
+    @Test fun emptyTreeTest() {
         val tree = AVLtree<Int, Int>()
         assertEquals("null", tree.toText())
     }
 
-    Test fun insertKeyTreeTest() {
+    @Test fun insertKeyTreeTest() {
         var tree = AVLtree<Int, Int>()
         tree.insert(1, 100)
         assertEquals("null,100,null", tree.toText())
@@ -46,12 +45,12 @@ public class AVLtreeTest {
         assertEquals(ans, tree.toText())
     }
 
-    Test fun findKeyEmptyTreeTest() {
+    @Test fun findKeyEmptyTreeTest() {
         val tree = AVLtree<Int, Int>()
         assertEquals(null, tree.search(1))
     }
 
-    Test fun findNonExistentTreeTest() {
+    @Test fun findNonExistentTreeTest() {
         val tree = AVLtree<Int, Int>()
         tree.insert(3, 300); tree.insert(7, 700); tree.insert(5, 500)
         assertEquals(null, tree.search(1))
@@ -60,7 +59,7 @@ public class AVLtreeTest {
         assertEquals(null, tree.search(8))
     }
 
-    Test fun findKeyTreeTest() {
+    @Test fun findKeyTreeTest() {
 
         var tree = AVLtree<Int, Int>()
         tree.insert(1, 100); tree.insert(5, 500); tree.insert(9, 900);
@@ -76,20 +75,20 @@ public class AVLtreeTest {
         assertEquals(1900, tree.search(19))
     }
 
-    Test fun removeKeyEmptyTreeTest() {
+    @Test fun removeKeyEmptyTreeTest() {
         val tree = AVLtree<Int, Int>()
         tree.delete(1)
         assertEquals("null", tree.toText())
     }
 
-    Test fun removeKeyNonExistentTreeTest() {
+    @Test fun removeKeyNonExistentTreeTest() {
         val tree = AVLtree<Int, Int>()
         tree.insert(3, 300); tree.insert(7, 700); tree.insert(5, 500)
         tree.delete(1); tree.delete(4); tree.delete(6); tree.delete(8);
         assertEquals("{null,300,null},500,{null,700,null}", tree.toText())
     }
 
-    Test fun removeKeyTreeTest() {
+    @Test fun removeKeyTreeTest() {
         var tree = AVLtree<Int, Int>()
         tree.insert(1, 100)
         tree.delete(1)
@@ -105,7 +104,7 @@ public class AVLtreeTest {
                 "{null,2600,{null,2800,null}}}}", tree.toText())
     }
 
-    Test fun treeUnionTreeTest() {
+    @Test fun treeUnionTreeTest() {
         var tree1 = AVLtree<Int, Int>()
         var tree2 = AVLtree<Int, Int>()
         assertEquals("null", tree1.union(tree2).toText())
@@ -118,7 +117,7 @@ public class AVLtreeTest {
         assertEquals("{null,300,null},500,{null,700,{null,1000,null}}", tree1.union(tree2).toText())
     }
 
-    Test fun treeUnionHashMapTest() {
+    @Test fun treeUnionHashMapTest() {
         var tree = AVLtree<Int, Int>()
         var hashMap = HashMap<Int, Int>()
         assertEquals("null", tree.union(hashMap).toText())
@@ -133,7 +132,7 @@ public class AVLtreeTest {
         assertEquals("{null,300,null},700,{null,1000,null}", tree.union(hashMap).toText())
     }
 
-    Test fun treeIntersectionTreeTest() {
+    @Test fun treeIntersectionTreeTest() {
         var tree1 = AVLtree<Int, Int>()
         var tree2 = AVLtree<Int, Int>()
         assertEquals("null", tree1.intersection(tree2).toText())
@@ -146,7 +145,7 @@ public class AVLtreeTest {
         assertEquals("null,300,{null,700,null}", tree1.intersection(tree2).toText())
     }
 
-    Test fun treeIntersectionHashMapTest() {
+    @Test fun treeIntersectionHashMapTest() {
         var tree = AVLtree<Int, Int>()
         var hashMap = HashMap<Int, Int>()
         assertEquals("null", tree.intersection(hashMap).toText())

@@ -1,10 +1,13 @@
-package hw04
+package hw08
 
 import java.util.LinkedList
+import java.util.NoSuchElementException
 
 class AVLtree<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key> {
 
     private var root: Node<Key, Value>? = null
+
+    override fun iterator() = root?.iterator() ?: EmptyIterator()
 
     override public fun search(key: Key): Value? {
         return root?.search(key)
@@ -50,17 +53,19 @@ where Key : Comparable<Key> {
 
     private var height: Int = 1
 
-    private var left: Node<Key, Value>? = left_param
-        set(newLeft) {
-            $left = newLeft
-            $height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
+    public var left: Node<Key, Value>? = left_param
+        private set(newLeft) {
+            field = newLeft
+            height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
         }
 
-    private var right: Node<Key, Value>? = right_param
-        set(newRight) {
-            $right = newRight
-            $height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
+    public var right: Node<Key, Value>? = right_param
+        private set(newRight) {
+            field = newRight
+            height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
         }
+
+    public fun iterator() : Iterator<Pair<Key, Value>> = NodeIterator(this)
 
     public fun toList(): LinkedList<Pair<Key, Value>> {
         fun f(node: Node<Key, Value>?, list: LinkedList<Pair<Key, Value>>): LinkedList<Pair<Key, Value>> {
@@ -183,5 +188,42 @@ where Key : Comparable<Key> {
             }
         }
         return ans.balance()
+    }
+}
+
+internal class EmptyIterator<A>(): Iterator<A> {
+    override fun hasNext(): Boolean = false
+    override fun next(): A { throw NoSuchElementException() }
+}
+
+private class NodeIterator<Key : Comparable<Key>, Value>(private val node : Node<Key, Value>)
+: Iterator<Pair<Key, Value>> {
+    protected val lIterator = node.left?.iterator() ?: EmptyIterator<Pair<Key, Value>>()
+    protected val rIterator = node.right?.iterator() ?: EmptyIterator<Pair<Key, Value>>()
+    protected var wasObserved: Boolean = false
+    protected var leftHasNext: Boolean = true
+        get() =
+        if (field) {
+            field = lIterator.hasNext()
+            field
+        } else false
+    protected var rightHasNext: Boolean = true
+        get() =
+        if (field) {
+            field = rIterator.hasNext()
+            field
+        } else false
+
+    override fun hasNext(): Boolean = !wasObserved || leftHasNext || rightHasNext
+
+    override fun next(): Pair<Key, Value> {
+        if (leftHasNext) return lIterator.next()
+        if (!wasObserved) {
+            wasObserved = true;
+            return Pair(node.key, node.value)
+        }
+        if (rightHasNext) return rIterator.next()
+        throw NoSuchElementException()
+
     }
 }

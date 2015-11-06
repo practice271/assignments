@@ -1,8 +1,8 @@
-package hw04
+package hw08
 
 import java.util.LinkedList
 
-abstract class AbstractMap<Key, Value> where Key : Comparable<Key> {
+abstract class AbstractMap<Key, Value> : Iterable<Pair<Key, Value>> where Key : Comparable<Key> {
     abstract public fun insert(key: Key, value: Value)
     abstract public fun delete(key: Key)
     abstract public fun search(key: Key): Value?

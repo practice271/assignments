@@ -1,4 +1,4 @@
-package hw04
+package hw08
 
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -26,12 +26,12 @@ public class HashMapTest {
             Pair(20, "2000"), Pair(21, "2100"), Pair(22, "2200"), Pair(23, "2300"), Pair(24, "2400"),
             Pair(25, "2500"), Pair(26, "2600"), Pair(27, "2700"), Pair(28, "2800"))
 
-    Test fun emptyHashTMapTest() {
+    @Test fun emptyHashTMapTest() {
         val hashMap = HashMap<Int, String>()
         assertEquals(linkedListOf<Pair<Int, String>>(), hashMap.toList())
     }
 
-    Test fun insertKeyHashMapTest() {
+    @Test fun insertKeyHashMapTest() {
         var hashMap = HashMap<Int, String>()
         hashMap.insert(1, "100")
         assertEquals(linkedListOf(Pair(1, "100")), hashMap.toList())
@@ -44,12 +44,12 @@ public class HashMapTest {
         assertEquals(getTestingHashMapAsList(), hashMap.toList())
     }
 
-    Test fun findKeyEmptyHashMapTest() {
+    @Test fun findKeyEmptyHashMapTest() {
         var hashMap = HashMap<Int, String>()
         assertEquals(null, hashMap.search(1))
     }
 
-    Test fun findKeyHashMapTest() {
+    @Test fun findKeyHashMapTest() {
 
         var hashMap = HashMap<Int, String>()
         hashMap.insert(1, "100"); hashMap.insert(5, "500"); hashMap.insert(9, "900");
@@ -65,20 +65,20 @@ public class HashMapTest {
         assertEquals("1900", hashMap.search(19))
     }
 
-    Test fun removeKeyEmptyHashMap() {
+    @Test fun removeKeyEmptyHashMap() {
         val hashMap = HashMap<Int, String>()
         hashMap.delete(1)
         assertEquals(linkedListOf<Pair<Int, String>>(), hashMap.toList())
     }
 
-    Test fun removeKeyNonExistentHashMapTest() {
+    @Test fun removeKeyNonExistentHashMapTest() {
         val hashMap = HashMap<Int, Int>()
         hashMap.insert(3, 300); hashMap.insert(7, 700); hashMap.insert(5, 500)
         hashMap.delete(1); hashMap.delete(4); hashMap.delete(6); hashMap.delete(8);
         assertEquals(linkedListOf<Pair<Int, Int>>(Pair(3, 300), Pair(5, 500), Pair(7, 700)), hashMap.toList())
     }
 
-    Test fun removeKeyHashMapTest() {
+    @Test fun removeKeyHashMapTest() {
         var hashMap = HashMap<Int, String>()
         hashMap.insert(1, "100")
         hashMap.delete(1)
@@ -95,7 +95,7 @@ public class HashMapTest {
         assertEquals(ansList, hashMap.toList())
     }
 
-    Test fun hashMapUnionHashMap() {
+    @Test fun hashMapUnionHashMap() {
         var hashMap1 = HashMap<Int, Int>()
         var hashMap2 = HashMap<Int, Int>()
         assertEquals(linkedListOf<Pair<Int, String>>(), hashMap1.union(hashMap2).toList())
@@ -109,7 +109,7 @@ public class HashMapTest {
                 hashMap1.union(hashMap2).toList())
     }
 
-    Test fun HashMapUnionTreeTest() {
+    @Test fun HashMapUnionTreeTest() {
         var tree = AVLtree<Int, Int>()
         var hashMap = HashMap<Int, Int>()
         assertEquals(linkedListOf<Pair<Int, String>>(), hashMap.union(tree).toList())
@@ -125,7 +125,7 @@ public class HashMapTest {
         assertEquals(linkedListOf(Pair(3, 300), Pair(5, 500), Pair(7, 700)), hashMap.union(tree).toList())
     }
 
-    Test fun hashMapIntersectionHashMap() {
+    @Test fun hashMapIntersectionHashMap() {
         var hashMap1 = HashMap<Int, Int>()
         var hashMap2 = HashMap<Int, Int>()
         assertEquals(linkedListOf<Pair<Int, String>>(), hashMap1.intersection(hashMap2).toList())
@@ -138,7 +138,7 @@ public class HashMapTest {
         assertEquals(linkedListOf(Pair(3, 300), Pair(7, 700)), hashMap1.intersection(hashMap2).toList())
     }
 
-    Test fun HashMapIntersectionTreeTest() {
+    @Test fun HashMapIntersectionTreeTest() {
         var tree = AVLtree<Int, Int>()
         var hashMap = HashMap<Int, Int>()
         assertEquals(linkedListOf<Pair<Int, String>>(), hashMap.intersection(tree).toList())
