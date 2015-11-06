@@ -13,6 +13,7 @@ public abstract class OrderedListTestingClass {
         equalsOrderedListTest();
         compareToOrderedListTest();
         removeOrderedListTest();
+        hashCodeTest();
     }
 
     public void addGetTest() {
@@ -145,5 +146,15 @@ public abstract class OrderedListTestingClass {
         assertEquals(true, array.removeAt(3));
         Integer[] res = {1, 2, 3, 5};
         assertArrayEquals(res, array.toArray());
+    }
+
+    public void hashCodeTest() {
+        IOrderedList<Integer> list1 = getOrderedList();
+        IOrderedList<Integer> list2 = getOrderedList();
+        for (int i = 0; i < 100; i++) {
+            list1.add(i);
+            list2.add(i);
+        }
+        assertTrue(list1.hashCode() == list2.hashCode());
     }
 }

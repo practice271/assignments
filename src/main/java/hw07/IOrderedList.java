@@ -1,6 +1,6 @@
 package hw07;
 
-public interface IOrderedList<A extends Comparable<? super A>> {
+public interface IOrderedList<A extends Comparable<? super A>> extends Iterable<A> {
     void add(A newElem);
 
     A getByIndex(int index);
@@ -10,10 +10,6 @@ public interface IOrderedList<A extends Comparable<? super A>> {
     int getLength();
 
     int compareTo(IOrderedList<? extends A> other);
-
-    boolean equals(Object other);
-
-    int hashCode();
 
     A[] toArray();
 }

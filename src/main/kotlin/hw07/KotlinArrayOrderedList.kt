@@ -1,11 +1,11 @@
 package hw07
 
 import java.util.Arrays
+import java.util.NoSuchElementException
 
 data class KotlinArrayOrderedList<A : Comparable<A>>(val arr : Array<A>) : IKotlinOrderedList<A> {
 
-    public var leng = 0
-        private set
+    private var leng = 0
 
     private var allocated = 100
     private var array = Array<Any?>(100, { null })
@@ -24,9 +24,29 @@ data class KotlinArrayOrderedList<A : Comparable<A>>(val arr : Array<A>) : IKotl
         array = Arrays.copyOf(array, allocated)
     }
 
+    private class ArrayIterator<A : Comparable<A>>(private var array: Array<Any?>, private val length: Int)
+    : MutableIterator<A> {
+        private var index = 0
+        override public fun hasNext(): Boolean {
+            return (index < length)
+        }
+
+        override public fun next(): A {
+            if (index >= length) throw NoSuchElementException()
+            return array[index++] as A
+        }
+
+        override fun remove() {
+            throw UnsupportedOperationException()
+        }
+    }
+
+    override public fun iterator(): MutableIterator<A> {
+        return ArrayIterator<A>(array, getLength())
+    }
+
     override public fun add(newElem: A) {
-        if (allocated == leng)
-            reallocate()
+        if (allocated == leng) reallocate()
         var index: Int = 0
         while (index < leng && ((array[index] as A).compareTo(newElem) < 0))
             index++
@@ -38,15 +58,15 @@ data class KotlinArrayOrderedList<A : Comparable<A>>(val arr : Array<A>) : IKotl
 
     override public fun getByIndex(index: Int): A? {
         if (index < 0 || index >= leng)
-            return null;
+            return null
         return array[index] as A
     }
 
     override public fun removeAt(index: Int): Boolean {
         if (index < 0 || index >= leng)
-            return false;
+            return false
         for (i in index..leng - 2)
-            array[i] = array[i + 1];
+            array[i] = array[i + 1]
         leng--
         return true
     }
@@ -55,31 +75,34 @@ data class KotlinArrayOrderedList<A : Comparable<A>>(val arr : Array<A>) : IKotl
         val thisLength: Int = leng
         val otherLength: Int = other.getLength()
         val minLength: Int = Math.min(thisLength, otherLength)
+        var thisIterator = iterator()
+        var otherIterator = other.iterator()
         for (i in 0..minLength - 1) {
-            val compare = (getByIndex(i) as A).compareTo(other.getByIndex(i));
-            if (compare != 0) return compare;
+            val compare = thisIterator.next().compareTo(otherIterator.next())
+            if (compare != 0) return compare
         }
-        if (thisLength > otherLength) return -1;
-        if (otherLength > thisLength) return 1;
-        return 0;
+        if (thisLength > otherLength) return -1
+        if (otherLength > thisLength) return 1
+        return 0
     }
 
     override public fun equals(other: Any?): Boolean {
-        if (other !is IOrderedList<*>)
-            return false;
+        if (other !is IOrderedList<*>) return false
         val otherList = other as IOrderedList<A>
-        if (leng != otherList.getLength())
-            return false;
-        for (i in 0..leng - 1)
-            if (!(getByIndex(i) as A).equals(otherList.getByIndex(i))) return false;
-        return true;
+        if (leng != otherList.getLength()) return false
+        var thisIterator = iterator()
+        var otherIterator = otherList.iterator()
+        while (thisIterator.hasNext())
+            if (!thisIterator.next().equals(otherIterator.next())) return false
+        return true
     }
 
     override public fun hashCode(): Int {
         var hash: Int = 0
-        for (i in 0..leng - 1)
-            hash = hash * 31 + (getByIndex(i) as A).hashCode();
-        return hash;
+        var iterator = iterator()
+        while (iterator.hasNext())
+            hash = hash * 31 + iterator.next().hashCode()
+        return hash
     }
 
     override public fun toArray(): Array<A> {

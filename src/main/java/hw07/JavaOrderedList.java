@@ -1,5 +1,7 @@
 package hw07;
 
+import java.util.Iterator;
+
 public abstract class JavaOrderedList<A extends Comparable<? super A>>
         implements Comparable<IOrderedList<? extends A>>, IOrderedList<A> {
 
@@ -19,8 +21,10 @@ public abstract class JavaOrderedList<A extends Comparable<? super A>>
         int thisLength = getLength();
         int otherLength = other.getLength();
         int minLength = Math.min(thisLength, otherLength);
+        Iterator<A> thisIterator = iterator();
+        Iterator<A> otherIterator = (Iterator<A>) other.iterator();
         for (int i = 0; i < minLength; i++) {
-            int compare = getByIndex(i).compareTo(other.getByIndex(i));
+            int compare = thisIterator.next().compareTo(otherIterator.next());
             if (compare != 0) return compare;
         }
         if (thisLength > otherLength) return -1;
@@ -34,23 +38,27 @@ public abstract class JavaOrderedList<A extends Comparable<? super A>>
             return false;
         IOrderedList otherList = (IOrderedList) other;
         if (getLength() != otherList.getLength()) return false;
-        for (int i = 0; i < getLength(); i++)
-            if (!getByIndex(i).equals(otherList.getByIndex(i))) return false;
+        Iterator<A> thisIterator = iterator();
+        Iterator<A> otherIterator = otherList.iterator();
+        while (thisIterator.hasNext())
+            if (!thisIterator.next().equals(otherIterator.next())) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        for (int i = 0; i < getLength(); i++)
-            hash = hash * 31 + getByIndex(i).hashCode();
+        Iterator<A> iterator = iterator();
+        while (iterator.hasNext())
+            hash = hash * 31 + iterator.next().hashCode();
         return hash;
     }
 
     public A[] toArray() {
         A[] newArray = (A[]) new Comparable[getLength()];
+        Iterator<A> iterator = iterator();
         for (int index = 0; index < getLength(); index++)
-            newArray[index] = getByIndex(index);
+            newArray[index] = iterator.next();
         return newArray;
     }
 }

@@ -10,9 +10,5 @@ public interface IKotlinOrderedList<A : Comparable<in A>> : Comparable<IOrderedL
 
     override public fun compareTo(other: IOrderedList<out A>): Int
 
-    override public fun equals(other: Any?): Boolean
-
-    override public fun hashCode(): Int
-
     override public fun toArray(): Array<A>
 }

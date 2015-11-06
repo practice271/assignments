@@ -1,10 +1,14 @@
 package hw07;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class JavaATDOrderedList<A extends Comparable<A>> extends JavaOrderedList<A> {
 
     private class Cons<A extends Comparable<A>> {
         public A value;
         public Cons<A> next;
+
         Cons(A val, Cons nextCons) {
             value = val;
             next = nextCons;
@@ -12,6 +16,29 @@ public class JavaATDOrderedList<A extends Comparable<A>> extends JavaOrderedList
     }
 
     private Cons<A> list = null;
+
+    private class ATDIterator<A extends Comparable<A>> implements Iterator<A> {
+        private Cons<A> cons;
+
+        public ATDIterator(Cons<A> list) {
+            cons = list;
+        }
+
+        public boolean hasNext() {
+            return (cons != null);
+        }
+
+        public A next() {
+            if (cons == null) throw new NoSuchElementException();
+            A val = cons.value;
+            cons = cons.next;
+            return val;
+        }
+    }
+
+    public Iterator<A> iterator() {
+        return new ATDIterator<A>(list);
+    }
 
     @Override
     public void add(A newElem) {
@@ -28,8 +55,7 @@ public class JavaATDOrderedList<A extends Comparable<A>> extends JavaOrderedList
         if (c.value.compareTo(newElem) < 0) {
             min = c.value;
             max = newElem;
-        }
-        else {
+        } else {
             min = newElem;
             max = c.value;
         }
