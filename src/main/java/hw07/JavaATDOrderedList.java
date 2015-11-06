@@ -34,6 +34,9 @@ public class JavaATDOrderedList<A extends Comparable<A>> extends JavaOrderedList
             cons = cons.next;
             return val;
         }
+
+        public void remove() {
+        }
     }
 
     public Iterator<A> iterator() {

@@ -38,7 +38,6 @@ data class KotlinATDOrderedList<A : Comparable<A>>(val arr : Array<A>) : IKotlin
         }
 
         override fun remove() {
-            throw UnsupportedOperationException()
         }
     }
 

@@ -37,7 +37,6 @@ data class KotlinArrayOrderedList<A : Comparable<A>>(val arr : Array<A>) : IKotl
         }
 
         override fun remove() {
-            throw UnsupportedOperationException()
         }
     }
 

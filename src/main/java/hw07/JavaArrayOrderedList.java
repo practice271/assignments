@@ -31,6 +31,9 @@ public class JavaArrayOrderedList<A extends Comparable<A>> extends JavaOrderedLi
             if (index >= length) throw new NoSuchElementException();
             return array[index++];
         }
+
+        public void remove() {
+        }
     }
 
     public Iterator<A> iterator() {
