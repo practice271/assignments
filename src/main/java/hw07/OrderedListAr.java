@@ -4,10 +4,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class OrderedListAr <A extends Comparable<? super A>>
-        extends OrderedList<A> {
-
-    private A[] vals;
+        extends OrderedList<A>{
     private int size;
+    private A[] vals;
     private int trueSize;
     private boolean isAscending;
 
@@ -16,10 +15,39 @@ public class OrderedListAr <A extends Comparable<? super A>>
         return MIN_ARRAY_SIZE;
     }
 
+    @Override
+    public Iterator<A> iterator() {
+        return new arrayIterator();
+    }
+
+    public class arrayIterator implements Iterator<A> {
+        private int count;
+        arrayIterator() {
+            count = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return count < trueSize;
+        }
+
+        @Override
+        public A next() {
+            return vals[count++];
+        }
+    }
+
     private void enlargeArray() {
         A[] newAr = (A[]) new Comparable[size * 2];
         System.arraycopy(vals, 0, newAr, 0, size);
         size *= 2;
+        vals = newAr;
+    }
+
+    private void reduceArray() {
+        size /= 2;
+        A[] newAr = (A[]) new Comparable[size];
+        System.arraycopy(vals, 0, newAr, 0, size);
         vals = newAr;
     }
 
@@ -69,7 +97,7 @@ public class OrderedListAr <A extends Comparable<? super A>>
             vals[ind] = null;
             return;
         }
-        if (vals[size - 1] == null) {//dubious
+        if (vals[size - 1] == null) {
             System.arraycopy(vals, ind, vals, ind + 1, trueSize - ind);
             vals[ind] = null;
             return;
@@ -127,6 +155,7 @@ public class OrderedListAr <A extends Comparable<? super A>>
         if (index > -1 && index < trueSize) {
             moveL(index);
             trueSize--;
+            if (trueSize * 2 < size) reduceArray();
         }
     }
 
@@ -138,56 +167,5 @@ public class OrderedListAr <A extends Comparable<? super A>>
             hashCode = 31 * hashCode + (curVal == null ? 0 : curVal.hashCode());
         }
         return hashCode;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof OrderedList)) return false;
-
-        OrderedList otherList = (OrderedList) other;
-        boolean otherIsAtd = false;
-
-        Iterator<A> otherIter  = null;
-        if (other instanceof OrderedListATD) {
-            otherIsAtd = true;
-            OrderedListATD otherAsAtd = (OrderedListATD) other;
-            otherIter = otherAsAtd.iterator();
-        }
-
-        boolean res = true;
-        if (trueSize != otherList.getSize()) return false;
-
-        for (int i = 0; i < trueSize; i++) {
-            A curThis = vals[i];
-            Comparable curOther;
-            curOther = otherIsAtd ? otherIter.next() : otherList.getVal(i);
-            if (curThis == null && curOther != null) return false;
-            if (curThis != null && curOther == null) return false;
-            if (!(curThis == null && curOther == null))
-                res = res && curThis.equals(curOther);
-            //if both are nulls, we shouldn't do anything.
-        }
-        return res;
-    }
-
-    @Override
-    public int compareTo (OrderedList<? extends A> other) {
-        int minSize = Math.min(trueSize, other.getSize());
-
-        boolean isAtd = false;
-        Iterator<A> otherIter  = null;
-        if (other instanceof OrderedListATD) {
-            isAtd = true;
-            OrderedListATD otherAsAtd = (OrderedListATD) other;
-            otherIter = otherAsAtd.iterator();
-        }
-
-        for (int i = 0; i < minSize; i++) {
-            int curCompare = isAtd ? vals[i].compareTo((A) otherIter.next()) : vals[i].compareTo(other.getVal(i));
-            if (curCompare != 0) return curCompare;
-        }
-        if (trueSize < other.getSize()) return -1;
-        if (trueSize > other.getSize()) return 1;
-        return 0;
     }
 }

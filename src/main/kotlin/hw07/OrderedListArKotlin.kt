@@ -1,10 +1,9 @@
 package hw07
 
-import java.util.Arrays
+import java.util.*
 import kotlin.properties.Delegates
 
-class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAscending: Boolean) : OrderedListKotlin<A>() {
-
+class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAscending : Boolean) : OrderedListKotlin<A>() {
     private var vals: Array<A?> by Delegates.notNull<Array<A?>>()
     private var size: Int = 0
     private var trueSize: Int = 0
@@ -16,6 +15,26 @@ class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAsc
         val newAr = arrayOfNulls<Comparable<Any>>(size) as Array<A?>
         System.arraycopy(vals, 0, newAr, 0, size / 2)
         vals = newAr
+    }
+
+    override fun iterator(): Iterator<A> {
+        return arrayIterator()
+    }
+
+    inner class arrayIterator internal constructor() : Iterator<A> {
+        private var count: Int = 0
+
+        init {
+            count = 0
+        }
+
+        override fun hasNext(): Boolean {
+            return count < trueSize
+        }
+
+        override fun next() : A {
+            return vals[count++] ?: throw NoSuchElementException()
+        }
     }
 
     init {
@@ -130,53 +149,6 @@ class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAsc
         }
         return hashCode
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is OrderedListKotlin<*>) return false
-
-        var otherIsAtd = false
-
-        var otherIter: Iterator<A>? = null
-        if (other is OrderedListATDKotlin<*>) {
-            otherIsAtd = true
-            otherIter = other.iterator() as Iterator<A>?
-        }
-
-        var res = true
-        if (trueSize != other.getSize()) return false
-
-        for (i in 0..trueSize - 1) {
-            val curThis = vals[i]
-            val curOther = if (otherIsAtd) (otherIter?.next() ?: throw(errorInAddingException)) else other.getVal(i)
-            if (curThis == null && curOther != null) return false
-            if (curThis != null && curOther == null) return false
-            if (!(curThis == null && curOther == null))
-                res = res && curThis == curOther
-            //if both are nulls, we shouldn't do anything.
-        }
-        return res
-    }
-
-    override public fun compareTo(other: OrderedListKotlin<out A>): Int {
-        val minSize = Math.min(trueSize, other.getSize())
-
-        var isAtd = false
-        var otherIter: Iterator<A>? = null
-        if (other is OrderedListATDKotlin<*>) {
-            isAtd = true
-            otherIter = other.iterator() as Iterator<A>?
-        }
-
-        for (i in 0..minSize - 1) {
-            val thisCur = vals[i] ?: throw(errorInAddingException)
-            val curCompare = if (isAtd) thisCur.compareTo(otherIter?.next() as A? ?: throw(errorInAddingException))
-                else thisCur.compareTo(other.getVal(i) ?: throw(errorInAddingException))
-            if (curCompare != 0) return curCompare
-        }
-        if (trueSize < other.getSize()) return -1
-        if (trueSize > other.getSize()) return 1
-        return 0
-    }
-
+    
     private val MIN_ARRAY_SIZE = 16
 }

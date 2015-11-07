@@ -92,7 +92,7 @@ class OrderedListArKotlinTest {
         a.delVal(17)
         Assert.assertTrue(a == resList)
     }
-    
+
     @Test
     fun testHashCodeForEqual() {
         val in1 = arrayOf(1, 2, 4)

@@ -4,10 +4,9 @@ import patterns.singleton.instance
 import java.util.*
 import kotlin.properties.Delegates
 
-class OrderedListATDKotlin<A : Comparable<A>> (array: Array<A>?, private val isAscending: Boolean)
-        : OrderedListKotlin<A>(), Iterable<A> {
+class OrderedListATDKotlin<A : Comparable<A>> (array: Array<A>?, private val isAscending : Boolean)
+        : OrderedListKotlin<A>() {
     public var vals: List by Delegates.notNull<List>();
-
     private var size: Int = 0
     override fun getSize() : Int {
         return size;
@@ -142,56 +141,5 @@ class OrderedListATDKotlin<A : Comparable<A>> (array: Array<A>?, private val isA
 
     override fun hashCode(): Int {
         return calcHashCode(1, vals)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is OrderedListKotlin<*>) return false
-        val thisIter = iterator()
-
-        var otherIsAtd = false
-
-        var otherIter: Iterator<A>? = null
-        if (other is OrderedListATDKotlin<*>) {
-            otherIsAtd = true
-            otherIter = other.iterator() as Iterator<A>?
-        }
-
-        var res = true
-        if (size != other.getSize()) return false
-
-        for (i in 0..size - 1) {
-            val curThis = thisIter.next()
-            val curOther = if (otherIsAtd) (otherIter?.next() ?: throw(errorInAddingException)) else other.getVal(i)
-            if (curThis == null && curOther != null) return false
-            if (curThis != null && curOther == null) return false
-            if (!(curThis == null && curOther == null))
-                res = res && curThis == curOther
-            //if both are nulls, we shouldn't do anything.
-        }
-        return res
-    }
-
-    override operator fun compareTo(other: OrderedListKotlin<out A>): Int {
-        val minSize = Math.min(size, other.getSize())
-        val thisIter = iterator()
-
-        var isAtd = false
-        var otherIter: Iterator<A>? = null
-        if (other is OrderedListATDKotlin<*>) {
-            isAtd = true
-            otherIter = other.iterator() as Iterator<A>?
-        }
-
-        for (i in 0..minSize - 1) {
-            val curCompare = if (isAtd)
-                thisIter.next().compareTo(otherIter?.next() ?: throw(errorInAddingException))
-            else
-                thisIter.next().compareTo(other.getVal(i) ?: throw(errorInAddingException))
-
-            if (curCompare != 0) return curCompare
-        }
-        if (size < other.getSize()) return -1
-        if (size > other.getSize()) return 1
-        return 0
     }
 }

@@ -5,26 +5,38 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class OrderedListATD <A extends Comparable<? super A>>
-        extends OrderedList<A> implements Iterable<A> {
+        extends OrderedList<A> {
     public List vals;
     private int size;
-    private boolean isAscending;
-
-    public List getVals() {
-        return vals;
-    }
 
     @Override
     public Iterator<A> iterator() {
-        if (vals instanceof OrderedListATD.ListEmpty) {throw new NullPointerException();}
-        else return ((ListNotEmpty) vals).iterator();
+        return vals.iterator();
     }
 
+    abstract protected class List implements Iterable<A> {
+    }
 
-    abstract protected class List {};
-    protected class ListEmpty extends List {};
+    protected class ListEmpty extends List {
+        @Override
+        public Iterator<A> iterator() {
+            return new EmptyListIterator();
+        }
 
-    protected class ListNotEmpty extends List implements Iterable<A>{
+        public class EmptyListIterator implements Iterator<A> {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public A next() {
+                throw new NoSuchElementException();
+            }
+        }
+    }
+
+    protected class ListNotEmpty extends List {
         A head;
         List tail;
 
@@ -51,29 +63,28 @@ public class OrderedListATD <A extends Comparable<? super A>>
             return new ListIterator(this);
         }
 
-    }
+        public class ListIterator implements Iterator<A> {
+            public ListIterator(List list) {
+                currentNode = list instanceof OrderedListATD.ListEmpty ? null : (ListNotEmpty) list;
+            }
 
-    public class ListIterator implements Iterator<A> {
-        public ListIterator (List list) {
-            currentNode = list instanceof OrderedListATD.ListEmpty ? null : (ListNotEmpty) list;
-        }
+            public ListNotEmpty currentNode;
 
-        public ListNotEmpty currentNode;
+            @Override
+            public boolean hasNext() {
+                return currentNode != null;
+            }
 
-        @Override
-        public boolean hasNext() {
-            return currentNode != null;
-        }
+            @Override
+            public A next() {
+                if (currentNode == null)
+                    throw new NoSuchElementException();
 
-        @Override
-        public A next() {
-            if (currentNode == null)
-                throw new NoSuchElementException();
-
-            A res = currentNode.head;
-            currentNode = currentNode.tail instanceof OrderedListATD.ListEmpty ? null
-                    : (ListNotEmpty) currentNode.tail;
-            return res;
+                A res = currentNode.head;
+                currentNode = currentNode.tail instanceof OrderedListATD.ListEmpty ? null
+                        : (ListNotEmpty) currentNode.tail;
+                return res;
+            }
         }
     }
 
@@ -138,9 +149,9 @@ public class OrderedListATD <A extends Comparable<? super A>>
         if (l instanceof OrderedListATD.ListEmpty) return l;
         ListNotEmpty listGood = (ListNotEmpty) l;
         if (depth == 0) {
-            return  listGood.tail;
+            return listGood.tail;
         }
-        return new ListNotEmpty(listGood.head, delFromDepth(depth - 1,  listGood.tail));
+        return new ListNotEmpty(listGood.head, delFromDepth(depth - 1, listGood.tail));
     }
 
     @Override
@@ -160,59 +171,5 @@ public class OrderedListATD <A extends Comparable<? super A>>
     @Override
     public int hashCode() {
         return calcHashCode(1, vals);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof OrderedList)) return false;
-        Iterator<A> thisIter  = iterator();
-
-        OrderedList otherList = (OrderedList) other;
-        boolean otherIsAtd = false;
-
-        Iterator<A> otherIter  = null;
-        if (other instanceof OrderedListATD) {
-            otherIsAtd = true;
-            OrderedListATD otherAsAtd = (OrderedListATD) other;
-            otherIter = otherAsAtd.iterator();
-        }
-
-        boolean res = true;
-        if (size != otherList.getSize()) return false;
-
-        for (int i = 0; i < size; i++) {
-            A curThis = thisIter.next();
-            Comparable curOther;
-            curOther = otherIsAtd ? otherIter.next() : otherList.getVal(i);
-            if (curThis == null && curOther != null) return false;
-            if (curThis != null && curOther == null) return false;
-            if (!(curThis == null && curOther == null))
-                res = res && curThis.equals(curOther);
-            //if both are nulls, we shouldn't do anything.
-        }
-        return res;
-    }
-
-    @Override
-    public int compareTo(OrderedList<? extends A> other) {
-        int minSize = Math.min(size, other.getSize());
-        Iterator<A> thisIter  = iterator();
-
-        boolean isAtd = false;
-        Iterator<A> otherIter  = null;
-        if (other instanceof OrderedListATD) {
-            isAtd = true;
-            otherIter = ((OrderedListATD) other).iterator();
-        }
-
-        for (int i = 0; i < minSize; i++) {
-            int curCompare = isAtd ? thisIter.next().compareTo(otherIter.next())
-                    : thisIter.next().compareTo(other.getVal(i));
-
-            if (curCompare != 0) return curCompare;
-        }
-        if (size < other.getSize()) return -1;
-        if (size > other.getSize()) return 1;
-        return 0;
     }
 }
