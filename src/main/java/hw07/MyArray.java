@@ -123,8 +123,9 @@ public class MyArray<A extends Comparable<A>>  implements IOrderedList<A>
 
             @Override
             public A next() {
+                A elem = arr[idx];
                 idx++;
-                return arr[idx];
+                return elem;
             }
 
             @Override
