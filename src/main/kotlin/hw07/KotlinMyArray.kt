@@ -1,37 +1,32 @@
 package hw07
 
-class KotlinMyArray<A : Comparable<A>> : IOrderedList<A>
-{
+/*class MyArray<A : Comparable<A>> : IOrderedList<A> {
+    private val resizeConst = 2
     private var lengthArray = 2
     private var arr = newArray()
-    private var position = 0
+    private var index = 0
 
-    fun newArray() : Array<A>
-    {
+    fun newArray(): Array<A> {
         return arrayOfNulls<Comparable<Any>>(lengthArray) as Array<A>
     }
 
-    override fun getLength() : Int
-    {
-        return position
+    override fun getLength(): Int {
+        return index
     }
 
-    override fun push (newElem : A)
-    {
+    override fun push(newElem: A) {
         val newArr: Array<A>
-        position++
+        index++
 
-        if (position > lengthArray)
-        {
-            lengthArray += 2
+        if (index > lengthArray) {
+            lengthArray *= resizeConst
         }
 
         newArr = newArray()
 
         var i: Int
         i = 0
-        while (i < position - 1)
-        {
+        while (i < index - 1) {
             if (arr[i] == null || newElem.compareTo(arr[i]) > 0) break
             i++
         }
@@ -41,54 +36,75 @@ class KotlinMyArray<A : Comparable<A>> : IOrderedList<A>
 
         newArr[i] = newElem
 
-        System.arraycopy(arr, i, newArr, i + 1, position - 1 - i)
+        System.arraycopy(arr, i, newArr, i + 1, index - 1 - i)
 
         arr = newArr
     }
 
-    override fun removeAt (index : Int)
-    {
-        if (index >= position) return
+    override fun removeAt(index: Int) {
+        if (index >= this.index) return
 
-        position--
+        this.index--
         System.arraycopy(arr, index + 1, arr, index, lengthArray - 1 - index)
     }
 
-    override fun remove (elem : A)
-    {
-        var i: Int
-
-        i = 0
-        while (i < position)
-        {
-            if (elem.compareTo(arr[i]) == 0) break
-            i++
-        }
-
-        if (i == position) return
-        removeAt(i)
+    override fun remove(elem: A) {
+        for (i in 0..index - 1)
+            if (elem.compareTo(arr[i]) == 0) {
+                removeAt(i)
+                return
+            }
     }
 
-    override fun getAt(index : Int) : A?
-    {
-        if (index >= position) return null
+    override fun getAt(index: Int): A? {
+        if (index >= this.index) return null
         return arr[index]
     }
 
-    override fun hashCode() : Int
-    {
+    override fun hashCode(): Int {
         var hash = 0
 
-        for (i in 0..position - 1)
-        {
+        for (i in 0..index - 1) {
             hash += arr[i].hashCode() * 71
         }
 
         return hash
     }
 
-    override fun equals(obj : Any?) : Boolean
-    {
-        return obj is IOrderedList<*> && (obj as IOrderedList<*>?)?.hashCode() == hashCode() && (obj as IOrderedList<*>?)?.getLength() == getLength()
+    override fun equals(obj: Any?): Boolean {
+        if (obj !is IOrderedList<*> )
+            return false
+        else {
+
+            if (obj.length == length) {
+                val iter = iterator()
+                for (i in 0..index - 1) {
+                    if (iter.next() !== obj.getAt(i)) return false
+                }
+
+                return true
+            } else
+                return false
+        }
+    }
+
+    override fun iterator(): MutableIterator<A> {
+        return object : MutableIterator<A> {
+
+            internal var idx = 0
+
+            override fun hasNext(): Boolean {
+                return (idx < lengthArray)
+            }
+
+            override fun next(): A {
+                idx++
+                return arr[idx]
+            }
+
+            override fun remove() {
+            }
+        }
     }
 }
+*/

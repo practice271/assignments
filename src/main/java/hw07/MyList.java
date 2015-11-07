@@ -1,5 +1,8 @@
 package hw07;
 
+import java.util.Iterator;
+import java.util.SortedMap;
+
 public class MyList <A extends Comparable<A>> implements IOrderedList<A>
 {
     private class CList
@@ -19,7 +22,8 @@ public class MyList <A extends Comparable<A>> implements IOrderedList<A>
 
     private CList add (CList cList, A elem)
     {
-        if (!(cList == null) && (elem.compareTo(cList.head) < 0)) return new CList(cList.head, add(cList.tail, elem));
+        if (!(cList == null) && (elem.compareTo(cList.head) < 0))
+            return new CList(cList.head, add(cList.tail, elem));
 
         return new CList(elem, cList);
     }
@@ -34,8 +38,11 @@ public class MyList <A extends Comparable<A>> implements IOrderedList<A>
     private CList deleteAt (CList cList, int idx)
     {
         if (idx == 0)
-            if (cList == null) return null;
-            else return cList.tail;
+            if (cList == null)
+                return null;
+            else
+                return cList.tail;
+
         return new CList(cList.head, deleteAt(cList.tail, idx - 1));
     }
 
@@ -100,7 +107,53 @@ public class MyList <A extends Comparable<A>> implements IOrderedList<A>
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof IOrderedList && ((IOrderedList) obj).hashCode() == hashCode() && ((IOrderedList) obj).getLength() == getLength();
+    public boolean equals (Object obj)
+    {
+        if (!(obj instanceof IOrderedList))
+            return false;
+        else
+        {
+            IOrderedList<A> otherList = (IOrderedList) obj;
+
+            if (otherList.getLength() == getLength())
+            {
+                Iterator<A> iter = iterator();
+
+                CList someList = list;
+
+                while (someList != null)
+                {
+                    if (iter.next() != someList.head) return false;
+                    someList = someList.tail;
+                }
+
+                return true;
+            }
+
+            else return false;
+        }
+    }
+
+    @Override
+    public Iterator<A> iterator() {
+        return new Iterator<A>() {
+
+            CList someList = list;
+
+            @Override
+            public boolean hasNext() {
+                return (someList != null);
+            }
+
+            @Override
+            public A next() {
+                A elem = someList.head;
+                someList = someList.tail;
+                return elem;
+            }
+
+            @Override
+            public void remove() {}
+        };
     }
 }
