@@ -20,5 +20,5 @@ class SetBox<T> : IBox<T> where T : Comparable<T>{
     // ITERATOR PATTERN
     override fun iterator() : Iterator<T> = SetBoxIterator(this)
 
-    fun size() = _values.size()
+    fun size() = _values.size
 }
