@@ -11,7 +11,7 @@ import java.util.*
  */
 
 public interface Data{
-    public abstract fun doubleClick()
+    public fun doubleClick()
 }
 //Primitive class
 public class File() : Data {
@@ -22,7 +22,7 @@ public class File() : Data {
     public fun setName(name : String) {
         this.name = name
     }
-    override public fun  doubleClick() {
+    override public fun doubleClick() {
         println("${this.getName()} file is Opened in a Program ")
     }
 }

@@ -54,9 +54,8 @@ public abstract class AbstractFactory {
 }
 
 public class ShapeFactory: AbstractFactory() {
-    override fun getShape(shapeType: String): Shape? {
-        if (shapeType == null) { return null }
-        when (shapeType) {
+    override fun getShape(shape: String): Shape? {
+        when (shape) {
             "CIRCLE"    -> return Circle()
             "RECTANGLE" -> return Rectangle()
             "SQUARE"    -> return Square()
@@ -69,11 +68,10 @@ public class ShapeFactory: AbstractFactory() {
 }
 
 public class ColorFactory: AbstractFactory() {
-    override fun getShape(shapeType: String): Shape? {
+    override fun getShape(shape: String): Shape? {
         return null
     }
     override fun getColor(color: String): Color? {
-        if (color == null) {return null}
         when (color) {
             "RED"   -> return Red()
             "GREEN" -> return Green()
