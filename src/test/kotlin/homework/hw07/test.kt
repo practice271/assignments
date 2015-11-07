@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class Hw07JavaTest {
     //Array tests
     @Test fun testAdd() {
-        var list = arrList<Int>()
+        var list = ArrList<Int>()
         list.add(1)
         list.add(2)
         list.add(3)
@@ -21,7 +21,7 @@ class Hw07JavaTest {
     }
 
     @Test fun testRemove() {
-        var list = arrList<Int>()
+        var list = ArrList<Int>()
         list.add(5)
         list.add(8)
         list.add(10)
@@ -35,8 +35,8 @@ class Hw07JavaTest {
     }
 
     @Test fun testEquals() {
-        val list1 = arrList<String>()
-        val list2 = arrList<String>()
+        val list1 = ArrList<String>()
+        val list2 = ArrList<String>()
         list1.add("bb")
         list1.add("gg")
         list2.add("bb")
@@ -48,7 +48,7 @@ class Hw07JavaTest {
 
     //Linked list tests
     @Test fun testOrdListAdd() {
-        val list = ordList<Int>()
+        val list = OrdList<Int>()
         list.add(1)
         list.add(2)
         list.add(3)
@@ -61,7 +61,7 @@ class Hw07JavaTest {
     }
 
     @Test fun testOrdListRemove() {
-        val list = ordList<Int>()
+        val list = OrdList<Int>()
         for (i in 1..10)
             list.add(i)
         list.removeAt(10)
@@ -71,8 +71,8 @@ class Hw07JavaTest {
     }
 
     @Test fun testOrdListEquals() {
-        val list1 = ordList<Int>()
-        val list2 = ordList<Int>()
+        val list1 = OrdList<Int>()
+        val list2 = OrdList<Int>()
         list1.add(2)
         list1.add(5)
         list2.add(2)

@@ -1,6 +1,8 @@
 package homework.hw07;
 
-public class ordList<T extends Comparable<T>> extends abstractList<T> {
+import java.util.Iterator;
+
+public class OrdList<T extends Comparable<T>> extends AbstractList<T> {
     Node head;
     Node tail;
     int size = 0;
@@ -59,7 +61,7 @@ public class ordList<T extends Comparable<T>> extends abstractList<T> {
             }
             return pointer.value;
         }
-        else throw new ArrayIndexOutOfBoundsException();
+        else throw new IndexOutOfBoundsException();
     }
 
     @Override
@@ -79,7 +81,6 @@ public class ordList<T extends Comparable<T>> extends abstractList<T> {
             pointer.next = pointer.next.next;
         }
         else if(index==1) head = head.next;
-        else throw new ArrayIndexOutOfBoundsException();
     }
 
     @Override
@@ -96,24 +97,48 @@ public class ordList<T extends Comparable<T>> extends abstractList<T> {
         return result;
     }
 
+    public Iterator<T> iterator() {
+        return new LinkedOrderedListIterator(this);
+    }
+
+    private class LinkedOrderedListIterator implements Iterator<T> {
+        private Node list;
+
+        public LinkedOrderedListIterator(OrdList list) {
+            this.list = list.head;
+        }
+
+        public boolean hasNext() {
+            return list.next != null;
+        }
+
+        public T next() {
+            list = list.next;
+            return list.value;
+        }
+
+        public void remove() {
+        }
+    }
+
     @Override
-    public boolean equals(Object arg) {
-        if (!(arg instanceof abstractList)) {
+    public boolean equals(Object other) {
+        if (!(other instanceof AbstractList)) {
             return false;
         }
-        ordList argList = (ordList) arg;
-        if (argList.size != size) {
+
+        AbstractList otherList = (AbstractList) other;
+        if (otherList.size() != this.size()) {
             return false;
         }
-        Node pointer = head;
-        Node pointer2 = argList.head;
-        while (pointer != null) {
-            if (pointer.value != pointer2.value) {
+        Iterator iterator  = iterator();
+        Iterator iterOther = ((AbstractList) other).iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next() != iterOther.next()) {
                 return false;
             }
-            pointer = pointer.next;
-            pointer2 = pointer2.next;
         }
         return true;
     }
+
 }

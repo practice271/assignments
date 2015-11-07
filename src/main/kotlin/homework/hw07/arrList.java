@@ -1,7 +1,12 @@
 package homework.hw07;
 
-public class arrList<T extends Comparable<T>> extends abstractList<T> {
+import java.util.Iterator;
+
+public class ArrList<T extends Comparable<T>> extends AbstractList<T> {
+    //just support property
     private int size    =  2;
+    // shows how many elements we have. -1 is default value.
+    // It means that list is empty
     private int pointer = -1;
     protected T[] list;
     private int limit = 2147483647;
@@ -24,12 +29,12 @@ public class arrList<T extends Comparable<T>> extends abstractList<T> {
 
     @Override
     public int size(){
-        return pointer;
+        return pointer+1;
     }
 
     @Override
     public T get(int index){
-        if (index<=pointer && index>=0) return list[index];
+        if (index<=pointer) return list[index];
         else throw new IndexOutOfBoundsException();
     }
 
@@ -59,7 +64,7 @@ public class arrList<T extends Comparable<T>> extends abstractList<T> {
             System.arraycopy(list, index+1, list, index, pointer - index);
             pointer--;
         }
-        else throw new ArrayIndexOutOfBoundsException();
+        else throw new IndexOutOfBoundsException();
     }
 
     @Override
@@ -75,11 +80,11 @@ public class arrList<T extends Comparable<T>> extends abstractList<T> {
 
     @Override
     public boolean equals(Object arg) {
-        if (!(arg instanceof arrList)) {
+        if (!(arg instanceof AbstractList)) {
             return false;
         }
-        arrList argList = (arrList) arg;
-        if (argList.size() != pointer) {
+        AbstractList argList = (AbstractList) arg;
+        if (argList.size() != pointer+1) {
             return false;
         }
         for (int i = 0; i < size; i++) {
@@ -88,5 +93,30 @@ public class arrList<T extends Comparable<T>> extends abstractList<T> {
             }
         }
         return true;
+    }
+
+    public Iterator<T> iterator() {
+        return new ArrListIterator(this);
+    }
+
+    private class ArrListIterator implements Iterator<T> {
+        private final ArrList<T> list;
+        private int index;
+
+        public ArrListIterator(ArrList<T> list) {
+            this.list = list;
+            index = 0;
+        }
+
+        public boolean hasNext() {
+            return index < list.size;
+        }
+
+        public T next() {
+            return list.get(index++);
+        }
+
+        public void remove() {
+        }
     }
 }
