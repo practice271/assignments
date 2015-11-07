@@ -149,6 +149,6 @@ class OrderedListArKotlin<A : Comparable<A>>(array: Array<A>?, private val isAsc
         }
         return hashCode
     }
-    
+
     private val MIN_ARRAY_SIZE = 16
 }
