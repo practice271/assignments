@@ -71,6 +71,9 @@ public class ArrayOrderedList<A extends Comparable<A>>
                 index++;
                 return items[index - 1];
             }
+
+            @Override
+            public void remove() {}
         };
     }
 }

@@ -95,6 +95,9 @@ public class OrderedList<A extends Comparable<? super A>>
             node = node.next;
             return i;
         }
+
+        @Override
+        public void remove() {}
     }
 
     @Override
