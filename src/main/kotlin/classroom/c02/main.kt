@@ -74,7 +74,7 @@ fun asdf(/*a: Tree?*/): Pair<Int, Int> {
     return  Pair(left, right)
 
 
-    //val array: Array<List<Int>> = Array(100500, {ArrayList<Int>()})
+    //val array: Array<Empty<Int>> = Array(100500, {ArrayList<Int>()})
 }
 
 fun main(args: Array<String>) {
