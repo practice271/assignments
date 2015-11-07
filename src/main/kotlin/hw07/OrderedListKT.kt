@@ -63,5 +63,19 @@ class OrderedListKT<A : Comparable<A>> : AOrderedListKT<A>() {
         else return res
     }
 
+    inner class LIterator(private var node: Node?): Iterator<A> {
+        override fun hasNext(): Boolean {
+            return (node != null)
+        }
+        override fun next(): A {
+            val i = node?.item
+            node = node?.next
+            return i ?: throw NullPointerException()
+        }
+    }
+
+    override fun iterator(): Iterator<A> {
+        return  LIterator(head)
+    }
 }
 

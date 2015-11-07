@@ -3,8 +3,10 @@ package hw07;
 /**
  * Created by Mikhail on 01.11.2015.
  */
+import java.util.Iterator;
+
 public abstract class AOrderedList<A extends Comparable<? super A>>
-                implements Comparable<AOrderedList<? extends A>> {
+                implements Comparable<AOrderedList<? extends A>>, Iterable<A> {
     public abstract A get(int index);
     public abstract void add(A item);
     public abstract int size();
@@ -14,13 +16,6 @@ public abstract class AOrderedList<A extends Comparable<? super A>>
     public int compareTo(AOrderedList<? extends A> other) {
         if (size() > other.size()) return 1;
         if (size() < other.size()) return -1;
-
-        int i = 0;
-        while (i < size()){
-            int compare = get(i).compareTo(other.get(i));
-            if (compare != 0) return compare;
-            i++;
-        }
         return 0;
     }
 
@@ -28,9 +23,13 @@ public abstract class AOrderedList<A extends Comparable<? super A>>
     public boolean equals(Object other) {
         if (!(other instanceof AOrderedList)) return false;
         AOrderedList otherOrderedList = (AOrderedList) other;
+        Iterator iterateThis = iterator();
+        Iterator iterateOther = ((AOrderedList) other).iterator();
         if (size() != otherOrderedList.size()) return false;
-        for (int i = 0; i < size() - 1; i++) {
-            if (get(i) != otherOrderedList.get(i)) return false;
+        while (iterateThis.hasNext()) {
+            if (iterateThis.next() != iterateOther.next()) {
+                return false;
+            }
         }
         return true;
     }
@@ -38,9 +37,7 @@ public abstract class AOrderedList<A extends Comparable<? super A>>
     @Override
     public int hashCode() {
         int res = 0;
-        for (int i = 0; i < size(); i++) {
-            res = res * 23 + get(i).hashCode();
-        }
+        for (A item : this) res = res * 23 + item.hashCode();
         return res;
     }
 }

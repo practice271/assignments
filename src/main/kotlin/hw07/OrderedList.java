@@ -1,16 +1,18 @@
 package hw07;
 
+import java.util.Iterator;
+
 /**
  * Created by Mikhail on 01.11.2015.
  */
 public class OrderedList<A extends Comparable<? super A>>
                            extends AOrderedList<A> {
 
-    public class Node{
+    public class Node {
         public A item;
         public Node next;
 
-        public Node(A i){
+        public Node(A i) {
             item = i;
             next = null;
         }
@@ -27,7 +29,7 @@ public class OrderedList<A extends Comparable<? super A>>
     @Override
     public void add(A item) {
         Node newNode = new Node(item);
-        if (head == null){
+        if (head == null) {
             head = newNode;
             size++;
             return;
@@ -52,7 +54,7 @@ public class OrderedList<A extends Comparable<? super A>>
     @Override
     public boolean contains(A item) {
         Node n = head;
-        while (n != null){
+        while (n != null) {
             if (item.compareTo(n.item) == 0) return true;
             n = n.next;
         }
@@ -60,7 +62,9 @@ public class OrderedList<A extends Comparable<? super A>>
     }
 
     @Override
-    public int size() {return size;}
+    public int size() {
+        return size;
+    }
 
     @Override
     public A get(int index) {
@@ -73,5 +77,29 @@ public class OrderedList<A extends Comparable<? super A>>
         return curNode.item;
     }
 
+    public class LIterator implements Iterator<A> {
+        private Node node;
+
+        public LIterator(Node node) {
+            this.node = node;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (node != null);
+        }
+
+        @Override
+        public A next() {
+            A i = node.item;
+            node = node.next;
+            return i;
+        }
+    }
+
+    @Override
+    public Iterator<A> iterator() {
+        return new LIterator(head);
+    }
 }
 

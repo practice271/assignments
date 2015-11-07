@@ -44,4 +44,18 @@ class ArrayOrderedListKT<A : Comparable<A>> : AOrderedListKT<A>() {
         }
         return false
     }
+
+    override fun iterator(): Iterator<A>{
+        return object: Iterator<A> {
+            internal var index = 0
+            override fun hasNext(): Boolean {
+                return index < size
+            }
+
+            override fun next(): A {
+                index++
+                return items[index - 1]
+            }
+        }
+    }
 }

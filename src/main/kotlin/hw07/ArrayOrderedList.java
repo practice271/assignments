@@ -1,5 +1,7 @@
 package hw07;
 
+import java.util.Iterator;
+
 /**
  * Created by Mikhail on 01.11.2015.
  */
@@ -53,5 +55,22 @@ public class ArrayOrderedList<A extends Comparable<A>>
             }
         }
         return false;
+    }
+
+    @Override
+    public Iterator<A> iterator() {
+        return new Iterator<A>() {
+            int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < size;
+            }
+
+            @Override
+            public A next() {
+                index++;
+                return items[index - 1];
+            }
+        };
     }
 }
