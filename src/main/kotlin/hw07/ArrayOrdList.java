@@ -26,6 +26,7 @@ public class ArrayOrdList<A extends Comparable<? super A>>
             if (hasNext()) return array[index++];
             else throw new NoSuchElementException();
         }
+        public void remove(){}
     }
 
     @Override

@@ -33,6 +33,7 @@ public class ListOrdList<A extends Comparable<? super A>>
             }
             else throw new NoSuchElementException();
         }
+        public void remove(){}
     }
     public Iterator<A> iterator(){
         return new Iterator_ListOrdList();
