@@ -1,7 +1,10 @@
 package hw07;
+import java.util.Iterator;
+
+
 
 public abstract class OrdList <A extends Comparable<? super A>>
-        implements Comparable<OrdList<? extends A>> {
+        implements Comparable<OrdList<? extends A>>,Iterable<A> {
     public abstract int size();
     public abstract A get(int index);
     public  abstract void print();
@@ -11,8 +14,10 @@ public abstract class OrdList <A extends Comparable<? super A>>
     public int compareTo(OrdList<? extends A> other) {
         if (size() > other.size()) return 1;
         if (size() < other.size()) return -1;
-        for (int i = 0; i < size(); i++) {
-            int compare = get(i).compareTo(other.get(i));
+        Iterator itr = iterator();
+        Iterator itr_other = other.iterator();
+        while (itr.hasNext()){
+            int compare = ((A)itr.next()).compareTo((A)itr_other.next());
             if (compare != 0) return compare;
         }
         return 0;
@@ -20,8 +25,10 @@ public abstract class OrdList <A extends Comparable<? super A>>
 
     public boolean equals(OrdList<A> other) {
         if (size() != other.size()) return false;
-        for (int i = 0; i < size(); i++) {
-            if (!get(i).equals(other.get(i))) return false;
+        Iterator itr = iterator();
+        Iterator itr_other = other.iterator();
+        while (itr.hasNext()) {
+            if (!itr.next().equals(itr_other.next())) return false;
         }
         return true;
     }
