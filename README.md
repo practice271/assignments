@@ -40,3 +40,6 @@ for logical and console interface parts.
 Custom `hashCode()` and `equals()` methods must be implemented.
 You can't use containers from the standard library, except ordinary arrays. This task must be solved on Java.
 2. (2 point) Rewrite previous task on Kotlin using data classes.
+
+### Homework 8 (03.11 - 17.11):
+1. (4 points) An `Iterable` implementation for containers from the problem 4.1.
