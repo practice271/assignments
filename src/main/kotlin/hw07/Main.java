@@ -2,7 +2,7 @@ package hw07;
 
 public class Main {
     public static void main(String[] args) {
-        OrderedList<String> l = new OrderedList();
+        OrderedList<String> l = new LinkedOrderedList();
         l.add("bbb");
         l.add("aa");
         l.add("b");

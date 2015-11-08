@@ -43,8 +43,18 @@ public class ListTestAdd {
     }
 
     @Test
-    public void test() {
-        OrderedList<Integer> ord = new OrderedList();
+    public void testLinked() {
+        OrderedList<Integer> ord = new LinkedOrderedList();
+        for (int a : input)
+            ord.add(a);
+        Integer[] res = new Integer[ord.size()];
+        ord.toArray(res);
+        Assert.assertArrayEquals(expected, res);
+    }
+
+    @Test
+    public void testArray() {
+        OrderedList<Integer> ord = new ArrayOrderedList();
         for (int a : input)
             ord.add(a);
         Integer[] res = new Integer[ord.size()];
