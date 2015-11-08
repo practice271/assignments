@@ -107,6 +107,8 @@ public class JavaOrderedListATD<T extends Comparable<? super T>> extends JavaOrd
                 }
                 return null;
             }
+
+            public void remove() {}
         };
     }
 

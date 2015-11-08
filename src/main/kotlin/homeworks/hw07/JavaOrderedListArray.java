@@ -92,6 +92,8 @@ public class JavaOrderedListArray<T extends Comparable<? super T>> extends JavaO
                 index++;
                 return array[index - 1];
             }
+
+            public void remove() {}
         };
     }
 }
