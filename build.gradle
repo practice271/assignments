@@ -2,7 +2,7 @@ group 'assingments'
 version '1.0-SNAPSHOT'
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.7'
+  gradleVersion = '2.2'
   distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
@@ -11,11 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
-<<<<<<< HEAD
-mainClassName = 'classroom.c02.MainKt'
-=======
-mainClassName = 'classroom.c04.Main'
->>>>>>> master
+mainClassName = 'classroom.c05.MainKt'
 
 sourceCompatibility = 1.5
 
