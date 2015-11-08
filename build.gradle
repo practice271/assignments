@@ -11,7 +11,11 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
+<<<<<<< HEAD
 mainClassName = 'classroom.c02.MainKt'
+=======
+mainClassName = 'classroom.c04.Main'
+>>>>>>> master
 
 sourceCompatibility = 1.5
 
