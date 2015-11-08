@@ -1,11 +1,13 @@
 package hw07;
 
+import java.util.Iterator;
+
 /**
  * Created by Antropov Igor on 31.10.2015.
  */
 
 
-public class OrderedList<E extends Comparable<? super E>> extends AbstractOrderedList<E> {
+public class OrderedList<E extends Comparable<? super E>> extends AbstractOrderedList<E> implements Iterable<E> {
 
     class Node<E> {
         private Node next;
@@ -88,5 +90,25 @@ public class OrderedList<E extends Comparable<? super E>> extends AbstractOrdere
         size++;
     }
 
+    private class MyIteratorList<E extends Comparable<? super E>> implements Iterator<E> {
+        Node<E> node;
 
+        public MyIteratorList(Node<E> node) {
+            this.node = node;
+        }
+
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        public E next() {
+            E val = node.getE();
+            node = node.getNext();
+            return val;
+        }
+    }
+
+    public Iterator iterator() {
+        return new MyIteratorList(firstNode);
+    }
 }
