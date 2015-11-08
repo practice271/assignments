@@ -60,7 +60,6 @@ class JavaTests {
         val expected = createListArray()
         val list = createListArray()
         expected.add(20)
-        list.add(21)
         assertEquals(list.equals(expected), false)
     }
 
@@ -94,6 +93,7 @@ class JavaTests {
         val list = createListATD()
         expected.add(100)
         list.add(2)
+        list.add(21)
         assertEquals(list.equals(expected), false)
     }
 }

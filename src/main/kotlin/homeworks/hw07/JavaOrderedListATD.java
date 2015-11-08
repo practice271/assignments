@@ -1,28 +1,11 @@
 package homeworks.hw07;
 
-public class JavaOrderedListATD<T extends Comparable<? super T>> extends KotlinOrderedList<T>  {
-    private Node head;
-    private int size;
+import java.util.Iterator;
 
-    public JavaOrderedListATD() {
-        this.head = null;
-        this.size = 0;
-    }
-
-    private class Node {
-        private T value;
-        private Node next;
-
-        public Node(T value, Node next) {
-            this.value = value;
-            this.next = next;
-        }
-
-        public Node(T value) {
-            this.value = value;
-            this.next = null;
-        }
-    }
+public class JavaOrderedListATD<T extends Comparable<? super T>> extends JavaOrderedList<T>  {
+    private int size = 0;
+    public T first;
+    public JavaOrderedListATD tail;
 
     @Override
     public int size() {
@@ -31,74 +14,100 @@ public class JavaOrderedListATD<T extends Comparable<? super T>> extends KotlinO
 
     @Override
     public T get(int index) {
-        Node node = head;
-        for (int i = 0; i < index; i++) {
-            node = node.next;
+        if (index == 0) {
+            return first;
         }
-        return node.value;
+        return getPosition(tail, 1, index);
+    }
+
+    private T getPosition(JavaOrderedListATD l, int i, int index) {
+        if (i < index) {
+            return getPosition(l.tail, i + 1, index);
+        }
+        return (T)l.first;
     }
 
     @Override
     public void add(T object) {
-        if (head == null) {
-            head = new Node(object);
+        if (size == 0) {
+            first = object;
             size++;
             return;
         }
-        if (object.compareTo(head.value) < 0) {
-            head.next = new Node(head.value, head.next);
-            head.value = object;
+        if (object.compareTo(first) < 0) {
+            JavaOrderedListATD<T> temp = new JavaOrderedListATD<T>();
+            temp.first = first;
+            temp.tail = tail;
+            first = object;
+            tail = temp;
             size++;
             return;
         }
-        Node node = head;
-        while ((node.next != null) && (node.next.value.compareTo(object) <= 0)) {
-            node = node.next;
-        }
-        node.next = new Node(object, node.next);
+        tail = addPosition(tail, object);
         size++;
+    }
+
+    private JavaOrderedListATD<T> addPosition(JavaOrderedListATD l, T obj) {
+        JavaOrderedListATD<T> res = new JavaOrderedListATD<T>();
+        if (l == null) {
+            res.first = obj;
+            return res;
+        }
+        if (l.first.compareTo(obj) >= 0) {
+            res.first = obj;
+            res.tail = l;
+            return res;
+        }
+        res.first = (T)l.first;
+        res.tail  = addPosition(l.tail, obj);
+        return res;
     }
 
     @Override
     public void removeAt(int index) {
-        if ((index <= 0 || index >= size)) {
+        if ((index < 0 || index >= size)) {
             return;
         }
-        Node node = head;
-        for (int i = 0; i < index - 1; i++) {
-            node = node.next;
+        if (index == 0) {
+            first = (T) tail.first;
+            tail = tail.tail;
+            size--;
+            return;
         }
-        node.next = node.next.next;
+        tail = removePosition(tail, 1, index);
         size--;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        Node node = head;
-        for (int i = 0; i < size; i++) {
-            hash = hash * 31 + node.value.hashCode();
-            node = node.next;
+    private JavaOrderedListATD removePosition(JavaOrderedListATD l, int i, int index) {
+        if (i < index) {
+            JavaOrderedListATD<T> res = new JavaOrderedListATD<T>();
+            res.first = (T)l.first;
+            res.tail = removePosition(l.tail, i + 1, index);
+            return res;
         }
-        return hash;
+        if (i == size - 1) {
+            return null;
+        }
+        return l.tail;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof JavaOrderedListATD)) {
-            return false;
-        }
-        JavaOrderedListATD otherList  = (JavaOrderedListATD) other;
-        if (size() != otherList.size()) {
-            return false;
-        }
-        Node node = head;
-        for (int i = 0; i < size(); i++) {
-            if (node.value != otherList.get(i)) {
-                return false;
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private JavaOrderedListATD<T> list;
+
+            public boolean hasNext() {
+                return (list != null);
             }
-            node = node.next;
-        }
-        return true;
+
+            public T next() {
+                if (hasNext()) {
+                    T temp = list.first;
+                    list = list.tail;
+                    return temp;
+                }
+                return null;
+            }
+        };
     }
+
 }

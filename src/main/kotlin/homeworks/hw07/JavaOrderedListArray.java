@@ -1,10 +1,12 @@
 package homeworks.hw07;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class JavaOrderedListArray<T extends Comparable<? super T>> extends JavaOrderedList<T> {
     private T[] array;
     private int size;
+    private int currentIndex;
 
     @Override
     public int size() {
@@ -19,6 +21,7 @@ public class JavaOrderedListArray<T extends Comparable<? super T>> extends JavaO
     public JavaOrderedListArray() {
         this.array = (T[]) new Comparable[0];
         this.size = array.length;
+        this.currentIndex = 0;
     }
 
     @Override
@@ -28,23 +31,27 @@ public class JavaOrderedListArray<T extends Comparable<? super T>> extends JavaO
             array = Arrays.copyOf(array, size);
             array[0] = object;
         } else {
-            size++;
+            currentIndex++;
             int index = binarySearch(object);
-            array = Arrays.copyOf(array, size);
-
-            for (int i = size - 1; i > index; i--) {
-                array[i] = array[i - 1];
+            if (currentIndex == size) {
+                resize();
             }
+            System.arraycopy(array, index, array, index + 1, currentIndex - index);
             array[index] = object;
         }
     }
 
+    private void resize() {
+        size *= 2;
+        array = Arrays.copyOf(array, size);
+    }
+
     private int binarySearch(T key) {
         int low = 0;
-        int high = size - 1;
+        int high = currentIndex;
         int result = 0;
         int mid = (low + high) / 2;
-        while (low <= high && mid  != size - 1) {
+        while (low <= high && mid  != currentIndex) {
             T midVal = array[mid];
             int cmp = midVal.compareTo(key);
             if (cmp < 0) {
@@ -59,6 +66,7 @@ public class JavaOrderedListArray<T extends Comparable<? super T>> extends JavaO
             mid = (low + high) / 2;
         }
         return result; //key not found, return position to add
+        //Not matter whether the key is found, return to the place where the insert
     }
 
     @Override
@@ -72,29 +80,18 @@ public class JavaOrderedListArray<T extends Comparable<? super T>> extends JavaO
         array = Arrays.copyOf(temp, size);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        for (int i = 0; i < size(); i++) {
-            hash = hash * 31 + get(i).hashCode();
-        }
-        return hash;
-    }
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            int index = 0;
 
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof JavaOrderedListArray)) {
-            return false;
-        }
-        JavaOrderedListArray otherList  = (JavaOrderedListArray) other;
-        if (size() != otherList.size()) {
-            return false;
-        }
-        for (int i = 0; i < size(); i++) {
-            if (get(i) != otherList.get(i)) {
-                return false;
+            public boolean hasNext() {
+                return (index <= currentIndex);
             }
-        }
-        return true;
+
+            public T next() {
+                index++;
+                return array[index - 1];
+            }
+        };
     }
 }

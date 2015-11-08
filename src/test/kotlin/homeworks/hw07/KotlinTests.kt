@@ -89,11 +89,4 @@ class KotlinTests {
         assertEquals(list.equals(expected), true)
     }
 
-    @Test fun testEquals2ATD() {
-        val expected = createListATD()
-        val list = createListATD()
-        expected.add(100)
-        list.add(2)
-        assertEquals(list.equals(expected), false)
-    }
 }
