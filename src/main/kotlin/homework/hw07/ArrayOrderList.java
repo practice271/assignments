@@ -93,6 +93,9 @@ public class ArrayOrderList<T extends Comparable<? super T>>
                 if(hasNext()) return arr[index - 1];
                 throw new NoSuchElementException();
             }
+            
+            @Override
+            public void remove() {}
         };
     }
 }
