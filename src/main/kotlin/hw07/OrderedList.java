@@ -6,39 +6,26 @@ import java.util.NoSuchElementException;
 
 public class OrderedList<T extends Comparable<T>>
         extends AbstractCollection<T>
-        implements Comparable<OrderedList<T>> {
-
-    private class ListNode {
-
-        public T value;
-        public ListNode next;
-
-        public ListNode(T v, ListNode n) {
-            value = v;
-            next = n;
-        }
-    }
+        implements Ordered<T> {
 
     private class ListIterator implements Iterator<T> {
-        public ListIterator(ListNode head) {
-            currentNode = head;
+        public ListIterator() {
+            current = 0;
         }
 
-        public ListNode currentNode;
+        public int current = 0;
 
         @Override
         public boolean hasNext() {
-            return currentNode != null;
+            return current >= size;
         }
 
         @Override
         public T next() {
-            if (currentNode == null)
+            if (!hasNext())
                 throw new NoSuchElementException();
 
-            T res = currentNode.value;
-            currentNode = currentNode.next;
-            return res;
+            return array[current++];
         }
 
         @Override
@@ -47,11 +34,11 @@ public class OrderedList<T extends Comparable<T>>
         }
     }
 
-    private ListNode head = null;
-    private int size = 0;
+    private T[] array = (T[]) new Comparable[8];
+    private int size = 0, cap = 8;
 
     @Override
-    public int compareTo(OrderedList<T> obj) {
+    public int compareTo(Ordered<T> obj) {
         Iterator<T> itA = iterator(), itB = obj.iterator();
         while (itA.hasNext() && itB.hasNext()) {
             T a = itA.next(), b = itB.next();
@@ -70,9 +57,8 @@ public class OrderedList<T extends Comparable<T>>
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return (obj instanceof OrderedList &&
-                compareTo((OrderedList<T>) obj) == 0);
+    public boolean equals(Ordered<T> x) {
+        return (compareTo(x) == 0);
     }
 
     @Override
@@ -92,24 +78,19 @@ public class OrderedList<T extends Comparable<T>>
 
     @Override
     public Iterator<T> iterator() {
-        return new ListIterator(head);
+        return new ListIterator();
     }
 
     @Override
     public boolean add(T t) {
-        ListNode current = head, last = null;
-        while (current != null &&
-               current.value.compareTo(t) < 0) {
-            last = current;
-            current = current.next;
+        if (size == cap) {
+            cap *= 2;
+            T[] newa = (T[]) new Comparable[cap];
+            for (int i = 0; i < size; i++)
+                newa[i] = array[i];
+            array = newa;
         }
-        ListNode node = new ListNode(t, current);
-        if (current == head) {
-            head = node;
-        } else {
-            last.next = node;
-        }
-        size++;
+        array[size++] = t;
         return true;
     }
 
