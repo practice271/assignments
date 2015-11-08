@@ -36,6 +36,9 @@ public class AtdOrderList<T extends Comparable<? super T>> extends IOrderList<T>
                 if(hasNext()) return val;
                 throw new NoSuchElementException();
             }
+
+            @Override
+            public void remove() {}
         };
     }
 
