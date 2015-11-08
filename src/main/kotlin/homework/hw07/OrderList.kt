@@ -1,7 +1,13 @@
 package homework.hw07
 
+import java.util.*
 
-abstract  class OrderList<T : Comparable<T>> : Comparable<OrderList<out T>> {
+
+abstract  class OrderList<T : Comparable<T>> : Comparable<OrderList<out T>>,Iterable<T> {
+
+    override fun iterator(): Iterator<T> {
+        return this.iterator()
+    }
 
     override fun hashCode(): Int {
         var i = size() - 1
@@ -19,26 +25,20 @@ abstract  class OrderList<T : Comparable<T>> : Comparable<OrderList<out T>> {
 
         if (size() != other.size()) return false
 
-        var answer = true
-        var i = 0
-        while (i < size() && answer) {
-            answer = get(i) == other[i]
-            i++
-        }
-        return answer
+        val iterator = other.iterator()
+        for(item in this) if(item != iterator.next()) return false
+        return true
     }
 
     override fun compareTo(other: OrderList<out T>): Int {
         if (size() > other.size()) return 1
         if (size() < other.size()) return -1
 
-        var i = 0
-        while (i < size()) {
-            val comprassion = get(i).compareTo(other[i])
+        val iterator = other.iterator()
+        for(item in this) {
+            val comprassion = item.compareTo(iterator.next())
             if (comprassion != 0) return comprassion
-            i++
         }
-
         return 0
     }
 
@@ -56,6 +56,23 @@ class KotlinAtdOrderList<T : Comparable<T>>() : OrderList<T>() {
 
     private var count = 0
     private var list: Node<T>? = null
+
+    override fun iterator(): Iterator<T> {
+        return listIterator(list)
+    }
+
+    private class listIterator<T : Comparable<T>>(private var list : Node<T>?): Iterator<T> {
+        override fun hasNext(): Boolean {
+            return list != null
+        }
+
+        override fun next(): T {
+            val temp = list?.value
+            list = list?.next
+            return temp ?: throw NoSuchElementException()
+
+        }
+    }
 
     internal inner class Node<T : Comparable<T>>(var value: T, var next: Node<T>?)
 
@@ -89,8 +106,8 @@ class KotlinAtdOrderList<T : Comparable<T>>() : OrderList<T>() {
                 when (node.next) {
                     null -> return null
                     else -> {
-                        if (node.next!!.value != value) return delete(value, node.next)
-                        return Node(node.value, node.next!!.next)
+                        if (node.next?.value != value) return delete(value, node.next)
+                        return Node(node.value, node.next?.next)
                     }
                 }
             }
@@ -105,10 +122,10 @@ class KotlinAtdOrderList<T : Comparable<T>>() : OrderList<T>() {
         var index = index
         var temp: Node<T>? = list
         while (index > 0) {
-            temp = temp!!.next
+            temp = temp?.next
             index--;
         }
-        return temp!!.value
+        return temp?.value ?: throw NoSuchElementException()
     }
 
     fun print() {
@@ -125,6 +142,10 @@ class KotlinArrayOrderList<T : Comparable<T>> : OrderList<T>() {
 
     private var arr: Array<T> = arrayOfNulls<Comparable<Any>>(10) as Array<T>
     private var count = 0
+
+    override fun iterator(): Iterator<T> {
+        return arr.iterator()
+    }
 
     override fun add(value: T) {
         fun toRight(index: Int) {

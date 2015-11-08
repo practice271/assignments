@@ -1,5 +1,8 @@
 package homework.hw07;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class ArrayOrderList<T extends Comparable<? super T>>
         extends IOrderList<T> {
 
@@ -17,14 +20,14 @@ public class ArrayOrderList<T extends Comparable<? super T>>
     public void add(T val) {
         if (count == arr.length - 1) bigger();
         int i = 0;
-        while (i < count && arr[i].compareTo(val) == -1) i++;
+        while (i < count && arr[i].compareTo(val) < 0) i++;
         toRight(i);
         arr[i] = val;
         count++;
     }
 
     private void bigger() {
-        T[] newarr = (T[]) new Comparable[arr.length + 10];
+        T[] newarr = (T[]) new Comparable[arr.length + arr.length/2];
         for (int i = 0; i < arr.length; i++) {
             newarr[i] = arr[i];
         }
@@ -72,4 +75,24 @@ public class ArrayOrderList<T extends Comparable<? super T>>
         }
     }
 
+    @Override
+    public Iterator<T> iterator() {
+
+        return new Iterator<T>() {
+
+            private Integer index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < count;
+            }
+
+            @Override
+            public T next() {
+                index++;
+                if(hasNext()) return arr[index - 1];
+                throw new NoSuchElementException();
+            }
+        };
+    }
 }

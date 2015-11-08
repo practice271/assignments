@@ -1,9 +1,9 @@
 package homework.hw07;
 
-/**
- * Created by sharg on 10/30/2015.
- */
-public abstract class IOrderList<T extends Comparable<? super T>> implements Comparable<IOrderList<? extends T>> {
+
+import java.util.Iterator;
+
+public abstract class IOrderList<T extends Comparable<? super T>> implements Comparable<IOrderList<? extends T>>, Iterable<T> {
 
     @Override
     public int hashCode() {
@@ -16,22 +16,20 @@ public abstract class IOrderList<T extends Comparable<? super T>> implements Com
         return Math.abs(answer);
     }
 
+
     @Override
     public boolean equals(Object other) {
 
         if (!(other instanceof IOrderList)) return false;
 
-        IOrderList otherList = (IOrderList) other;
+        IOrderList<T> otherList = (IOrderList) other;
 
         if (size() != otherList.size()) return false;
 
-        Boolean answer = true;
-        int i = 0;
-        while (i < size() && answer) {
-            answer = get(i).equals(otherList.get(i));
-            i++;
-        }
-        return answer;
+        Iterator<T> iterator = otherList.iterator();
+        for( T item : this)
+            if(item != iterator.next()) return false;
+        return false;
     }
 
     @Override
@@ -39,14 +37,17 @@ public abstract class IOrderList<T extends Comparable<? super T>> implements Com
         if (size() > other.size()) return 1;
         if (size() < other.size()) return -1;
 
-        int i = 0;
-        while (i < size()) {
-            int comprassion = get(i).compareTo(other.get(i));
+        Iterator<? extends T> iterator = other.iterator();
+        for(T item : this) {
+            Integer comprassion = item.compareTo(iterator.next());
             if (comprassion != 0) return comprassion;
-            i++;
         }
-
         return 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return this.iterator();
     }
 
     public abstract void add(T val);

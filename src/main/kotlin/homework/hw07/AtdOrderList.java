@@ -1,9 +1,13 @@
 package homework.hw07;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class AtdOrderList<T extends Comparable<? super T>> extends IOrderList<T> {
 
     private int count = 0;
     private Node list = null;
+
 
     class Node<T extends Comparable<? super T>> {
 
@@ -14,6 +18,25 @@ public class AtdOrderList<T extends Comparable<? super T>> extends IOrderList<T>
             this.value = value;
             this.next = next;
         }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            Node<T> temp = list;
+            @Override
+            public boolean hasNext() {
+                return (temp != null);
+            }
+
+            @Override
+            public T next() {
+                T val = temp.value;
+                temp = temp.next;
+                if(hasNext()) return val;
+                throw new NoSuchElementException();
+            }
+        };
     }
 
     @Override
