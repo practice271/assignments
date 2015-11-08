@@ -1,31 +1,58 @@
 package hw8
 
 import java.io.*
+import java.util.*
 
 abstract class Tree<T: Comparable<T>>() {
     var height: Int = 0
     var diff: Int = 0
     var size: Int = 0
+
+    abstract operator fun iterator(): Iterator<T>
 }
 
-class Nil<T: Comparable<T>>(): Tree<T>()
+class Nil<T: Comparable<T>>(): Tree<T>() {
+    override fun iterator(): Iterator<T> = NilIterator()
+
+    inner class NilIterator: Iterator<T> {
+        override fun next(): T {
+            throw NoSuchElementException()
+        }
+
+        override fun hasNext(): Boolean {
+            return false
+        }
+
+    }
+}
 
 class Node<T: Comparable<T>>(val v: T, val l: Tree<T>, val r: Tree<T>): Tree<T>() {
+    override fun iterator(): Iterator<T> = NodeIterator(this)
+
     init {
         height = Math.max(l.height, r.height) + 1
         diff = l.height - r.height
     }
-}
 
-class TreeIterator<T: Comparable<T>>(var c: Tree<T>, var p: Tree<T>): Iterator<T> {
+    inner class NodeIterator(val n: Node<T>): Iterator<T> {
+        val leftIt = n.l.iterator()
+        val rightIt = n.r.iterator()
+        var yielded = false
 
-    override fun next(): T {
-        val res = c;
+        override fun next(): T {
+            if (!hasNext())
+                throw NoSuchElementException()
+           return when {
+               leftIt.hasNext() -> leftIt.next()
+               !yielded -> { yielded = true; v }
+               else -> rightIt.next()
+           }
+        }
 
-    }
+        override fun hasNext(): Boolean {
+            return leftIt.hasNext() || !yielded || rightIt.hasNext()
+        }
 
-    override fun hasNext(): Boolean {
-        throw UnsupportedOperationException()
     }
 }
 
@@ -52,10 +79,6 @@ fun <T : Comparable<T>> Tree<T>.rotRightLeft(): Tree<T> =
             Node(v, l, r.rotRight()).rotLeft()
         else
             Nil()
-
-fun <T : Comparable<T>> Tree<T>.iterator(): Tree<T> {
-
-}
 
 fun <T : Comparable<T>> Tree<T>.insert(x: T): Tree<T> =
         if (this is Node) (
@@ -167,15 +190,13 @@ class TreeSet<T: Comparable<T>>(var t: Tree<T>) : Set<T> {
 
     override fun isEmpty(): Boolean = t.size == 0
 
-    override fun contains(x: T): Boolean = t.find(x)
+    override fun contains(element: T): Boolean = t.find(element)
 
-    override fun iterator(): Iterator<T> {
-        throw UnsupportedOperationException()
-    }
+    override fun iterator(): Iterator<T> = t.iterator()
 
-    override fun containsAll(xs: Collection<T>): Boolean {
+    override fun containsAll(elements: Collection<T>): Boolean {
         var c = true
-        forAll { v ->  c = c && contains(v) }
+        forEach { v ->  c = c && contains(v) }
         return c
     }
 
@@ -187,24 +208,22 @@ class TreeSet<T: Comparable<T>>(var t: Tree<T>) : Set<T> {
         t = t.remove(x)
     }
 
-    fun find(x: T): Boolean = t.find(x)
-
     fun text() = t.text()
 
     fun intersect(s: Set<T>): TreeSet<T> {
         val x: TreeSet<T> = TreeSet(Nil())
-        forAll { v -> if (s.contains(v)) x.insert(v) }
+        forEach { v -> if (s.contains(v)) x.insert(v) }
         return x;
     }
 
     fun union(s: Set<T>): TreeSet<T> {
         val x: TreeSet<T> = TreeSet(Nil())
-        forAll { v -> x.insert(v) }
+        forEach { v -> x.insert(v) }
         s.forEach { v -> x.insert(v) }
         return x
     }
 
-    fun forAll(f: (T) -> Unit) {
+    fun forEach(f: (T) -> Unit) {
         t.forAll(f);
     }
 
@@ -218,6 +237,11 @@ fun main(args: Array<String>) {
         t = t.insert(x)
         t.print(w)
     }
+    println("**")
+    for (x in t) {
+        println(x)
+    }
+    println("**")
     t = t.remove(4)
     t.print(w)
     t = t.remove(3)
