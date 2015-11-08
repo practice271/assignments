@@ -17,7 +17,7 @@ public class OrderedList<T extends Comparable<T>>
 
         @Override
         public boolean hasNext() {
-            return current >= size;
+            return current < size;
         }
 
         @Override
@@ -90,7 +90,13 @@ public class OrderedList<T extends Comparable<T>>
                 newa[i] = array[i];
             array = newa;
         }
-        array[size++] = t;
+        int place = 0;
+        while (place < size && array[place].compareTo(t) < 0)
+            place++;
+        for (int i = size - 1; i >= place; i--)
+            array[i + 1] = array[i];
+        array[place] = t;
+        size++;
         return true;
     }
 

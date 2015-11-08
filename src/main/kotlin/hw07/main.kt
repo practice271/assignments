@@ -2,16 +2,16 @@ package hw07
 
 import java.util.*
 
-interface Ordered<T> : Iterable<T> {
+interface OrderedKt<T> : Iterable<T> {
 
-    fun equals(x: Ordered<T>): Boolean
-    operator fun compareTo(x: Ordered<T>): Int
+    fun equals(x: OrderedKt<T>): Boolean
+    operator fun compareTo(x: OrderedKt<T>): Int
     override fun hashCode(): Int
 
 }
 
 class OrderedListKt<T : Comparable<T>> : AbstractCollection<T>(),
-                                         Ordered<T> {
+                                         OrderedKt<T> {
 
     private inner class ListIterator : Iterator<T> {
 
@@ -33,7 +33,7 @@ class OrderedListKt<T : Comparable<T>> : AbstractCollection<T>(),
     private var sz = 0
     private var cap = 8
 
-    override fun compareTo(other: Ordered<T>): Int {
+    override fun compareTo(other: OrderedKt<T>): Int {
         val itA = iterator()
         val itB = other.iterator()
         while (itA.hasNext() && itB.hasNext()) {
@@ -53,8 +53,8 @@ class OrderedListKt<T : Comparable<T>> : AbstractCollection<T>(),
         }
     }
 
-    override fun equals(other: Ordered<T>): Boolean {
-        return (compareTo(other) == 0)
+    override fun equals(x: OrderedKt<T>): Boolean {
+        return (compareTo(x) == 0)
     }
 
     override fun hashCode(): Int {
@@ -66,7 +66,7 @@ class OrderedListKt<T : Comparable<T>> : AbstractCollection<T>(),
         return h
     }
 
-    override val size: Int
+    override var size: Int = 0
         get() = sz
 
     override fun iterator(): MutableIterator<T> =
@@ -80,7 +80,13 @@ class OrderedListKt<T : Comparable<T>> : AbstractCollection<T>(),
                 newa[i] = array[i]
             array = newa
         }
-        array[sz++] = t
+        var place = 0
+        while (place < size && array[place].compareTo(t) < 0)
+            place++
+        for (i in size - 1 downTo place)
+            array[i + 1] = array[i]
+        array[place] = t
+        size++
         return true
     }
 
