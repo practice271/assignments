@@ -18,6 +18,8 @@ public class OrdArray <A extends Comparable<? super A>> extends OrderedList<A>{
             }
             return null;
         }
+        public void remove() {
+        }
     }
 
     public Iterator iterator(){
