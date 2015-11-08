@@ -1,20 +1,27 @@
 package hw07;
 
+import java.util.*;
+
 public abstract class OrderedList
         <A extends Comparable<? super A>>
-        implements Comparable<OrderedList<? extends A>>{
+        implements Comparable<OrderedList<? extends A>>, Iterable<A> {
 
     public abstract int size();
     public abstract A get(int index);
     public abstract void set(A value);
 
-    public boolean equals(Object other) {
+
+
+    public boolean equals(Iterable<A> other) {
         if (!(other instanceof OrderedList)) { return false; }
         if (!(this.size() == ((OrderedList) other).size())) {
             return  false;
         }
-        for (int i = 0; i < this.size(); i++) {
-            if (!(this.get(i).equals(((OrderedList) other).get(i)))) {
+
+        Iterator thisIter = this.iterator();
+        Iterator otherIter = other.iterator();
+        while (thisIter.hasNext()){
+            if (!otherIter.next().equals(thisIter.next())){
                 return false;
             }
         }
@@ -22,9 +29,10 @@ public abstract class OrderedList
     }
 
     public int hashCode() {
+        Iterator thisIter = this.iterator();
         int sum = 0;
-        for (int i = 0; i < this.size(); i++) {
-            sum = sum * 31 + this.get(i).hashCode();
+        while(thisIter.hasNext()) {
+            sum = sum * 31 + thisIter.next().hashCode();
         }
         return sum;
     }
@@ -42,4 +50,3 @@ public abstract class OrderedList
         return 0;
     }
 }
-

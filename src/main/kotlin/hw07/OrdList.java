@@ -1,5 +1,7 @@
 package hw07;
 
+import java.util.*;
+
 public class OrdList<A extends Comparable<? super A>> extends OrderedList<A>{
     private class Node<A extends Comparable<? super A>>{
         public int index;
@@ -14,6 +16,25 @@ public class OrdList<A extends Comparable<? super A>> extends OrderedList<A>{
     }
 
     Node beginning = null;
+
+    private class OrdListIter implements Iterator<A> {
+        Node node = beginning;
+        public boolean hasNext(){
+            return (node != null);
+        }
+        public A next(){
+            if(hasNext()) {
+                A next = (A) node.data;
+                node = node.next;
+                return next;
+            }
+            return null;
+        }
+    }
+
+    public Iterator iterator(){
+        return new OrdListIter();
+    }
 
     @Override
     public int size(){

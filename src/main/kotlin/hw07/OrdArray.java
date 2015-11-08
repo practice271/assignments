@@ -1,7 +1,28 @@
 package hw07;
 
+import java.util.*;
+
 public class OrdArray <A extends Comparable<? super A>> extends OrderedList<A>{
     private A[] array = (A[]) new Comparable[0];
+
+    private class OrdArrayIter implements Iterator<A> {
+        int index = 0;
+        public boolean hasNext(){
+            return (index < array.length);
+        }
+        public A next(){
+            if (hasNext()) {
+                A next = (A) array[index];
+                index++;
+                return next;
+            }
+            return null;
+        }
+    }
+
+    public Iterator iterator(){
+        return new OrdArrayIter();
+    }
 
     @Override
     public int size() {
@@ -28,9 +49,8 @@ public class OrdArray <A extends Comparable<? super A>> extends OrderedList<A>{
         A val = arr[i];
         A mem;
         arr[i] =  value;
-        for (int k = i + 1; k < arr.length - 1; k++){
-            mem = arr[k + 1];
-            arr[k + 1] = arr[k];
+        for (int k = i + 1; k < arr.length; k++){
+            mem = arr[k];
             arr[k] = val;
             val = mem;
         }
