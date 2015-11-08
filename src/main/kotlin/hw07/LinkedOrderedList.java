@@ -41,7 +41,7 @@ public class LinkedOrderedList<T extends Comparable<T>>
 
         @Override
         public void remove() {
-            return;
+            throw new UnsupportedOperationException();
         }
     }
 

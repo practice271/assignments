@@ -29,7 +29,7 @@ public class ArrayOrderedList<T extends Comparable<T>>
 
         @Override
         public void remove() {
-            return;
+            throw new UnsupportedOperationException();
         }
     }
 
