@@ -2,7 +2,7 @@ package hw08
 
 import java.util.*
 
-internal class AVLTree : AbstractMap()
+class AVLTree : AbstractMap()
 {
     private inner class Node (value : Int, l : Node?, r: Node?) {
 

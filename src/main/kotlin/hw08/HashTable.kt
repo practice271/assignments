@@ -2,7 +2,7 @@ package hw08
 
 import java.util.*
 
-internal class HashTable (hashKey: Int) : AbstractMap()
+class HashTable (hashKey: Int) : AbstractMap()
 {
     public val table = Array(hashKey, {LinkedList<Int>()})
 

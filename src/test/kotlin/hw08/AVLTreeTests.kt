@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 public class AVLTree_insert
 {
-    internal var tree : AVLTree = AVLTree()
+    var tree : AVLTree = AVLTree()
 
     @Test fun Test0()
     {
@@ -32,7 +32,7 @@ public class AVLTree_insert
 
 public class AVLTree_delete
 {
-    internal var tree : AVLTree = AVLTree()
+    var tree : AVLTree = AVLTree()
 
     @Test fun Test0()
     {
@@ -70,7 +70,7 @@ public class AVLTree_delete
 
 public class AVLTree_search
 {
-    internal var tree : AVLTree = AVLTree()
+    var tree : AVLTree = AVLTree()
 
     @Test fun Test0()
     {
@@ -97,8 +97,8 @@ public class AVLTree_search
 
 public class AVLTree_intersection
 {
-    internal var tree1 : AVLTree = AVLTree()
-    internal var tree2 : AVLTree = AVLTree()
+    var tree1 : AVLTree = AVLTree()
+    var tree2 : AVLTree = AVLTree()
 
     @Test fun Test0()
     {
@@ -122,8 +122,8 @@ public class AVLTree_intersection
 
 public class AVLTree_union
 {
-    internal var tree1 : AVLTree = AVLTree()
-    internal var tree2 : AVLTree = AVLTree()
+    var tree1 : AVLTree = AVLTree()
+    var tree2 : AVLTree = AVLTree()
 
     @Test fun Test0()
     {
