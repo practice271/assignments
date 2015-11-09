@@ -21,16 +21,13 @@ public abstract class AbstractOrderedList<T extends Comparable<? super T>>
 
     public int compareTo(@NotNull AbstractOrderedList<? extends T> other) {
         // compares lexicographically
-        int lim = Math.min(size(), other.size());
-        int i = 0;
-        while (i < lim) {
-            T v1 = get(i);
-            T v2 = other.get(i);
-            int res = v1.compareTo(v2);
+        Iterator<? extends T> iterThis  = iterator();
+        Iterator<? extends T> iterOther = other.iterator();
+        while (iterThis.hasNext() && iterOther.hasNext()) {
+            int res = iterThis.next().compareTo(iterOther.next());
             if (res != 0) {
                 return res;
             }
-            i++;
         }
         return size() - other.size();
     }
