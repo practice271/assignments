@@ -2,38 +2,39 @@ package hw08
 
 import java.util.*
 
-internal class ArrayOfElemOrNullIterator<A>(private var array : Array<A?>) : Iterator<A> {
+internal class ArrayOfElemOrNullIterator<A>(private var array : Array<A?>)
+: Iterator<A> {
     var index = 0
-    override public fun hasNext() : Boolean {
-        for (i in index .. array.size - 1)
+    override public fun hasNext(): Boolean {
+        for (i in index..array.size - 1)
             if (array[i] != null) {
                 index = i
                 return true
             }
         return false
     }
-    override public fun next() : A {
+
+    override public fun next(): A {
         if (!hasNext()) throw NoSuchElementException()
         return array[index++] as A
     }
 }
 
-internal class HashMapIterator<Key, Value>(private val array : Array<LinkedList<Pair<Key, Value>>?>)
-: Iterator<Pair<Key, Value>> {
+internal class HashMapIterator<Key, Value>(
+        private val array : Array<LinkedList<Pair<Key, Value>>?>) : Iterator<Pair<Key, Value>> {
     var arrayIterator = ArrayOfElemOrNullIterator(array)
-    var listIterOrNull : Iterator<Pair<Key, Value>>? = null
-    override public fun hasNext() : Boolean {
-        if (listIterOrNull != null)
-            if (listIterOrNull!!.hasNext()) return true
+    var listIterator: Iterator<Pair<Key, Value>> = EmptyIterator()
+    override public fun hasNext(): Boolean {
+        if (listIterator.hasNext()) return true
         return arrayIterator.hasNext()
     }
-    override public fun next() : Pair<Key, Value> {
-        if (listIterOrNull != null)
-            if (listIterOrNull!!.hasNext()) return listIterOrNull!!.next()
+
+    override public fun next(): Pair<Key, Value> {
+        if (listIterator.hasNext()) return listIterator.next()
         if (!arrayIterator.hasNext())
             throw NoSuchElementException()
-        listIterOrNull = arrayIterator.next().iterator()
-        return listIterOrNull!!.next()
+        listIterator = arrayIterator.next().iterator()
+        return listIterator.next()
     }
 }
 
@@ -41,7 +42,7 @@ class HashMap<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key
     private val arraySize = 1000
     private val array: Array<LinkedList<Pair<Key, Value>>?> = Array(arraySize, { null })
 
-    override public fun iterator() : Iterator<Pair<Key, Value>> = HashMapIterator(array)
+    override public fun iterator(): Iterator<Pair<Key, Value>> = HashMapIterator(array)
 
     private fun getHashCode(key: Key) = key.hashCode() % arraySize
 
@@ -51,8 +52,8 @@ class HashMap<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key
             array[arrayIndex] = linkedListOf(Pair(key, value))
         else {
             delete(key)
-            array[arrayIndex]?.addFirst(Pair(key, value))               //it`s guaranteed that array[arrayIndex]
-        }                                                               //is not null
+            array[arrayIndex]?.addFirst(Pair(key, value))
+        }
     }
 
     override public fun delete(key: Key) {
@@ -87,7 +88,7 @@ class HashMap<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key
         return resList
     }
 
-    override public fun union(map : AbstractMap<Key, Value>) : HashMap<Key, Value> {
+    override public fun union(map: AbstractMap<Key, Value>): HashMap<Key, Value> {
         val res = HashMap<Key, Value>()
         val hashMapList = this.toList()
         val mapList = map.toList()
@@ -97,7 +98,7 @@ class HashMap<Key, Value> : AbstractMap<Key, Value>() where Key : Comparable<Key
         return res
     }
 
-    override public fun intersection(map : AbstractMap<Key, Value>) : HashMap<Key, Value> {
+    override public fun intersection(map: AbstractMap<Key, Value>): HashMap<Key, Value> {
         val res = HashMap<Key, Value>()
         val treeList = this.toList()
         val mapList = map.toList()

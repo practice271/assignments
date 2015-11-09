@@ -65,7 +65,7 @@ where Key : Comparable<Key> {
             height = Math.max(left?.height ?: 0, right?.height ?: 0) + 1
         }
 
-    public fun iterator() : Iterator<Pair<Key, Value>> = NodeIterator(this)
+    public fun iterator(): Iterator<Pair<Key, Value>> = NodeIterator(this)
 
     public fun toList(): LinkedList<Pair<Key, Value>> {
         fun f(node: Node<Key, Value>?, list: LinkedList<Pair<Key, Value>>): LinkedList<Pair<Key, Value>> {
@@ -126,7 +126,8 @@ where Key : Comparable<Key> {
         if (bf == 2) {
             if (((right as Node<Key, Value>).balanceFactor()) < 0) right = right?.rightRotate()
             return leftRotate()  //it`s guaranteed by 'balanceFactor' implementation that 'right' is not null
-        } else if (bf == -2) {   //if 'balanceFactor' returns 2
+        } else if (bf == -2) {
+            //if 'balanceFactor' returns 2
             if (((left as Node<Key, Value>).balanceFactor()) > 0) left = left?.leftRotate()
             return rightRotate() //'left' is not null if 'balanceFactor' returns -2
         } else return this
