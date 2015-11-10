@@ -97,6 +97,11 @@ public class OrderedList<E extends Comparable<? super E>> extends AbstractOrdere
             this.node = node;
         }
 
+        // in case of Travis
+        public void remove(){
+            throw new UnsupportedOperationException();
+        }
+
         public boolean hasNext() {
             return node != null;
         }

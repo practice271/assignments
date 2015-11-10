@@ -52,6 +52,11 @@ public class OrderedArray<E extends Comparable<? super E>> extends AbstractOrder
             this.array = array;
         }
 
+        // in case of Travis
+        public void remove(){
+            throw new UnsupportedOperationException();
+        }
+
         public boolean hasNext() {
             return array.length > num;
         }
@@ -60,7 +65,6 @@ public class OrderedArray<E extends Comparable<? super E>> extends AbstractOrder
             val = array[num];
             num++;
             return val;
-            //throw new NoSuchElementException();
         }
     }
 
