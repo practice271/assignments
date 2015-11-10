@@ -280,26 +280,24 @@ public class HashTable<A : Comparable<A>> : interfaceClass<A> {
 
     private class MyIterator<A>(var myNode: Node<A>?) : Iterator<Node<A>> {
 
-        private var tempNode: Node<A>? = null
-
-
         override public fun hasNext(): Boolean {
             if (myNode != null) return true
             else return false
         }
 
         override public fun next(): Node<A> {
-            tempNode = myNode
+            val tempNode = myNode
             myNode = myNode?.next
-            return tempNode!!
+            if (tempNode != null) return tempNode
+            else throw NoSuchElementException()
         }
     }
 
     override fun toString(): String {
         var res = ""
-        for (i in hashTable) {
-            if (i != null) {
-                for (j in i) res += j.key.toString() + " "
+        for (elemOfArray in hashTable) {
+            if (elemOfArray != null) {
+                for (elemOfList in elemOfArray) res += elemOfList.key.toString() + " "
             }
         }
         return res
@@ -307,10 +305,10 @@ public class HashTable<A : Comparable<A>> : interfaceClass<A> {
 
     override fun toList(): List<A> {
         var result = listOf<A>()
-        for (i in hashTable) {
-            if (i != null) {
-                for (j in i) {
-                    result += j.key
+        for (elemOfArray in hashTable) {
+            if (elemOfArray != null) {
+                for (elemOfList in elemOfArray) {
+                    result += elemOfList.key
                 }
             }
         }
@@ -321,18 +319,18 @@ public class HashTable<A : Comparable<A>> : interfaceClass<A> {
         val hashValue = k.hashCode()
         var contains = false
         var flag = false
-        for (i in hashTable) {
-            if (i != null)
-                if (i.hash() == hashValue) {
-                    for (j in i) {
-                        if (j.key == k) {
+        for (elemOfArray in hashTable) {
+            if (elemOfArray != null)
+                if (elemOfArray.hash() == hashValue) {
+                    for (elemOfList in elemOfArray) {
+                        if (elemOfList.key == k) {
                             flag = true
                             contains = true
                         }
                     }
                     if (!contains) {
-                        var tempNode = Node(k, i.next, i)
-                        i.next = tempNode
+                        var tempNode = Node(k, elemOfArray.next, elemOfArray)
+                        elemOfArray.next = tempNode
                         flag = true
                         break
                     }
@@ -351,29 +349,29 @@ public class HashTable<A : Comparable<A>> : interfaceClass<A> {
     override fun deletion(k: A) {
         var inc = 0
         val hashValue = k.hashCode()
-        for (i in hashTable) {
-            if (i != null)
-                if (i.hash() == hashValue) {
-                    for (j in i) {
+        for (elemOfArray in hashTable) {
+            if (elemOfArray != null)
+                if (elemOfArray.hash() == hashValue) {
+                    for (elemOfList in elemOfArray) {
                         inc++
-                        if (j.key == k)
+                        if (elemOfList.key == k)
                             when {
-                                j.next == null || j.prev == null -> {
+                                elemOfList.next == null || elemOfList.prev == null -> {
                                     hashTable[inc] = null
                                 }
-                                j.next == null -> {
-                                    j.prev?.next = null
-                                    j.prev = null
+                                elemOfList.next == null -> {
+                                    elemOfList.prev?.next = null
+                                    elemOfList.prev = null
                                 }
-                                j.prev == null -> {
-                                    j.next?.prev = null
-                                    j.next = null
+                                elemOfList.prev == null -> {
+                                    elemOfList.next?.prev = null
+                                    elemOfList.next = null
                                 }
                                 else -> {
-                                    j.next?.prev = j.prev
-                                    j.prev?.next = j.next
-                                    j.prev = null
-                                    j.next = null
+                                    elemOfList.next?.prev = elemOfList.prev
+                                    elemOfList.prev?.next = elemOfList.next
+                                    elemOfList.prev = null
+                                    elemOfList.next = null
                                 }
                             }
                     }
@@ -383,11 +381,11 @@ public class HashTable<A : Comparable<A>> : interfaceClass<A> {
 
     override fun search(k: A): Boolean {
         val hashValue = k.hashCode()
-        for (i in hashTable) {
-            if (i != null)
-                if (i.hash() == hashValue) {
-                    for (j in i) {
-                        if (j.key == k) {
+        for (elemOfArray in hashTable) {
+            if (elemOfArray != null)
+                if (elemOfArray.hash() == hashValue) {
+                    for (elemOfList in elemOfArray) {
+                        if (elemOfList.key == k) {
                             return true
                         }
                     }
@@ -398,10 +396,10 @@ public class HashTable<A : Comparable<A>> : interfaceClass<A> {
 
     override fun union(value: interfaceClass<A>): interfaceClass<A> {
         val res = HashTable<A>()
-        for (i in hashTable) {
-            if (i != null)
-                for (j in i) {
-                    res.insertion(j.key)
+        for (elemOfArray in hashTable) {
+            if (elemOfArray != null)
+                for (elemOfList in elemOfArray) {
+                    res.insertion(elemOfList.key)
                 }
         }
         for (i in value.toList()) res.insertion(i)
@@ -411,12 +409,12 @@ public class HashTable<A : Comparable<A>> : interfaceClass<A> {
     override fun intersection(value: interfaceClass<A>): interfaceClass<A> {
         var temp: A? = null
         val res = HashTable<A>()
-        for (i in value.toList()) {
-            for (j in hashTable) {
-                if (j != null)
-                    for (q in j) {
-                        temp = q.key
-                        if (temp == i)
+        for (elemOfOtherClass in value.toList()) {
+            for (elemOfArray in hashTable) {
+                if (elemOfArray != null)
+                    for (elemOfList in elemOfArray) {
+                        temp = elemOfList.key
+                        if (temp == elemOfOtherClass)
                             res.insertion(temp)
                     }
             }
