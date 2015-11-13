@@ -24,11 +24,9 @@ public class Node (var value: Int): Iterable<Int> {
         private val rIterator: Iterator<Int> = node.rightChild?.iterator() ?: EmptyIterator()
         private var observed: Boolean = false
         private var lHasNext: Boolean = true
-            get() =
-            if (field) { field = lIterator.hasNext(); field } else false //it works only with "!!"
+        get() = if (field) { field = lIterator.hasNext(); field } else false
         private  var rHasNext: Boolean = true
-            get() =
-            if (field) { field = rIterator.hasNext(); field } else false
+        get() = if (field) { field = rIterator.hasNext(); field } else false
 
         override fun hasNext(): Boolean {
             if (!observed) { return true }
