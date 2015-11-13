@@ -3,30 +3,61 @@ package hw8
 import java.util.*
 
 class HashTable<T>(val cap: Int): Set<T> {
-    class HashNode<T>(val v: T, var prev: HashNode<T>?, var next: HashNode<T>?);
 
-    val t = Array<LinkedList<HashNode<T>>>(cap, { i -> LinkedList() })
+    override var size: Int = 0; private set
 
-    var head: HashNode<T>? = null
+    override fun isEmpty(): Boolean =
+        size == 0
+
+    override fun contains(x: T): Boolean =
+        x != null && t[getHash(x)].any { n -> x.equals(n.v) }
+
+    override fun iterator(): Iterator<T> =
+        HashTableIterator(head)
+
+    inner class HashTableIterator(var node: HashNode?) : Iterator<T> {
+        override fun next(): T {
+            if (node != null) {
+                val r = node!!.v
+                node = node!!.next
+                return r
+            } else {
+                throw NoSuchElementException()
+            }
+        }
+
+        override fun hasNext() = node != null
+
+    }
+
+    override fun containsAll(xs: Collection<T>): Boolean =
+        xs.fold(true, { r, x -> r && contains(x) })
+
+    inner class HashNode(val v: T, var prev: HashNode?, var next: HashNode?);
+
+    val t = Array<List<HashNode>>(cap, { i -> LinkedList() })
+
+    var head: HashNode? = null
 
     /* We checked that x is not null, !! always OK */
-    private fun getHash(x: T) = x!!.hashCode() % cap
+    private fun getHash(x: T) = Math.abs(x!!.hashCode() % cap)
 
-    override fun insert(x: T) {
+    fun insert(x: T) {
         if (x != null) {
-            val l : MutableList<HashNode<T>> = t[getHash(x)]
-            if (!l.contains(x)) {
-                val nhead = HashNode(x, null, head)
-                l.add(nhead)
-                head = nhead
+            var l : List<HashNode> = t[getHash(x)]
+            if (l.all { n -> !x.equals(n.v) }) {
+                val newHead = HashNode(x, null, head)
+                t[getHash(x)] = l + newHead
+                head = newHead
+                size++
             }
         }
     }
 
-    override fun remove(x: T) {
+    fun remove(x: T) {
         if (x != null) {
-            val l : MutableList<HashNode<T>> = t[getHash(x)]
-            val node = l.find { (n) -> n.v == x }
+            val l : List<HashNode> = t[getHash(x)]
+            val node = l.find { n -> x.equals(n.v) }
             if (node != null) {
                 val next = node.next
                 val prev = node.prev
@@ -37,32 +68,25 @@ class HashTable<T>(val cap: Int): Set<T> {
                     prev.next = node.next
                 else
                     head = node.next
+                size--
             }
         }
     }
 
-    override fun find(x: T): Boolean {
-        if (x != null) {
-            val l : MutableList<HashNode<T>> = t[getHash(x)]
-            return (l.find { (n) -> n.v == x }) != null
-        }
-        return false
-    }
-
-    override fun intersect(s: Set<T>): Set<T> {
+    fun intersect(s: Set<T>): Set<T> {
         val x = HashTable<T>(cap)
-        forAll { (v) -> if (s.find(v)) x.insert(v) }
+        forEach { v -> if (s.contains(v)) x.insert(v) }
         return x;
     }
 
-    override fun union(s: Set<T>): Set<T> {
+    fun union(s: Set<T>): Set<T> {
         val x = HashTable<T>(cap)
-        forAll { (v) -> x.insert(v) }
-        s.forAll { (v) -> x.insert(v) }
+        forEach { v -> x.insert(v) }
+        s.forEach { v -> x.insert(v) }
         return x
     }
 
-    override fun forAll(f: (T) -> Unit) {
+    fun forEach(f: (T) -> Unit) {
         var cur = head
         while (cur != null) {
             f(cur.v);
