@@ -18,7 +18,7 @@ public class HashTable(): Set() {
             }
             return false
         }
-        override fun next(): kotlin.Int {
+        override fun next(): Int {
             if (hasNext()) {
                 return table[arrayInd][listInd++]
             } else throw NoSuchElementException()
