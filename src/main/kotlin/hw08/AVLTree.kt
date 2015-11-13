@@ -1,6 +1,5 @@
 package hw08
 
-
 import java.util.*
 
 public class Node (var value: Int): Iterable<Int> {
@@ -13,16 +12,23 @@ public class Node (var value: Int): Iterable<Int> {
         rightChild = rightChild_
     }
 
+    private class EmptyIterator<Int>(): Iterator<Int> {
+             override fun hasNext(): Boolean = false
+                override fun next(): Int {throw NoSuchElementException()}
+            }
+
     override fun iterator(): Iterator<Int> = NodeIterator(this)
 
     protected  class NodeIterator(protected val node: Node):Iterator<Int> {
-        private val lIterator: Iterator<Int>? = node.leftChild?.iterator()
-        private val rIterator: Iterator<Int>? = node.rightChild?.iterator()
+        private val lIterator: Iterator<Int> = node.leftChild?.iterator() ?: EmptyIterator()
+        private val rIterator: Iterator<Int> = node.rightChild?.iterator() ?: EmptyIterator()
         private var observed: Boolean = false
         private var lHasNext: Boolean = true
-            get() = if (field) { field = lIterator!!.hasNext(); field } else false //it works only with "!!"
+            get() =
+            if (field) { field = lIterator.hasNext(); field } else false //it works only with "!!"
         private  var rHasNext: Boolean = true
-            get() = if (field) { field = rIterator!!.hasNext(); field } else false
+            get() =
+            if (field) { field = rIterator.hasNext(); field } else false
 
         override fun hasNext(): Boolean {
             if (!observed) { return true }
@@ -32,9 +38,9 @@ public class Node (var value: Int): Iterable<Int> {
         }
 
             override fun next(): Int {
-                if(!observed) { observed = true; return node.value }
-                if(lHasNext) return lIterator!!.next()
-                if(rHasNext) return rIterator!!.next()
+                if(!observed) { observed = true; return node?.value }
+                if(lHasNext) return lIterator.next()
+                if(rHasNext) return rIterator.next()
                 throw NoSuchElementException()
             }
 

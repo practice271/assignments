@@ -87,4 +87,26 @@ class AVLTree_Test {
         tree2.insert(12)
         assertEquals(listOf(8),tree1.insersection(tree2).toList())
     }
+
+    @Test fun iteratorTest1() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(9)
+        tree.insert(11)
+        tree.insert(13)
+
+        var test = ""
+        for (i in tree) test+="$i "
+        assertEquals("7 9 11 13 ", test)
+    }
+
+    @Test fun iteratorTest2() {
+        var tree = AVLTreeSet()
+        tree.insert(7)
+        tree.insert(9)
+
+        var test = ""
+        for (i in tree) test+="$i "
+        assertEquals("7 9 ", test)
+    }
 }

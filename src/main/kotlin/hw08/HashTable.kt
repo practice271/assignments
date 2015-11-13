@@ -7,20 +7,21 @@ public class HashTable(): Set() {
     val table = Array(arraySize, {ArrayList<Int>()})
 
     private inner class HashTableIterator(): Iterator<Int> {
-        var ind1 = 0
-        var ind2 = 0
+        var arrayInd = 0
+        var listInd = 0
 
         override fun hasNext(): Boolean {
-         if (table[ind1].isEmpty() || ind1 == arraySize) { return false}
-            else { return true }
+            if ((arrayInd == table.size - 1) && (listInd == table[arrayInd].size)) return false
+            while (arrayInd < table.size - 1) {
+                if (listInd == table[arrayInd].size) { arrayInd++; listInd = 0 }
+                else return true
+            }
+            return false
         }
-
-        override fun next(): Int {
-            while (table[ind1].size == 0) ind1++
-            var i = table[ind1].size
-            if (ind2 >= i - 1) {ind1++; ind2 = 0; return table[ind1][i - 1]}
-            ind2++
-            return table[ind1][ind2 - 1]
+        override fun next(): kotlin.Int {
+            if (hasNext()) {
+                return table[arrayInd][listInd++]
+            } else throw NoSuchElementException()
         }
     }
 
@@ -38,10 +39,7 @@ public class HashTable(): Set() {
     }
 
     override public fun delete(value: Int): Unit {
-        val arrayInd = hashFun(value)
-        val x = table[arrayInd]
-        val y = x.indexOf(value)
-        if(y != -1) x.remove(y)
+        table[hashFun(value)].remove(value)
     }
 
     override public fun toList(): ArrayList<Int> {
