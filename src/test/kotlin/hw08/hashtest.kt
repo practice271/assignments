@@ -1,65 +1,42 @@
 package hw08
 
 import org.junit.Test
+import java.util.LinkedList
 import kotlin.test.assertEquals
 
-
-class hashtest {
-
-    @Test
-    fun insertion() {
-        val t = HashTable(10)
-        assertEquals(emptyList<Int>(), t.toList())
-
-        t.insert(4)
-        assertEquals(listOf(4), t.toList())
-
-        t.insert(2); t.insert(3)
-        assertEquals(listOf(2, 3, 4), t.toList())
-
-        t.insert(1)
-        assertEquals(listOf(1, 2, 3, 4), t.toList())
-
-        t.insert(4)
-        assertEquals(listOf(1, 2, 3, 4, 4), t.toList())
-    }
-
+public class hashtest {
 
     @Test
-    fun deletion() {
-        val t = HashTable(10)
-        t.delete(3)
-        assertEquals(emptyList<Int>(), t.toList())
-
-        t.insert(2); t.insert(10); t.insert(14); t.insert(6); t.insert(12); t.insert(100); t.insert(15); t.insert(17)
-        t.delete(10)
-        assertEquals(listOf(100, 2, 12, 14, 15, 6, 17), t.toList())
-
-        t.delete(14)
-        assertEquals(listOf(100, 2, 12, 15, 6, 17), t.toList())
-    }
-
-
-    @Test
-    fun searching() {
+    fun searching() { // uses iterators in function 'contains'
         val t = HashTable(10)
         assertEquals(false, t.contains(5))
 
         t.insert(2); t.insert(10); t.insert(14); t.insert(6); t.insert(12); t.insert(100); t.insert(15); t.insert(17)
         assertEquals(true, t.contains(10))
         assertEquals(true, t.contains(6))
+        assertEquals(false, t.contains(13))
     }
 
+    @Test
+    fun iteratorTest() {
+        val t = HashTable(10)
+        var hashIter = t.iterator()
+        assertEquals(!t.isEmpty(), hashIter.hasNext())
+
+        t.insert(1); t.insert(18)
+        val iter = t.iterator()
+        assertEquals(true, iter.hasNext())
+        assertEquals(1, iter.next())
+        assertEquals(18, iter.next())
+        assertEquals(false, iter.hasNext())
+    }
 
     @Test
-    fun emptyness() {
+    fun forEachTest() {
         val t = HashTable(10)
-        assertEquals(true, t.isEmpty())
-
-        t.insert(5)
-        assertEquals(false, t.isEmpty())
-
-        t.delete(5)
-        assertEquals(true, t.isEmpty())
+        t.insert(2); t.insert(10); t.insert(14); t.insert(6); t.insert(12); t.insert(100); t.insert(15); t.insert(17)
+        val list = LinkedList<Int>()
+        t.forEach { list.add(it) }
+        assertEquals(listOf(10, 100, 2, 12, 14, 15, 6, 17), list)
     }
 }

@@ -249,12 +249,3 @@ public class AVLTree(): ISet() {
 
     //------------------------------END OF ITERATORS---------------------------
 }
-
-/*
-public fun main(args: Array<String>) {
-    val t = AVLTree()
-    t.fromList(listOf(2, 10, 14, 6, 12, 100, 15, 17))
-    val t1 = AVLTree()
-    t1.fromList(listOf(10, 8, 17, 11, 94, 13, 6))
-    println(t.union(t1))
-}*/

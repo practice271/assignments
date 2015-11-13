@@ -54,19 +54,28 @@ public class HashTable(public val arrsize: Int): ISet() {
 
     private inner class HTIterator(): Iterator<Int> {
         private var listInTable = 0
-        private var elmInList   = 0
+        private var lastNotEmpty = 0
+        private var listIter = table[listInTable].iterator()
 
-        override fun hasNext(): Boolean = listInTable < arrsize
+        init {
+            val sz = table.size - 1
+            for(i in 0..sz)
+                if(table[i].isNotEmpty()) lastNotEmpty = i
+            while(listInTable < sz && table[listInTable].isEmpty())
+                listInTable++
+            listIter = table[listInTable].iterator()
+        }
+
+        override fun hasNext(): Boolean =
+                !(listInTable == lastNotEmpty && !listIter.hasNext())
+
         override fun next(): Int {
-            while(table[listInTable].isEmpty()) listInTable++
-            val tmp = table[listInTable]
-            if(elmInList >= tmp.size - 1) {
-                if(listInTable < arrsize-1) listInTable++
-                elmInList = 0
-                return tmp[tmp.size - 1]
-            }
-            return tmp[++elmInList - 1]
+            val oldLIT = listInTable
+            if(listInTable < lastNotEmpty && !listIter.hasNext()) listInTable++
+            while(listInTable < lastNotEmpty && table[listInTable].isEmpty())
+                listInTable++
+            if(listInTable != oldLIT) listIter = table[listInTable].iterator()
+            return listIter.next()
         }
     }
-
 }
