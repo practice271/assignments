@@ -35,13 +35,12 @@ public class Node (var value: Int): Iterable<Int> {
             return false
         }
 
-            override fun next(): Int {
-                if(!observed) { observed = true; return node?.value }
-                if(lHasNext) return lIterator.next()
-                if(rHasNext) return rIterator.next()
-                throw NoSuchElementException()
-            }
-
+        override fun next(): Int {
+            if(!observed) { observed = true; return node?.value }
+            if(lHasNext) return lIterator.next()
+            if(rHasNext) return rIterator.next()
+            throw NoSuchElementException()
+        }
     }
 
     private fun height(node: Node?): Int {
@@ -76,7 +75,6 @@ public class Node (var value: Int): Iterable<Int> {
         return tmp
     }
 
-
     private fun balanceFactor(node: Node?): Node? {
         fixHeight(node)
         when (checkBalanceFactor(node)) {
@@ -107,7 +105,6 @@ public class Node (var value: Int): Iterable<Int> {
     public fun insertNode(value: Int) {
         insert(this, value)
     }
-
 
     private fun findMin(node: Node?): Node? {
         if (node?.leftChild != null)
@@ -165,7 +162,6 @@ public class Node (var value: Int): Iterable<Int> {
         }
         return add(this, ArrayList<Int>())
     }
-
 
     public fun toString_(): String {
         var lText = leftChild?.toString_()
