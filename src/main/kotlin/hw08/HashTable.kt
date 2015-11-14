@@ -69,7 +69,7 @@ class HashTable (hashKey: Int) : AbstractMap()
         val hashList = table[value % hashSize]
         val indexElem = hashList.indexOf(value)
 
-        if (indexElem != -1) hashList.remove(indexElem)
+        if (indexElem != -1) hashList.removeAt(indexElem)
     }
 
     override public fun search (value : Int) : Boolean = table[value % hashSize].indexOf(value) != -1

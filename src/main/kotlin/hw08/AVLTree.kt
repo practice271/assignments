@@ -24,19 +24,19 @@ class AVLTree : AbstractMap()
 
 
                 override fun next(): Int {
-                    if (lHasNext) return lIterator.next()
                     if (!observed)
                     {
                         observed = true
                         return Key
                     }
+                    if (lHasNext) return lIterator.next()
                     if (rHasNext) return rIterator.next()
                     throw NoSuchElementException()
                 }
 
                 override fun hasNext(): Boolean {
-                    if (lHasNext)   return true
                     if (!observed)  return true
+                    if (lHasNext)   return true
                     if (rHasNext)   return true
                     return false
                 }
@@ -180,10 +180,10 @@ class AVLTree : AbstractMap()
     {
         fun Node.toList_ () : List<Int>
         {
+            val vText = listOf(this.Key)
             val lText = leftChild?.toList_() ?: listOf()
             val rText = rightChild?.toList_() ?: listOf()
-            val vText = listOf(this.Key)
-            return lText + vText + rText
+            return vText + lText + rText
         }
 
         return root?.toList_() ?: listOf()

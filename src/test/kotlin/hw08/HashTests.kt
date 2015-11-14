@@ -39,13 +39,13 @@ public class HashTable_delete
         assertEquals(emptyList<Int>(), table.toList())
     }
 
-    /*@Test fun Test1()
+    @Test fun Test1()
     {
         table.insert(2)
         table.delete(2)
 
         assertEquals(emptyList<Int>(), table.toList())
-    }*/
+    }
 
     @Test fun Test2()
     {
@@ -55,7 +55,7 @@ public class HashTable_delete
         assertEquals(listOf(2), table.toList())
     }
 
-    /*@Test fun Test3()
+    @Test fun Test3()
     {
         table.insert(4)
         table.insert(2)
@@ -65,7 +65,7 @@ public class HashTable_delete
         table.delete(2)
 
         assertEquals(listOf(3, 4, 5), table.toList())
-    }*/
+    }
 }
 
 public class HashTable_search
