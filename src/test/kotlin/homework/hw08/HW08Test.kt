@@ -103,18 +103,18 @@ public class HW08Test {
         assertEquals(listOf(1,5), hash1.toList())
     }
     @Test fun iteratorTest() {
-        var tree : Set<Int> = AVLTree()
-        var arr = arrayListOf(4, 2, 8, 5, 7)
-        for (i in arr) tree.insertion(i)
-        var list : LinkedList<Int> = linkedListOf()
-        for (i in tree.toList()) list.add(i)
-        assertEquals(listOf(4, 2, 7, 5, 8), list.toList())
+        var tree = AVLTree<Int>()
+        tree.insertion(4); tree.insertion(2); tree.insertion(7)
+        tree.insertion(5); tree.insertion(8);
+        var temp = ""
+        for (i in tree.toList()) temp += "$i "
+        assertEquals("4 2 7 5 8 ", temp)
 
-        var hash : Set<Int> = HashTable(10)
-        list = linkedListOf()
-        var arr1 = arrayListOf(2, 10, 9, 32, 7)
-        for (i in arr1 ) hash.insertion(i)
-        for (i in hash.toList()) list.add(i)
-        assertEquals(listOf(10, 2, 32, 7, 9), list.toList())
+        var hash = HashTable<Int>(10)
+        hash.insertion(10); hash.insertion(2); hash.insertion(32)
+        hash.insertion(7); hash.insertion(9);
+        temp = ""
+        for (i in hash) temp += "$i "
+        assertEquals("10 2 32 7 9 ", temp)
     }
 }
