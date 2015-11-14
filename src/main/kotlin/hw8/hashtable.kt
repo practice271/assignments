@@ -48,6 +48,7 @@ class HashTable<T>(val cap: Int): Set<T> {
             if (l.all { n -> !x.equals(n.v) }) {
                 val newHead = HashNode(x, null, head)
                 t[getHash(x)] = l + newHead
+                head?.prev = newHead
                 head = newHead
                 size++
             }
@@ -59,6 +60,8 @@ class HashTable<T>(val cap: Int): Set<T> {
             val l : List<HashNode> = t[getHash(x)]
             val node = l.find { n -> x.equals(n.v) }
             if (node != null) {
+                t[getHash(x)] = l.filter { v -> !v.equals(node) }
+
                 val next = node.next
                 val prev = node.prev
                 if (next != null)
