@@ -26,7 +26,7 @@ public class AVLTree_insert
         tree.insert(3)
         tree.insert(5)
 
-        assertEquals(listOf(2, 3, 4, 5), tree.toList())
+        assertEquals(listOf(4, 2, 3, 5), tree.toList())
     }
 }
 
@@ -64,7 +64,7 @@ public class AVLTree_delete
 
         tree.delete(2)
 
-        assertEquals(listOf(3, 4, 5), tree.toList())
+        assertEquals(listOf(4, 3, 5), tree.toList())
     }
 }
 
