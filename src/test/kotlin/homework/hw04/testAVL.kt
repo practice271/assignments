@@ -82,3 +82,17 @@ public class AVLTree_intersection
         assertEquals(listOf(4), tree1.toList())
     }
 }
+
+public class AVLTree_iterator{
+    @Test fun Test(){
+        var tree : AVLTree<Int> = AVLTree<Int>()
+        tree.insertion(1);
+        tree.insertion(2);
+        tree.insertion(3);
+        tree.insertion(4);
+        tree.insertion(5);
+        var check = ""
+        for (t in tree.toList()) check+=t.toString() + " "
+        assertEquals(check, "1 3 5 4 2 ")
+    }
+}

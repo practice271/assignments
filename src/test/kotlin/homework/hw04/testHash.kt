@@ -63,3 +63,17 @@ public class HashTable_intersection
         assertEquals(listOf(10,15),table1.toList())
     }
 }
+
+public class HashTree_iterator{
+    @Test fun Test(){
+        var table1 : Set<Int> = HashTable(10)
+        table1.insertion(6)
+        table1.insertion(7)
+        table1.insertion(8)
+        table1.insertion(9)
+        table1.insertion(10)
+        var check = ""
+        for (t in table1.toList()) check+= t.toString() + " "
+       assertEquals(check, "10 6 7 8 9 ")
+    }
+}
