@@ -20,7 +20,7 @@ public class TestHash {
     @Test fun iteratorTest() {
         val s = HashTable<Int>(100)
         arrayOf(1, 2, 3, 4, 5, 6, 7).forEach { v -> s.insert(v) }
-        compareIterators(arrayOf(1, 2, 3, 4, 5, 6, 7).iterator(), s.iterator())
+        compareIterators(arrayOf(7, 6, 5, 4, 3, 2, 1).iterator(), s.iterator())
     }
 
     @Test fun removeTest() {
