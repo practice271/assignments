@@ -11,12 +11,16 @@ public class TestHash {
         a.indices.forEach { i -> assertEquals(a[i], b[i]) }
     }
 
+    fun <T>compareIterators(a: Iterator<out T>, b: Iterator<out T>) {
+        while (a.hasNext() && b.hasNext())
+            assertEquals(a.next(), b.next())
+        assertEquals(a.hasNext(), b.hasNext())
+    }
 
     @Test fun iteratorTest() {
         val s = HashTable<Int>(100)
-        arrayOf(5, 4, 6, 2, 1, 3, 7).forEach { v -> s.insert(v) }
-        val a: Array<out Int> = s.toTypedArray().sortedArray()
-        compareArrays(arrayOf(1, 2, 3, 4, 5, 6, 7), a)
+        arrayOf(1, 2, 3, 4, 5, 6, 7).forEach { v -> s.insert(v) }
+        compareIterators(arrayOf(1, 2, 3, 4, 5, 6, 7).iterator(), s.iterator())
     }
 
     @Test fun removeTest() {
