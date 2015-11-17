@@ -31,7 +31,7 @@ public class DataBus() {
 
     public fun write(value: Array<Byte>) {
         println("Data bus   : Set data")
-        for (i in 0..Math.min(value.size() - 1, capacity - 1))
+        for (i in 0..Math.min(value.size - 1, capacity - 1))
             data[i] = value[i]
 
     }
@@ -41,14 +41,14 @@ public class RAM {
     private var memory = Array<Byte>(640 * 1024, { 0 })         //ought to be enough for anybody
     public fun load(position: Byte, data: Array<Byte>) {
         println("RAM        : Load data at $position")
-        for (i in 0..data.size() - 1)
+        for (i in 0..data.size - 1)
             memory[position + i] = data[i]
     }
 
     public fun upload(position: Byte, length: Byte): Array<Byte> {
         println("RAM        : Upload data from $position")
         var data = Array<Byte>(length.toInt(), { 0 })
-        for (i in 0..data.size() - 1)
+        for (i in 0..data.size - 1)
             data[i] = memory[position + i]
         return data
     }

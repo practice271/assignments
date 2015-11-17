@@ -15,7 +15,7 @@ public class Application {
    }
 
    public fun loadWinSize(dimension : String) : Int {
-      print("Computing window ")
+      print("Computing window with $dimension")
       return Random().nextInt(100)
    }
 
@@ -23,11 +23,11 @@ public class Application {
    public fun saveWinSize(dimension : String, size : Int) {
       if (dimension == "width") {
          println("Saving window width")
-         listOfWindows[0].add(listOfWindows[0].size(), size)
+         listOfWindows[0].add(listOfWindows[0].size, size)
       }
       if (dimension == "height") {
          println("Saving window height")
-         listOfWindows[1].add(listOfWindows[1].size(), size)
+         listOfWindows[1].add(listOfWindows[1].size, size)
       }
    }
 }
@@ -62,5 +62,5 @@ fun main (args : Array<String>){
    var secondWindow = Window(0,0)
    secondWindow.createAppWindow(app2)
    print ("Number of application windows: ")
-   println(if (app2 != null) {app2.listOfWindows[0].size()} else 0)
+   println(app2?.listOfWindows?.get(0)?.size ?: 0)
 }
