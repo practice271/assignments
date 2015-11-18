@@ -1,6 +1,6 @@
 package classroom.c04.kotlin
 
-data class Pair<A: Comparable<A>, B: Comparable<B>>(
+data class MyPair<A: Comparable<A>, B: Comparable<B>>(
         public val first: A, public val second: B
 ): Comparable<Pair<out A, out B>> {
     override public fun compareTo(other: Pair<out A, out B>): Int {

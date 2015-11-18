@@ -1,7 +1,6 @@
 package classroom.c04;
 
 import java.util.HashMap;
-import classroom.c04.kotlin.Pair;
 
 public class Main {
     public static void main(String[] args) {
