@@ -1,0 +1,7 @@
+java -cp . <classname>
+     -cp . --- For setting classpath to default one. Without this
+               option a class package should be default (empty one).
+javap -v <classname>
+
+hex in vim:
+  :%!xxd
