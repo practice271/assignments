@@ -3,10 +3,12 @@ package hw9
 import org.junit.Test
 import kotlin.test.assertEquals
 
-public class TestGen {
+public abstract class TestRunner {
+
+    abstract fun getRunner(): CodeRunner
 
     fun testCode(source: String, input: String, output: String) {
-        val res = BrainRun().runCode(source, input)
+        val res = getRunner().runCode(source, input)
         assertEquals(output, res)
     }
 

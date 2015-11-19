@@ -9,7 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
 
-class BrainGen(val className: String, val program: String) {
+class BrainGenerator(val className: String, val program: String) {
 
     var labelOpenStack: Stack<Label> = Stack()
     var labelCloseStack: Stack<Label> = Stack()

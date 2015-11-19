@@ -5,10 +5,10 @@ import java.io.StringReader
 import java.io.StringWriter
 import java.net.URLClassLoader
 
-class BrainRun {
+class BrainRunner: CodeRunner {
 
-    public fun runCode(source: String, input: String): String {
-        val g = BrainGen("TestClass", source)
+    public override fun runCode(source: String, input: String): String {
+        val g = BrainGenerator("TestClass", source)
         g.generate()
         g.save()
 
