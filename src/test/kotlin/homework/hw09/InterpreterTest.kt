@@ -10,38 +10,41 @@ import kotlin.test.assertEquals
  * @author Kirill Smirenko, group 271
  */
 class InterpreterTest {
-    @Test fun testSimpleOutput() = test(
+    @Test fun testSimpleOutput() = testInterpreter(
             "+++++-+++++.",
             "",
             "${9.toByte().toChar()}"
     )
 
-    @Test fun testByteOverflow() = test(
+    @Test fun testByteOverflow() = testInterpreter(
             "------.",
             "",
             "${250.toByte().toChar()}"
     )
 
-    @Test fun testInputNextPrev() = test(
+    @Test fun testInputNextPrev() = testInterpreter(
             ",>,>,>,>,>,.<.<.<.<.<.",
             "kotlin",
             "niltok"
     )
 
-    @Test fun testHelloWorld() = test(
+    @Test fun testHelloWorld() = testInterpreter(
             "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---" +
                     ".+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.",
             "",
             "Hello World!\n"
     )
 
-    fun test(program : String, input : String, output : String) {
+    fun testInterpreter(program : String, input : String, output : String) {
         val sw = StringWriter()
         BrainfuckInterpreter.interpret(program, StringReader(input), sw)
         assertEquals(output, sw.toString())
     }
 
-    class StringReader(val str : String) : Reader() {
+    /**
+     * Custom Reader for testing.
+     */
+    class StringReader(private val str : String) : Reader() {
         var ptr = 0
 
         override fun read() = if (ptr < str.length) str[ptr++].toInt() else -1
@@ -54,6 +57,9 @@ class InterpreterTest {
         }
     }
 
+    /**
+     * Custom Writer for testing.
+     */
     class StringWriter() : Writer() {
         private var sb = StringBuilder()
 

@@ -1,8 +1,20 @@
 package homework.hw09
 
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
+
 fun main(args : Array<String>) {
-    println("{${(-70).toByte().toChar().toString()}}")
-    println("{${(-70).toChar().toString()}}")
-    println("{${(186).toByte().toChar().toString()}}")
-    println("{${(186).toChar().toString()}}")
+    val program = "+++[-]."
+    //val program = "+++[>++[>++++<]<]."
+    val className = "TestClass"
+    val classByteArray = BrainfuckCompiler.generateClassByteArray(program, className)
+    val targetFile = Paths.get("$className.class")
+    Files.write(
+            targetFile,
+            classByteArray,
+            StandardOpenOption.WRITE,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING
+    )
 }

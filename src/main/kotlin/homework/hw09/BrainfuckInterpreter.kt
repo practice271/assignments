@@ -3,23 +3,12 @@ package homework.hw09
 import java.io.Reader
 import java.io.Writer
 
-enum class Tokens(val v : Char) {
-    NEXT('>'),
-    PREV('<'),
-    INC('+'),
-    DEC('-'),
-    WRITE('.'),
-    READ(','),
-    LBRACKET('['),
-    RBRACKET(']')
-}
-
 /**
  * An interpreter for Brainfuck.
- * @author Kirill Smirenko, group 271
+ * @author Kirill Smirenko
  */
 public object BrainfuckInterpreter {
-    private val memorySize = 32768
+    private val memorySize = 30000
 
     public fun interpret(commands : String, reader : Reader, writer : Writer) {
         val byteZero : Byte = 0
