@@ -15,10 +15,6 @@ class BrainGen(val className: String, val program: String) {
     var labelCloseStack: Stack<Label> = Stack()
     var b: ByteArray= ByteArray(0)
 
-    init {
-        generate()
-    }
-
     public fun generate() {
         if (!b.isEmpty())
             return
