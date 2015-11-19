@@ -57,5 +57,7 @@ public fun main(args : Array<String>) {
     val simple = "+++[>+<-]>."
     val hw = "Hello World!"
     val br_hw = asciiToBrainfuck().interprete(hw)
+    //val br_hw = asciiToBrainfuck().interprete("'Cause the dead don't shuffle - they run! Brush through streets of slaughter, clutching your gun!")
+      //  asciiToBrainfuck().interprete("abba ")
     brainfuckInterpeter().interpete(br_hw)
 }
