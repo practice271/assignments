@@ -133,9 +133,17 @@ class Tree<A: Comparable<A>>(): Iterable<A> {
 
     override fun toString(): String =
         StringBuilder().let { sb ->
-            this.forEach { sb.append("$it ") }
+            this forEach { sb.append("$it ") }
             sb.append("\n")
         }.toString()
+
+    public fun toList(): List<A> {
+        val list: MutableList<A> = ArrayList<A>()
+        for (e in this) {
+            list.add(e)
+        }
+        return list
+    }
 }
 
 public fun main(args: Array<String>) {
@@ -147,6 +155,10 @@ public fun main(args: Array<String>) {
 
     tree.remove(3)
     print(tree)
+
+    for (e in tree.toList()) {
+        //
+    }
 
     println("3: ${tree.contains(3)}")
     println("5: ${tree.contains(5)}")
