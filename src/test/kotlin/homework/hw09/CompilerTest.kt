@@ -42,15 +42,20 @@ class CompilerTest {
     )
 
     @Test
-    fun testWhile() = testCompiler(
-            //"+++[>++[>++++<-]<-].",
+    fun testWhile1() = testCompiler(
             "+++[-].",
             "",
-            //"${24.toByte().toChar()}"
             "${0.toByte().toChar()}"
     )
 
-    //@Test
+    @Test
+    fun testWhile2() = testCompiler(
+            "+++[>++[>++++<-]<-].",
+            "",
+            "${24.toByte().toChar()}"
+    )
+
+    @Test
     fun testHelloWorld() = testCompiler(
             "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---" +
                     ".+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.",

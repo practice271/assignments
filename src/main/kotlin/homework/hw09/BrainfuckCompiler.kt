@@ -14,14 +14,17 @@ import java.util.*
  */
 public object BrainfuckCompiler {
     private val memorySize = 30000
-    private val labels = Stack<Label>();
+    private val labels = Stack<Label>()
+    //private val localVarCount = 3
+    //private val localVars = arrayOf("[Ljava/lang/String;", "[C", "I")
 
     public fun generateClassByteArray(commands : String, className : String) : ByteArray {
         val cw = ClassWriter(0);
         //val cw = ClassWriter(ClassWriter.COMPUTE_FRAMES or ClassWriter.COMPUTE_MAXS);
         cw.visit(V1_7, ACC_PUBLIC, className, null, "java/lang/Object", null)
 
-        val cmv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)
+        // generating constructor method
+        /*val cmv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null)
         cmv.visitCode()
         val lCStart = Label()
         cmv.visitLabel(lCStart)
@@ -32,8 +35,9 @@ public object BrainfuckCompiler {
         cmv.visitLabel(lCEnd)
         cmv.visitLocalVariable("this", "Lhomework/hw09/SampleClass;", null, lCStart, lCEnd, 0)
         cmv.visitMaxs(1, 1)
-        cmv.visitEnd()
+        cmv.visitEnd()*/
 
+        // generating main method
         val mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null)
         mv.visitCode()
         val lStart = Label()
@@ -70,9 +74,9 @@ public object BrainfuckCompiler {
         mv.visitInsn(RETURN)
         val lEnd = Label()
         mv.visitLabel(lEnd)
-        mv.visitLocalVariable("var0", "[Ljava/lang/String;", null, lStart, lEnd, 0);
+        /*mv.visitLocalVariable("var0", "[Ljava/lang/String;", null, lStart, lEnd, 0);
         mv.visitLocalVariable("var1", "[C", null, lStart, lEnd, 1);
-        mv.visitLocalVariable("var2", "I", null, lStart, lEnd, 2);
+        mv.visitLocalVariable("var2", "I", null, lStart, lEnd, 2);*/
         mv.visitMaxs(4, 3)
         mv.visitEnd()
         cw.visitEnd()
@@ -142,7 +146,8 @@ public object BrainfuckCompiler {
         labels.push(endLabel)
         labels.push(beginLabel)
         visitLabel(beginLabel)
-        //visitFrame(F_SAME, 0, null, 0, null)
+        visitFrame(F_SAME, 0, null, 0, null)
+
         visitVarInsn(ALOAD, 1)
         visitVarInsn(ILOAD, 2)
         visitInsn(CALOAD)
@@ -159,8 +164,8 @@ public object BrainfuckCompiler {
         visitJumpInsn(IFNE, labels.pop())*/
         visitJumpInsn(GOTO, labels.pop())
         visitLabel(labels.pop())
-
-        //visitFrame(F_SAME, 0, null, 0, null)
+        visitFrame(F_SAME, 0, null, 0, null)
+        //visitFrame(F_SAME, localVarCount, localVars, 0, null)
     }
 
 
