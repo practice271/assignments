@@ -9,33 +9,64 @@ import kotlin.properties.Delegates
 /**
  * Created by Alexander on 19.11.2015.
  */
-class bfToJDK {
-    val opcodes : List<Opcode> by Delegates.notNull<List<Opcode>>()
-    val cn = ClassNode()
-    val cw: ByteArray
-        get() {
-            cn.version = V1_7
-            cn.access = ACC_PUBLIC
-            cn.name = "ClassTest"
-            cn.superName = "java/lang/Object"
-
-            val mn = MethodNode(ACC_PUBLIC, "<init>", "()V", null, null)
-            val il = mn.instructions
-            il.add(VarInsnNode(ALOAD, 0))
-            il.add(MethodInsnNode(INVOKESPECIAL, cn.superName, "<init>", "()V", false))
-            il.add(InsnNode(RETURN))
-            cn.methods.add(mn)
-
-            val cw = ClassWriter(ClassWriter.COMPUTE_FRAMES)
-            cn.accept(cw)
-
-            return cw.toByteArray()
+class bfToJDK(code : String) {
+    class Opcode(val type : Opcode.Type) {
+        enum class Type {
+            SHL,
+            SHR,
+            ADD,
+            SUB,
+            OUT,
+            IN,
+            WHILE,
+            END
         }
 
-    fun toByteCode(className: String, memorySize: Int): ByteArray {
+        fun clone(): Opcode {
+            return Opcode(type)
+        }
+    }
 
-        //val mn = MethodNode(ACC_PUBLIC, "run", "()V", null, null)
+    fun tokenize(code: String): List<Opcode> {
+        //Создаем массив лексем (которые уже являются опкодами и готовы к исполнению)
+        val retValue = ArrayList<Opcode>()
+
+        for (c in code) {
+            when (c) {
+                '>' -> retValue.add(Opcode(Opcode.Type.SHR))
+                '<' -> retValue.add(Opcode(Opcode.Type.SHL))
+
+                '+' -> retValue.add(Opcode(Opcode.Type.ADD))
+                '-' -> retValue.add(Opcode(Opcode.Type.SUB))
+
+                '.' -> retValue.add(Opcode(Opcode.Type.OUT))
+                ',' -> retValue.add(Opcode(Opcode.Type.IN))
+                '[' -> retValue.add(Opcode(Opcode.Type.WHILE))
+                ']' -> retValue.add(Opcode(Opcode.Type.END))
+            }
+        }
+
+        return retValue
+    }
+    val opcodes : List<Opcode> = tokenize(code)
+
+    fun toByteCode(className: String, memorySize: Int): ByteArray {
+        val cn = ClassNode()
+        cn.version = V1_7
+        cn.access = ACC_PUBLIC
+        cn.name = "ClassTest"
+        cn.superName = "java/lang/Object"
+
+        val mn0 = MethodNode(ACC_PUBLIC, "<init>", "()V", null, null)
+        val il0 = mn0.instructions
+        il0.add(VarInsnNode(ALOAD, 0))
+        il0.add(MethodInsnNode(INVOKESPECIAL, cn.superName, "<init>", "()V", false))
+        il0.add(InsnNode(RETURN))
+        cn.methods.add(mn0)
+
+        val mn = MethodNode(ACC_PUBLIC, "run", "()V", null, null)
         val il = InsnList()
+        mn.instructions = il
         val lbls = Stack<LabelNode>()
 
         //объявляем массив размером memorySize
@@ -112,6 +143,11 @@ class bfToJDK {
             }
         }
 
-        // ......................
+        cn.methods.add(mn)
+
+        val cw = ClassWriter(ClassWriter.COMPUTE_FRAMES)
+        cn.accept(cw)
+
+        return cw.toByteArray()
     }
 }

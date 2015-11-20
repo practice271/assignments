@@ -5,14 +5,15 @@ package hw09
  */
 
 internal class asciiToBrainfuck {
-    public fun interprete(input : String) : String{
+    public fun translate(input : String) : String{
+        if (input == "") return ""
         val res = StringBuilder()
 
-        val num = Array(input.length, {0})
+        val nums = Array(input.length, {0})
         var sum = 0
         for (i in input.indices) {
             val cur = input[i].toInt()
-            num[i] = cur
+            nums[i] = cur
             sum += cur
         }
 
@@ -21,7 +22,6 @@ internal class asciiToBrainfuck {
             res.append('+')
             len--
         }
-        //res.append('>')
 
         val medium = sum / input.length
         var med : Int = medium
@@ -33,9 +33,9 @@ internal class asciiToBrainfuck {
         res.append("[<]>-]")
         res.append(">")
 
-        for (i in input.indices) {
-            var count = num[i] - medium
-            if (count > 0) {
+        for (i in nums.indices) {
+            var count = nums[i] - medium
+            if (count >= 0) {
                 while (count > 0) {
                     res.append('+')
                     count--
@@ -43,15 +43,12 @@ internal class asciiToBrainfuck {
                 res.append(".>")
                 continue
             }
-            if (count < 0) {
-                while (count < 0) {
-                    res.append('-')
-                    count++
-                }
-                res.append(".>")
+            while (count < 0) {
+                res.append('-')
+                count++
             }
+            res.append(".>")
         }
-        val a = res.length
         return res.toString()
     }
 }
