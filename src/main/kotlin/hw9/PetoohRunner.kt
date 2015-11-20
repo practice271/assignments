@@ -1,6 +1,5 @@
 package hw9
 
-import java.util.*
 import java.util.regex.Pattern
 
 class PetoohRunner : CodeRunner {
