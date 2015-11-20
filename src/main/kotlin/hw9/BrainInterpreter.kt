@@ -4,39 +4,14 @@ import java.util.*
 
 class BrainInterpreter: CodeRunner {
 
-    var source = ""
-    var input = ""
-    var jumpTable = IntArray(0)
-
-    override fun runCode(s: String, i: String): String {
-        source = s
-        input = i + '\u0000'
-        setupJumps()
-        return runCode()
-    }
-
-    private fun setupJumps() {
-        jumpTable = IntArray(source.length)
-        val openStack = Stack<Int>()
-
-        for (i in source.indices)
-            when (source[i]) {
-                '[' -> openStack.push(i)
-                ']' -> {
-                    val j = openStack.pop()
-                    jumpTable[i] = j - 1
-                    jumpTable[j] = i
-                }
-                else -> { }
-            }
-    }
-
-    public fun runCode(): String {
+    override fun runCode(source: String, input: String): String {
         var ip = 0
         var mp = 0
         var inp = 0
+        val ins = input + '\u0000'
         var output = ""
         var memory = ByteArray(1024 * 32)
+        val jumpStack = Stack<Int>()
         while (ip < source.length) {
             when (source[ip]) {
                 '>' -> mp++
@@ -44,11 +19,15 @@ class BrainInterpreter: CodeRunner {
                 '+' -> memory[mp]++
                 '-' -> memory[mp]--
                 '.' -> output += (memory[mp].toInt() and 0xFF).toChar()
-                ',' -> memory[mp] = input[inp++].toByte()
-                '[' -> if (memory[mp].toInt() == 0) ip = jumpTable[ip]
-                ']' -> ip = jumpTable[ip]
-                else -> {
+                ',' -> memory[mp] = ins[inp++].toByte()
+                '[' -> jumpStack.push(ip)
+                ']' ->  {
+                    if (memory[mp].toInt() == 0)
+                        jumpStack.pop()
+                    else
+                        ip = jumpStack.peek()
                 }
+                else -> {}
             }
             ip++
         }
