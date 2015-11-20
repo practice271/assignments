@@ -5,26 +5,26 @@ import java.io.InputStream
 import java.io.OutputStream
 import kotlin.test.assertEquals
 
-class TestOutputStream() : OutputStream() {
-    public val output = StringBuilder()
-
-    override fun write(byte: Int) {
-        output.append(byte.toChar())
-    }
-}
-
-class TestInputStream(private val input: Array<Int>) : InputStream() {
-    private var index = 0
-
-    override fun read(): Int {
-        return input[index++]
-    }
-
-    private fun flush() {
-    }
-}
-
 public class brainfuckInterpreterTest {
+
+    internal class TestOutputStream() : OutputStream() {
+        public val output = StringBuilder()
+
+        override fun write(byte: Int) {
+            output.append(byte.toChar())
+        }
+    }
+
+    internal class TestInputStream(private val input: Array<Int>) : InputStream() {
+        private var index = 0
+
+        override fun read(): Int {
+            return input[index++]
+        }
+
+        private fun flush() {
+        }
+    }
 
     @Test fun wrongBracketsTest01() {
         val outStream = TestOutputStream()

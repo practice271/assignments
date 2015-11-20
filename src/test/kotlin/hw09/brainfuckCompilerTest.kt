@@ -1,28 +1,44 @@
 package hw09
 
-import classroom.c07.ByteArrayClassLoader
 import org.junit.Test
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.PrintStream
 import kotlin.test.assertEquals
 
-class EmptyStream() : OutputStream() {
-    override fun write(b : Int) {
-    }
-}
-
-class TestPrintStream() : PrintStream(EmptyStream()) {
-    private var output = StringBuilder()
-
-    override fun print(c : Char) {
-        output.append(c)
-    }
-
-    override fun toString() = output.toString()
-}
-
 public class brainfuckCompilerTest {
+
+    internal class EmptyStream() : OutputStream() {
+        override fun write(b : Int) {
+        }
+    }
+
+    internal class TestPrintStream() : PrintStream(EmptyStream()) {
+        private var output = StringBuilder()
+
+        override fun print(c : Char) {
+            output.append(c)
+        }
+
+        override fun toString() = output.toString()
+    }
+
+    internal class ByteArrayClassLoader(): ClassLoader() {
+        fun loadClass(name: String?, buf: ByteArray): Class<*>? {
+            return super.defineClass(name, buf, 0, buf.size)
+        }
+    }
+
+    internal class TestInputStream(private val input: Array<Int>) : InputStream() {
+        private var index = 0
+
+        override fun read(): Int {
+            return input[index++]
+        }
+
+        private fun flush() {
+        }
+    }
 
     public fun testCompiler(program: String, input: Array<Int>, output: String) {
         val name = "test"
