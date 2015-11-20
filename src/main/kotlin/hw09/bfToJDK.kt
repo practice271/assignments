@@ -1,8 +1,11 @@
 package hw09
 
+import classroom.c07.loadClassAndRun
 import jdk.internal.org.objectweb.asm.ClassWriter
 import jdk.internal.org.objectweb.asm.tree.*
 import org.objectweb.asm.Opcodes.*
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -53,7 +56,7 @@ class bfToJDK(code : String) {
     fun toByteCode(className: String, memorySize: Int): ByteArray {
         val cn = ClassNode()
         cn.version = V1_7
-        cn.access = ACC_PUBLIC
+        cn.access = ACC_PUBLIC + ACC_STATIC
         cn.name = "ClassTest"
         cn.superName = "java/lang/Object"
 
@@ -64,9 +67,8 @@ class bfToJDK(code : String) {
         il0.add(InsnNode(RETURN))
         cn.methods.add(mn0)
 
-        val mn = MethodNode(ACC_PUBLIC, "run", "()V", null, null)
-        val il = InsnList()
-        mn.instructions = il
+        val mn = MethodNode(ACC_PUBLIC or ACC_STATIC, "main", "()V", null, null)
+        val il = mn.instructions
         val lbls = Stack<LabelNode>()
 
         //объявляем массив размером memorySize
@@ -140,6 +142,7 @@ class bfToJDK(code : String) {
                     //прописываем конец
                     il.add(lbls.pop())
                 }
+              //  else -> {}
             }
         }
 
@@ -150,4 +153,40 @@ class bfToJDK(code : String) {
 
         return cw.toByteArray()
     }
+}
+
+internal class ByteArrayClassLoader(): ClassLoader() {
+    fun loadClass(name: String?, buf: ByteArray): Class<*>? {
+        return super.defineClass(name, buf, 0, buf.size)
+    }
+}
+
+public fun saveToDisk(classByteArray: ByteArray) {
+    val targetFile = Paths.get("bfToJDK.class")
+    Files.write(targetFile, classByteArray)
+}
+
+public fun loadClassAndRun(classByteArray: ByteArray): Any? {
+    val cl = ByteArrayClassLoader()
+    val exprClass = cl.loadClass("ClassTest", classByteArray)
+    val methods = exprClass?.methods
+    if (methods == null || methods.isEmpty()) { throw Exception() }
+    for (method in methods) {
+        if (method.name != "main") { continue }
+        return method.invoke(null)
+    }
+    return null
+}
+
+public fun main(args : Array<String>) {
+    val helloWorld = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
+    val simple = "+++[>+<-]>."
+    val theSimplest = "+"
+    val hw = "Hello World!"
+    val size = 100
+    val name = "bfToJDK"
+    val res = bfToJDK(theSimplest).toByteCode(name, size)
+    val output = hw09.loadClassAndRun(res)
+    println("$output")
+    saveToDisk(res)
 }

@@ -4,7 +4,7 @@ package hw09
  * Created by Alexander on 18.11.2015.
  */
 
-internal class asciiToBrainfuck {
+public  class asciiToBrainfuck {
     public fun translate(input : String) : String{
         if (input == "") return ""
         val res = StringBuilder()
