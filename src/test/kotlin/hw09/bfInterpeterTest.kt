@@ -43,12 +43,12 @@ class bfInterpeterTest {
         assertEquals(expected, res)
     }
 
-    @Test fun emptyInputTest() {
+    @Test fun noCodeTest() {
         val res = brainfuckInterpeter().interpete("", false)
         assertEquals("", res)
     }
 
-    @Test fun incorrectInputTest() {
+    @Test fun incorrectCodeTest() {
         val code = "+[+]]."
         try {
             brainfuckInterpeter().interpete(code)

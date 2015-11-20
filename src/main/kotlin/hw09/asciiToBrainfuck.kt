@@ -4,7 +4,7 @@ package hw09
  * Created by Alexander on 18.11.2015.
  */
 
-public  class asciiToBrainfuck {
+public  class AsciiToBrainfuck {
     public fun translate(input : String) : String{
         if (input == "") return ""
         val res = StringBuilder()
@@ -23,18 +23,18 @@ public  class asciiToBrainfuck {
             len--
         }
 
-        val medium = sum / input.length
-        var med : Int = medium
+        val mean = sum / input.length
+        var m : Int = mean
         res.append("[[>]")
-        while (med > 0) {
+        while (m > 0) {
             res.append('+')
-            med--
+            m--
         }
         res.append("[<]>-]")
         res.append(">")
 
         for (i in nums.indices) {
-            var count = nums[i] - medium
+            var count = nums[i] - mean
             if (count >= 0) {
                 while (count > 0) {
                     res.append('+')
