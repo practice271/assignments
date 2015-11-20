@@ -50,9 +50,9 @@ class CompilerTest {
 
     @Test
     fun testWhile2() = testCompiler(
-            "+++[>++[>++++<-]<-].",
+            "+++[>++++[>++++<-]<-]>>.",
             "",
-            "${24.toByte().toChar()}"
+            "${48.toByte().toChar()}"
     )
 
     @Test

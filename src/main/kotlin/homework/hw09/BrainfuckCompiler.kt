@@ -15,6 +15,7 @@ import java.util.*
 public object BrainfuckCompiler {
     private val memorySize = 30000
     private val labels = Stack<Label>()
+    private var isFirstLoop = true
     //private val localVarCount = 3
     //private val localVars = arrayOf("[Ljava/lang/String;", "[C", "I")
 
@@ -50,6 +51,7 @@ public object BrainfuckCompiler {
         mv.visitInsn(ICONST_0)
         mv.visitIntInsn(ISTORE, 2)
 
+        isFirstLoop = true
         for (op in commands) {
             when (op) {
                 Tokens.NEXT.v ->
@@ -146,7 +148,13 @@ public object BrainfuckCompiler {
         labels.push(endLabel)
         labels.push(beginLabel)
         visitLabel(beginLabel)
-        visitFrame(F_SAME, 0, null, 0, null)
+        if (isFirstLoop) {
+            visitFrame(F_APPEND, 2, arrayOf("[C", INTEGER), 0, null)
+            isFirstLoop = false
+        }
+        else {
+            visitFrame(F_SAME, 0, null, 0, null)
+        }
 
         visitVarInsn(ALOAD, 1)
         visitVarInsn(ILOAD, 2)
