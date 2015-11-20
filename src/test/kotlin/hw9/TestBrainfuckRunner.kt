@@ -29,4 +29,9 @@ public abstract class TestBrainfuckRunner: TestRunner() {
                  "23", "5")
     }
 
+    @Test
+    fun testLoopStart() {
+        testCode("[>+<]++++++[>++++++++<-]>.", "", "0")
+    }
+
 }
