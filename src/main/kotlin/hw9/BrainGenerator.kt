@@ -143,7 +143,6 @@ class BrainGenerator(val className: String, val program: String) {
             mv.visitInsn(IADD)
             mv.visitLdcInsn(Integer(0xFF))
             mv.visitInsn(IAND)
-            mv.visitInsn(I2B)
 
             mv.visitInsn(BASTORE)
         }
@@ -156,7 +155,6 @@ class BrainGenerator(val className: String, val program: String) {
             mv.visitInsn(ISUB)
             mv.visitLdcInsn(Integer(0xFF))
             mv.visitInsn(IAND)
-            mv.visitInsn(I2B)
 
             mv.visitInsn(BASTORE)
         }
