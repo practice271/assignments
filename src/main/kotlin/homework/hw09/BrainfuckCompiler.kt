@@ -127,13 +127,13 @@ public class BrainfuckCompiler() {
     }
 }
 
-internal class ByteArrayClassLoader(): ClassLoader() {
+private class ByteArrayClassLoader(): ClassLoader() {
     fun loadClass(name: String?, buf: ByteArray): Class<*>? {
         return super.defineClass(name, buf, 0, buf.size)
     }
 }
 
-internal fun loadClassAndRun(classByteArray: ByteArray) {
+public fun loadClassAndRun(classByteArray: ByteArray) {
     val out = PrintStream(File("programOutput.out"))
     System.setOut(out)
 

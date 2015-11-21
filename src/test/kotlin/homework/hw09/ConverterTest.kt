@@ -78,21 +78,21 @@ internal class ConverterTest() {
 
 
     /**
-     * Simple:     9366
-     * Algorithm1: 1424
-     * Algorithm2: 1412
-     * Algorithm3: 1363
-     * Best:        867
+     * Simple:     4179
+     * Algorithm1:  257
+     * Algorithm2:  257
+     * Algorithm3:  502
+     * Best:        257
      */
     @Test fun test06() {
         var text = ""
-        for (i in 1 .. 42) text += "za"
+        for (i in 1 .. 21) text += "ab"
         test(text)
     }
 
     /**
      * Gets a [program] on Brainfuck and checks that outputs of
-     * all converting methods is equal to this [program].
+     * all converting methods are equal to this [program].
      */
     private fun test(program : String) {
         val simple     = converter.simpleMethod(program)
