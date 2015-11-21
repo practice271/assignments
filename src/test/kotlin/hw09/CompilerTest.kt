@@ -4,7 +4,6 @@ package hw09
  * Created by Antropov Igor on 21.11.2015.
  */
 import org.junit.Test
-import test.main
 import java.io.ByteArrayInputStream
 import java.io.OutputStream
 import java.io.PrintStream
