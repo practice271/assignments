@@ -56,13 +56,12 @@ public class Converter() {
     /** Contains common part for first and second algorithms. */
     private fun convertWith(text : String, value : Int) : String {
         var program = ""
-        for (i in 0 .. text.length) program += '>'
-        for (i in 0 .. value - 1)   program += '-'
-        for (i in 0 .. text.length) program += '<'
+        for (i in 1 .. text.length) program += '+'
+        //program += '>'
 
-        program += "[>"
-        for (i in 0 .. value - 1) program += '+'
-        program += "][<]>"
+        program += "[>[>]"
+        for (i in 1 .. value) program += '+'
+        program += "[<]<-]>>"
 
         for (c in text) {
             var sub = c.toInt() - value
@@ -89,17 +88,23 @@ public class Converter() {
         for (i in 1 .. x) program += '+'
         program += '['
         var temp = ""
-        for (c in text) {
-            val n = c.toInt() / x
-            program += '>'
-            for (i in 1 .. n) program += "+"
+        var counter = 0
+        for (i in 0 .. text.length - 1) {
+            val c = text[i]
+            if (i > 0 && c == text[i - 1]) temp += '.'
+            else {
+                counter++
+                val n = c.toInt() / x
+                program += '>'
+                for (i in 1..n) program += "+"
 
-            val m = c.toInt() - n * x
-            temp += '>'
-            for (i in 1 .. m) temp += "+"
-            temp += '.'
+                val m = c.toInt() - n * x
+                temp += '>'
+                for (i in 1..m) temp += "+"
+                temp += '.'
+            }
         }
-        for (c in text) program += '<'
+        for (i in 1 .. counter) program += '<'
         program += "-]" + temp
         return program
     }

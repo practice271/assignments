@@ -16,8 +16,8 @@ internal class ConverterTest() {
 
     /**
      * Simple:     935
-     * Algorithm1: 337
-     * Algorithm2: 339
+     * Algorithm1: 231
+     * Algorithm2: 229
      * Algorithm3: 162
      * Best:       162
      */
@@ -28,10 +28,10 @@ internal class ConverterTest() {
 
     /**
      * Simple:     1109
-     * Algorithm1:  514
-     * Algorithm2:  494
-     * Algorithm3:  222
-     * Best:        191
+     * Algorithm1:  416
+     * Algorithm2:  385
+     * Algorithm3:  201
+     * Best:        179
      */
     @Test fun test02() {
         val text = "Hello World!"
@@ -40,10 +40,10 @@ internal class ConverterTest() {
 
     /**
      * Simple:     12340
-     * Algorithm1:  3809
-     * Algorithm2:  3253
-     * Algorithm3:  2018
-     * Best:        2018
+     * Algorithm1:  3590
+     * Algorithm2:  3022
+     * Algorithm3:  1960
+     * Best:        1960
      */
     @Test fun test03() {
         val text = "Brainfuck is an esoteric programming language created in 1993 by Urban Muller, " +
@@ -53,8 +53,8 @@ internal class ConverterTest() {
 
     /**
      * Simple:     148
-     * Algorithm1: 173
-     * Algorithm2: 161
+     * Algorithm1: 103
+     * Algorithm2:  97
      * Algorithm3:  51
      * Best:        36
      */
@@ -65,14 +65,28 @@ internal class ConverterTest() {
 
     /**
      * Simple:     5208
-     * Algorithm1:  421
-     * Algorithm2:  421
-     * Algorithm3:  901
-     * Best:        316
+     * Algorithm1:  261
+     * Algorithm2:  261
+     * Algorithm3:   81
+     * Best:         71
      */
     @Test fun test05() {
         var text = ""
         for (i in 1 .. 42) text += 'z'
+        test(text)
+    }
+
+
+    /**
+     * Simple:     9366
+     * Algorithm1: 1424
+     * Algorithm2: 1412
+     * Algorithm3: 1363
+     * Best:        867
+     */
+    @Test fun test06() {
+        var text = ""
+        for (i in 1 .. 42) text += "za"
         test(text)
     }
 
