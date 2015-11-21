@@ -31,13 +31,8 @@ public class Pair
 
     @Override
     public int compareTo(Pair<? extends A, ? extends B> other) {
-        double firstCompare = first.compareTo(other.first);
-        if (firstCompare > 0) { return  1; }
-        if (firstCompare < 0) { return -1; }
-
-        double secondCompare = second.compareTo(other.second);
-        if (secondCompare > 0) { return  1; }
-        if (secondCompare < 0) { return -1; }
-        return 0;
+        int firstCompare = first.compareTo(other.first);
+        if (firstCompare != 0) { return firstCompare; }
+        return second.compareTo(other.second);
     }
 }
