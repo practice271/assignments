@@ -31,7 +31,8 @@ public object Brainfuck {
         val cw = ClassWriter(0)
         cw.visit(V1_7, ACC_PUBLIC, outFileName, null, "java/lang/Object", null)
 
-        var mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null)
+        var mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main",
+                "([Ljava/lang/String;)V", null, null)
         mv.visitCode()
         val lStart = Label()
         mv.visitLabel(lStart)
@@ -71,17 +72,21 @@ public object Brainfuck {
                     mv.visitIincInsn(2, 1)
                 }
                 Token.OUT-> {
-                    mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
+                    mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out",
+                            "Ljava/io/PrintStream;")
                     mv.visitVarInsn(ALOAD, 1)
                     mv.visitVarInsn(ILOAD, 2)
                     mv.visitInsn(IALOAD)
-                    mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(C)V", false)
+                    mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream",
+                            "print", "(C)V", false)
                 }
                 Token.IN -> {
                     mv.visitVarInsn(ALOAD, 1)
                     mv.visitVarInsn(ILOAD, 2)
-                    mv.visitFieldInsn(GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;")
-                    mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/InputStream", "read", "()I", false)
+                    mv.visitFieldInsn(GETSTATIC, "java/lang/System", "in",
+                            "Ljava/io/InputStream;")
+                    mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/InputStream",
+                            "read", "()I", false)
                     mv.visitInsn(IASTORE)
                 }
                 Token.WHILE -> {

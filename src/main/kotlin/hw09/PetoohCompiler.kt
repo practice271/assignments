@@ -2,7 +2,7 @@ package hw09
 
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.Label
-import org.objectweb.asm.Opcodes
+import org.objectweb.asm.Opcodes.*
 import java.util.*
 
 public object Petooh {
@@ -25,18 +25,19 @@ public object Petooh {
         var program = program
         program = prepare(program)
         val cw = ClassWriter(0)
-        cw.visit(Opcodes.V1_7, Opcodes.ACC_PUBLIC, outFileName, null, "java/lang/Object", null)
+        cw.visit(V1_7, ACC_PUBLIC, outFileName, null, "java/lang/Object", null)
 
-        var mv = cw.visitMethod(Opcodes.ACC_PUBLIC or Opcodes.ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null)
+        var mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main",
+                "([Ljava/lang/String;)V", null, null)
         mv.visitCode()
         val lStart = Label()
         mv.visitLabel(lStart)
-        mv.visitIntInsn(Opcodes.SIPUSH, MAX_MEM)
-        mv.visitIntInsn(Opcodes.NEWARRAY, Opcodes.T_INT)
-        mv.visitIntInsn(Opcodes.ASTORE, 1)
+        mv.visitIntInsn(SIPUSH, MAX_MEM)
+        mv.visitIntInsn(NEWARRAY, T_INT)
+        mv.visitIntInsn(ASTORE, 1)
 
-        mv.visitInsn(Opcodes.ICONST_0)
-        mv.visitIntInsn(Opcodes.ISTORE, 2)
+        mv.visitInsn(ICONST_0)
+        mv.visitIntInsn(ISTORE, 2)
 
         firstLoop = true
         val chars = program.toCharArray()
@@ -51,23 +52,23 @@ public object Petooh {
             }
             when (buf) {
                 Token.INC -> {
-                    mv.visitVarInsn(Opcodes.ALOAD, 1)
-                    mv.visitVarInsn(Opcodes.ILOAD, 2)
-                    mv.visitInsn(Opcodes.DUP2)
-                    mv.visitInsn(Opcodes.IALOAD)
-                    mv.visitInsn(Opcodes.ICONST_1)
-                    mv.visitInsn(Opcodes.IADD)
-                    mv.visitInsn(Opcodes.IASTORE)
+                    mv.visitVarInsn(ALOAD, 1)
+                    mv.visitVarInsn(ILOAD, 2)
+                    mv.visitInsn(DUP2)
+                    mv.visitInsn(IALOAD)
+                    mv.visitInsn(ICONST_1)
+                    mv.visitInsn(IADD)
+                    mv.visitInsn(IASTORE)
                     instruction = StringBuilder()
                 }
                 Token.DEC -> {
-                    mv.visitVarInsn(Opcodes.ALOAD, 1)
-                    mv.visitVarInsn(Opcodes.ILOAD, 2)
-                    mv.visitInsn(Opcodes.DUP2)
-                    mv.visitInsn(Opcodes.IALOAD)
-                    mv.visitInsn(Opcodes.ICONST_1)
-                    mv.visitInsn(Opcodes.ISUB)
-                    mv.visitInsn(Opcodes.IASTORE)
+                    mv.visitVarInsn(ALOAD, 1)
+                    mv.visitVarInsn(ILOAD, 2)
+                    mv.visitInsn(DUP2)
+                    mv.visitInsn(IALOAD)
+                    mv.visitInsn(ICONST_1)
+                    mv.visitInsn(ISUB)
+                    mv.visitInsn(IASTORE)
                     instruction = StringBuilder()
                 }
                 Token.SHIFTL-> {
@@ -81,11 +82,13 @@ public object Petooh {
 
                 }
                 Token.OUT-> {
-                    mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
-                    mv.visitVarInsn(Opcodes.ALOAD, 1)
-                    mv.visitVarInsn(Opcodes.ILOAD, 2)
-                    mv.visitInsn(Opcodes.IALOAD)
-                    mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "print", "(C)V", false)
+                    mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out",
+                            "Ljava/io/PrintStream;")
+                    mv.visitVarInsn(ALOAD, 1)
+                    mv.visitVarInsn(ILOAD, 2)
+                    mv.visitInsn(IALOAD)
+                    mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream",
+                            "print", "(C)V", false)
                     instruction = StringBuilder()
 
                 }
@@ -97,27 +100,27 @@ public object Petooh {
                     lbls.push(start)
                     mv.visitLabel(start)
                     if (firstLoop) {
-                        mv.visitFrame(Opcodes.F_APPEND, 2, arrayOf("[I", Opcodes.INTEGER), 0, null)
+                        mv.visitFrame(F_APPEND, 2, arrayOf("[I", INTEGER), 0, null)
                         firstLoop = false
                     } else {
-                        mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null)
+                        mv.visitFrame(F_SAME, 0, null, 0, null)
                     }
-                    mv.visitVarInsn(Opcodes.ALOAD, 1)
-                    mv.visitVarInsn(Opcodes.ILOAD, 2)
-                    mv.visitInsn(Opcodes.IALOAD);
-                    mv.visitJumpInsn(Opcodes.IFEQ, end)
+                    mv.visitVarInsn(ALOAD, 1)
+                    mv.visitVarInsn(ILOAD, 2)
+                    mv.visitInsn(IALOAD);
+                    mv.visitJumpInsn(IFEQ, end)
                     instruction = StringBuilder()
 
                 }
                 Token.END -> {
-                    mv.visitJumpInsn(Opcodes.GOTO, lbls.pop())
+                    mv.visitJumpInsn(GOTO, lbls.pop())
                     mv.visitLabel(lbls.pop())
-                    mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null)
+                    mv.visitFrame(F_SAME, 0, null, 0, null)
                     instruction = StringBuilder()
                 }
             }
         }
-        mv.visitInsn(Opcodes.RETURN)
+        mv.visitInsn(RETURN)
         val lEnd = Label()
         mv.visitLabel(lEnd)
         mv.visitMaxs(1600, 1600)

@@ -16,7 +16,8 @@ public object Converter {
             val ascii = i.toInt()
             val factor = ascii / 10
             val remaining = ascii % 10
-            res += "+".repeat(10) + "[>" + "+".repeat(factor) + "<-]>" + "+".repeat(remaining) + ".[-]"
+            res += "+".repeat(10) + "[>" + "+".repeat(factor) +
+                    "<-]>" + "+".repeat(remaining) + ".[-]"
         }
         return res
     }
