@@ -105,6 +105,8 @@ class Interpreter (private val fileName : String)
                         {
                             while (arr[ind] != nullChar) run(true, someTourText)
                             endsCount = -1
+                            someTourText = ""
+                            writeTourText = false
                         }
                     }
             }
@@ -119,9 +121,9 @@ class Interpreter (private val fileName : String)
     }
 }
 
-/*fun main(args : Array<String>)
+fun main(args : Array<String>)
 {
     val intr = Interpreter("G:\\GitHub\\assignments\\src\\main\\kotlin\\hw09\\helloWorld.bf")
 
     intr.start()
-}*/
+}
