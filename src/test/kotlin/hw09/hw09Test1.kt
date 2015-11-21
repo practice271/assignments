@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
  * Created by Mikhail on 21.11.2015.
  */
 
-public class HW09Test(): OutputTest() {
+public class HW09Test1(): OutputTest() {
 
     @Test fun InterpreterFibonacci() {
         var code = "+++++++++++"+
@@ -31,21 +31,6 @@ public class HW09Test(): OutputTest() {
         assertEquals(res, output.toString())
     }
 
-    @Test fun InterpreterHelloWorld() {
-        val code = "++++++++++[>+++++++>++++++++++>+++>++++<"+
-                "<<<-]>++.>+.+++++++..+++.>>++++.<++.<+++"+
-                "+++++.--------.+++.------.--------.>+."
-        val res = "Hello, world!"
-        Interpreter.interpret(code)
-        assertEquals(res, output.toString())
-    }
-
-    @Test fun OptimalConverterHelloWorld() {
-        val input = "Hello, world!"
-        val res = Converter.optimalConverte(input)
-        Interpreter.interpret(res)
-        assertEquals(input, output.toString())
-    }
     @Test fun NotOptimalConverterHelloWorld() {
         val input = "Hello, world!"
         val res = Converter.notOptimalConverte(input)
@@ -53,18 +38,13 @@ public class HW09Test(): OutputTest() {
         assertEquals(input, output.toString())
     }
 
-    @Test fun Converter() {
-        val input = "@<>!!!!"
-        var res = Converter.optimalConverte(input)
-        Interpreter.interpret(res)
-        assertEquals(input, output.toString())
-    }
     @Test fun BrainfuckCompilerHelloWorld() = BrainfuckCompiler(
             "++++++++++[>+++++++>++++++++++>+++>++++<" +
                     "<<<-]>++.>+.+++++++..+++.>>++++.<++.<+++"+
                     "+++++.--------.+++.------.--------.>+.",
             "", "Hello, world!"
     )
+
     @Test fun BrainfuckCompileFibonacci() = BrainfuckCompiler(
             "+++++++++++"+
                     ">+>>>>++++++++++++++++++++++++++++++++++++++++++++"+
@@ -142,19 +122,19 @@ public class HW09Test(): OutputTest() {
         }
     }
 
-    class ByteArrayClassLoader() : ClassLoader() {
+    internal class ByteArrayClassLoader() : ClassLoader() {
         fun loadClass(name : String?, buf : ByteArray) : Class<*>? {
             return super.defineClass(name, buf, 0, buf.size)
         }
     }
 
-    class StringInputStream(private val str : String) : InputStream() {
+    internal class StringInputStream(private val str : String) : InputStream() {
         var ptr = 0
 
         override fun read() = if (ptr < str.length) str[ptr++].toInt() else -1
     }
 
-    class StringPrintStream() : PrintStream(EmptyStream()) {
+    internal class StringPrintStream() : PrintStream(EmptyStream()) {
         private var sb = StringBuilder()
 
         override fun print(c : Char) {
@@ -164,20 +144,8 @@ public class HW09Test(): OutputTest() {
         override fun toString() = sb.toString()
     }
 
-    class EmptyStream() : OutputStream() {
+    internal class EmptyStream() : OutputStream() {
         override fun write(b : Int) {
         }
-    }
-}
-
-abstract class OutputTest {
-    protected val output = ByteArrayOutputStream()
-    @Before
-    fun setUpStreams() {
-        System.setOut(PrintStream(output))
-    }
-    @After
-    fun cleanUpStreams() {
-        System.setOut(null)
     }
 }
