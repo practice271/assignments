@@ -1,6 +1,6 @@
 /*
  * Homework 9 (03.11.2015)
- * Tests for converter
+ * Tests for converter.
  *
  * Author: Mikhail Kita, group 271
  */
@@ -10,7 +10,7 @@ package homework.hw09
 import org.junit.Test
 import kotlin.test.assertEquals
 
-internal class ConverterTest() {
+internal class ConverterTest {
     private val interpreter = BrainfuckInterpreter()
     private val converter   = Converter()
 
@@ -91,15 +91,15 @@ internal class ConverterTest() {
     }
 
     /**
-     * Gets a [program] on Brainfuck and checks that outputs of
-     * all converting methods are equal to this [program].
+     * Gets a [text] and checks that outputs of all
+     * converting methods are equal to this [text].
      */
-    private fun test(program : String) {
-        val simple     = converter.simpleMethod(program)
-        val algorithm1 = converter.algorithm1(program)
-        val algorithm2 = converter.algorithm2(program)
-        val algorithm3 = converter.algorithm3(program, 16) // 16 is optimal x
-        val best       = converter.convert(program)
+    private fun test(text: String) {
+        val simple     = converter.simpleMethod(text)
+        val algorithm1 = converter.algorithm1(text)
+        val algorithm2 = converter.algorithm2(text)
+        val algorithm3 = converter.algorithm3(text, 16) // 16 is optimal x
+        val best       = converter.convert(text)
 
         println(simple.length)
         println(algorithm1.length)
@@ -107,10 +107,10 @@ internal class ConverterTest() {
         println(algorithm3.length)
         println(best.length)
 
-        assertEquals(program, interpreter.interpret(simple, ""))
-        assertEquals(program, interpreter.interpret(algorithm1, ""))
-        assertEquals(program, interpreter.interpret(algorithm2, ""))
-        assertEquals(program, interpreter.interpret(algorithm3, ""))
-        assertEquals(program, interpreter.interpret(best, ""))
+        assertEquals(text, interpreter.interpret(simple, ""))
+        assertEquals(text, interpreter.interpret(algorithm1, ""))
+        assertEquals(text, interpreter.interpret(algorithm2, ""))
+        assertEquals(text, interpreter.interpret(algorithm3, ""))
+        assertEquals(text, interpreter.interpret(best, ""))
     }
 }

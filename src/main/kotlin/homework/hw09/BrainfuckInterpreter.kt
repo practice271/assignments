@@ -15,7 +15,7 @@ import java.util.*
  * NB: it is not classic distribution of Brainfuck.
  * This implementation can resize array if necessary.
  */
-public class BrainfuckInterpreter() {
+public class BrainfuckInterpreter {
     /** Returns an array with the specified [size]. */
     private fun newArray(size : Int) = Array(size, { 0 })
 
@@ -29,7 +29,7 @@ public class BrainfuckInterpreter() {
         var output = ""
 
         val inputStream = input.iterator()
-        val loopPointer = Stack<Int>()
+        val stack = Stack<Int>()
 
         var i = 0
         while (i < program.length) {
@@ -58,10 +58,10 @@ public class BrainfuckInterpreter() {
                 }
                 '.'  -> output += (array[index]).toChar()
                 ','  -> array[index] = inputStream.next().toInt()
-                '['  -> loopPointer.push(i)
+                '['  -> stack.push(i)
                 ']'  ->
-                    if (array[index] == 0) loopPointer.pop()
-                    else i = loopPointer.peek()
+                    if (array[index] == 0) stack.pop()
+                    else i = stack.peek()
                 else -> i += 0 // it is a comment. Ignore this symbol
             }
             i++

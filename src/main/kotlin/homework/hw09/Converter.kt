@@ -24,7 +24,7 @@ import java.util.*
  * Third algorithm is the most effective for literary text.
  * In the general case it reduces output in 6 times compared to simple method.
  */
-public class Converter() {
+public class Converter {
     /** Simple solution. */
     public fun simpleMethod(text : String) : String {
         var program = ""
@@ -57,7 +57,6 @@ public class Converter() {
     private fun convertWith(text : String, value : Int) : String {
         var program = ""
         for (i in 1 .. text.length) program += '+'
-        //program += '>'
 
         program += "[>[>]"
         for (i in 1 .. value) program += '+'
@@ -96,11 +95,11 @@ public class Converter() {
                 counter++
                 val n = c.toInt() / x
                 program += '>'
-                for (i in 1..n) program += "+"
+                (1 .. n).forEach { program += "+" }
 
                 val m = c.toInt() - n * x
                 temp += '>'
-                for (i in 1..m) temp += "+"
+                (1 .. m).forEach { temp += "+" }
                 temp += '.'
             }
         }
