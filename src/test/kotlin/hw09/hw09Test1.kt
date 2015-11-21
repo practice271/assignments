@@ -12,9 +12,50 @@ import kotlin.test.assertEquals
  * Created by Mikhail on 21.11.2015.
  */
 
-public class HW09Test1(): OutputTest() {
+public class HW09Test1() {
 
+    @Test fun InterpreterHelloWorld() {
+
+        val os = ByteArrayOutputStream()
+        val ps = PrintStream(os)
+        System.setOut(ps)
+        val code = "++++++++++[>+++++++>++++++++++>+++>++++<"+
+                "<<<-]>++.>+.+++++++..+++.>>++++.<++.<+++"+
+                "+++++.--------.+++.------.--------.>+."
+        val res = "Hello, world!"
+        Interpreter().interpret(code)
+        assertEquals(res, os.toString())
+
+        System.setOut(null)
+    }
+
+    @Test fun OptimalConverterHelloWorld() {
+        val os = ByteArrayOutputStream()
+        val ps = PrintStream(os)
+        System.setOut(ps)
+        val input = "Hello, world!"
+        val res = Converter.optimalConverte(input)
+        Interpreter().interpret(res)
+        assertEquals(input, os.toString())
+
+        System.setOut(null)
+    }
+
+    @Test fun Converter() {
+        val os = ByteArrayOutputStream()
+        val ps = PrintStream(os)
+        System.setOut(ps)
+        val input = "<>!!<>??"
+        val res = Converter.optimalConverte(input)
+        Interpreter().interpret(res)
+        assertEquals(input, os.toString())
+
+        System.setOut(null)
+    }
     @Test fun InterpreterFibonacci() {
+        val os = ByteArrayOutputStream()
+        val ps = PrintStream(os)
+        System.setOut(ps)
         var code = "+++++++++++"+
                 ">+>>>>++++++++++++++++++++++++++++++++++++++++++++"+
                 ">++++++++++++++++++++++++++++++++<<<<<<[>[>>>>>>+>"+
@@ -27,15 +68,20 @@ public class HW09Test1(): OutputTest() {
                 "<<<<<<<<<<[>>>+>+<<<<-]>>>>[<<<<+>>>>-]<-[>>.>.<<<"+
                 "[-]]<<[>>+>+<<<-]>>>[<<<+>>>-]<<[<+>-]>[<+>-]<<<-]"
         val res = "1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89"
-        Interpreter.interpret(code)
-        assertEquals(res, output.toString())
+        Interpreter().interpret(code)
+        assertEquals(res, os.toString())
+        System.setOut(null)
     }
 
     @Test fun NotOptimalConverterHelloWorld() {
+        val os = ByteArrayOutputStream()
+        val ps = PrintStream(os)
+        System.setOut(ps)
         val input = "Hello, world!"
         val res = Converter.notOptimalConverte(input)
-        Interpreter.interpret(res)
-        assertEquals(input, output.toString())
+        Interpreter().interpret(res)
+        assertEquals(input, os.toString())
+        System.setOut(null)
     }
 
     @Test fun BrainfuckCompilerHelloWorld() = BrainfuckCompiler(
@@ -129,7 +175,7 @@ public class HW09Test1(): OutputTest() {
     }
 
     internal class StringInputStream(private val str : String) : InputStream() {
-        var ptr = 0
+        private var ptr = 0
 
         override fun read() = if (ptr < str.length) str[ptr++].toInt() else -1
     }

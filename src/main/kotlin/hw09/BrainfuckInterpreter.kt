@@ -2,7 +2,7 @@ package hw09
 
 import java.util.*
 
-public object Interpreter {
+public class Interpreter {
 
     private val sc = Scanner(System.`in`)
     private val LENGTH = 65535

@@ -21,9 +21,8 @@ public object Converter {
         return res
     }
 }
-
-/*
-fun main(args: Array<String>) {
-    val o = "Helloo"
-    print(Converter.optimalConverte(o))
-}*/
+//
+//fun main(args: Array<String>) {
+//    val o = "Helloo"
+//    print(Converter.optimalConverte("Hello, world!"))
+//}
