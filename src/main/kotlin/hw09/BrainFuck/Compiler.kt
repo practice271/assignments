@@ -1,25 +1,21 @@
 package hw09.BrainFuck
 
-import jdk.internal.org.objectweb.asm.ClassWriter
-import jdk.internal.org.objectweb.asm.Label
-import jdk.internal.org.objectweb.asm.Opcodes.*
-import jdk.internal.org.objectweb.asm.tree.ClassNode
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.util.*
-
-
 /* Compiler for BrainFuck  made by Guzel Garifullina
    Estimated time  3 hours
    real time       3 hours
 */
+
+import jdk.internal.org.objectweb.asm.ClassWriter
+import jdk.internal.org.objectweb.asm.Label
+import jdk.internal.org.objectweb.asm.Opcodes.*
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.util.*
+
 public class Compiler(private val arr :Code, private val className : String){
     private val code = arr.getCode()
     private val memSize = 30000
     private fun getClassWriter() : ClassWriter {
-        fun getElem (){
-
-        }
         val cw = ClassWriter(ClassWriter.COMPUTE_FRAMES)
         cw.visit(V1_7, ACC_PUBLIC or ACC_FINAL or ACC_SUPER,
                 className, null, "java/lang/Object", null)
@@ -27,7 +23,7 @@ public class Compiler(private val arr :Code, private val className : String){
         val constructor = cw.visitMethod(ACC_PUBLIC , "<init>", "()V", null, null)
         constructor.visitVarInsn(ALOAD, 0)
         constructor.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false)
-        constructor.visitMaxs(30, 30)
+        constructor.visitMaxs(2, 1)
         constructor.visitInsn(RETURN)
         constructor.visitEnd()
 
@@ -105,7 +101,7 @@ public class Compiler(private val arr :Code, private val className : String){
             }
         }
         run.visitInsn(RETURN)
-        run.visitMaxs(64, 30)
+        run.visitMaxs(8, 3)
         run.visitEnd()
 
         cw.visitEnd()
@@ -142,40 +138,9 @@ public class Compiler(private val arr :Code, private val className : String){
 }
 
 public fun main(args: Array<String>) {
-    val expr = Code(",++-[+].")
+    val expr = Code(",++-.")
     val com = Compiler(expr, "Brainfuck")
     val classByteArray = com.generateClassByteArray()
-
-    //val result = l println("result: $result")
-
-    com.saveToDisk(classByteArray)
     com.loadClassAndRun(classByteArray)
-}
-fun Asmify(cw : ClassWriter) {
-    val mv = cw.visitMethod(ACC_PUBLIC, "getId", "(I)I",null, null)
-    mv.visitCode()
-    val l0 = Label()
-    mv.visitLabel(l0)
-    mv.visitLineNumber(16, l0) //???
-    mv.visitVarInsn(ALOAD, 0)
-    mv.visitFieldInsn(GETFIELD, "zt/asm/Items", "ids", "Ljava/util/List;")
-    mv.visitVarInsn(ILOAD, 1)
-    mv.visitMethodInsn(INVOKEINTERFACE, "java/util/List", "get", "(I)Ljava/lang/Object;")
-
-    mv.visitTypeInsn(CHECKCAST, "java/lang/Integer")
-    mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Integer", "intValue","()I")
-
-
-    mv.visitInsn(IRETURN)
-
-    val l1 = Label()
-    mv.visitLabel(l1)
-    // name, desc, sign, label start, label end, index
-    mv.visitLocalVariable("this","Lzt/asm/Items;", null, l0, l1, 0)
-    mv.visitMaxs(2,2)
-    mv.visitEnd()
-
-
-
-
+    com.saveToDisk(classByteArray)
 }
