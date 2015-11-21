@@ -5,9 +5,9 @@ package hw09.BrainFuck
    real time       3 hours
 */
 
-import jdk.internal.org.objectweb.asm.ClassWriter
-import jdk.internal.org.objectweb.asm.Label
-import jdk.internal.org.objectweb.asm.Opcodes.*
+import org.objectweb.asm.ClassWriter
+import org.objectweb.asm.Label
+import org.objectweb.asm.Opcodes.*
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
