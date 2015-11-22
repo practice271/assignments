@@ -27,7 +27,7 @@ public class Compiler(private val arr : Code, private val className : String){
         constructor.visitInsn(RETURN)
         constructor.visitEnd()
 
-        val run = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null)
+        val run = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main", "()V", null, null)
         //init array
         run.visitCode()
         run.visitIntInsn(SIPUSH, memSize)
@@ -38,7 +38,7 @@ public class Compiler(private val arr : Code, private val className : String){
         run.visitIntInsn(SIPUSH, memSize / 2)
         run.visitVarInsn(ISTORE, 2)
 
-        val lbls = Stack<Label>();
+        val lbls = Stack<Label>()
         for (elem in code) {
             when (elem.getType()) {
                 Commands.SHIFT -> {
@@ -52,7 +52,7 @@ public class Compiler(private val arr : Code, private val className : String){
                     run.visitVarInsn(ILOAD, 2)
                     run.visitInsn(DUP2)
                     run.visitInsn(IALOAD)
-                    run.visitLdcInsn(elem.getAmt())
+                    run.visitIntInsn(BIPUSH, elem.getAmt())
                     run.visitInsn(IADD)
                     run.visitInsn(IASTORE)
                 }
@@ -130,16 +130,21 @@ public class Compiler(private val arr : Code, private val className : String){
         }
         for (method in methods) {
             if (method.name != "main") { continue }
-            return method.invoke(null, null)
+            return method.invoke(null)
         }
         return null
     }
 }
 
 public fun main(args: Array<String>) {
-    val expr = Code(BrainFuckCode(",++-."))
+    var str = ""
+    for (i in 1..256){
+        str = str + '+'
+    }
+    val expr = Code(BrainFuckCode("+[-]+[-]]."))
     val com = Compiler(expr, "Brainfuck")
     val classByteArray = com.generateClassByteArray()
     com.loadClassAndRun(classByteArray)
     com.saveToDisk(classByteArray)
+
 }

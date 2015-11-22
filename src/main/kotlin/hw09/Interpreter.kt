@@ -57,7 +57,7 @@ public class Operations(private val type : Commands) {
     public fun addAmt(value : Int) {
         amt += value
     }
-    override public fun toString(): String {
+    override public fun toString() : String {
         val str = (when (type){
             Commands.SHIFT -> ">="
             Commands.ADD -> "+="
@@ -70,20 +70,20 @@ public class Operations(private val type : Commands) {
         return "$str $amt\n"
     }
 }
-public  class Code(private  val codeType: CodeTypes) {
+public  class Code (private  val codeType : CodeTypes) {
     private var codeArr = ArrayList<Operations>()
     init {
         codeArr = optimize(tokenize())
     }
     private fun tokenize () : ArrayList<Operations> {
-        return codeType.tokenize ()
+        return codeType.tokenize()
     }
     private fun optimize (oldArr : ArrayList<Operations>) : ArrayList<Operations> {
         val newArr = ArrayList<Operations>()
         var type : Commands? = null
         for (e in oldArr) {
             val eType = e.getType()
-            when (type){
+            when (type) {
                 null, Commands.WHILE, Commands.END -> {
                     type = eType
                     newArr.add(e)
@@ -104,7 +104,7 @@ public  class Code(private  val codeType: CodeTypes) {
     public fun getCode () : ArrayList<Operations> {
         return codeArr
     }
-    override public fun toString () : String {
+    override public fun toString() : String {
         val sb = StringBuilder()
         for (e in codeArr){
             sb.append(e.toString())
@@ -116,18 +116,18 @@ public  class Code(private  val codeType: CodeTypes) {
 public class Interpreter (private val code : Code) {
     private val memSize = 30000
     private val commands = code.getCode()
-    private val arr = IntArray(memSize)
+    private val arr = ByteArray(memSize)
     private var currentElem = memSize / 2
     private val commandsSize = commands.size
 
     public fun interpret (){
         var comandInd = 0
-        var braces = Stack<Int>();
+        var braces = Stack<Int>()
         while (comandInd < commandsSize ){
             val e = commands[comandInd]
             when (e.getType()){
                 Commands.SHIFT -> currentElem += e.getAmt()
-                Commands.ADD -> arr[currentElem] += e.getAmt()
+                Commands.ADD -> arr[currentElem] = (arr[currentElem] + e.getAmt()).toByte()
                 Commands.ZERO -> arr[currentElem] = 0
                 Commands.OUT -> {
                     for ( i in 1 .. e.getAmt()){
@@ -136,11 +136,11 @@ public class Interpreter (private val code : Code) {
                 }
                 Commands.IN -> {
                     for ( i in 1 .. e.getAmt()){
-                        arr[currentElem]  = System.`in`.read()
+                        arr[currentElem] = System.`in`.read().toByte()
                     }
                 }
                 Commands.WHILE ->{
-                    if (arr[currentElem] == 0){
+                    if (arr[currentElem] == 0.toByte()){
                         comandInd = findEndBracket(comandInd + 1)
                     }
                     else {
