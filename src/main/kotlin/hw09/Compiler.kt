@@ -139,9 +139,10 @@ public class Compiler(private val arr : Code, private val className : String){
 public fun main(args: Array<String>) {
     var str = ""
     for (i in 1..256){
-        str = str + '+'
+        str = str + '-'
     }
-    val expr = Code(BrainFuckCode("+[-]+[-]]."))
+    str = ',' + str + '.'
+    val expr = BrainFuckCode(str)
     val com = Compiler(expr, "Brainfuck")
     val classByteArray = com.generateClassByteArray()
     com.loadClassAndRun(classByteArray)

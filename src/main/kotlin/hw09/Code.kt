@@ -1,25 +1,63 @@
 package hw09
 
+import java.io.FileInputStream
 import java.util.*
 
-/* Compiler for BrainFuck  made by Guzel Garifullina
+/* Code translator for BrainFuck like languages
+   made by Guzel Garifullina
    Estimated time  3 hours
    real time       3 hours
 */
 
-public interface CodeTypes {
-    public fun tokenize() : ArrayList<Operations>
+public abstract class  Code {
+    abstract public fun tokenize() : ArrayList<Operations>
+    protected var codeArr = ArrayList<Operations>()
+    protected fun optimize (oldArr : ArrayList<Operations>) : ArrayList<Operations> {
+        val newArr = ArrayList<Operations>()
+        var type : Commands? = null
+        for (e in oldArr) {
+            val eType = e.getType()
+            when (type) {
+                null, Commands.WHILE, Commands.END -> {
+                    type = eType
+                    newArr.add(e)
+                }
+                eType -> {
+                    if (type != Commands.ZERO) {
+                        newArr.last().addAmt(e.getAmt())
+                    }
+                }
+                else -> {
+                    type = eType
+                    newArr.add(e)
+                }
+            }
+        }
+        return newArr
+    }
+    public fun getCode () : ArrayList<Operations> {
+        return codeArr
+    }
+    override public fun toString() : String {
+        val sb = StringBuilder()
+        for (e in codeArr){
+            sb.append(e.toString())
+        }
+        return sb.toString()
+    }
 }
-public class BrainFuckCode : CodeTypes {
+public class BrainFuckCode : Code {
     private var codeStr = ""
     private var size = 0
     constructor (str : String){
         codeStr = str
         size = codeStr.length
+        codeArr = optimize(tokenize())
     }
     constructor (file : FileL){
         codeStr = file.readFile()
         size = codeStr.length
+        codeArr = optimize(tokenize())
     }
     override public fun tokenize () : ArrayList<Operations> {
         val arr : ArrayList<Operations> = ArrayList()
@@ -50,16 +88,18 @@ public class BrainFuckCode : CodeTypes {
     }
 }
 
-public class PetoohCode  : CodeTypes {
+public class PetoohCode : Code {
     private var codeStr = ""
     private var size = 0
     constructor ( str : String) {
         codeStr = str
         size = codeStr.length
+        codeArr = optimize(tokenize())
     }
     constructor (file : FileL){
         codeStr = file.readFile()
         size = codeStr.length
+        codeArr = optimize(tokenize())
     }
     private fun isSubstring (index : Int, prototype : String) : Boolean {
         val len = prototype.length
@@ -111,5 +151,31 @@ public class PetoohCode  : CodeTypes {
             i++
         }
         return arr
+    }
+}
+
+public class FileL (private val filename : String){
+    //throws IOException FileNotFoundException
+    private fun readFile(filename : String) : String {
+        var inn : FileInputStream? = null
+        var str : String = ""
+        val sb : StringBuilder = StringBuilder()
+        try {
+            inn = FileInputStream(filename)
+            var c = 1
+            while (c != -1) {
+                c = inn.read()
+                sb.append(c.toChar())
+            }
+        }finally {
+            if (inn != null) {
+                inn.close()
+            }
+            str = sb.toString()
+            return str
+        }
+    }
+    public fun readFile() : String {
+        return readFile(filename)
     }
 }

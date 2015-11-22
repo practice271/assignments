@@ -33,11 +33,11 @@ class GeneralTests {
     private val strHello = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++" +
             ".>+.+++++++..+++.>++.<<+++++++++++++++.>.+++." +
             "------.--------.>+.>."
-    private val codeHello = Code(BrainFuckCode(strHello))
+    private val codeHello = BrainFuckCode(strHello)
 
     @Test fun GetCodeBrainFuck() {
         val str = "[+]>>><+++[[+-]]>----+"
-        val code = Code (BrainFuckCode(str))
+        val code = BrainFuckCode(str)
         val res = code.toString()
         val expectedResult ="0= 1\n>= 2\n+= 3\nwhile= 1\n" +
                 "while= 1\n+= 0\n]= 1\n]= 1\n>= 1\n+= -3\n"
@@ -47,7 +47,7 @@ class GeneralTests {
         val str = "KoKoKoKoKoKoKoKoKoKo Kud-Kudah" +
                 "KoKoKoKoKoKoKoKo kudah kO kud-Kudah Kukarek kudah" +
                 "kOkOkOkO kukarek"
-        val code = Code (PetoohCode(str))
+        val code = PetoohCode(str)
         val res = code.toString()
         val expectedResult ="+= 10\nwhile= 1\n>= 1\n+= 8\n>= -1\n+= -1\n" +
         "]= 1\n>= 1\n.= 1\n>= -1\n+= -4\n,= 1\n"
@@ -63,16 +63,28 @@ class GeneralTests {
         for (i in 1..256){
             str += '+'
         }
-        Interpreter(Code(BrainFuckCode(str))).interpret()
+        Interpreter(BrainFuckCode(str + '.')).interpret()
         val expectedResult ="${0.toChar()}"
         assertEquals(expectedResult, outContent.toString())
     }
-    @Test fun Compiler() {
+    @Test fun TestCompiler() {
         val com = Compiler(codeHello, "Brainfuck")
         val expectedResult ="Hello World!${10.toChar()}"
         val classByteArray = com.generateClassByteArray()
         com.saveToDisk(classByteArray)
         com.loadClassAndRun(classByteArray)
+        assertEquals(expectedResult, outContent.toString())
+    }
+    @Test fun TestCompilerMod256(){
+        var str = ""
+        for (i in 1..256){
+            str += '+'
+        }
+        val com = Compiler(BrainFuckCode(str + '.'), "Brainfuck")
+        val classByteArray = com.generateClassByteArray()
+        com.saveToDisk(classByteArray)
+        com.loadClassAndRun(classByteArray)
+        val expectedResult ="${0.toChar()}"
         assertEquals(expectedResult, outContent.toString())
     }
 }
