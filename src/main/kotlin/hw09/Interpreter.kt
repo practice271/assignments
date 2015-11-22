@@ -15,6 +15,10 @@ public class Interpreter (private val code : Code) {
     private val commandsSize = commands.size
 
     public fun interpret (){
+        if (! code.isCorrect()){
+            print("Unbalanced brackets!\n")
+            return
+        }
         var comandInd = 0
         var braces = Stack<Int>()
         while (comandInd < commandsSize ){

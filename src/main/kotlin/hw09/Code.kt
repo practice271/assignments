@@ -10,7 +10,6 @@ import java.util.*
 */
 
 public abstract class  Code {
-    abstract public fun tokenize() : ArrayList<Operations>
     protected var codeArr = ArrayList<Operations>()
     protected fun optimize (oldArr : ArrayList<Operations>) : ArrayList<Operations> {
         val newArr = ArrayList<Operations>()
@@ -38,6 +37,19 @@ public abstract class  Code {
     public fun getCode () : ArrayList<Operations> {
         return codeArr
     }
+    public fun isCorrect() : Boolean {
+        var br = 0
+        for (e in codeArr) {
+            when (e.getType()){
+                Commands.WHILE -> br ++
+                Commands.END   -> {
+                    br--
+                    if (br < 0) { return false}
+                }
+            }
+        }
+        return br == 0
+    }
     override public fun toString() : String {
         val sb = StringBuilder()
         for (e in codeArr){
@@ -59,7 +71,7 @@ public class BrainFuckCode : Code {
         size = codeStr.length
         codeArr = optimize(tokenize())
     }
-    override public fun tokenize () : ArrayList<Operations> {
+    private fun tokenize () : ArrayList<Operations> {
         val arr : ArrayList<Operations> = ArrayList()
         var i = 0
         while (i <  size) {
@@ -109,7 +121,7 @@ public class PetoohCode : Code {
         }
         return true
     }
-    override public fun tokenize() : ArrayList<Operations> {
+    private fun tokenize() : ArrayList<Operations> {
         val arr : ArrayList<Operations> = ArrayList()
         var i = 0
         while (i <  size) {

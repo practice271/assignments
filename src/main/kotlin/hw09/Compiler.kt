@@ -12,8 +12,8 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
 
-public class Compiler(private val arr : Code, private val className : String){
-    private val code = arr.getCode()
+public class Compiler(private val codeG : Code, private val className : String){
+    private var code = codeG.getCode()
     private val memSize = 30000
     private fun getClassWriter() : ClassWriter {
         val cw = ClassWriter(ClassWriter.COMPUTE_FRAMES)
@@ -38,6 +38,20 @@ public class Compiler(private val arr : Code, private val className : String){
         run.visitIntInsn(SIPUSH, memSize / 2)
         run.visitVarInsn(ISTORE, 2)
 
+        if (! codeG.isCorrect()){
+            run.visitFieldInsn(GETSTATIC, "java/lang/System",
+                    "out", "Ljava/io/PrintStream;")
+            run.visitLdcInsn("Unbalanced brackets!")
+            run.visitMethodInsn(INVOKEVIRTUAL,
+                    "java/io/PrintStream", "println",
+                    "(Ljava/lang/String;)V", false)
+            run.visitInsn(RETURN)
+            run.visitMaxs(2, 2)
+            run.visitEnd()
+
+            cw.visitEnd()
+            return cw
+        }
         val lbls = Stack<Label>()
         for (elem in code) {
             when (elem.getType()) {
@@ -134,18 +148,4 @@ public class Compiler(private val arr : Code, private val className : String){
         }
         return null
     }
-}
-
-public fun main(args: Array<String>) {
-    var str = ""
-    for (i in 1..256){
-        str = str + '-'
-    }
-    str = ',' + str + '.'
-    val expr = BrainFuckCode(str)
-    val com = Compiler(expr, "Brainfuck")
-    val classByteArray = com.generateClassByteArray()
-    com.loadClassAndRun(classByteArray)
-    com.saveToDisk(classByteArray)
-
 }

@@ -78,6 +78,12 @@ class GeneralTests {
         val expectedResult ="abc"
         assertEquals (expectedResult, outContent.toString())
     }
+    @Test fun TestInterpreterNotCorrectCode() {
+        val code = BrainFuckCode(",>,>,[.>.>.")
+        Interpreter(code).interpret()
+        val expectedResult ="Unbalanced brackets!\n"
+        assertEquals (expectedResult, outContent.toString())
+    }
     @Test fun TestInterpreterMod256(){
         var str = ""
         for (i in 1..256){
@@ -106,6 +112,15 @@ class GeneralTests {
         com.loadClassAndRun(classByteArray)
         val expectedResult ="${0.toChar()}"
         assertEquals(expectedResult, outContent.toString())
+    }
+    @Test fun TestCompilerNotCorrectCode() {
+        val code = BrainFuckCode(",>,>,[]][.>.>.")
+        val com = Compiler(code, "Brainfuck")
+        val classByteArray = com.generateClassByteArray()
+        com.saveToDisk(classByteArray)
+        com.loadClassAndRun(classByteArray)
+        val expectedResult ="Unbalanced brackets!\n"
+        assertEquals (expectedResult, outContent.toString())
     }
     @Test fun TestCompilerRead() {
         val data = "abc"
