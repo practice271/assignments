@@ -134,4 +134,20 @@ class GeneralTests {
         val expectedResult ="abc"
         assertEquals (expectedResult, outContent.toString())
     }
+    @Test fun TestCompilerFull() {
+        val data = "gfedcba"
+        System.setIn(ByteArrayInputStream(data.toByteArray()))
+        val str = "Here is a Brainf*** program that bubblesorts its input and spits it out:"+
+                ">>>>>,+[>>>,+]<<<[<<<"+
+                "[>>>[-<<<-<+>[>]>>]<<<[<]>>"+
+                "[>>>+<<<-]<[>+>>>+<<<<-]"+
+                "<<]>>>[-.[-]]>>>[>>>]<<<]"
+        val code = BrainFuckCode(str)
+        val com = Compiler(code, "Brainfuck")
+        val expectedResult ="abcdefg"
+        val classByteArray = com.generateClassByteArray()
+        com.saveToDisk(classByteArray)
+        com.loadClassAndRun(classByteArray)
+        assertEquals(expectedResult, outContent.toString())
+    }
 }
