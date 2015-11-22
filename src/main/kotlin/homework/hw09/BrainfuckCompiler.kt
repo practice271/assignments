@@ -15,7 +15,7 @@ import java.util.*
 
 public class BrainfuckCompiler {
     /** Generates bytecode of given Brainfuck [program] using [input] string. */
-    public fun compile(program: String, input : String) : ByteArray {
+    public fun compile(program : String, input : String) : ByteArray {
         val cw = ClassWriter(0)
         cw.visit(V1_7, ACC_PUBLIC, "BrainfuckCompiler", null, "java/lang/Object", null)
         val mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main",

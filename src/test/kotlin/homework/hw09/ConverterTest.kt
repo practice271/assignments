@@ -16,10 +16,10 @@ internal class ConverterTest {
 
     /**
      * Simple:     935
-     * Algorithm1: 231
-     * Algorithm2: 229
-     * Algorithm3: 162
-     * Best:       162
+     * Algorithm1: 230
+     * Algorithm2: 228
+     * Algorithm3: 145
+     * Best:       143
      */
     @Test fun test01() {
         val text = "Brainfuck"
@@ -28,10 +28,10 @@ internal class ConverterTest {
 
     /**
      * Simple:     1109
-     * Algorithm1:  416
-     * Algorithm2:  385
-     * Algorithm3:  201
-     * Best:        179
+     * Algorithm1:  396
+     * Algorithm2:  376
+     * Algorithm3:  161
+     * Best:        158
      */
     @Test fun test02() {
         val text = "Hello World!"
@@ -40,10 +40,10 @@ internal class ConverterTest {
 
     /**
      * Simple:     12340
-     * Algorithm1:  3590
-     * Algorithm2:  3022
-     * Algorithm3:  1960
-     * Best:        1960
+     * Algorithm1:  3517
+     * Algorithm2:  2961
+     * Algorithm3:  1684
+     * Best:        1631
      */
     @Test fun test03() {
         val text = "Brainfuck is an esoteric programming language created in 1993 by Urban Muller, " +
@@ -52,22 +52,22 @@ internal class ConverterTest {
     }
 
     /**
-     * Simple:     148
-     * Algorithm1: 103
-     * Algorithm2:  97
-     * Algorithm3:  51
-     * Best:        36
+     * Simple:     80
+     * Algorithm1: 93
+     * Algorithm2: 93
+     * Algorithm3: 30
+     * Best:       26
      */
     @Test fun test04() {
-        val text = "NB"
+        val text = "N"
         test(text)
     }
 
     /**
      * Simple:     5208
-     * Algorithm1:  261
-     * Algorithm2:  261
-     * Algorithm3:   81
+     * Algorithm1:  219
+     * Algorithm2:  219
+     * Algorithm3:   78
      * Best:         71
      */
     @Test fun test05() {
@@ -76,18 +76,37 @@ internal class ConverterTest {
         test(text)
     }
 
-
     /**
      * Simple:     4179
-     * Algorithm1:  257
-     * Algorithm2:  257
+     * Algorithm1:  256
+     * Algorithm2:  256
      * Algorithm3:  502
-     * Best:        257
+     * Best:        256
      */
     @Test fun test06() {
         var text = ""
         for (i in 1 .. 21) text += "ab"
         test(text)
+    }
+
+    /**
+     * Stress test
+     *
+     * Simple: 159250
+     * Best:    14290
+     */
+    @Test fun test07() {
+        var text = ""
+        for (i in 1 .. 250) text += "Kotlin"
+
+        val simple = converter.simpleMethod(text)
+        val best   = converter.algorithm3(text, 37)
+
+        println(simple.length)
+        println(best.length)
+
+        assertEquals(text, interpreter.interpret(simple, ""))
+        assertEquals(text, interpreter.interpret(best, ""))
     }
 
     /**

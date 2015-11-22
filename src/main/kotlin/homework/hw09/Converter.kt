@@ -15,13 +15,13 @@ import java.util.*
  * Contains four methods for converting: simple and three algorithms of optimisation.
  * Method [convert] returns best solution.
  *
- * First algorithm is effective for strings with medium length.
+ * First algorithm is effective for strings with medium length (but no longer than 256 symbols).
  * In the general case it reduces output in 3 times compared to simple method.
  *
- * Second algorithm is effective for long strings.
+ * Second algorithm is effective for long strings (but no longer than 256 symbols).
  * In the general case it reduces output in 4 times compared to simple method.
  *
- * Third algorithm is the most effective for literary text.
+ * Third algorithm is the most effective for literary text with arbitrary length
  * In the general case it reduces output in 6 times compared to simple method.
  */
 public class Converter {
@@ -62,15 +62,16 @@ public class Converter {
         for (i in 1 .. value) program += '+'
         program += "[<]<-]>>"
 
-        for (c in text) {
-            var sub = c.toInt() - value
-            if (sub >= 0)
-                for (i in 1 .. sub) program += '+'
+        for (i in 0 .. text.length - 1) {
+            val c = text[i]
+            if (i > 0 && c == text[i - 1]) program += '.'
             else {
-                sub *= -1
-                for (i in 1 .. sub) program += '-'
+                if (i > 0) program += '>'
+                val sub = c.toInt() - value
+                if (sub >= 0) (1 .. sub).forEach { program += '+' }
+                else (1 .. -sub).forEach { program += '-' }
+                program += '.'
             }
-            program += ".>"
         }
         return program
     }
@@ -93,13 +94,15 @@ public class Converter {
             if (i > 0 && c == text[i - 1]) temp += '.'
             else {
                 counter++
-                val n = c.toInt() / x
+                var n = c.toInt() / x
+                if (c.toInt() - n * x > (n + 1) * x - c.toInt()) n++
                 program += '>'
                 (1 .. n).forEach { program += "+" }
 
                 val m = c.toInt() - n * x
                 temp += '>'
-                (1 .. m).forEach { temp += "+" }
+                if (m >= 0) (1 .. m).forEach { temp += "+" }
+                else (1 .. -m).forEach { temp += "-" }
                 temp += '.'
             }
         }
