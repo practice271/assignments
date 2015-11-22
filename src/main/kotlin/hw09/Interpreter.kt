@@ -1,4 +1,4 @@
-package hw09.BrainFuck
+package hw09
 
 /* Interpreter  made by Guzel Garifullina
    Estimated time  1 hour
@@ -43,9 +43,9 @@ public enum class Commands{
     WHILE,
     END
 }
-public class Operations(private val type : Commands ) {
+public class Operations(private val type : Commands) {
     private var amt = 1
-    constructor(type : Commands , amount : Int) : this (type){
+    constructor(type : Commands, amount : Int) : this (type){
         amt = amount
     }
     public fun getType() : Commands {
@@ -63,59 +63,28 @@ public class Operations(private val type : Commands ) {
             Commands.ADD -> "+="
             Commands.ZERO -> "0="
             Commands.OUT -> ".="
-            Commands.IN  -> ",="
+            Commands.IN -> ",="
             Commands.END -> "]="
             Commands.WHILE -> "while="
         })
         return "$str $amt\n"
     }
 }
-public  class Code {
-    private var codeStr = ""
+public  class Code(private  val codeType: CodeTypes) {
     private var codeArr = ArrayList<Operations>()
-    constructor(str: String) {
-        codeStr = str
+    init {
         codeArr = optimize(tokenize())
     }
-    constructor(file: FileL) {
-        codeStr = file.readFile()
-        codeArr = optimize(tokenize())
+    private fun tokenize () : ArrayList<Operations> {
+        return codeType.tokenize ()
     }
-    private fun tokenize () : ArrayList<Operations>{
-        val arr : ArrayList<Operations> = ArrayList()
-        var i = 0
-        val n = codeStr.length
-        while (i <  n){
-            when (codeStr[i]) {
-                '>' -> arr.add(Operations(Commands.SHIFT))
-                '<' -> arr.add(Operations(Commands.SHIFT, -1))
-                '+' -> arr.add(Operations(Commands.ADD) )
-                '-' -> arr.add(Operations(Commands.ADD, -1) )
-                '.' -> arr.add(Operations(Commands.OUT) )
-                ',' -> arr.add(Operations(Commands.IN))
-                '[' -> {
-                    if ((i + 2 < n ) && (codeStr[i + 1] == '-' || codeStr[i + 1] == '+' )
-                            && (codeStr[i + 2] == ']')){
-                        arr.add(Operations(Commands.ZERO))
-                        i +=2
-                    }
-                    else {
-                        arr.add(Operations(Commands.WHILE))
-                    }
-                }
-                ']' -> arr.add(Operations(Commands.END))
-            }
-            i++
-        }
-        return arr
-    }
-    private fun optimize (oldArr : ArrayList<Operations>) : ArrayList<Operations>{
+    private fun optimize (oldArr : ArrayList<Operations>) : ArrayList<Operations> {
         val newArr = ArrayList<Operations>()
         var type : Commands? = null
         for (e in oldArr) {
             val eType = e.getType()
             when (type){
-                null,Commands.WHILE, Commands.END -> {
+                null, Commands.WHILE, Commands.END -> {
                     type = eType
                     newArr.add(e)
                 }
@@ -132,7 +101,7 @@ public  class Code {
         }
         return newArr
     }
-    public fun getCode () : ArrayList<Operations>{
+    public fun getCode () : ArrayList<Operations> {
         return codeArr
     }
     override public fun toString () : String {
@@ -153,7 +122,7 @@ public class Interpreter (private val code : Code) {
 
     public fun interpret (){
         var comandInd = 0
-        var braces =Stack<Int>();
+        var braces = Stack<Int>();
         while (comandInd < commandsSize ){
             val e = commands[comandInd]
             when (e.getType()){
@@ -165,7 +134,7 @@ public class Interpreter (private val code : Code) {
                         print(arr[currentElem].toChar())
                     }
                 }
-                Commands.IN  -> {
+                Commands.IN -> {
                     for ( i in 1 .. e.getAmt()){
                         arr[currentElem]  = System.`in`.read()
                     }
@@ -190,7 +159,7 @@ public class Interpreter (private val code : Code) {
         for (i in comandInd .. commandsSize -1){
             when (commands[i].getType()){
                 Commands.WHILE -> sum ++
-                Commands.END   -> {
+                Commands.END -> {
                     sum --
                     if (sum == 0){
                         return i

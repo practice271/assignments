@@ -1,6 +1,6 @@
-package hw09.BrainFuck
+package hw09
 
-/* Compiler for BrainFuck  made by Guzel Garifullina
+/* Compiler for languages like BrainFuck  made by Guzel Garifullina
    Estimated time  3 hours
    real time       3 hours
 */
@@ -12,7 +12,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
 
-public class Compiler(private val arr :Code, private val className : String){
+public class Compiler(private val arr : Code, private val className : String){
     private val code = arr.getCode()
     private val memSize = 30000
     private fun getClassWriter() : ClassWriter {
@@ -83,9 +83,9 @@ public class Compiler(private val arr :Code, private val className : String){
                         run.visitInsn(IASTORE)
                     }
                 }
-                Commands.WHILE-> {
+                Commands.WHILE -> {
                     val begin = Label()
-                    val end =   Label()
+                    val end = Label()
                     lbls.push(end)
                     lbls.push(begin)
                     run.visitLabel(begin)
@@ -94,7 +94,7 @@ public class Compiler(private val arr :Code, private val className : String){
                     run.visitInsn(IALOAD)
                     run.visitJumpInsn(IFEQ, end)
                 }
-                Commands.END-> {
+                Commands.END -> {
                     run.visitJumpInsn(GOTO, lbls.pop())
                     run.visitLabel(lbls.pop())
                 }
@@ -134,11 +134,10 @@ public class Compiler(private val arr :Code, private val className : String){
         }
         return null
     }
-
 }
 
 public fun main(args: Array<String>) {
-    val expr = Code(",++-.")
+    val expr = Code(BrainFuckCode(",++-."))
     val com = Compiler(expr, "Brainfuck")
     val classByteArray = com.generateClassByteArray()
     com.loadClassAndRun(classByteArray)
