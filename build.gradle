@@ -11,7 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test', 'run'
 
-mainClassName = 'classroom.c02.MainKt'
+mainClassName = 'classroom.c05.MainKt'
 
 sourceCompatibility = 1.5
 
