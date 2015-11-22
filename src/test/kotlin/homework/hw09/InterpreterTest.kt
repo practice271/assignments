@@ -56,14 +56,4 @@ class InterpreterTest {
         val interpreter = TestInterpreter("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
         assertEquals("Hello World!\n",interpreter.interpret())
     }
-
-    @Test fun helloworldTest2(){
-        val program = "++++[>+++++<-]>[<+++++>-]+<+[" +
-                "        >[>+>+<<-]++>>[<<+>>-]>>>[-]++>[-]+" +
-                "        >>>+[[-]++++++>>>]<<<[[<++++++++<++>>-]+<.<[>----<-]<]" +
-                "        <<[>>>>>[>>>[-]+++++++++<[>-<-]+++++++++>[-[<->-]+[<<<]]<[>+<-]>]<<-]<<-]"
-
-        val interpreter = TestInterpreter(program)
-        assertEquals("Hello World!\n",interpreter.interpret())
-    }
 }
