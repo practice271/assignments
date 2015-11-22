@@ -11,6 +11,7 @@ import org.junit.Test
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.assertFalse
@@ -58,6 +59,25 @@ class GeneralTests {
         val expectedResult ="Hello World!${10.toChar()}"
         assertEquals (expectedResult, outContent.toString())
     }
+    @Test fun TestInterpreterRead() {
+        val data = "a"
+        System.setIn(ByteArrayInputStream(data.toByteArray()))
+
+        val scanner = Scanner(System.`in`)
+        val code = BrainFuckCode(", +++.")
+        Interpreter(code).interpret()
+        val expectedResult ="d"
+        assertEquals (expectedResult, outContent.toString())
+    }
+    @Test fun TestInterpreterRead2() {
+        val data = "abc"
+        System.setIn(ByteArrayInputStream(data.toByteArray()))
+
+        val code = BrainFuckCode(",>,>,<<.>.>.")
+        Interpreter(code).interpret()
+        val expectedResult ="abc"
+        assertEquals (expectedResult, outContent.toString())
+    }
     @Test fun TestInterpreterMod256(){
         var str = ""
         for (i in 1..256){
@@ -86,5 +106,17 @@ class GeneralTests {
         com.loadClassAndRun(classByteArray)
         val expectedResult ="${0.toChar()}"
         assertEquals(expectedResult, outContent.toString())
+    }
+    @Test fun TestCompilerRead() {
+        val data = "abc"
+        System.setIn(ByteArrayInputStream(data.toByteArray()))
+
+        val code = BrainFuckCode(",>,>,<<.>.>.")
+        val com = Compiler(code, "Brainfuck")
+        val classByteArray = com.generateClassByteArray()
+        com.saveToDisk(classByteArray)
+        com.loadClassAndRun(classByteArray)
+        val expectedResult ="abc"
+        assertEquals (expectedResult, outContent.toString())
     }
 }
