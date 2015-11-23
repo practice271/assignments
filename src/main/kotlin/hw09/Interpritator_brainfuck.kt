@@ -9,15 +9,6 @@ public class Interpritator_brainfuck(program: String, in_string: String){
     private val program = program
     private val in_str = in_string
 
-    private fun nextCeilMemory() {
-        pointer_memory++
-    }
-
-    private fun prevCeilMemory() {
-        pointer_memory--
-        if (pointer_memory < 0) throw IndexOutOfBoundsException()
-    }
-
     private fun inc() {
         memory[pointer_memory]++
         if (memory[pointer_memory] > 255){
@@ -69,7 +60,7 @@ public class Interpritator_brainfuck(program: String, in_string: String){
     fun read() {
         if (pointer_in < in_str.length){
             val value = in_str[pointer_in]
-            nextCeilMemory()
+            pointer_memory++
             memory[pointer_memory] = value.toInt()
             pointer_in++
         }
@@ -78,15 +69,16 @@ public class Interpritator_brainfuck(program: String, in_string: String){
     fun run(): String {
         while (pointer_instruction < program.length) {
             when (program[pointer_instruction]) {
-                '>' -> nextCeilMemory()
-                '<' -> prevCeilMemory()
+                '>' -> pointer_memory++
+                '<' -> {pointer_memory--
+                        if (pointer_memory < 0) return "Going beyond memory"}
                 '+' -> inc()
                 '-' -> dec()
                 '[' -> openLoop()
                 ']' -> closeLoop()
                 '.' -> print()
                 ',' -> read()
-                else -> println("Error")
+                else -> return "Input error"
             }
             pointer_instruction++
         }
@@ -95,9 +87,8 @@ public class Interpritator_brainfuck(program: String, in_string: String){
 }
 
 fun main (args : Array<String>) {
-    var program = ""
+    val program = "896"
     val in_str = ""
-    val inter = Interpritator_brainfuck(program, in_str).run()
-    println("${inter}")
+    val result = Interpritator_brainfuck(program, in_str).run()
+    println(result)
 }
-

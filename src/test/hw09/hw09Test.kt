@@ -20,6 +20,18 @@ class hw09Test{
         val result = Interpritator_brainfuck(program, in_str).run()
         assertEquals("bee",result)
     }
+    @Test fun incorect_input_interpritator(){
+        val program = "98>+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
+        val in_str = ""
+        val result = Interpritator_brainfuck(program, in_str).run()
+        assertEquals("Input error",result)
+    }
+    @Test fun memory_interpritator(){
+        val program = "<>+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
+        val in_str = ""
+        val result = Interpritator_brainfuck(program, in_str).run()
+        assertEquals("Going beyond memory",result)
+    }
     @Test fun Insert_interpritator(){
         var program = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++"+
                 ".>+.+++++++..,."
