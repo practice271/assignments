@@ -17,10 +17,10 @@ public class BrainfuckInterpreter {
         while (index < code.length) {
             when (code[index]) {
                 '>' -> {
-                    dataPointer = if ((dataPointer == LENGTH - 1)) 0 else dataPointer + 1
+                    dataPointer = if (dataPointer == LENGTH - 1) 0 else dataPointer + 1
                 }
                 '<' -> {
-                    dataPointer = if ((dataPointer == 0)) LENGTH - 1 else dataPointer - 1
+                    dataPointer = if (dataPointer == 0) LENGTH - 1 else dataPointer - 1
                 }
                 '+' -> {
                     memory[dataPointer]++
