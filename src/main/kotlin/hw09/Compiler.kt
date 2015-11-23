@@ -31,7 +31,7 @@ public class Compiler(private val codeG : Code, private val className : String){
         //init array
         run.visitCode()
         run.visitIntInsn(SIPUSH, memSize)
-        run.visitIntInsn(NEWARRAY, T_INT)
+        run.visitIntInsn(NEWARRAY, T_BYTE)
         run.visitVarInsn(ASTORE, 1)
 
         //init index of array
@@ -65,23 +65,22 @@ public class Compiler(private val codeG : Code, private val className : String){
                     run.visitVarInsn(ALOAD, 1)
                     run.visitVarInsn(ILOAD, 2)
                     run.visitInsn(DUP2)
-                    run.visitInsn(IALOAD)
-                    run.visitIntInsn(BIPUSH, elem.getAmt())
+                    run.visitInsn(BALOAD)
+                    run.visitLdcInsn(elem.getAmt())
                     run.visitInsn(IADD)
-                    run.visitInsn(IASTORE)
+                    run.visitInsn(BASTORE)
                 }
                 Commands.ZERO -> {
                     run.visitVarInsn(ALOAD, 1)
                     run.visitVarInsn(ILOAD, 2)
                     run.visitInsn(ICONST_0)
-                    run.visitInsn(IASTORE)
+                    run.visitInsn(BASTORE)
                 }
                 Commands.OUT -> {
                     for (i in 1..elem.getAmt()) {
                         run.visitVarInsn(ALOAD, 1)
                         run.visitVarInsn(ILOAD, 2)
-                        run.visitInsn(IALOAD)
-                        run.visitInsn(I2C)
+                        run.visitInsn(BALOAD)
                         run.visitMethodInsn(INVOKESTATIC,
                                 "kotlin/io/ConsoleKt", "print", "(C)V", false)
                     }
@@ -93,8 +92,8 @@ public class Compiler(private val codeG : Code, private val className : String){
                         run.visitFieldInsn(GETSTATIC,
                                 "java/lang/System", "in", "Ljava/io/InputStream;")
                         run.visitMethodInsn(INVOKEVIRTUAL,
-                                "java/io/InputStream", "read", "()I", false)
-                        run.visitInsn(IASTORE)
+                                "java/io/InputStream", "read", "()B", false)
+                        run.visitInsn(BASTORE)
                     }
                 }
                 Commands.WHILE -> {
@@ -105,7 +104,7 @@ public class Compiler(private val codeG : Code, private val className : String){
                     run.visitLabel(begin)
                     run.visitIntInsn(ALOAD, 1)
                     run.visitIntInsn(ILOAD, 2)
-                    run.visitInsn(IALOAD)
+                    run.visitInsn(BALOAD)
                     run.visitJumpInsn(IFEQ, end)
                 }
                 Commands.END -> {
@@ -148,4 +147,12 @@ public class Compiler(private val codeG : Code, private val className : String){
         }
         return null
     }
+}
+public  fun main (args : Array<String>){
+    val str = "-[--->+<]>.--[--->+<]>---.------------.-.+++++++++++.-----------.+++++++++++++.-----------.++.-.-[--->+<]>-.[->+++<]>++.[--->+<]>----.+++[->+++<]>++.++.++++++++.------.[--->+<]>---.-."
+    val code = BrainFuckCode(str)
+    val com = Compiler(code, "Brainfuck")
+    val classByteArray = com.generateClassByteArray()
+    com.saveToDisk(classByteArray)
+    com.loadClassAndRun(classByteArray)
 }

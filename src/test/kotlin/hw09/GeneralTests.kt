@@ -86,11 +86,11 @@ class GeneralTests {
     }
     @Test fun TestInterpreterMod256(){
         var str = ""
-        for (i in 1..256){
+        for (i in 1..257){
             str += '+'
         }
         Interpreter(BrainFuckCode(str + '.')).interpret()
-        val expectedResult ="${0.toChar()}"
+        val expectedResult ="${1.toChar()}"
         assertEquals(expectedResult, outContent.toString())
     }
     @Test fun TestCompiler() {
@@ -103,15 +103,15 @@ class GeneralTests {
     }
     @Test fun TestCompilerMod256(){
         var str = ""
-        for (i in 1..256){
+        for (i in 1..255){
             str += '+'
         }
-        val com = Compiler(BrainFuckCode(str + '.'), "Brainfuck")
+        val com = Compiler(BrainFuckCode(str + "><" +str + '.'), "Brainfuck")
         val classByteArray = com.generateClassByteArray()
         com.saveToDisk(classByteArray)
         com.loadClassAndRun(classByteArray)
-        val expectedResult ="${0.toChar()}"
-        assertEquals(expectedResult, outContent.toString())
+        val expectedResult = 254.toByte()
+        assertEquals(expectedResult, outContent.toString()[0].toByte())
     }
     @Test fun TestCompilerNotCorrectCode() {
         val code = BrainFuckCode(",>,>,[]][.>.>.")
@@ -145,6 +145,18 @@ class GeneralTests {
         val code = BrainFuckCode(str)
         val com = Compiler(code, "Brainfuck")
         val expectedResult ="abcdefg"
+        val classByteArray = com.generateClassByteArray()
+        com.saveToDisk(classByteArray)
+        com.loadClassAndRun(classByteArray)
+        assertEquals(expectedResult, outContent.toString())
+    }
+    @Test fun TestCompilerFullWithModule256() {
+        val str = "++++[++++>---<]>-.---[----->+<]>-.+++[->+++<]>++.++.++++++++." +
+                "------.[--->+<]>---.-.+[---->+<]>+++.---[->++++<]>+.-------.----" +
+                "--------.-.+++++++++++.-----------.+++++++++++++.-----------.++.-."
+        val code = BrainFuckCode(str)
+        val com = Compiler(code, "Brainfuck")
+        val expectedResult ="Brackets unbalanced"
         val classByteArray = com.generateClassByteArray()
         com.saveToDisk(classByteArray)
         com.loadClassAndRun(classByteArray)
