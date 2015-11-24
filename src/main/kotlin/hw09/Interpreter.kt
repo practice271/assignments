@@ -5,22 +5,14 @@ import java.io.FileReader
 
 class Interpreter (private val fileName : String)
 {
-    var arrSize = 30000
-    var arr : Array<Char> = resizeArray()
-    var ind = 0
-    val textProgram : String = readTextProgram()
-    var output : String = ""
+    private val arrSize = 30000
+    private var arr : Array<Char> = Array(arrSize, {i -> nullChar})
+    private var ind = 0
+    private val textProgram : String = readTextProgram()
+    private var output : String = ""
 
-    val nullChar = '0' - 48
+    private val nullChar = '0' - 48
 
-    fun resizeArray() : Array<Char>
-    {
-        val ch : Char = nullChar
-
-        arr = Array(arrSize, {i -> ch})
-
-        return arr
-    }
 
     private fun readTextProgram() : String
     {
@@ -38,7 +30,7 @@ class Interpreter (private val fileName : String)
         return prog
     }
 
-    fun run (tour : Boolean = false, tourText : String = "")
+    private fun run (tour : Boolean = false, tourText : String = "")
     {
         var someTourText = ""
         var writeTourText : Boolean = false
@@ -86,13 +78,12 @@ class Interpreter (private val fileName : String)
                         if (endsCount == -1)
                         {
                             writeTourText = true
-                            endsCount = 0
                         }
                         else
                         {
-                            endsCount++
                             someTourText += '['
                         }
+                        endsCount++
                     }
                 ']' ->
                     {
