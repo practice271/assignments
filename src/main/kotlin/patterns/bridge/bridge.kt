@@ -10,27 +10,27 @@ abstract class Image(internal var imageImp: ImageImp) {
     init {
         this.imageImp = imageImp
     }
-    fun getFormat() {
+    public fun getFormat() {
         imageImp.format()
     }
 }
 
 /* Implementor */
-class Photo(imageImp: ImageImp) : Image(imageImp)
+public class Photo(imageImp: ImageImp) : Image(imageImp)
 
-interface ImageImp {
-    fun format()
+public interface ImageImp {
+    public fun format()
 }
 
 /* ConcreteImplementor */
-class Png : ImageImp {
+internal class Png : ImageImp {
     public override fun format() {
         println("Image format: Png")
     }
 }
 
 /* ConcreteImplementor */
-class Jpg : ImageImp {
+internal class Jpg : ImageImp {
     public override fun format() {
         println("Image format: Jpg")
     }
