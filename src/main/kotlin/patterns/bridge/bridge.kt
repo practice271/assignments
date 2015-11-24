@@ -6,7 +6,7 @@ package patterns.bridge
 import java.util.*
 
 /* Abstraction */
-abstract class Image(internal var imageImp: ImageImp) {
+public abstract class Image(internal var imageImp: ImageImp) {
     init {
         this.imageImp = imageImp
     }
