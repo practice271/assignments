@@ -4,11 +4,11 @@ import java.util.*
 
 class BrainInterpreter: CodeRunner {
 
-    var source = ""
-    var input = ""
-    var jumpTable = IntArray(0)
+    private var source = ""
+    private var input = ""
+    private var jumpTable = IntArray(0)
 
-    override fun runCode(s: String, i: String): String {
+    override public fun runCode(s: String, i: String): String {
         source = s
         input = i + '\u0000'
         setupJumps()
@@ -27,7 +27,6 @@ class BrainInterpreter: CodeRunner {
                     jumpTable[i] = j - 1
                     jumpTable[j] = i
                 }
-                else -> { }
             }
     }
 
@@ -47,8 +46,6 @@ class BrainInterpreter: CodeRunner {
                 ',' -> memory[mp] = input[inp++].toByte()
                 '[' -> if (memory[mp].toInt() == 0) ip = jumpTable[ip]
                 ']' -> ip = jumpTable[ip]
-                else -> {
-                }
             }
             ip++
         }

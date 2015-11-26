@@ -261,7 +261,7 @@ class BrainGenerator(val className: String, val program: String) {
     }
 
     fun save() {
-        val p = Paths.get("${className}.class")
+        val p = Paths.get("$className.class")
         Files.write(p, b)
     }
 
