@@ -1,23 +1,24 @@
 package homework9
 
-public class BFInterpeter() {
-    val memory: Array<Int> = Array(30000, { 0 })
+public class BFInterpreter() {
+    val memory = Array(30000, { 0 })
     var indicator = 0
     var brackets = 0
     var output = ""
-    public fun interperet(input: String): String {
+    public fun interpret(input: String, ch: String): String {
         var i = 0
+        var count = 0
         while (i < input.length) {
             when (input[i]) {
                 '+' -> memory[indicator]++
                 '-' -> memory[indicator]--
-                '>' -> indicator++
-                '<' -> indicator--
+                '>' -> if (indicator + 1 == 30000) indicator = 0 else indicator++
+                '<' -> if (indicator - 1 == -1) indicator = 29999 else indicator--
                 '.' -> output += memory[indicator].toChar()
                 ',' -> {
-                    var ch = readLine()
-                    if (ch != null) {
-                        memory[indicator] = ch[0].toInt()
+                    if (ch != "") {
+                        memory[indicator] = ch[count].toInt()
+                        count++
                     }
                 }
                 '[' -> {
@@ -41,10 +42,11 @@ public class BFInterpeter() {
                         i--
                     }
                 }
-                else -> return "Incorrect character"
+                else -> return "Invalid character"
             }
             i++
         }
+        if (brackets != 0) return "Incorrectly entered brackets"
         return output
     }
 
@@ -54,9 +56,9 @@ public class BFInterpeter() {
 fun main(args: Array<String>) {
     var input: String? = readLine()
     while (input != "exit") {
-        var c = BFInterpeter()
+        var c = BFInterpreter()
         if (input != null) {
-            println(c.interperet(input))
+            println(c.interpret(input,"Hello World"))
         }
         input = readLine()
     }

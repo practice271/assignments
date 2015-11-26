@@ -3,13 +3,16 @@ package homework9
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.Label
 import org.objectweb.asm.Opcodes.*
+import java.io.ByteArrayInputStream
+import java.io.OutputStream
+import java.io.PrintStream
 import java.util.*
 
 public class BFCompiler() {
     private fun getClassWriter(input: String): ClassWriter {
         val cw = ClassWriter(0)
         cw.visit(V1_7, ACC_PUBLIC, "BFCompiler", null, "java/lang/Object", null)
-        val mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main" , "([Ljava/lang/String;)V", null, null)
+        val mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null)
         mv.visitCode()
         mv.visitIntInsn(SIPUSH, 30000)
         mv.visitIntInsn(NEWARRAY, T_INT)
@@ -19,8 +22,8 @@ public class BFCompiler() {
         mv.visitFrame(F_APPEND, 2, arrayOf("[I", INTEGER), 0, null)
         val labels = Stack<Label>()
 
-        for (ch in input){
-            when (ch){
+        for (ch in input) {
+            when (ch) {
                 '+' -> {
                     mv.visitIntInsn(ALOAD, 1)
                     mv.visitIntInsn(ILOAD, 2)
@@ -88,13 +91,25 @@ public class BFCompiler() {
     private fun generateClassByteArray(input: String): ByteArray {
         return getClassWriter(input).toByteArray()
     }
+
     private class ByteArrayClassLoader() : ClassLoader() {
         fun loadClass(name: String?, buf: ByteArray): Class<*>? {
             return super.defineClass(name, buf, 0, buf.size)
         }
     }
 
-    private fun loadClassAndRun(classByteArray: ByteArray):Any? {
+    private var out = ""
+    private var printStr: PrintStream
+    init {
+        printStr = PrintStream(object : OutputStream() {
+            override fun write(ch: Int) {
+                out += (ch.toChar())
+            }
+        })
+        System.setOut(printStr)
+    }
+
+    private fun loadClassAndRun(classByteArray: ByteArray) {
         val cl = ByteArrayClassLoader()
         val exprClass = cl.loadClass("BFCompiler", classByteArray)
         val methods = exprClass?.methods
@@ -107,18 +122,13 @@ public class BFCompiler() {
             }
             method.invoke(null, arrayOf<String>())
         }
-        return null
     }
 
-    public fun compile(input: String):Any? {
+    public fun compile(input: String, ch: String): String {
         val classByteArray = generateClassByteArray(input)
-        val result = loadClassAndRun(classByteArray)
-        return result
+        if (input != "") System.setIn(ByteArrayInputStream(ch.toByteArray()))
+        loadClassAndRun(classByteArray)
+        return out.toString()
     }
 }
-/*
-public fun main(args: Array<String>) {
-    val c = BFCompiler()
-    c.compile("++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.")
-}
-*/
+
