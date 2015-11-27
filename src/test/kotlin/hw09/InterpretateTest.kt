@@ -10,11 +10,10 @@ import java.io.PrintStream
 import kotlin.test.assertEquals
 
 
-public class InterpretateTest(){
+public class InterpretateTest() {
 
-
-    var res = StringBuilder()
-    var printMethod: PrintStream
+    private var res = StringBuilder()
+    private var printMethod: PrintStream
 
     init {
         printMethod = PrintStream(object : OutputStream() {
@@ -25,37 +24,39 @@ public class InterpretateTest(){
         System.setOut(printMethod)
     }
 
-    public fun interpretate(program: String, input: String): String {
+    public fun interpret(program: String, input: String): String {
         val interpreteter = BrainfuckInterpreter()
         if (input != "") System.setIn(ByteArrayInputStream(input.toByteArray()))
         res.delete(0, res.length)
-        interpreteter.interpratate(program)
+        interpreteter.interpret(program)
         return res.toString()
     }
 
     @Test fun helloWorldTest() {
         assertEquals("Hello World!\n",
-                interpretate("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>" +
+                interpret("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>" +
                         "+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.", ""))
     }
 
     @Test fun readTest() {
         assertEquals("Made by Antropov Igor",
-                interpretate("+++++++++++++++++++++[>,.<-]", "Made by Antropov Igor"))
+                interpret("+++++++++++++++++++++[>,.<-]", "Made by Antropov Igor"))
     }
 
-    @Test fun helloWorldTest2(){
-            assertEquals("Hello World!\n", interpretate("+++++++++++++++++++++++++++++++++++++++++++++" +
-                    "+++++++++++++++++++++++++++.+++++++++++++++++" +
-                    "++++++++++++.+++++++..+++.-------------------" +
-                    "---------------------------------------------" +
-                    "---------------.+++++++++++++++++++++++++++++" +
-                    "++++++++++++++++++++++++++.++++++++++++++++++" +
-                    "++++++.+++.------.--------.------------------" +
-                    "---------------------------------------------" +
-                    "----.-----------------------.", ""))
+    @Test fun helloWorldTest2() {
+        assertEquals("Hello World!\n", interpret("+++++++++++++++++++++++++++++++++++++++++++++" +
+                "+++++++++++++++++++++++++++.+++++++++++++++++" +
+                "++++++++++++.+++++++..+++.-------------------" +
+                "---------------------------------------------" +
+                "---------------.+++++++++++++++++++++++++++++" +
+                "++++++++++++++++++++++++++.++++++++++++++++++" +
+                "++++++.+++.------.--------.------------------" +
+                "---------------------------------------------" +
+                "----.-----------------------.", ""))
     }
 
-
-
+    @Test fun failTest() {
+        assertEquals("There is a problem in your code",
+                interpret("+++[+[--++].", ""))
+    }
 }
