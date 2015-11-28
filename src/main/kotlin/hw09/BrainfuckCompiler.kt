@@ -26,7 +26,7 @@ public class  BrainfuckCompiler(private val program: String, private val name: S
         mv.visitInsn(ICONST_0)
         mv.visitIntInsn(ISTORE, 2)
 
-        for (i in 0..program.length - 1) {
+        for (i in program.indices) {
             when(program[i]) {
                 '>' -> mv.brainfuckShiftL()
                 '<' -> mv.brainfuckShiftR()
