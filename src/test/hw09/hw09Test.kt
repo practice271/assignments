@@ -11,32 +11,32 @@ class hw09Test{
                 ">+++++++[<+++++++>-]<++++++.>++++[<++++>-]<++++++++.+++."+
                 ">++[<-->-]<--.>++[<-->-]<----.>++++++++[<-------->-]<---."
         val in_str = ""
-        val result = Interpritator_brainfuck(program, in_str).run()
+        val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("Hello, World!",result)
     }
     @Test fun Same_symbols_interpritator(){
         val program = ">+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
         val in_str = ""
-        val result = Interpritator_brainfuck(program, in_str).run()
+        val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("bee",result)
     }
     @Test fun incorect_input_interpritator(){
         val program = "98>+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
         val in_str = ""
-        val result = Interpritator_brainfuck(program, in_str).run()
+        val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("Input error",result)
     }
     @Test fun memory_interpritator(){
         val program = "<>+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
         val in_str = ""
-        val result = Interpritator_brainfuck(program, in_str).run()
+        val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("Going beyond memory",result)
     }
     @Test fun Insert_interpritator(){
         var program = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++"+
                 ".>+.+++++++..,."
         val in_str = "o"
-        val result = Interpritator_brainfuck(program, in_str).run()
+        val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("Hello",result)
     }
     @Test fun HelloWorld_ASCII(){
