@@ -4,7 +4,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 class hw09Test{
-    @Test fun HelloWorld_interpritator(){
+    @Test fun HelloWorld_Interpreter(){
         val program = ">++++++++[<++++++++>-]<++++++++."+
                 ">+++++[<+++++>-]<++++.>++[<++>-]<+++..+++."+
                 ">++++++++[<-------->-]<---.>+++[<--->-]<---."+
@@ -14,25 +14,25 @@ class hw09Test{
         val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("Hello, World!",result)
     }
-    @Test fun Same_symbols_interpritator(){
+    @Test fun Same_symbols_Interpreter(){
         val program = ">+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
         val in_str = ""
         val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("bee",result)
     }
-    @Test fun incorect_input_interpritator(){
+    @Test fun incorrect_input_Interpreter(){
         val program = "98>+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
         val in_str = ""
         val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("Input error",result)
     }
-    @Test fun memory_interpritator(){
+    @Test fun memory_Interpreter(){
         val program = "<>+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
         val in_str = ""
         val result = Interpreter_brainfuck(program, in_str).run()
         assertEquals("Going beyond memory",result)
     }
-    @Test fun Insert_interpritator(){
+    @Test fun Insert_Interpreter(){
         var program = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++"+
                 ".>+.+++++++..,."
         val in_str = "o"
@@ -67,6 +67,20 @@ class hw09Test{
         val result = Convertor_to_brainfuck(text).run()
         assertEquals(program,result)
     }
-
-
+    @Test fun HelloWorld_compiler(){
+        val program = ">++++++++[<++++++++>-]<++++++++."+
+                ">+++++[<+++++>-]<++++.>++[<++>-]<+++..+++."+
+                ">++++++++[<-------->-]<---.>+++[<--->-]<---."+
+                ">+++++++[<+++++++>-]<++++++.>++++[<++++>-]<++++++++.+++."+
+                ">++[<-->-]<--.>++[<-->-]<----.>++++++++[<-------->-]<---."
+        val compiler = Compiler_brainfuck()
+        val result = compiler.compile(program,"")
+        assertEquals("Hello, World!",result)
+    }
+    @Test fun bee_compiler(){
+        val program = ">+++++++++[<+++++++++>-]<+++++++++++++++++.+++.."
+        val compiler = Compiler_brainfuck()
+        val result = compiler.compile(program,"")
+        assertEquals("bee",result)
+    }
 }
