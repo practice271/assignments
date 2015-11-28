@@ -1,6 +1,6 @@
 package hw09
 
-public class Interpritator_brainfuck(program: String, in_string: String){
+public class Interpreter_brainfuck(program: String, in_string: String){
     private var pointer_memory = 0
     private var pointer_instruction = 0
     private var pointer_in = 0
@@ -53,11 +53,11 @@ public class Interpritator_brainfuck(program: String, in_string: String){
         }
     }
 
-    fun print() {
+    public fun print() {
         out += (memory[pointer_memory]).toChar()
     }
 
-    fun read() {
+    public fun read() {
         if (pointer_in < in_str.length){
             val value = in_str[pointer_in]
             pointer_memory++
@@ -66,7 +66,7 @@ public class Interpritator_brainfuck(program: String, in_string: String){
         }
     }
 
-    fun run(): String {
+    public fun run(): String {
         while (pointer_instruction < program.length) {
             when (program[pointer_instruction]) {
                 '>' -> pointer_memory++
@@ -89,6 +89,6 @@ public class Interpritator_brainfuck(program: String, in_string: String){
 fun main (args : Array<String>) {
     val program = "896"
     val in_str = ""
-    val result = Interpritator_brainfuck(program, in_str).run()
+    val result = Interpreter_brainfuck(program, in_str).run()
     println(result)
 }
