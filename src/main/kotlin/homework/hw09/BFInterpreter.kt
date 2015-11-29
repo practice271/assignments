@@ -7,12 +7,16 @@ import java.util.*
 
 public class BFInterpreter(private val arraySize : Int) {
     private var array = Array(arraySize, {0})
-    public fun handle(code : String, input : String) : String {
-        var index = 0
-        var output = ""
+    private var index = 0
+    public var output = ""
+    private var stack = Stack<Int>()
+    private var leftBr = 0; private var rightBr = 0
+    public fun handle(code : String, input : String) {
+        index = 0
+        output = ""
         var inputIterator = input.iterator()
-        val stack = Stack<Int>()
-        var leftBr = 0; var rightBr = 0
+        stack = Stack<Int>()
+        leftBr = 0; rightBr = 0
         for (j in 0 .. code.length - 1) {
             if (code[j] == '[') leftBr++
             if (code[j] == ']') rightBr++
@@ -35,6 +39,5 @@ public class BFInterpreter(private val arraySize : Int) {
                 i++
             }
         }
-        return output
     }
 }
