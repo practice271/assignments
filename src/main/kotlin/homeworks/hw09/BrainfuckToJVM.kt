@@ -49,25 +49,26 @@ public class BrainfuckToJVM {
     }
 
     public fun compile(program: String, className: String): ByteArray {
-        val opcodes = tokenizer(program)
-
         val cw = ClassWriter(0)
         cw.visit(V1_7, ACC_PUBLIC, className, null, "java/lang/Object", null)
 
         val mv = cw.visitMethod(ACC_PUBLIC or ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null)
-
-        mv.visitIincInsn(SIPUSH, MAX_MEMORY)
-        mv.visitIincInsn(NEWARRAY, T_INT)
-        mv.visitIincInsn(ASTORE, 1)
+        mv.visitCode()
+        val lStart = Label()
+        mv.visitLabel(lStart)
+        mv.visitIntInsn(SIPUSH, MAX_MEMORY)
+        mv.visitIntInsn(NEWARRAY, T_INT)
+        mv.visitIntInsn(ASTORE, 1)
 
         mv.visitInsn(ICONST_0)
-        mv.visitIincInsn(ISTORE, 2)
+        mv.visitIntInsn(ISTORE, 2)
 
         firstLoop = true
+        val opcodes = tokenizer(program)
         opcodes.forEach {
             when (it.type) {
-                Opcode.Type.SHIFTR -> mv.visitVarInsn(2, 1)
-                Opcode.Type.SHIFTL -> mv.visitVarInsn(2, -1)
+                Opcode.Type.SHIFTR -> mv.visitIincInsn(2, 1)
+                Opcode.Type.SHIFTL -> mv.visitIincInsn(2, -1)
                 Opcode.Type.ADD    -> mv.visitChangeValueInsn(IADD)
                 Opcode.Type.SUB    -> mv.visitChangeValueInsn(ISUB)
                 Opcode.Type.IN     -> mv.visitWriteInsn()
@@ -78,10 +79,11 @@ public class BrainfuckToJVM {
         }
 
         mv.visitInsn(RETURN)
+        val lFinish = Label()
+        mv.visitLabel(lFinish)
         mv.visitMaxs(4, 3)
         mv.visitEnd()
         cw.visitEnd()
-
         return cw.toByteArray()
     }
 
@@ -104,18 +106,16 @@ public class BrainfuckToJVM {
     }
 
     private fun MethodVisitor.visitReadInsn() {
+        visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
         visitVarInsn(ALOAD, 1)
         visitVarInsn(ILOAD, 2)
         visitInsn(IALOAD)
-        visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
         visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(C)V", false)
-        visitInsn(IASTORE)
     }
 
     private fun MethodVisitor.visitWhileInsn() {
         val start  = Label()
         val finish = Label()
-
         labels.push(finish)
         labels.push(start)
         visitLabel(start)
@@ -125,7 +125,6 @@ public class BrainfuckToJVM {
         } else {
             visitFrame(F_SAME, 0, null, 0, null)
         }
-
         visitVarInsn(ALOAD, 1)
         visitVarInsn(ILOAD, 2)
         visitInsn(IALOAD)
