@@ -7,13 +7,14 @@ import kotlin.test.assertEquals
 class InterpreterTest {
     @Test
     fun helloWorld() {
-        test("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.",
+        test("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>" +
+                ".>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.",
                 Stack<Char>(), "Hello World!\n")
     }
 
     @Test
     fun simpleCycle() {
-        test("[+].", Stack<Char>(), "${0.toByte().toChar()}")
+        test("[+].", Stack<Char>(), "${0.toChar()}")
     }
 
     @Test
@@ -31,7 +32,7 @@ class InterpreterTest {
     }
     @Test
     fun moveTwoCellsRight() {
-        test("+++++>>[-]<<[->>+<<]>>.", Stack<Char>(), "${5.toByte().toChar()}")
+        test("+++++>>[-]<<[->>+<<]>>.", Stack<Char>(), "${5.toChar()}")
     }
 
     private fun test(code: String, input: Stack<Char>, expected: String) {

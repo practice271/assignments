@@ -6,13 +6,6 @@ public class BrainFInterpreter(private val tapeLen: Int) {
     private val tape = Array<Byte>(tapeLen) { 0 }
     private var curCell = 0
 
-    internal enum class BFTokens(val ch: Char) {
-        INC('+'), DEC('-'),
-        RMOVE('>'), LMOVE('<'),
-        IN(','), OUT('.'),
-        LBRT('['), RBRT(']')
-    }
-
     public fun interpret(code: String, input: Stack<Char>): String {
         var resOut = ""
         var i = 0
@@ -38,8 +31,8 @@ public class BrainFInterpreter(private val tapeLen: Int) {
                     i++
                     while (true) {
                         when (code[i]) {
-                            '[' -> brtCount++
-                            ']' -> brtCount--
+                            BFTokens.LBRT.ch -> brtCount++
+                            BFTokens.RBRT.ch -> brtCount--
                         }
                         if (brtCount == 0) break
                         inCycle += code[i++]
