@@ -20,7 +20,7 @@ public class InterpreterTest {
         val input      = "+++[+++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
         var inputArray = input.toCharArray()
         val actual     = interpreter().interpret(inputArray)
-        val expected   = "Error count of brackets"
+        val expected   = null
         assertEquals(expected, actual)
     }
 

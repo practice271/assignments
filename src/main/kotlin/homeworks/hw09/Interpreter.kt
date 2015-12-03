@@ -12,21 +12,18 @@ public class interpreter () {
     var countPairsBrackets = 0
 
     private fun checkSyntax(input: CharArray): Boolean {
-        var flag = 0
+        var flag = 0 //count pairs of brackets
 
         input.forEach {
-            if (it == '[') {
+            if (flag < 0) {
+                return false
+            } else if (it == '[') {
                 flag++
-            }
-            if (it == ']') {
+            } else if (it == ']') {
                 flag--
             }
         }
-
-        if (flag == 0) {
-            return true
-        }
-        return false
+        return flag == 0
     }
 
     private fun interpretWork(input: CharArray): String {
@@ -82,11 +79,11 @@ public class interpreter () {
         return result
     }
 
-    public fun interpret(input: CharArray): String {
+    public fun interpret(input: CharArray): String? {
         if (checkSyntax(input)) {
             return interpretWork(input)
         } else {
-            return "Error count of brackets"
+            return null
         }
     }
 }
