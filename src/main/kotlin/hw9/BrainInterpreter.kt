@@ -8,6 +8,8 @@ class BrainInterpreter: CodeRunner {
     private var input = ""
     private var jumpTable = IntArray(0)
 
+    private val memSize = 32 * 1024
+
     override public fun runCode(s: String, i: String): String {
         source = s
         input = i + '\u0000'
@@ -35,7 +37,7 @@ class BrainInterpreter: CodeRunner {
         var mp = 0
         var inp = 0
         var output = ""
-        var memory = ByteArray(1024 * 32)
+        var memory = ByteArray(memSize)
         while (ip < source.length) {
             when (source[ip]) {
                 '>' -> mp++

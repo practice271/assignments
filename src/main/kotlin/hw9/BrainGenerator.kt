@@ -11,9 +11,9 @@ import java.util.*
 
 class BrainGenerator(val className: String, val program: String) {
 
-    var labelOpenStack: Stack<Label> = Stack()
-    var labelCloseStack: Stack<Label> = Stack()
-    var b: ByteArray= ByteArray(0)
+    private var labelOpenStack: Stack<Label> = Stack()
+    private var labelCloseStack: Stack<Label> = Stack()
+    private var b: ByteArray= ByteArray(0)
 
     public fun generate() {
         if (!b.isEmpty())
@@ -260,7 +260,7 @@ class BrainGenerator(val className: String, val program: String) {
         mv.visitEnd()
     }
 
-    fun save() {
+    public fun save() {
         val p = Paths.get("$className.class")
         Files.write(p, b)
     }
