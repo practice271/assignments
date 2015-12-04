@@ -4,8 +4,8 @@ import java.util.*
 
 public class Parser() {
 
-    public class IncorrectInputException() : Throwable()
-    public class IncorrectBracketsSequence() : Throwable()
+    public class IncorrectInputException() : Exception()
+    public class IncorrectBracketsSequence() : Exception()
 
     enum class Tokens {LS, RS, INC, DEC, PRINT, WRITE, LB, RB }
 
