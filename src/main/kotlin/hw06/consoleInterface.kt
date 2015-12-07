@@ -96,6 +96,7 @@ fun main (args : Array<String>){
                     start = true
                     number = input.toInt()
                     changeRules(size, number)
+                    newGame()
                 }
             }
         }
