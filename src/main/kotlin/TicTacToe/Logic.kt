@@ -81,12 +81,8 @@ public open class Logic() {
         if(flag == 1) {
             var newFieldSizeHorizontal = fieldSizeHorizontal - 1
             while(index >= newFieldSizeHorizontal) { newFieldSizeHorizontal *= 2}
-            var newField: Array<Array<Char>> = Array(newFieldSizeHorizontal,{Array(fieldSizeVertical, { ' '}) })
-            for(i in 0..fieldSizeHorizontal - 1) {
-                for (i2 in 0..fieldSizeVertical - 1) {
-                    newField[i][i2] = field[i][i2]
-                }
-            }
+            var newField: Array<Array<Char>> = Array(newFieldSizeHorizontal,{Array(fieldSizeVertical, {' '}) })
+            arrayCopy(newField)
             fieldSizeHorizontal = newFieldSizeHorizontal
             field = newField
             return
@@ -94,15 +90,20 @@ public open class Logic() {
         else {
             var newFieldSizeVertical = fieldSizeVertical - 1
             while(index >= newFieldSizeVertical)   { newFieldSizeVertical *=2 }
-            var newField: Array<Array<Char>> = Array(fieldSizeHorizontal,{Array(newFieldSizeVertical, { ' '}) })
-            for(i in 0..fieldSizeHorizontal - 1) {
-                for ( i2 in 0..fieldSizeVertical - 1) {
-                    newField[i][i2] = field[i][i2]
-                }
-            }
+            var newField: Array<Array<Char>> = Array(fieldSizeHorizontal,{Array(newFieldSizeVertical, {' '}) })
+            arrayCopy(newField)
             fieldSizeVertical = newFieldSizeVertical
             field = newField
             return
+        }
+        return
+    }
+
+    public fun arrayCopy(newField: Array<Array<Char>>) {
+        for(i in 0..fieldSizeHorizontal - 1) {
+            for ( i2 in 0..fieldSizeVertical - 1) {
+                newField[i][i2] = field[i][i2]
+            }
         }
         return
     }
