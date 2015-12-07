@@ -3,8 +3,19 @@ import java.lang.StringBuilder
 
 
 class Converter(var input:String){
+    //Classic size of tape
+    private val buffer_size = 30000
+
     public fun setString(string:String){
         input = string
+    }
+    //Both functions round numbers to closest
+    private fun floorUp(a: Int):Int{
+        return ((a+10) / 10) * 10
+    }
+
+    private fun floourDown(a:Int):Int{
+        return (a / 10) * 10
     }
 
     //@checkNums return true when arr has "close" numbers
@@ -13,24 +24,19 @@ class Converter(var input:String){
             if (arr.contains(i)) return true
         return false
     }
-    private fun abs(a : Int):Int {
-        if (a<0) return a*(-1)
-        return a
-    }
 
     public fun convert():String{
         return method2()
     }
 
     private fun method2():String{
-        var buffer = Array<Byte>(30000) {0}
+        var buffer = Array<Byte>(buffer_size) {0}
         val sb  = StringBuilder()
         var temp = Array<Int>(input.length) {0}
         var tempCounter = 0
         //Initiate
         buffer[0] = 10
         sb.append("++++++++++[>")
-        //ToDo : решения с другими compareValue
         for (char in input){
             if (!checkNums(temp, char.toInt(), 10)){
                 temp[tempCounter++] = char.toInt()
@@ -38,12 +44,13 @@ class Converter(var input:String){
         }
         val cells = Array<Int>(tempCounter){0}
         for (i in 0..tempCounter-1) {
+            // Just checking the remainder after dividing
             if (temp[i] % 10 > 5){
-                cells[i] = ((temp[i]+10) / 10) * 10
+                cells[i] = floorUp(temp[i])
                 buffer[i+1] = cells[i].toByte()
             }
             else {
-                cells[i] = (temp[i] / 10) * 10
+                cells[i] = floourDown(temp[i])
                 buffer[i + 1] = cells[i].toByte()
             }
         }
@@ -62,13 +69,12 @@ class Converter(var input:String){
             var minPlace = 0
             var minDif   = 360
             for (i in 1..tempCounter) {
-                if (abs(buffer[i].toInt() - char.toInt()) < minDif) {
+                if (Math.abs(buffer[i].toInt() - char.toInt()) < minDif) {
                     min      = buffer[i].toInt()
-                    minDif   = abs(buffer[i].toInt() - char.toInt())
+                    minDif   = Math.abs(buffer[i].toInt() - char.toInt())
                     minPlace = i
                 }
             }
-            //            println("Char is " + char + " and min is " + min)
             if (min == char.toInt()){
                 if (place > minPlace){
                     for (i in 1..place-minPlace) sb.append("<")
@@ -82,12 +88,12 @@ class Converter(var input:String){
                 }
             }
             else {
-                if (char.toInt() - min > 0){
-                    if (place > minPlace)
-                        for (i in 1..place - minPlace) sb.append("<")
-                    else
-                        for (i in 1..minPlace - place) sb.append(">")
+                if (place > minPlace)
+                    for (i in 1..place - minPlace) sb.append("<")
+                else
+                    for (i in 1..minPlace - place) sb.append(">")
 
+                if (char.toInt() - min > 0){
                     for (i in 1..char.toInt() - min) {
                         sb.append("+")
                         buffer[minPlace]++
@@ -96,11 +102,6 @@ class Converter(var input:String){
                     sb.append(".")
                 }
                 else {
-                    if (place > minPlace)
-                        for (i in 1..place - minPlace) sb.append("<")
-                    else
-                        for (i in 1..minPlace - place) sb.append(">")
-
                     for (i in 1..min - char.toInt()){
                         sb.append("-")
                         buffer[minPlace]--
@@ -152,3 +153,4 @@ class Interpreter(){
         return result
     }
 }
+

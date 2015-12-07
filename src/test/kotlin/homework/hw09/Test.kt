@@ -35,10 +35,28 @@ public class ConverterTest{
         test(converter,text)
     }
 
+    //Test for other symbols
+    //Length : 912
+    @Test fun Test5(){
+        val text = "var hash = require('crypto').createHash('sha1');" +
+                "hash.update(Math.random().toString());" +
+                "hash = hash.digest('hex');" +
+                "var device_id = 'android:' + hash;"
+        val converter = Converter(text)
+        test(converter,text)
+    }
+
+    //One more
+    //Length : 806
+    @Test fun Test6(){
+        val text = "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine."
+        val converter = Converter(text)
+        test(converter,text)
+    }
+
     private fun test(converter: Converter, text:String){
         val bf = converter.convert()
         val interpreter = Interpreter().Interpret(bf)
         assertEquals(interpreter, text)
     }
-
 }
