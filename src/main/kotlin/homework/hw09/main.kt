@@ -98,17 +98,15 @@ class Converter(var input:String){
                         sb.append("+")
                         buffer[minPlace]++
                     }
-                    place = minPlace
-                    sb.append(".")
                 }
                 else {
                     for (i in 1..min - char.toInt()){
                         sb.append("-")
                         buffer[minPlace]--
                     }
-                    place = minPlace
-                    sb.append(".")
                 }
+                place = minPlace
+                sb.append(".")
             }
         }
         return sb.toString()
@@ -153,4 +151,3 @@ class Interpreter(){
         return result
     }
 }
-
