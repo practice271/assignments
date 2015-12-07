@@ -11,7 +11,7 @@ apply plugin: 'application'
 
 defaultTasks 'test'
 
-mainClassName = 'homework.Hw04.Hw04Package'
+mainClassName = 'homework.Hw09.Hw04Package'
 
 sourceCompatibility = 1.5
 
