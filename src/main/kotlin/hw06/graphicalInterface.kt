@@ -69,5 +69,6 @@ public class TicTacToeGame : JFrame() {
 
 fun main(args:Array<String>) {
     changeRules(19,5)
+    newGame()
     TicTacToeGame()
 }
