@@ -8,7 +8,7 @@ public open class Logic() {
 
     public var fieldSizeHorizontal: Int = 5 //default size
     public var fieldSizeVertical: Int = 5   //default size
-    public var field: Array<Array<Char>> = Array(fieldSizeHorizontal,{Array(fieldSizeVertical, { ' '}) })
+    public var field: Array<Array<Char>> = Array(fieldSizeHorizontal,{Array(fieldSizeVertical, { ' ' })})
     public var winLength: Int = 5
     public var gameOver: Boolean = false
     public var winner: Char = ' '
@@ -76,7 +76,6 @@ public open class Logic() {
         checkWinRLDiagonal()
     }
 
-
     public fun resize(index: Int, flag: Int) {
         if(flag == 1) {
             var newFieldSizeHorizontal = fieldSizeHorizontal - 1
@@ -97,6 +96,30 @@ public open class Logic() {
             return
         }
         return
+    }
+
+    public fun shiftUp(shiftNumber: Int) { //if input = arr[x][-y]
+        var reserveField: Array<Array<Char>> = Array(fieldSizeHorizontal,{Array(fieldSizeVertical + shiftNumber, {' '}) })
+
+        for(i in 0..fieldSizeHorizontal - 1) {
+            for ( i2 in 0..fieldSizeVertical - 1) {
+                reserveField[i][i2 + shiftNumber] = field[i][i2]
+            }
+        }
+        fieldSizeVertical += shiftNumber
+        field = reserveField
+    }
+
+    public fun shiftLeft(shiftNumber: Int) { //if input = arr[-x][y]
+        var reserveField: Array<Array<Char>> = Array(fieldSizeHorizontal + shiftNumber,{Array(fieldSizeVertical, {' '}) })
+
+        for(i in 0..fieldSizeHorizontal - 1) {
+            for ( i2 in 0..fieldSizeVertical - 1) {
+                reserveField[i + shiftNumber][i2] = field[i][i2]
+            }
+        }
+        fieldSizeHorizontal += shiftNumber
+        field = reserveField
     }
 
     public fun arrayCopy(newField: Array<Array<Char>>) {

@@ -8,9 +8,16 @@ import java.util.*
 public class Console: Logic() {
 
     public fun readValue(coordX: Int, coordY:Int,  number: Int) {
+        var coordX_ = coordX
+        var coordY_ = coordY
+
         if (coordX > fieldSizeHorizontal - 1) { resize(coordX, 1)}
         if (coordY > fieldSizeVertical - 1)   { resize(coordY, 0)}
-        if (number % 2 == 0) { field[coordX][coordY] = 'X'} else {field[coordX][coordY] = 'O'}
+
+        if (coordY < 0) { shiftUp(Math.abs(coordY));   coordY_ = 0 }
+        if (coordX < 0) { shiftLeft(Math.abs(coordX)); coordX_ = 0 }
+
+        if (number % 2 == 0) { field[coordX_][coordY_] = 'X'} else {field[coordX_][coordY_] = 'O'}
     }
 
     public fun printMessage(n: Int) {
