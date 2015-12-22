@@ -25,8 +25,6 @@ public class Main {
         System.out.println("pair1.compareTo(pair2): " + pair1.compareTo(pair2));
 
         Pair<A1, A1> pair3 = new Pair<A1, A1>(new A1(), new A1());
-        Pair<A2, A2> pair4 = new Pair<A2, A2>(new A2(), new A2());
-        int res = pair3.compareTo(pair4);
 
         System.out.println(pair1);
     }
