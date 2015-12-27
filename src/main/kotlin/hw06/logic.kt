@@ -3,127 +3,125 @@
 
 package homework.hw06
 
-public var playerMark = "X"
-public var fieldSize = 3
-public var symbolNumber = 3
-public var field = Array(fieldSize, {Array(fieldSize, {" "})})
+import java.util.*
+
+public var playerMark = 'X'
 public var gameOver = false
-public var result = ""
-public var output = ""
+public var coordX : Int = 0
+public var coordY : Int = 0
+public var board = Hashtable<String,Char>()
 
 public fun newGame() {
-    field = Array(fieldSize, {Array(fieldSize, {" "})})
+    board.clear()
+    playerMark = 'X'
     gameOver = false
-    playerMark = "X"
-    result = ""
 }
 
 public fun changePlayer() {
     when(playerMark) {
-        "O" -> playerMark = "X"
-        else -> playerMark = "O"
+        'O' -> playerMark = 'X'
+        else -> playerMark = 'O'
     }
 }
 
-public fun changeRules(size: Int, number : Int) {
-    fieldSize = size
-    symbolNumber = number
-}
-
-public fun checkForWin() : Boolean {
-    var counter = 0
-    var x : Int
-    var y : Int
-    for (i in 0..fieldSize - symbolNumber) {
-        for (j in 0..fieldSize - 1) {
-            if (field[i][j] != " ") {
-                x = i; y = j;
-                for (k in 0..symbolNumber - 2) {
-                    x++
-                    if (field[i][j] == field[x][y]) counter++
-                    else break
-                }
-                if (counter == symbolNumber - 1) return true
-                else counter = 0
-            }
-        }
-    }
-    for (i in 0..fieldSize - 1) {
-        for (j in 0..fieldSize - symbolNumber) {
-            if (field[i][j] != " ") {
-                x = i; y = j;
-                for (k in 0..symbolNumber - 2) {
-                    y++
-                    if (field[i][j] == field[x][y]) counter++
-                    else break
-                }
-                if (counter == symbolNumber - 1) return true
-                else counter = 0
-            }
-        }
-    }
-    for (i in 0..fieldSize - symbolNumber) {
-        for (j in 0..fieldSize - symbolNumber) {
-            if (field[i][j] != " ") {
-                x = i; y = j;
-                for (k in 0..symbolNumber - 2) {
-                    x++; y++
-                    if (field[i][j] == field[x][y]) counter++
-                    else break
-                }
-                if (counter == symbolNumber - 1) return true
-                else counter = 0
-            }
-        }
-    }
-    for (i in 0..fieldSize - symbolNumber) {
-        for (j in (symbolNumber - 1)..fieldSize - 1) {
-            if (field[i][j] != " ") {
-                x = i; y = j;
-                for (k in 0..symbolNumber - 2) {
-                    x++; y--
-                    if (field[i][j] == field[x][y]) counter++
-                    else break
-                }
-                if (counter == symbolNumber - 1) return true
-                else counter = 0
-            }
-        }
-    }
-    return false
-}
-
-
-public fun boardIsFull() : Boolean {
-    var isFull = true
-    for (i in 0..fieldSize - 1) {
-        for (j in 0..fieldSize - 1) {if (field[i][j] == " ") isFull = false}
-    }
-    return isFull
-}
-
-public fun placeMark(i: Int, j: Int) {
+public fun placeMark(field : String) {
     if (!gameOver) {
-        if ((field[i][j] == " ") && (i >= 0) && (i < fieldSize)
-            && (j >= 0) && (j < fieldSize)) {
-            field[i][j] = playerMark
-            output = "Player" + playerMark.toString() + " marked (" + i + "," + j + ")"
-            if (checkForWin()) {
-                result = "Player" + playerMark.toString() + " wins!"
-                gameOver = true
-            }
-            else {
-                    if (boardIsFull()) {
-                        result = "Draw!"
-                        gameOver = true
-                    } else changePlayer()
-                }
-        }
+        board.put(field, playerMark)
+        checkForWin(field)
+        changePlayer()
+    }
+}
+
+public fun setCoords(field : String) {
+    var x : String = ""
+    var y : String = ""
+    var comma = false
+    for (i in field) {
+        if (i == ',') {comma = true}
         else {
-            output = "Incorrect field"
+            if (!comma) x += i
+            else y += i
         }
     }
-    else {
-        output = "GAME OVER"
+    coordX = x.toInt()
+    coordY = y.toInt()
+}
+
+public fun checkForWin(field : String) {
+    var symbolNumber = 5
+    var count1 = 0
+    var count2 = 0
+    var x : String
+    var y : String
+    var temp : String
+    fun isGameOver() {
+        if (count1 + count2 > symbolNumber - 2) gameOver = true
+        else {
+            count1 = 0
+            count2 = 0
+        }
     }
+    setCoords(field)
+    // up & down
+    x = coordX.toString();
+    for (i in 1..(symbolNumber - 1)) {
+        y = (coordY + i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        else break
+    }
+    for (i in 1..(symbolNumber - 1)) {
+        y = (coordY - i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count2++
+        else break
+    }
+    isGameOver()
+    // left & right
+    y = coordY.toString();
+    for (i in 1..(symbolNumber - 1)) {
+        x = (coordX + i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        else break
+    }
+    for (i in 1..(symbolNumber - 1)) {
+        x = (coordX - i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        else break
+    }
+    isGameOver()
+    // left up & right down
+    for (i in 1..(symbolNumber - 1)) {
+        x = (coordX - i).toString();
+        y = (coordY + i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        else break
+    }
+    for (i in 1..(symbolNumber - 1)) {
+        x = (coordX + i).toString();
+        y = (coordY - i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        else break
+    }
+    isGameOver()
+    // right up & left down
+    for (i in 1..(symbolNumber - 1)) {
+        x = (coordX + i).toString();
+        y = (coordY + i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        else break
+    }
+    for (i in 1..(symbolNumber - 1)) {
+        x = (coordX - i).toString();
+        y = (coordY - i).toString();
+        temp = x + "," + y
+        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        else break
+    }
+    isGameOver()
 }
