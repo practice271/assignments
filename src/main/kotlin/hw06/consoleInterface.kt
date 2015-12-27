@@ -18,7 +18,7 @@ public fun checkInput(input : String) : Boolean {
 
 public fun mark(field : String) {
     if (gameOver) println("start - to start a new game")
-    if (board.getOrDefault(field, ' ') != ' ') {
+    if (board[field] == 'X' || board[field] == 'O') {
         output = "Incorrect field"
         println(output)
     }

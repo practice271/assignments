@@ -10,9 +10,9 @@ public class HW06Test {
     @Test fun placeMarkTest() {
         newGame()
         placeMark("500,-1267")
-        assertEquals(board.getOrDefault("500,-1267", ' '), 'X')
+        assertEquals(board["500,-1267"], 'X')
         placeMark("0,0")
-        assertEquals(board.getOrDefault("0,0", ' '), 'O')
+        assertEquals(board["0,0"], 'O')
     }
     @Test fun checkForWinTest() {
         newGame()
@@ -38,7 +38,7 @@ public class HW06Test {
     @Test fun consoleInterfaceTest() {
         newGame()
         input = "0,0"; handle(input)
-        assertEquals(board.getOrDefault("0,0", ' '), 'X')
+        assertEquals(board["0,0"], 'X')
         assertEquals(output, "Player X marked (0,0)")
         input = "0,0"; handle(input)
         assertEquals(output, "Incorrect field")

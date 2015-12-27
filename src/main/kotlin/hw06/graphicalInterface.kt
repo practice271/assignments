@@ -81,7 +81,7 @@ public class TicTacToeGame : JFrame() {
         for (i in 0..fieldSize - 1) {
             for (j in 0..fieldSize - 1) {
                 tmp = (centerX - 7 + i).toString() + "," + (centerY - 7 + j).toString()
-                fieldBtn[i][j].text = board.getOrDefault(tmp, ' ').toString()
+                fieldBtn[i][j].text = board[tmp]?.toString()
                 if (gameOver) fieldBtn[i][j].isEnabled = false
             }
         }
@@ -96,7 +96,7 @@ public class TicTacToeGame : JFrame() {
         for (i in 0..fieldSize - 1) {
             for (j in 0..fieldSize - 1) {
                 tmp = (centerX - 7 + i).toString() + "," + (centerY - 7 + j).toString()
-                fieldBtn[i][j].text = board.getOrDefault(tmp, ' ').toString()
+                fieldBtn[i][j].text = board[tmp]?.toString()
                 fieldBtn[i][j].isEnabled = true
             }
         }
@@ -105,8 +105,8 @@ public class TicTacToeGame : JFrame() {
         for (i in 0..fieldSize - 1) {
             for (j in 0..fieldSize - 1) {
                 tmp = (centerX - 7 + i).toString() + "," + (centerY - 7 + j).toString()
-                fieldBtn[i][j].text = board.getOrDefault(tmp, ' ').toString()
-                if (fieldBtn[i][j].text != " ") fieldBtn[i][j].isEnabled = false
+                fieldBtn[i][j].text = board[tmp]?.toString()
+                if (fieldBtn[i][j].text == "X" || fieldBtn[i][j].text == "O") fieldBtn[i][j].isEnabled = false
                 else fieldBtn[i][j].isEnabled = true
             }
         }

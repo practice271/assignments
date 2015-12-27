@@ -67,13 +67,13 @@ public fun checkForWin(field : String) {
     for (i in 1..(symbolNumber - 1)) {
         y = (coordY + i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        if (board[temp] == playerMark) count1++
         else break
     }
     for (i in 1..(symbolNumber - 1)) {
         y = (coordY - i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count2++
+        if (board[temp] == playerMark) count2++
         else break
     }
     isGameOver()
@@ -82,13 +82,13 @@ public fun checkForWin(field : String) {
     for (i in 1..(symbolNumber - 1)) {
         x = (coordX + i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        if (board[temp] == playerMark) count1++
         else break
     }
     for (i in 1..(symbolNumber - 1)) {
         x = (coordX - i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        if (board[temp] == playerMark) count1++
         else break
     }
     isGameOver()
@@ -97,14 +97,14 @@ public fun checkForWin(field : String) {
         x = (coordX - i).toString();
         y = (coordY + i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        if (board[temp] == playerMark) count1++
         else break
     }
     for (i in 1..(symbolNumber - 1)) {
         x = (coordX + i).toString();
         y = (coordY - i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        if (board[temp] == playerMark) count1++
         else break
     }
     isGameOver()
@@ -113,14 +113,14 @@ public fun checkForWin(field : String) {
         x = (coordX + i).toString();
         y = (coordY + i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        if (board[temp] == playerMark) count1++
         else break
     }
     for (i in 1..(symbolNumber - 1)) {
         x = (coordX - i).toString();
         y = (coordY - i).toString();
         temp = x + "," + y
-        if (board.getOrDefault(temp, ' ') == playerMark) count1++
+        if (board[temp] == playerMark) count1++
         else break
     }
     isGameOver()
