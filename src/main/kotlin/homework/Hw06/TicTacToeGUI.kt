@@ -96,7 +96,7 @@ public class TicTacToeGame : JFrame() {
             fieldBtn[i + centerX*(-1)][j + centerY*(-1)].isEnabled = false
             fieldBtn[i + centerX*(-1)][j + centerY*(-1)].text = mark
             board.put(Pair(i, j), mark)
-            val res = winCheck(Pair(i, j))
+            val res = game.winCheck(Pair(i, j))
             if (res != "-") {
                 status.text = "${res} Win!"
             }
