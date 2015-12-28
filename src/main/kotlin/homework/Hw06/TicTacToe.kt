@@ -19,7 +19,7 @@ class Game(){
     val step = Step("0")
     var max = 0
 
-    private var board = HashMap<Pair<Int,Int>, String> ()
+    public var board = HashMap<Pair<Int,Int>, String> ()
 
     private fun tictac(x:Int,y:Int):String?{
         val coordinate = Pair(x,y)
@@ -85,19 +85,30 @@ class Game(){
     public fun winCheck(c:Pair<Int,Int>):String{
         val x = c.first
         val y = c.second
-        var counters = arrayOf(1,1,1,1,1,1,1,1)
-        var mark = board?.get(c) ?: ""
+        var counters = Array(4, {0})
+        var mark = board?.get(c) ?: "-"
         for (i in 1..4){
-            if (board.get(Pair(x,y-i)) == mark) counters[0]++
-            if (board.get(Pair(x,y+i)) == mark) counters[1]++
-            if (board.get(Pair(x-i,y)) == mark) counters[2]++
-            if (board.get(Pair(x+i,y)) == mark) counters[3]++
-            if (board.get(Pair(x+i,y+i)) == mark) counters[4]++
-            if (board.get(Pair(x+i,y-i)) == mark) counters[5]++
-            if (board.get(Pair(x-i,y-i)) == mark) counters[6]++
-            if (board.get(Pair(x-i,y+i)) == mark) counters[7]++
+            if (board.get(Pair(x,y-i)) == mark &&
+                    board.get(Pair(x,y-i+1)) == mark) counters[0]++
+            if (board.get(Pair(x,y+i)) == mark &&
+                    board.get(Pair(x,y+i-1)) == mark) counters[0]++
+
+            if (board.get(Pair(x-i,y)) == mark &&
+                    board.get(Pair(x-i+1,y)) == mark) counters[1]++
+            if (board.get(Pair(x+i,y)) == mark &&
+                    board.get(Pair(x+i-1,y)) == mark) counters[1]++
+
+            if (board.get(Pair(x+i,y+i)) == mark &&
+                    board.get(Pair(x+i-1,y+i-1)) == mark) counters[2]++
+            if (board.get(Pair(x-i,y-i)) == mark &&
+                    board.get(Pair(x-i+1,y-i+1)) == mark) counters[2]++
+
+            if (board.get(Pair(x+i,y-i)) == mark &&
+                    board.get(Pair(x+i-1,y-i+1)) == mark) counters[3]++
+            if (board.get(Pair(x-i,y+i)) == mark &&
+                    board.get(Pair(x-i+1,y+i-1)) == mark) counters[3]++
         }
-        if (counters.contains(5)) return mark
+        if (counters.contains(4)) return mark
         return "-"
     }
     public fun start(){
@@ -130,23 +141,4 @@ class Game(){
             }
         }
     }
-}
-
-fun main(argv:Array<String>){
-    val game = Game()
-
-    game.writeMark(Pair(1,1))
-    game.writeMark(Pair(2,5))
-    game.writeMark(Pair(1,2))
-    game.writeMark(Pair(2,9))
-    game.writeMark(Pair(1,3))
-    game.writeMark(Pair(2,10))
-    game.writeMark(Pair(1,4))
-    game.writeMark(Pair(2,11))
-    game.writeMark(Pair(1,5))
-
-    game.start()
-
-//    val res = game.winCheck(Pair(2,10))
-//    println(res)
 }
